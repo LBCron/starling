@@ -53,7 +53,7 @@ Console.WriteLine(answer.Text);   // on the 0.8B model, greedy: "Today in Paris,
 ```
 
 - `ChatOptions.Tools`: each `AIFunctionDeclaration` (any `AIFunction`) is rendered into the template's tools block as `{"type": "function", "function": {"name", "description", "parameters": JsonSchema}}`. Other tool types and duplicate names are rejected.
-- `ToolMode`: `Auto` (or unset) and `None` are supported; `None` renders no tools and parses nothing. `RequireAny` and `RequireSpecific` need guided decoding (below). On the published bundle they are rejected with `NotSupportedException`: the template cannot require a call, and the bundle lacks the files a constrained decode needs. `AllowMultipleToolCalls = false` is rejected with `Auto`.
+- `ToolMode`: `Auto` (or unset) and `None` are supported; `None` renders no tools and parses nothing. `RequireAny` and `RequireSpecific` need guided decoding (below). On a directory without the guidance files (a cache acquired before hosting revision r2, or a local build without them) they are rejected with `NotSupportedException`: the template cannot require a call, and a constrained decode needs those files. `AllowMultipleToolCalls = false` is rejected with `Auto`.
 - History: `FunctionCallContent` in assistant messages is rendered as the template's `<tool_call>` blocks after the message text; each `FunctionResultContent` of a tool message becomes one template tool message (strings as is, other results as compact JSON), so several results render as consecutive `<tool_response>` blocks.
 - Responses: tool-call blocks become `FunctionCallContent` (a new `CallId`, `Name`, `Arguments` as `JsonElement` values cast with the tool's schema; `RawRepresentation` is the `Qwen35ToolCall`), and the finish reason is `ToolCalls`. Text before a call is `TextContent`. A malformed or unfinished block is returned as text, verbatim, with finish reason `Stop` or `Length`; the client never throws on model output. With thinking enabled, the reasoning up to `</think>` stays text and is not parsed (or becomes `TextReasoningContent` with `SplitReasoning`).
 - Streaming: text deltas are emitted as usual; text that could start a tool call is held back, and each `FunctionCallContent` is emitted once its block is complete, so no `<tool_call>` markup leaks for a valid call. The updates reassemble (`ToChatResponse`) to the non-streamed response.
@@ -62,8 +62,8 @@ Console.WriteLine(answer.Text);   // on the 0.8B model, greedy: "Today in Paris,
 ### Guided decoding (experimental, opt-in)
 
 ```csharp
-// A directory with tokenizer.json and tokenizer_config.json next to the variant's files (the published bundle has neither).
-using var guided = Qwen35ChatClient.Create(filesWithGuidanceFiles);
+// The hosted variant directories carry tokenizer.json and tokenizer_config.json since hosting revision r2.
+using var guided = Qwen35ChatClient.Create(await Qwen35ModelAssets.DownloadAsync(Qwen35Variant.Fp32x));
 ChatResponse call = await guided.GetResponseAsync("Weather in Porto?", new ChatOptions { Tools = [getWeather], ToolMode = ChatToolMode.RequireAny });
 ChatResponse json = await guided.GetResponseAsync("6 times 7, as JSON.", new ChatOptions { ResponseFormat = ChatResponseFormat.ForJsonSchema(schema) });
 ```
@@ -71,7 +71,7 @@ ChatResponse json = await guided.GetResponseAsync("6 times 7, as JSON.", new Cha
 - When the model directory has ONNX Runtime GenAI's guidance files (`Qwen35ModelInfo.GuidanceMissingFiles` empty), `ChatToolMode.RequireAny` constrains the completion to calls of the offered functions with `Qwen35ToolGrammar`. `RequireSpecific(name)` constrains it to calls of that function (all functions are still rendered into the prompt). The grammar admits one call with `AllowMultipleToolCalls = false`, and one or more otherwise. A JSON `ResponseFormat` constrains the completion to its schema, or to a JSON object without one (`json_schema` guidance).
 - Rejected with `NotSupportedException`: any of these on a directory without the guidance files (the message names the missing files), a JSON format with offered tools, a JSON format with a required tool mode, guidance with `enable_thinking` or `logprobs`, and a required function that is not offered.
 - `Qwen35ChatClientOptions.GuidanceFastForward` (default false) builds the tool grammar with fast-forward tokens, so its fixed tags are appended without a decode step each.
-- Capabilities `guidance.json_schema`, `guidance.lark` and `guidance.regex` (in `Qwen35Capabilities.All`): experimental. Scripted sequences in CI; on the real fp32x model on CPU in a directory with the two files added, one `RequireAny` request returned a `get_weather` call and one JSON schema request returned matching JSON (`docs/evidence/qwen35-guidance-2026-10-26/`). On the published bundle, `extensions_ai.tool_mode.required` and `extensions_ai.structured_output` stay unsupported.
+- Capabilities `guidance.json_schema`, `guidance.lark` and `guidance.regex` (in `Qwen35Capabilities.All`): experimental. Scripted sequences in CI; on the real fp32x model on CPU in a directory with the two files added, one `RequireAny` request returned a `get_weather` call and one JSON schema request returned matching JSON (`docs/evidence/qwen35-guidance-2026-10-26/`). `extensions_ai.tool_mode.required` and `extensions_ai.structured_output`: experimental since hosting revision r2, whose variant directories carry both files; on fp32x on CPU, loaded from the downloaded r2 files, `GuidedRealModelTests` passed (`docs/evidence/qwen35-hosting-r2-2026-11-02/README.md`).
 
 ### Reasoning split (experimental, opt-in)
 

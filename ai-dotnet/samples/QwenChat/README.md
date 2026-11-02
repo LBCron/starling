@@ -7,8 +7,8 @@ Streaming console chat with `Qwen/Qwen3.5-0.8B`, using only the published packag
 3. `ask`: offline, one streamed answer to the question on the command line (default: "What is the capital of France? Answer in one sentence."). It takes the same options as `chat`.
 
 ```sh
-dotnet run -- download [--cache <dir>] [--variant fp32x|fp16x]     # fp32x about 3.1 GB, fp16x about 1.6 GB
-dotnet run -- chat [--cache <dir> | --snapshot <dir>] [--variant fp32x|fp16x] [--cuda] [--thinking] [--max-new 512] [--chat-client]
+dotnet run -- download [--cache <dir>] [--variant fp32x|fp16x|int4]     # fp32x about 3.1 GB, fp16x about 1.6 GB, int4 about 0.6 GB
+dotnet run -- chat [--cache <dir> | --snapshot <dir>] [--variant fp32x|fp16x|int4] [--cuda] [--thinking] [--max-new 512] [--chat-client]
 dotnet run -- ask  [same options as chat] "What is the capital of France?"
 ```
 
@@ -24,7 +24,7 @@ await foreach (ChatResponseUpdate update in client.GetStreamingResponseAsync("Wh
 }
 ```
 
-`--thinking` sets the template's `enable_thinking`: the model writes its reasoning and `</think>` before the answer, all of it printed. `--cuda` needs `Microsoft.ML.OnnxRuntimeGenAI.Cuda` instead of the CPU package in `QwenChat.csproj` (reference exactly one) and the CUDA 13 runtime; on CUDA use `--variant fp16x` (the fp32x graph runs there but is slow). On CPU only fp32x is supported (about 6 tokens/s decode on a 6-core AVX2 machine).
+`--thinking` sets the template's `enable_thinking`: the model writes its reasoning and `</think>` before the answer, all of it printed. `--cuda` needs `Microsoft.ML.OnnxRuntimeGenAI.Cuda` instead of the CPU package in `QwenChat.csproj` (reference exactly one) and the CUDA 13 runtime; on CUDA use `--variant fp16x` (the fp32x graph runs there but is slow). On CPU only fp32x is supported (about 6 tokens/s decode on a 6-core AVX2 machine); `--variant int4` is the Experimental CPU-only int4 profile `qwen3.5-0.8b/ortgenai-int4-cpu` (not close to the fp32 reference, see the package README).
 
 The hosting repository is public: `download` needs no token. Files already in the snapshot directory (`<cache>/Qwen/Qwen3.5-0.8B/2fc06364715b967f1860aea9cf38778875588b17/`, layout `chat_template.jinja`, `ortgenai-fp32x/`, `transformers-5.18.0/tokenizer.json`) are verified and reused; `--snapshot <dir>` uses a directory in that layout. The files can also be built with `model-pipeline/reference/generation/build_ortgenai_bundle.py`; the lock checks every SHA-256.
 

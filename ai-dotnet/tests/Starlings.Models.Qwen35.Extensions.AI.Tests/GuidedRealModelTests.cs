@@ -5,29 +5,18 @@ using Microsoft.Extensions.AI;
 namespace Starlings.Models.Qwen35.Extensions.AI.Tests;
 
 /// <summary>
-/// The IChatClient on the fp32x model on CPU in a directory with ONNX Runtime GenAI's guidance files added
-/// (<see cref="Qwen35GuidedDirectory"/>). Skips without the model or a verified <c>tokenizer_config.json</c>.
+/// The IChatClient on the fp32x model on CPU, from the variant directory as the lock lays it out (with ONNX Runtime
+/// GenAI's guidance files since hosting revision r2). Skips without the model.
 /// </summary>
 public sealed class Qwen35GuidedChatClientFixture : IDisposable
 {
-    private readonly Qwen35GuidedDirectory? _directory;
-
     public Qwen35GuidedChatClientFixture()
     {
-        _directory = Qwen35GuidedDirectory.TryCreate(Qwen35Variant.Fp32x, out string reason);
+        var (files, reason) = Qwen35TestAssets.FindModel(Qwen35Variant.Fp32x);
         Reason = reason;
-        if (_directory is not null)
+        if (files is not null)
         {
-            try
-            {
-                Client = Qwen35ChatClient.Create(_directory.Files);
-            }
-            catch
-            {
-                // A constructor that throws gets no Dispose; remove the temporary directory here.
-                _directory.Dispose();
-                throw;
-            }
+            Client = Qwen35ChatClient.Create(files);
         }
     }
 
@@ -35,11 +24,7 @@ public sealed class Qwen35GuidedChatClientFixture : IDisposable
 
     public string Reason { get; }
 
-    public void Dispose()
-    {
-        Client?.Dispose();
-        _directory?.Dispose();
-    }
+    public void Dispose() => Client?.Dispose();
 }
 
 /// <summary>Runs alone, after the parallel classes have released their models: its fixture loads another 3.1 GB model.</summary>
@@ -64,6 +49,18 @@ public sealed class GuidedRealModelTests(Qwen35GuidedChatClientFixture fixture) 
 
     private static CancellationToken Ct => TestContext.Current.CancellationToken;
 
+    /// <summary>Writes the constrained output to the test log, so the evidence records what the model returned.</summary>
+    private static void Record(string request, ChatResponse response)
+    {
+        string contents = string.Join(" | ", response.Messages.SelectMany(m => m.Contents).Select(c => c switch
+        {
+            FunctionCallContent call => $"call {call.Name}({JsonSerializer.Serialize(call.Arguments)})",
+            TextContent text => $"text {JsonSerializer.Serialize(text.Text)}",
+            _ => c.GetType().Name,
+        }));
+        TestContext.Current.TestOutputHelper?.WriteLine($"{request}: finish={response.FinishReason}; {contents}");
+    }
+
     [Fact]
     public async Task RequireAnyReturnsAFunctionCall()
     {
@@ -73,6 +70,22 @@ public sealed class GuidedRealModelTests(Qwen35GuidedChatClientFixture fixture) 
             "What's the weather in Porto?",
             new ChatOptions { Tools = [weather, time], ToolMode = ChatToolMode.RequireAny, MaxOutputTokens = 64 },
             Ct);
+        Record("RequireAny", response);
+        var call = Assert.IsType<FunctionCallContent>(Assert.Single(response.Messages.Single().Contents));
+        Assert.Equal("get_weather", call.Name);
+        Assert.Equal(ChatFinishReason.ToolCalls, response.FinishReason);
+    }
+
+    [Fact]
+    public async Task RequireSpecificReturnsACallOfTheNamedFunction()
+    {
+        var weather = AIFunctionFactory.Create((string city) => $"Sunny in {city}", "get_weather", "Current weather for a city.");
+        var time = AIFunctionFactory.Create(() => "12:00", "get_time", "The current time.");
+        var response = await Client.GetResponseAsync(
+            "What time is it in Porto?",
+            new ChatOptions { Tools = [weather, time], ToolMode = ChatToolMode.RequireSpecific("get_weather"), MaxOutputTokens = 64 },
+            Ct);
+        Record("RequireSpecific(get_weather)", response);
         var call = Assert.IsType<FunctionCallContent>(Assert.Single(response.Messages.Single().Contents));
         Assert.Equal("get_weather", call.Name);
         Assert.Equal(ChatFinishReason.ToolCalls, response.FinishReason);
@@ -86,6 +99,7 @@ public sealed class GuidedRealModelTests(Qwen35GuidedChatClientFixture fixture) 
             "What is 6 times 7? Reply as JSON.",
             new ChatOptions { ResponseFormat = ChatResponseFormat.ForJsonSchema(schema), MaxOutputTokens = 32 },
             Ct);
+        Record("JSON schema ResponseFormat", response);
         using var json = JsonDocument.Parse(response.Text);
         Assert.Equal(JsonValueKind.Number, json.RootElement.GetProperty("answer").ValueKind);
         Assert.Equal(ChatFinishReason.Stop, response.FinishReason);

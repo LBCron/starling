@@ -8,29 +8,18 @@ using Starlings.TestSupport;
 namespace Starlings.Models.Qwen35.Tests;
 
 /// <summary>
-/// The fp32x bundle on CPU in a temporary directory with ONNX Runtime GenAI's guidance files added
-/// (<see cref="Qwen35GuidedDirectory"/>). Skips without the model or a verified <c>tokenizer_config.json</c>.
+/// The fp32x bundle on CPU as the lock lays it out: since hosting revision r2 the variant directory holds ONNX Runtime
+/// GenAI's guidance files (<c>tokenizer.json</c>, <c>tokenizer_config.json</c>). Skips without the model.
 /// </summary>
 public sealed class Qwen35GuidedCpuFixture : IDisposable
 {
-    private readonly Qwen35GuidedDirectory? _directory;
-
     public Qwen35GuidedCpuFixture()
     {
-        _directory = Qwen35GuidedDirectory.TryCreate(Qwen35Variant.Fp32x, out string reason);
+        var (files, reason) = Qwen35TestAssets.FindModel(Qwen35Variant.Fp32x);
         Reason = reason;
-        if (_directory is not null)
+        if (files is not null)
         {
-            try
-            {
-                Model = Qwen35ChatModel.Load(_directory.Files);
-            }
-            catch
-            {
-                // A constructor that throws gets no Dispose; remove the temporary directory here.
-                _directory.Dispose();
-                throw;
-            }
+            Model = Qwen35ChatModel.Load(files);
         }
     }
 
@@ -38,11 +27,7 @@ public sealed class Qwen35GuidedCpuFixture : IDisposable
 
     public string Reason { get; }
 
-    public void Dispose()
-    {
-        Model?.Dispose();
-        _directory?.Dispose();
-    }
+    public void Dispose() => Model?.Dispose();
 }
 
 /// <summary>

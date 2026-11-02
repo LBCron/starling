@@ -1,0 +1,28 @@
+from: https://huggingface.co/Starlinghq/qwen3.5-0.8b-ortgenai/resolve/22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45/
+Fp32x: OpenLocal before DownloadAsync: ModelAssetMissingException, missing ortgenai-fp32x/tokenizer.json, ortgenai-fp32x/tokenizer_config.json
+Fp32x: DownloadAsync ok in 15 s; model directory ~/.cache/starling-r3-qwen35-hosting/cache-r2/Qwen/Qwen3.5-0.8B/2fc06364715b967f1860aea9cf38778875588b17/ortgenai-fp32x
+  chat_template.jinja 7755 273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80 already cached, sha256 verified offline
+  transformers-5.18.0/tokenizer.json 19989339 a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f already cached, sha256 verified offline
+  ortgenai-fp32x/genai_config.json 1935 e7e1957b2544fdad6170a9cc81cbbb1b88c8819b7016a609170ad7cbebba81ba already cached, sha256 verified offline
+  ortgenai-fp32x/model.onnx 308301 4a052c4a1444c9437e00ffd48baecb0838d3d9ca1703c3153dbd46e945e84703 already cached, sha256 verified offline
+  ortgenai-fp32x/model.onnx.data 3077177344 129c58a320b6de7192713cc9c7e4ba744dcf7fabb0f57c6535021b45b3dc5143 already cached, sha256 verified offline
+  ortgenai-fp32x/tokenizer.json 19989339 a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f downloaded, sha256 verified offline
+  ortgenai-fp32x/tokenizer_config.json 16709 49e2b6e395f959f077f1e992b338919c0d4a9732fc6e613995e06557f843500c downloaded, sha256 verified offline
+Fp16x: OpenLocal before DownloadAsync: ModelAssetMissingException, missing ortgenai-fp16x/tokenizer.json, ortgenai-fp16x/tokenizer_config.json
+Fp16x: DownloadAsync ok in 6 s; model directory ~/.cache/starling-r3-qwen35-hosting/cache-r2/Qwen/Qwen3.5-0.8B/2fc06364715b967f1860aea9cf38778875588b17/ortgenai-fp16x
+  chat_template.jinja 7755 273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80 already cached, sha256 verified offline
+  transformers-5.18.0/tokenizer.json 19989339 a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f already cached, sha256 verified offline
+  ortgenai-fp16x/genai_config.json 2109 ded164b67284883a13c6454d7445f814014a1e12277ce323011683cd6a69d055 already cached, sha256 verified offline
+  ortgenai-fp16x/model.onnx 316521 26895023e4be1f528aef04ce3a07a14e70a2421cfb400a49fec639ea9a14f46d already cached, sha256 verified offline
+  ortgenai-fp16x/model.onnx.data 1572143104 47f6ee15d95080acc66f7c4acdf4012c83b20063cf0cfeb59a6b7ae09950a3b2 already cached, sha256 verified offline
+  ortgenai-fp16x/tokenizer.json 19989339 a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f downloaded, sha256 verified offline
+  ortgenai-fp16x/tokenizer_config.json 16709 49e2b6e395f959f077f1e992b338919c0d4a9732fc6e613995e06557f843500c downloaded, sha256 verified offline
+Int4: OpenLocal before DownloadAsync: ModelAssetMissingException, missing ortgenai-int4/genai_config.json, ortgenai-int4/model.onnx, ortgenai-int4/model.onnx.data, ortgenai-int4/tokenizer.json, ortgenai-int4/tokenizer_config.json
+Int4: DownloadAsync ok in 9 s; model directory ~/.cache/starling-r3-qwen35-hosting/cache-r2/Qwen/Qwen3.5-0.8B/2fc06364715b967f1860aea9cf38778875588b17/ortgenai-int4
+  chat_template.jinja 7755 273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80 already cached, sha256 verified offline
+  transformers-5.18.0/tokenizer.json 19989339 a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f already cached, sha256 verified offline
+  ortgenai-int4/genai_config.json 1935 e7e1957b2544fdad6170a9cc81cbbb1b88c8819b7016a609170ad7cbebba81ba downloaded, sha256 verified offline
+  ortgenai-int4/model.onnx 364388 a41f341f106a1bb5b50eb67ca824cd9c324705141d88b027de0888f140e39cf7 downloaded, sha256 verified offline
+  ortgenai-int4/model.onnx.data 541523968 709e08797497f609547f7aef1387cfb35bd0deb3f4039acf001f0680b23f9745 downloaded, sha256 verified offline
+  ortgenai-int4/tokenizer.json 19989339 a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f downloaded, sha256 verified offline
+  ortgenai-int4/tokenizer_config.json 16709 49e2b6e395f959f077f1e992b338919c0d4a9732fc6e613995e06557f843500c downloaded, sha256 verified offline

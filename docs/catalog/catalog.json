@@ -8139,7 +8139,7 @@
         "stop_sequences": "supported",
         "stop_tokens": "supported",
         "structured_extraction": "unrecorded",
-        "structured_output": "unsupported",
+        "structured_output": "experimental",
         "temperature_fallback": "unrecorded",
         "text": "unrecorded",
         "text_only_inputs": "unrecorded",
@@ -8426,7 +8426,7 @@
         "stop_sequences": "supported",
         "stop_tokens": "supported",
         "structured_extraction": "unrecorded",
-        "structured_output": "unsupported",
+        "structured_output": "experimental",
         "temperature_fallback": "unrecorded",
         "text": "unrecorded",
         "text_only_inputs": "unrecorded",
@@ -8716,7 +8716,7 @@
         "stop_sequences": "supported",
         "stop_tokens": "supported",
         "structured_extraction": "unrecorded",
-        "structured_output": "unsupported",
+        "structured_output": "experimental",
         "temperature_fallback": "unrecorded",
         "text": "unrecorded",
         "text_only_inputs": "unrecorded",
@@ -8824,7 +8824,6 @@
       "review_date": "2027-02-01",
       "last_checked": "2026-11-01",
       "known_issues": [
-        "Not hosted: users build the int4 graph from the pinned checkpoint with the bundle script (--variant int4) and open it with Qwen35ModelAssets.OpenDirectory.",
         "Fidelity to the checkpoint is not claimed: against the transformers fp32 reference the int4 build agrees on 1 of 22 greedy sequences (M0). No task-quality floor exists yet.",
         "The ONNX Runtime GenAI runtime version must equal the builder version that wrote the graph (0.17.1).",
         "Build in the environment of model-pipeline/reference/generation/requirements.txt. The same recipe gave a different model.onnx (766e49f3...) in M0 for an unexplained reason, and OpenDirectory checks SHA-256 by default, so a model.onnx digest mismatch means a different builder environment, not a corrupt download."
@@ -8977,7 +8976,7 @@
         "stop_sequences": "experimental",
         "stop_tokens": "experimental",
         "structured_extraction": "unrecorded",
-        "structured_output": "unsupported",
+        "structured_output": "untested",
         "temperature_fallback": "unrecorded",
         "text": "unrecorded",
         "text_only_inputs": "unrecorded",
@@ -9071,6 +9070,7 @@
           "aot",
           "extensions_ai",
           "long_context_1667_to_8192_tokens",
+          "structured_output",
           "tool_calling"
         ]
       },

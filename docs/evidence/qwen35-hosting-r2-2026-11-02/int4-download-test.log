@@ -1,0 +1,9 @@
+# 2026-11-02T16:08:10Z STARLING_NETWORK_TESTS=1, anonymous (UseEnvironmentToken=false), fresh temporary cache; commit 7304bd2bb0a714eb88542e627bc8889b4428dbb0
+xUnit.net v3 In-Process Runner v4.0.1+8ed8aa354c (64-bit .NET 10.0.14)
+  Discovering: Starlings.Models.Qwen35.Tests (method display = ClassAndMethod, method display options = None)
+  Discovered:  Starlings.Models.Qwen35.Tests (1 test case to be run)
+  Starting:    Starlings.Models.Qwen35.Tests (parallel mode = collections [12 threads], stop on fail = off, explicit = off, seed = 2010148612)
+    [D::Starlings.Models.Qwen35.Tests] int4 lock (581893433 bytes) downloaded and verified in 9 s
+  Finished:    Starlings.Models.Qwen35.Tests (ID = 'd88a245f53ff315b42a5da6e23eddfbda4a5d621138b73ac105e15eb3e379b1a')
+=== TEST EXECUTION SUMMARY ===
+   Starlings.Models.Qwen35.Tests  Total: 1, Errors: 0, Failed: 0, Skipped: 0, Not Run: 0, Time: 12.207s

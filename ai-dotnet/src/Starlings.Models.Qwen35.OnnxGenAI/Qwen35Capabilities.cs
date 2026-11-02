@@ -49,14 +49,15 @@ public static class Qwen35Capabilities
         ["chat.greedy.fp32x.cpu"] = Qwen35CapabilityStatus.Supported,
         ["chat.greedy.fp32x.cuda"] = Qwen35CapabilityStatus.Supported,
         ["chat.greedy.fp16x.cuda"] = Qwen35CapabilityStatus.Supported,
-        // int4 on CPU (profile qwen3.5-0.8b/ortgenai-int4-cpu, Experimental, local build only, issue #163): compared with
+        // int4 on CPU (profile qwen3.5-0.8b/ortgenai-int4-cpu, Experimental, issue #163; hosted since hosting revision r2,
+        // where an anonymous download verified every file of the lock): compared with
         // the same graph through the upstream Python binding on the 22 development prompts (proposed fixture
         // model-pipeline/proposed/qwen3.5-0.8b/ortgenai-int4-cpu, no maintainer tolerances yet). It is not close to the
         // fp32 reference (M0: 1 of 22 sequences). "quantized" below stays the status on the Stable profiles.
         ["chat.greedy.int4.cpu"] = Qwen35CapabilityStatus.Experimental,
         ["quantized.int4.cpu"] = Qwen35CapabilityStatus.Experimental,
         ["int4.cuda"] = Qwen35CapabilityStatus.Unsupported,
-        ["asset_acquisition.download.int4"] = Qwen35CapabilityStatus.Unsupported,
+        ["asset_acquisition.download.int4"] = Qwen35CapabilityStatus.Experimental,
         ["template.owned_renderer.text"] = Qwen35CapabilityStatus.Supported,
         ["template.enable_thinking"] = Qwen35CapabilityStatus.Experimental,
         ["tokenizer.owned"] = Qwen35CapabilityStatus.Supported,
@@ -128,12 +129,17 @@ public static class Qwen35Capabilities
 
         // Opt-in, off by default: guided decoding through ONNX Runtime GenAI's llguidance (GenerationOptions.Guidance,
         // Qwen35ChatOptions.Guidance, Qwen35ToolGrammar; in the IChatClient, ToolMode RequireAny and RequireSpecific and a
-        // JSON ResponseFormat). Needs tokenizer.json and tokenizer_config.json in the variant directory, which the
-        // published bundle lacks, so on the published bundle these requests fail with NotSupportedException and
-        // "structured_output", "extensions_ai.tool_mode.required" and "extensions_ai.structured_output" below stay
-        // Unsupported. Grammar builder and decode loop (fast-forward tokens included) tested with scripted sequences in
-        // CI; on the real fp32x model on CPU with the two files added (local, one machine): a regex, a JSON schema and the
-        // required tool-call grammar were followed. No latency qualification.
+        // JSON ResponseFormat). Needs tokenizer.json and tokenizer_config.json in the variant directory, which the hosted
+        // bundle carries since hosting revision r2 (a cache acquired earlier lacks them until DownloadAsync runs again).
+        // Grammar builder and decode loop (fast-forward tokens included) tested with scripted sequences in CI; on the real
+        // fp32x model on CPU loaded from the downloaded r2 files (local, one machine): a regex, a JSON schema and the
+        // required tool-call grammar were followed, through the typed API and the IChatClient; the same checks passed on
+        // fp32x and fp16x on CUDA (an RTX 4060 Ti, not the RTX 3090 of the Stable CUDA record). No latency qualification,
+        // no int4 run (the int4 manifest says untested).
+        ["structured_output"] = Qwen35CapabilityStatus.Experimental,
+        ["structured_output.cuda"] = Qwen35CapabilityStatus.Experimental,
+        ["extensions_ai.tool_mode.required"] = Qwen35CapabilityStatus.Experimental,
+        ["extensions_ai.structured_output"] = Qwen35CapabilityStatus.Experimental,
         ["guidance.json_schema"] = Qwen35CapabilityStatus.Experimental,
         ["guidance.lark"] = Qwen35CapabilityStatus.Experimental,
         ["guidance.regex"] = Qwen35CapabilityStatus.Experimental,
@@ -149,7 +155,6 @@ public static class Qwen35Capabilities
         ["concurrent_requests.cuda.unserialized"] = Qwen35CapabilityStatus.Unsupported,
         ["conversation_state_reuse"] = Qwen35CapabilityStatus.Unsupported,
         ["reasoning_split"] = Qwen35CapabilityStatus.Unsupported,
-        ["structured_output"] = Qwen35CapabilityStatus.Unsupported,
         ["vision"] = Qwen35CapabilityStatus.Unsupported,
         ["fp16x.cpu"] = Qwen35CapabilityStatus.Unsupported,
         ["tf32"] = Qwen35CapabilityStatus.Unsupported,
@@ -157,8 +162,6 @@ public static class Qwen35Capabilities
         ["lora"] = Qwen35CapabilityStatus.Unsupported,
         ["mtp_speculative_decoding"] = Qwen35CapabilityStatus.Unsupported,
         ["backend_tokenizer"] = Qwen35CapabilityStatus.Unsupported,
-        ["extensions_ai.tool_mode.required"] = Qwen35CapabilityStatus.Unsupported,
-        ["extensions_ai.structured_output"] = Qwen35CapabilityStatus.Unsupported,
         ["extensions_ai.multimodal"] = Qwen35CapabilityStatus.Unsupported,
         ["extensions_ai.unseeded_sampling"] = Qwen35CapabilityStatus.Unsupported,
         ["extensions_ai.reasoning_options"] = Qwen35CapabilityStatus.Unsupported,
@@ -221,7 +224,8 @@ public static class Qwen35Capabilities
             // Proposed P-029 tool cases and one real-model run; tool choice is not qualified.
             ["tool_calling"] = Qwen35CapabilityStatus.Experimental,
             ["reasoning_split"] = Qwen35CapabilityStatus.Unsupported,
-            ["structured_output"] = Qwen35CapabilityStatus.Unsupported,
+            // Guided decoding (llguidance) on the r2 variant directory: regex, JSON schema and tool grammar followed.
+            ["structured_output"] = Qwen35CapabilityStatus.Experimental,
             ["vision"] = Qwen35CapabilityStatus.Unsupported,
             // Unquantized fp32x/fp16x graphs; int4 is the separate ortgenai-int4-cpu profile (#163).
             ["quantized"] = Qwen35CapabilityStatus.Unsupported,

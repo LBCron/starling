@@ -5,7 +5,7 @@ namespace Starlings.Models.Qwen35.Tests;
 
 /// <summary>
 /// Real downloads from the public hosting repository (<see cref="Qwen35ModelAssets.HostingRepository"/>), with no token.
-/// Skipped unless <c>STARLING_NETWORK_TESTS=1</c>. The fp16x download is 1.57 GB.
+/// Skipped unless <c>STARLING_NETWORK_TESTS=1</c>. The fp16x download is 1.61 GB, the int4 download 0.58 GB.
 /// </summary>
 public sealed class HostingDownloadTests
 {
@@ -41,4 +41,30 @@ public sealed class HostingDownloadTests
         }
     }
 
+    [Fact]
+    public async Task Int4DownloadsFromTheHostingRepositoryAndVerifies()
+    {
+        RequireNetwork();
+        string cache = Directory.CreateTempSubdirectory("df-qwen35-hosting-").FullName;
+        try
+        {
+            // Hosted since hosting revision r2. Anonymous, as above.
+            var options = new ModelAcquisitionOptions { CacheDirectory = cache, UseEnvironmentToken = false };
+            var started = DateTime.UtcNow;
+            var files = await Qwen35ModelAssets.DownloadAsync(Qwen35Variant.Int4, options, cancellationToken: Ct);
+            TestContext.Current.SendDiagnosticMessage(
+                $"int4 lock ({Qwen35ModelAssets.GetLock(Qwen35Variant.Int4).Files.Sum(f => f.Size)} bytes) downloaded and verified in {(DateTime.UtcNow - started).TotalSeconds:F0} s");
+
+            var local = Qwen35ModelAssets.OpenLocal(Qwen35Variant.Int4, new ModelAcquisitionOptions { CacheDirectory = cache, UseEnvironmentToken = false, Verification = CacheVerification.Sha256 });
+            Assert.Equal(files.ModelDirectory, local.ModelDirectory);
+            // The variant directory carries the graph and the guidance files.
+            Assert.Equal(
+                ["genai_config.json", "model.onnx", "model.onnx.data", "tokenizer.json", "tokenizer_config.json"],
+                Directory.EnumerateFiles(local.ModelDirectory).Select(Path.GetFileName).Order(StringComparer.Ordinal));
+        }
+        finally
+        {
+            Directory.Delete(cache, recursive: true);
+        }
+    }
 }

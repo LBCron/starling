@@ -80,8 +80,8 @@ public sealed record Qwen35ModelInfo
 
     /// <summary>
     /// Experimental: the files guided decoding (<see cref="Qwen35ChatOptions.Guidance"/>) needs that the model directory
-    /// lacks (<see cref="GenAIModel.GuidanceMissingFiles"/>); empty when guided requests can be served. The published
-    /// bundle's variant directories have neither <c>tokenizer.json</c> nor <c>tokenizer_config.json</c>. Defaults to both
+    /// lacks (<see cref="GenAIModel.GuidanceMissingFiles"/>); empty when guided requests can be served. The hosted
+    /// variant directories carry <c>tokenizer.json</c> and <c>tokenizer_config.json</c> since hosting revision r2. Defaults to both
     /// file names for an instance that <see cref="Qwen35ChatModel.Load"/> did not create.
     /// </summary>
     public IReadOnlyList<string> GuidanceMissingFiles { get; init; } = GenAIModel.GuidanceFiles;
