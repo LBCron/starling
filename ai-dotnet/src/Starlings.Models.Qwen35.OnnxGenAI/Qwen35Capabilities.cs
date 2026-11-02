@@ -49,6 +49,14 @@ public static class Qwen35Capabilities
         ["chat.greedy.fp32x.cpu"] = Qwen35CapabilityStatus.Supported,
         ["chat.greedy.fp32x.cuda"] = Qwen35CapabilityStatus.Supported,
         ["chat.greedy.fp16x.cuda"] = Qwen35CapabilityStatus.Supported,
+        // int4 on CPU (profile qwen3.5-0.8b/ortgenai-int4-cpu, Experimental, local build only, issue #163): compared with
+        // the same graph through the upstream Python binding on the 22 development prompts (proposed fixture
+        // model-pipeline/proposed/qwen3.5-0.8b/ortgenai-int4-cpu, no maintainer tolerances yet). It is not close to the
+        // fp32 reference (M0: 1 of 22 sequences). "quantized" below stays the status on the Stable profiles.
+        ["chat.greedy.int4.cpu"] = Qwen35CapabilityStatus.Experimental,
+        ["quantized.int4.cpu"] = Qwen35CapabilityStatus.Experimental,
+        ["int4.cuda"] = Qwen35CapabilityStatus.Unsupported,
+        ["asset_acquisition.download.int4"] = Qwen35CapabilityStatus.Unsupported,
         ["template.owned_renderer.text"] = Qwen35CapabilityStatus.Supported,
         ["template.enable_thinking"] = Qwen35CapabilityStatus.Experimental,
         ["tokenizer.owned"] = Qwen35CapabilityStatus.Supported,
@@ -163,6 +171,14 @@ public static class Qwen35Capabilities
     };
 
     /// <summary>
+    /// The capability record of every registry profile this package serves (<see cref="ModelProfileCapabilities"/>),
+    /// generated from the profiles' registry manifests by <c>model-pipeline catalog</c>, keyed by profile id. Each
+    /// record's <see cref="ModelProfileCapabilities.Capabilities"/> is the manifest's <c>capabilities</c> map key for key;
+    /// the package-wide <see cref="All"/> adds finer keys.
+    /// </summary>
+    public static IReadOnlyDictionary<string, ModelProfileCapabilities> ProfileCapabilities => GeneratedProfileCapabilities.Profiles;
+
+    /// <summary>
     /// Status per capability of each profile this package version publishes a contract for, keyed exactly as the
     /// profile's registry manifest (<c>model-pipeline/registry/&lt;profile&gt;/manifest.yaml</c>, <c>capabilities</c>).
     /// </summary>
@@ -207,6 +223,8 @@ public static class Qwen35Capabilities
             ["reasoning_split"] = Qwen35CapabilityStatus.Unsupported,
             ["structured_output"] = Qwen35CapabilityStatus.Unsupported,
             ["vision"] = Qwen35CapabilityStatus.Unsupported,
+            // Unquantized fp32x/fp16x graphs; int4 is the separate ortgenai-int4-cpu profile (#163).
+            ["quantized"] = Qwen35CapabilityStatus.Unsupported,
             // Proposed long-context fixture, protected bounds.
             ["long_context_1667_to_8192_tokens"] = Qwen35CapabilityStatus.Experimental,
             ["long_context_over_8192_tokens"] = Qwen35CapabilityStatus.Unsupported,

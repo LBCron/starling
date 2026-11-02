@@ -227,14 +227,14 @@ try {
         'Starlings.Generation.Abstractions'                  = @("Starlings.Tokenizers [$tokVersion]", 'Microsoft.Extensions.AI.Abstractions 10.10.1')
         'Starlings.Generation.OnnxGenAI'                     = @("Starlings.Generation.Abstractions [$aiVersion]", "Starlings.Tokenizers [$tokVersion]", "Microsoft.ML.OnnxRuntimeGenAI.Managed [$genaiVersion]")
         'Starlings.Models.Qwen35'                            = @("Starlings.Acquisition [$aiVersion]", "Starlings.Generation.Abstractions [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
-        'Starlings.Models.Qwen35.OnnxGenAI'                  = @("Starlings.Acquisition [$aiVersion]", "Starlings.Generation.OnnxGenAI [$aiVersion]", "Starlings.Models.Qwen35 [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
+        'Starlings.Models.Qwen35.OnnxGenAI'                  = @("Starlings.Acquisition [$aiVersion]", "Starlings.Generation.OnnxGenAI [$aiVersion]", "Starlings.Models.Abstractions [$aiVersion]", "Starlings.Models.Qwen35 [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
         'Starlings.Models.Qwen35.Extensions.AI'              = @("Starlings.Models.Qwen35.OnnxGenAI [$aiVersion]", 'Microsoft.Extensions.AI.Abstractions 10.10.1', 'Microsoft.Extensions.DependencyInjection.Abstractions 10.0.12')
-        'Starlings.Models.Kev'                               = @("Starlings.Tokenizers [$tokVersion]")
-        'Starlings.Models.Kev.Onnx'                          = @("Starlings.Acquisition [$aiVersion]", "Starlings.Models.Kev [$aiVersion]", "Starlings.Runtime.Onnx [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
-        'Starlings.Models.QwenChat'                          = @("Starlings.Generation.Abstractions [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
-        'Starlings.Models.QwenChat.OnnxGenAI'                = @("Starlings.Acquisition [$aiVersion]", "Starlings.Generation.OnnxGenAI [$aiVersion]", "Starlings.Models.QwenChat [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
+        'Starlings.Models.Kev'                               = @("Starlings.Acquisition [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
+        'Starlings.Models.Kev.Onnx'                          = @("Starlings.Acquisition [$aiVersion]", "Starlings.Models.Abstractions [$aiVersion]", "Starlings.Models.Kev [$aiVersion]", "Starlings.Runtime.Onnx [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
+        'Starlings.Models.QwenChat'                          = @("Starlings.Acquisition [$aiVersion]", "Starlings.Generation.Abstractions [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
+        'Starlings.Models.QwenChat.OnnxGenAI'                = @("Starlings.Acquisition [$aiVersion]", "Starlings.Generation.OnnxGenAI [$aiVersion]", "Starlings.Models.Abstractions [$aiVersion]", "Starlings.Models.QwenChat [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
         'Starlings.Models.Bert'                              = @("Starlings.Acquisition [$aiVersion]", "Starlings.Models.Abstractions [$aiVersion]", "Starlings.Runtime.Onnx [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
-        'Starlings.Models.Lfm3'                              = @("Starlings.Acquisition [$aiVersion]", "Starlings.Generation.Abstractions [$aiVersion]", "Starlings.Runtime.Onnx [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
+        'Starlings.Models.Lfm3'                              = @("Starlings.Acquisition [$aiVersion]", "Starlings.Generation.Abstractions [$aiVersion]", "Starlings.Models.Abstractions [$aiVersion]", "Starlings.Runtime.Onnx [$aiVersion]", "Starlings.Tokenizers [$tokVersion]")
     }
     Add-Type -AssemblyName System.IO.Compression.FileSystem
     function Read-Entry([string]$Zip, [string]$Name) {
@@ -283,6 +283,16 @@ try {
         if (($actual -join "`n") -ne ($expected -join "`n")) { Fail "${id}: dependencies`n$($actual -join "`n")`nexpected`n$($expected -join "`n")" }
         foreach ($f in "lib/net10.0/$id.dll", "lib/net10.0/$id.xml", 'README.md') {
             if ($contents -notcontains $f) { Fail "${id}: package lacks $f" }
+        }
+        # The definition packages carry their Hub checkpoint locks as JSON (a test keeps each equal to the C# lock).
+        $packedLocks = switch ($id) {
+            'Starlings.Models.Qwen35' { @('qwen3.5-0.8b') }
+            'Starlings.Models.QwenChat' { @('qwen3-0.6b', 'qwen2.5-0.5b-instruct') }
+            'Starlings.Models.Kev' { @('kev-0.8b', 'kev-4b', 'qwen3.5-0.8b-base', 'qwen3.5-4b-base') }
+            default { @() }
+        }
+        foreach ($l in $packedLocks) {
+            if ($contents -notcontains "locks/$l.checkpoint.lock.json") { Fail "${id}: package lacks locks/$l.checkpoint.lock.json" }
         }
         if ($contents | Where-Object { $_ -match '(?i)(^|/)(lib)?(avcodec|avformat|avutil|avfilter|avdevice|swscale|swresample|postproc)([-.][0-9]+)*\.(so|dll|dylib)(\.[0-9]+)*$' }) { Fail "${id}: package contains an FFmpeg library" }
         if ($contents | Where-Object { $_ -match '(?i)\.(onnx|safetensors|bin|gguf)$|tokenizer\.json$' }) { Fail "${id}: package contains model assets" }
@@ -364,7 +374,7 @@ try {
         if (($names | Where-Object { $_ -match '(?i)^skiasharp' }) -and $app -ne 'EmbeddingGemma2Search') { Fail "${app}: SkiaSharp restored outside the image sample" }
         if ($names | Where-Object { $_ -match '(?i)sdcb\.ffmpeg|ffmpeg\.(native|runtime|redist)|ffmpeg\.autogen|ffmpegcore|xabe\.ffmpeg' }) { Fail "${app}: FFmpeg bindings or binaries restored" }
         $want = switch ($app) {
-            'QwenChat' { 'Starlings.Tokenizers', 'Starlings.Acquisition', 'Microsoft.ML.OnnxRuntime', 'Microsoft.ML.OnnxRuntimeGenAI', 'Microsoft.ML.OnnxRuntimeGenAI.Managed', 'Starlings.Generation.Abstractions', 'Starlings.Generation.OnnxGenAI', 'Starlings.Models.Qwen35', 'Starlings.Models.Qwen35.OnnxGenAI', 'Starlings.Models.Qwen35.Extensions.AI' }
+            'QwenChat' { 'Starlings.Tokenizers', 'Starlings.Acquisition', 'Microsoft.ML.OnnxRuntime', 'Microsoft.ML.OnnxRuntimeGenAI', 'Microsoft.ML.OnnxRuntimeGenAI.Managed', 'Starlings.Generation.Abstractions', 'Starlings.Generation.OnnxGenAI', 'Starlings.Models.Qwen35', 'Starlings.Models.Qwen35.OnnxGenAI', 'Starlings.Models.Qwen35.Extensions.AI', 'Starlings.Models.Abstractions' }
             'Gliner2Ner' { 'Starlings.Tokenizers', 'Starlings.Acquisition', 'Starlings.Runtime.Onnx', 'Starlings.Models.Abstractions', 'Microsoft.ML.OnnxRuntime', 'Starlings.Models.Gliner2' }
             'EmbeddingGemma2Search' { 'Starlings.Tokenizers', 'Starlings.Acquisition', 'Starlings.Runtime.Onnx', 'Starlings.Models.Abstractions', 'Microsoft.ML.OnnxRuntime', 'Starlings.Models.EmbeddingGemma2', 'Starlings.Models.EmbeddingGemma2.Extensions.AI', 'Starlings.Models.EmbeddingGemma2.Imaging.SkiaSharp', 'Starlings.Models.EmbeddingGemma2.Video.FFmpeg' }
             'MlNetConsumer' { 'Starlings.Tokenizers', 'Starlings.Acquisition', 'Starlings.Runtime.Onnx', 'Starlings.Models.Abstractions', 'Microsoft.ML.OnnxRuntime', 'Starlings.Models.E5', 'Starlings.Models.E5.MLNet', 'Starlings.Models.EmbeddingGemma2', 'Starlings.Models.EmbeddingGemma2.MLNet', 'Microsoft.ML' }

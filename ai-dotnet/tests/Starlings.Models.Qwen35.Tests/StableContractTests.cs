@@ -40,6 +40,7 @@ public class StableContractTests
             ["reasoning_split"] = ["reasoning_split"],
             ["structured_output"] = ["structured_output", "extensions_ai.structured_output"],
             ["vision"] = ["vision", "extensions_ai.multimodal"],
+            ["quantized"] = ["quantized"],
             ["long_context_1667_to_8192_tokens"] = ["long_context.1667_to_8192_tokens"],
             ["long_context_over_8192_tokens"] = ["long_context.over_8192_tokens"],
         },
@@ -71,6 +72,7 @@ public class StableContractTests
             ["reasoning_split"] = ["reasoning_split"],
             ["structured_output"] = ["structured_output", "extensions_ai.structured_output"],
             ["vision"] = ["vision", "extensions_ai.multimodal"],
+            ["quantized"] = ["quantized"],
             ["long_context_1667_to_8192_tokens"] = ["long_context.1667_to_8192_tokens"],
             ["long_context_over_8192_tokens"] = ["long_context.over_8192_tokens"],
         },
@@ -102,6 +104,7 @@ public class StableContractTests
             ["reasoning_split"] = ["reasoning_split"],
             ["structured_output"] = ["structured_output", "extensions_ai.structured_output"],
             ["vision"] = ["vision", "extensions_ai.multimodal"],
+            ["quantized"] = ["quantized"],
             ["long_context_1667_to_8192_tokens"] = ["long_context.1667_to_8192_tokens"],
             ["long_context_over_8192_tokens"] = ["long_context.over_8192_tokens"],
         },
@@ -171,5 +174,12 @@ public class StableContractTests
         Assert.Equal(Qwen35CapabilityStatus.Experimental, Qwen35Capabilities.All["aot.cuda"]);
         Assert.Equal(stable.Compatibility["windows-x64 cpu"], Name(Qwen35Capabilities.All["windows"]));
         Assert.Equal(8192, Qwen35ChatModel.MaxContextTokens);
+    }
+
+    /// <summary>The generated capability records equal the registry manifests field for field and capability key for key.</summary>
+    [Fact]
+    public void CapabilityRecordsEqualTheManifests()
+    {
+        CapabilityRecordChecks.AssertRecordsEqualManifests(Qwen35Capabilities.ProfileCapabilities, Family);
     }
 }

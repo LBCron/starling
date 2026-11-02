@@ -226,6 +226,8 @@ capabilities:
   long_context_1667_to_8192_tokens: experimental
   # Above 8,192 tokens: rejected with GenerationContextLengthException (cached vs uncached exceeded the bound at 16,391 on CPU).
   long_context_over_8192_tokens: unsupported
+  # Quantized weights: not on this profile (int4 on CPU is the separate experimental profile ortgenai-int4-cpu).
+  quantized: unsupported
 
 compatibility:
   # Linux x64 CUDA on an NVIDIA GeForce RTX 3090 (Ampere): G1 to G3 on the release sets, G4 one-hour soak and G5

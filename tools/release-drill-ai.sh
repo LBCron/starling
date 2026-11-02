@@ -439,6 +439,7 @@ expect_deps() {
             echo "Starlings.Tokenizers [$tok_version]" ;;
         Starlings.Models.Qwen35.OnnxGenAI)
             echo "Starlings.Acquisition [$ai_version]"
+            echo "Starlings.Models.Abstractions [$ai_version]"
             echo "Starlings.Generation.OnnxGenAI [$ai_version]"
             echo "Starlings.Models.Qwen35 [$ai_version]"
             echo "Starlings.Tokenizers [$tok_version]" ;;
@@ -447,17 +448,21 @@ expect_deps() {
             echo "Microsoft.Extensions.AI.Abstractions 10.10.1"
             echo "Microsoft.Extensions.DependencyInjection.Abstractions 10.0.12" ;;
         Starlings.Models.Kev)
+            echo "Starlings.Acquisition [$ai_version]"
             echo "Starlings.Tokenizers [$tok_version]" ;;
         Starlings.Models.Kev.Onnx)
             echo "Starlings.Acquisition [$ai_version]"
+            echo "Starlings.Models.Abstractions [$ai_version]"
             echo "Starlings.Models.Kev [$ai_version]"
             echo "Starlings.Runtime.Onnx [$ai_version]"
             echo "Starlings.Tokenizers [$tok_version]" ;;
         Starlings.Models.QwenChat)
+            echo "Starlings.Acquisition [$ai_version]"
             echo "Starlings.Generation.Abstractions [$ai_version]"
             echo "Starlings.Tokenizers [$tok_version]" ;;
         Starlings.Models.QwenChat.OnnxGenAI)
             echo "Starlings.Acquisition [$ai_version]"
+            echo "Starlings.Models.Abstractions [$ai_version]"
             echo "Starlings.Generation.OnnxGenAI [$ai_version]"
             echo "Starlings.Models.QwenChat [$ai_version]"
             echo "Starlings.Tokenizers [$tok_version]" ;;
@@ -468,6 +473,7 @@ expect_deps() {
             echo "Starlings.Tokenizers [$tok_version]" ;;
         Starlings.Models.Lfm3)
             echo "Starlings.Acquisition [$ai_version]"
+            echo "Starlings.Models.Abstractions [$ai_version]"
             echo "Starlings.Generation.Abstractions [$ai_version]"
             echo "Starlings.Runtime.Onnx [$ai_version]"
             echo "Starlings.Tokenizers [$tok_version]" ;;
@@ -515,6 +521,16 @@ expected
 $expected"
     for f in "lib/net10.0/$id.dll" "lib/net10.0/$id.xml" README.md; do
         grep -qx "$f" <<<"$contents" || fail "$id: package lacks $f"
+    done
+    # The definition packages carry their Hub checkpoint locks as JSON (a test keeps each equal to the C# lock).
+    packed_locks=()
+    case "$id" in
+        Starlings.Models.Qwen35) packed_locks=(qwen3.5-0.8b) ;;
+        Starlings.Models.QwenChat) packed_locks=(qwen3-0.6b qwen2.5-0.5b-instruct) ;;
+        Starlings.Models.Kev) packed_locks=(kev-0.8b kev-4b qwen3.5-0.8b-base qwen3.5-4b-base) ;;
+    esac
+    for l in ${packed_locks[@]+"${packed_locks[@]}"}; do
+        grep -qx "locks/$l.checkpoint.lock.json" <<<"$contents" || fail "$id: package lacks locks/$l.checkpoint.lock.json"
     done
     # The build-time native package checks travel to every consumer (README, "Native package check").
     case "$id" in
@@ -656,20 +672,21 @@ for path in sys.argv[5:]:
     bindings = [n for n in names if re.match(r"(ffmpeg\.autogen|ffmpegcore|sdcb\.ffmpeg)/", n, re.I)]
     assert not bindings, f"FFmpeg bindings package restored in {app}: {bindings}"
     if app in ("QwenChat", "QwenChatCuda"):
-        # The pilot LLM: GenAI CPU natives (which bring ONNX Runtime CPU), or the CUDA natives; no Runtime.Onnx, e5 or
-        # GLiNER2 packages.
+        # The pilot LLM: GenAI CPU natives (which bring ONNX Runtime CPU), or the CUDA natives; Models.Abstractions (the
+        # capability records of Qwen35.OnnxGenAI), no Runtime.Onnx, e5 or GLiNER2 packages.
         common = (["Starlings.Tokenizers", "Starlings.Acquisition", "Microsoft.ML.OnnxRuntime",
                    "Microsoft.ML.OnnxRuntimeGenAI", "Microsoft.ML.OnnxRuntimeGenAI.Managed"] if app == "QwenChat"
                   else ["Starlings.Tokenizers", "Starlings.Acquisition", "Microsoft.ML.OnnxRuntime.Gpu",
                         "Microsoft.ML.OnnxRuntime.Gpu.Linux", "Microsoft.ML.OnnxRuntimeGenAI.Cuda",
                         "Microsoft.ML.OnnxRuntimeGenAI.Managed", "Microsoft.ML.OnnxRuntime.Managed"])
         models = ["Starlings.Generation.Abstractions", "Starlings.Generation.OnnxGenAI", "Starlings.Models.Qwen35",
-                  "Starlings.Models.Qwen35.OnnxGenAI", "Starlings.Models.Qwen35.Extensions.AI", "Microsoft.Extensions.AI.Abstractions"]
+                  "Starlings.Models.Qwen35.OnnxGenAI", "Starlings.Models.Qwen35.Extensions.AI", "Starlings.Models.Abstractions",
+                  "Microsoft.Extensions.AI.Abstractions"]
         # One Microsoft.Extensions.AI.Abstractions: Generation.Abstractions' 10.10.1 lifts the 9.8.0 that GenAI's managed binding asks for.
         mea = [n for n in names if n.split("/")[0] == "Microsoft.Extensions.AI.Abstractions"]
         assert mea == ["Microsoft.Extensions.AI.Abstractions/10.10.1"], f"Microsoft.Extensions.AI.Abstractions resolved as {mea}"
         unrelated = ("Starlings.Runtime.Onnx", "Starlings.Models.E5", "Starlings.Models.Gliner2",
-                     "Starlings.Models.EmbeddingGemma2", "Starlings.Models.Abstractions")
+                     "Starlings.Models.EmbeddingGemma2")
         assert not [n for n in names if n.split("/")[0] in unrelated], "unrelated packages restored"
     else:
         common = ["Starlings.Tokenizers", "Starlings.Acquisition", "Starlings.Runtime.Onnx", "Starlings.Models.Abstractions",

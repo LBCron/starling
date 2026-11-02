@@ -8,8 +8,9 @@ namespace Starlings.Models.Qwen35;
 public sealed record Qwen35ModelOptions
 {
     /// <summary>
-    /// Execution provider. CPU runs <see cref="Qwen35Variant.Fp32x"/>; CUDA runs <see cref="Qwen35Variant.Fp32x"/> (TF32
-    /// always off) or <see cref="Qwen35Variant.Fp16x"/>. A provider that cannot be used fails the load; no fallback.
+    /// Execution provider. CPU runs <see cref="Qwen35Variant.Fp32x"/> or <see cref="Qwen35Variant.Int4"/> (experimental);
+    /// CUDA runs <see cref="Qwen35Variant.Fp32x"/> (TF32 always off) or <see cref="Qwen35Variant.Fp16x"/>, and rejects
+    /// <see cref="Qwen35Variant.Int4"/>. A provider that cannot be used fails the load; no fallback.
     /// </summary>
     public GenAIExecutionProvider Provider { get; init; } = GenAIExecutionProvider.Cpu;
 

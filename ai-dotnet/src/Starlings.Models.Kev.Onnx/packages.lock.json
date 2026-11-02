@@ -22,9 +22,16 @@
       "starlings.acquisition": {
         "type": "Project"
       },
+      "starlings.models.abstractions": {
+        "type": "Project",
+        "dependencies": {
+          "Starlings.Acquisition": "[0.4.0, )"
+        }
+      },
       "starlings.models.kev": {
         "type": "Project",
         "dependencies": {
+          "Starlings.Acquisition": "[0.4.0, )",
           "Starlings.Tokenizers": "[0.3.4, 0.3.4]"
         }
       },
