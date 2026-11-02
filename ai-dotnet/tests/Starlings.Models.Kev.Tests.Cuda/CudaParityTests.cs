@@ -207,27 +207,35 @@ public sealed class CudaParityTests(ITestOutputHelper output)
         ];
         var expected = kev!.Decide(new KevRequest(text, questions), Ct);
         var state = kev.CreateState(text, Ct);
-        var results = new KevDecision[8];
-        Parallel.For(0, results.Length, new ParallelOptions { MaxDegreeOfParallelism = 4, CancellationToken = Ct }, i =>
-            results[i] = kev.Decide(state, questions, Ct));
-        Assert.All(results, r =>
+        try
         {
-            for (int i = 0; i < questions.Length; i++)
+            var results = new KevDecision[8];
+            Parallel.For(0, results.Length, new ParallelOptions { MaxDegreeOfParallelism = 4, CancellationToken = Ct }, i =>
+                results[i] = kev.Decide(state, questions, Ct));
+            Assert.All(results, r =>
             {
-                Assert.Equal(expected.Answers[i].ProbabilityList, r.Answers[i].ProbabilityList);
-            }
-        });
+                for (int i = 0; i < questions.Length; i++)
+                {
+                    Assert.Equal(expected.Answers[i].ProbabilityList, r.Answers[i].ProbabilityList);
+                }
+            });
 
-        using var cts = new CancellationTokenSource();
-        cts.Cancel();
-        Assert.ThrowsAny<OperationCanceledException>(() => kev.Decide(state, questions, cts.Token));
-        Assert.Equal(expected["urgent"].ProbabilityList, kev.Decide(state, [questions[1]], Ct)["urgent"].ProbabilityList);
+            using var cts = new CancellationTokenSource();
+            cts.Cancel();
+            Assert.ThrowsAny<OperationCanceledException>(() => kev.Decide(state, questions, cts.Token));
+            Assert.Equal(expected["urgent"].ProbabilityList, kev.Decide(state, [questions[1]], Ct)["urgent"].ProbabilityList);
 
-        state.Dispose();
-        state.Dispose();
-        Assert.True(state.IsDisposed);
-        Assert.Throws<ObjectDisposedException>(() => kev.Decide(state, questions, Ct));
-        output.WriteLine($"{results.Length} decisions from one state on 4 callers bit-identical to Decide(request) on the same session");
+            state.Dispose();
+            state.Dispose();
+            Assert.True(state.IsDisposed);
+            Assert.Throws<ObjectDisposedException>(() => kev.Decide(state, questions, Ct));
+            output.WriteLine($"{results.Length} decisions from one state on 4 callers bit-identical to Decide(request) on the same session");
+        }
+        finally
+        {
+            // A failed assertion must not leave the state's cache alive on the shared session; Dispose is idempotent.
+            state.Dispose();
+        }
     }
 
     /// <summary>
