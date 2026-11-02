@@ -527,7 +527,7 @@ One table per family, one column per profile. Rows are every capability any prof
 | long_context_1667_to_8192_tokens | experimental | experimental | experimental | untested |
 | long_context_over_8192_tokens | unsupported | unsupported | unsupported | unsupported |
 | max_new_tokens | supported | supported | supported | experimental |
-| quantized | unrecorded | unrecorded | unrecorded | experimental |
+| quantized | unsupported | unsupported | unsupported | experimental |
 | reasoning_split | unsupported | unsupported | unsupported | unsupported |
 | sampling_seeded | supported | supported | supported | experimental |
 | step0_logits | supported | supported | supported | experimental |
@@ -719,6 +719,7 @@ One table per family, one column per profile. Rows are every capability any prof
 - `qwen3.5-0.8b/ortgenai-int4-cpu`: Not hosted: users build the int4 graph from the pinned checkpoint with the bundle script (--variant int4) and open it with Qwen35ModelAssets.OpenDirectory.
 - `qwen3.5-0.8b/ortgenai-int4-cpu`: Fidelity to the checkpoint is not claimed: against the transformers fp32 reference the int4 build agrees on 1 of 22 greedy sequences (M0). No task-quality floor exists yet.
 - `qwen3.5-0.8b/ortgenai-int4-cpu`: The ONNX Runtime GenAI runtime version must equal the builder version that wrote the graph (0.17.1).
+- `qwen3.5-0.8b/ortgenai-int4-cpu`: Build in the environment of model-pipeline/reference/generation/requirements.txt. The same recipe gave a different model.onnx (766e49f3...) in M0 for an unexplained reason, and OpenDirectory checks SHA-256 by default, so a model.onnx digest mismatch means a different builder environment, not a corrupt download.
 - `whisper-large-v3-turbo/onnx-fp16-cpu`: No reference fixtures are adopted into protected/ and no gate has run; every capability is at most experimental.
 - `whisper-large-v3-turbo/onnx-fp16-cpu`: The evidence covers English only (eight LibriSpeech clips, 1.6 s to 59.1 s, asr-corpus-v3); other languages are untested.
 - `whisper-large-v3-turbo/onnx-fp16-cpu`: The fp16 encoder's hidden state drifts further from the fp32 reference on audio positions of 20 to 30 s clips (up to 0.498 in the #229 diagnostic, 0.110 on the 27.9 s composite of asr-corpus-v2, against 0.013 to 0.025 on 14 to 18 s clips), so hidden_max_abs was re-adopted at 0.6 (1.2 x the worst observed). Teacher-forced logits stay within logits_max_abs, and ids, transcripts and segment timestamps equal the reference.

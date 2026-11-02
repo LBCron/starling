@@ -220,6 +220,8 @@ capabilities:
   # Above 8,192 tokens: cached vs uncached reached 4.1e-4 at 16,391 tokens (> 2e-4); rejected with
   # GenerationContextLengthException.
   long_context_over_8192_tokens: unsupported
+  # Quantized weights: not on this profile (int4 on CPU is the separate experimental profile ortgenai-int4-cpu).
+  quantized: unsupported
 
 compatibility:
   # Linux x64 CPU: gates G0 to G7 (G1 to G4 on an Intel i7-5820K; G5 on a quiet RunPod host, both sides pinned to the

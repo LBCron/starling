@@ -88,8 +88,9 @@ behavior:
     pad_token_id_overlay: >-
       248319 (an embedding row the tokenizer never produces) instead of 248044, as on every Qwen3.5 profile.
     quality: >-
-      Not fidelity to the checkpoint: int4 RTN changes the step-0 argmax on 8 of 22 development prompts and the whole
-      greedy sequence on 21 of 22 against the transformers fp32 reference (M0). The claim is parity of the .NET runtime
+      Not fidelity to the checkpoint: against the transformers fp32 reference, int4 RTN changes the step-0 argmax on 9
+      of 22 development prompts and the whole greedy sequence on 21 of 22 (this profile's proposed fixture; M0 saw 8
+      and 21). The claim is parity of the .NET runtime
       with the upstream Python binding on the same int4 graph. Task quality (GSM8K) is not measured for this profile.
   unsupported:
     - the CUDA provider (the graph is built for CPU; Qwen35ChatModel.Load rejects it)
@@ -207,9 +208,11 @@ qualification:
   # Proposed, not protected: the same int4 graph through the upstream Python binding (onnxruntime-genai 0.17.1, CPU) on
   # the prompt ids of the accepted prompts-v1 fixture.
   fixtures: model-pipeline/proposed/qwen3.5-0.8b/ortgenai-int4-cpu
-  # No tolerances file exists for this profile: setting the int4 bounds and the task-quality floor is the maintainer's
-  # protected change (issue #163, step 2). Candidate values with their observations are in the evidence README.
-  tolerances: docs/evidence/qwen35-int4-cpu-2026-11-01/README.md
+  # The intended protected path. Neither this file nor its directory exists yet: setting the int4 bounds and the
+  # task-quality floor is the maintainer's protected change (issue #163, step 2). Until then `model-pipeline evaluate`
+  # cannot run on this profile (the fixtures above are proposed, not protected, and evaluate reads only protected
+  # evidence). Candidate values with their observations: docs/evidence/qwen35-int4-cpu-2026-11-01/README.md.
+  tolerances: model-pipeline/protected/qwen3.5-0.8b/ortgenai-int4-cpu/tolerances.yaml
   gates:
     G0: { status: not-run }
     G1: { status: not-run }
@@ -235,3 +238,7 @@ maintenance:
       22 greedy sequences (M0). No task-quality floor exists yet.
     - >-
       The ONNX Runtime GenAI runtime version must equal the builder version that wrote the graph (0.17.1).
+    - >-
+      Build in the environment of model-pipeline/reference/generation/requirements.txt. The same recipe gave a
+      different model.onnx (766e49f3...) in M0 for an unexplained reason, and OpenDirectory checks SHA-256 by default,
+      so a model.onnx digest mismatch means a different builder environment, not a corrupt download.

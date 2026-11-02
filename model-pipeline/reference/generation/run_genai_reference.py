@@ -118,6 +118,8 @@ def greedy(og, model, ids: list[int], max_new: int, chunk: int | None) -> dict:
     finally:
         del generator
         del params
+    if step0 is None:
+        raise RuntimeError("no step-0 token (max_new_tokens is 0 or the generator was done before step 0)")
     order = np.argsort(-step0, kind="stable")[:5]
     return {
         "output_ids": gen,

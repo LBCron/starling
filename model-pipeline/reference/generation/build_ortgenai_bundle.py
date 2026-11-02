@@ -8,8 +8,9 @@ Recipe (``docs/m0/generation-backend-check.md`` sections 2 and 9, kickoff "Gener
    fp32, and fp32 matches the reference on only 16 of 22 prompts.
 3. Run the onnxruntime-genai 0.17.1 builder (``rel-0.17.1`` head ``83de55a1f3886cddbb32a5517e26adb3f9d65159``) with
    ``--extra_options exclude_mtp=true``: variant ``fp32x`` is ``-p fp32 -e cpu`` (used on the CPU EP and, with
-   ``use_tf32=0``, on the CUDA EP; ``-p fp32 -e cuda`` builds a graph that fails, M0 failure 2) and ``fp16x`` is
-   ``-p fp16 -e cuda``.
+   ``use_tf32=0``, on the CUDA EP; ``-p fp32 -e cuda`` builds a graph that fails, M0 failure 2), ``fp16x`` is
+   ``-p fp16 -e cuda`` and ``int4`` is ``-p int4 -e cpu`` (RTN, block 32, accuracy level 4; CPU EP only, the
+   Experimental profile ``qwen3.5-0.8b/ortgenai-int4-cpu``).
 4. Lay the files out as the C# asset lock expects (``Qwen35ModelAssets``), relative to the snapshot directory:
    ``ortgenai-<variant>/{genai_config.json,model.onnx,model.onnx.data}``, ``transformers-5.18.0/tokenizer.json``
    (the builder's copy of the transformers 5.18.0 runtime tokenizer, equal to the ``qwen35-bpe-chat`` profile asset)
