@@ -223,6 +223,8 @@ public static class Qwen35Capabilities
             ["reasoning_split"] = Qwen35CapabilityStatus.Unsupported,
             ["structured_output"] = Qwen35CapabilityStatus.Unsupported,
             ["vision"] = Qwen35CapabilityStatus.Unsupported,
+            // Unquantized fp32x/fp16x graphs; int4 is the separate ortgenai-int4-cpu profile (#163).
+            ["quantized"] = Qwen35CapabilityStatus.Unsupported,
             // Proposed long-context fixture, protected bounds.
             ["long_context_1667_to_8192_tokens"] = Qwen35CapabilityStatus.Experimental,
             ["long_context_over_8192_tokens"] = Qwen35CapabilityStatus.Unsupported,
