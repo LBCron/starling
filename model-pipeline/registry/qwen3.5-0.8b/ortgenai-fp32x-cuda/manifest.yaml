@@ -53,6 +53,14 @@ origin:
     - path: ortgenai-fp32x/model.onnx.data
       sha256: "129c58a320b6de7192713cc9c7e4ba744dcf7fabb0f57c6535021b45b3dc5143"
       size: 3077177344
+    # The guidance files of the variant directory (hosting revision r2): a copy of transformers-5.18.0/tokenizer.json
+    # and the checkpoint's tokenizer_config.json, unchanged. ONNX Runtime GenAI's guided decoding reads both.
+    - path: ortgenai-fp32x/tokenizer.json
+      sha256: "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+      size: 19989339
+    - path: ortgenai-fp32x/tokenizer_config.json
+      sha256: "49e2b6e395f959f077f1e992b338919c0d4a9732fc6e613995e06557f843500c"
+      size: 16709
   attribution: >-
     Qwen3.5-0.8B by the Qwen team, Alibaba Cloud (Qwen/Qwen3.5-0.8B, Apache-2.0). ONNX Runtime GenAI model builder by
     Microsoft (MIT).
@@ -162,8 +170,8 @@ execution:
       # transformers-5.18.0/tokenizer.json, ortgenai-*/): <source_base><path>. Public repository since
       # 2026-10-14 (private from 2026-10-10); a token, if set, is sent only to https://huggingface.co. The digests, not the address, pin the bytes.
       repository: https://huggingface.co/Starlinghq/qwen3.5-0.8b-ortgenai
-      revision: "95a690c1774f144957cb7b76986a9126e8b1bb5f"
-      source_base: https://huggingface.co/Starlinghq/qwen3.5-0.8b-ortgenai/resolve/95a690c1774f144957cb7b76986a9126e8b1bb5f/
+      revision: "22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45"
+      source_base: https://huggingface.co/Starlinghq/qwen3.5-0.8b-ortgenai/resolve/22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45/
       source_status: public
     inputs:
       - { name: input_ids, type: int64, shape: [batch, sequence] }
@@ -218,7 +226,10 @@ capabilities:
   # UseFunctionInvocation loop completes (docs/evidence/g7-integration-2026-10-14/qwen-cuda-tool-calling.log).
   tool_calling: experimental
   reasoning_split: unsupported
-  structured_output: unsupported
+  # structured_output: guided decoding (llguidance) from the downloaded hosting revision r2 files: a regex, a JSON schema
+  # and the required tool-call grammar followed on fp32x CUDA (Fp32xCudaGuidanceTests/Fp16xCudaGuidanceTests) on an RTX 4060 Ti,
+  # not the RTX 3090 of the Stable CUDA record; no per-release GPU regression. docs/evidence/qwen35-hosting-r2-2026-11-02/README.md
+  structured_output: experimental
   vision: unsupported
   # Long context (capability closure 2026-10-14, docs/evidence/capability-closure-2026-10-14/README.md): Fp32xCudaTests on prompts of 4,112 and
   # 8,213 tokens (proposed fixture model-pipeline/proposed/qwen3.5-0.8b/long-context): greedy ids exact, step-0 and

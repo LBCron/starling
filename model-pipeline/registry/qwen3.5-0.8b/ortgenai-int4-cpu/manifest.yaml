@@ -6,9 +6,9 @@
 # the M0 build. A quantized graph cannot match the transformers fp32 reference (M0: 1 of 22 sequences, 14 of 22 step-0
 # argmax), so this profile's reference is the same graph run by the upstream Python binding
 # (model-pipeline/reference/generation/run_genai_reference.py); the fixture is proposed, no tolerance is set.
-# NOT HOSTED: the graph files have no download location (hosting is out of scope for this step). Build them locally into
-# the snapshot layout and open them with Qwen35ModelAssets.OpenDirectory; Qwen35ModelAssets.DownloadAsync rejects the
-# variant. Evidence: docs/evidence/qwen35-int4-cpu-2026-11-01/README.md.
+# Hosted since hosting revision r2 (execution.graph.hosting): Qwen35ModelAssets.DownloadAsync fetches the variant; a
+# local build into the snapshot layout (same digests) opens with Qwen35ModelAssets.OpenDirectory. Evidence:
+# docs/evidence/qwen35-int4-cpu-2026-11-01/README.md and docs/evidence/qwen35-hosting-r2-2026-11-02/README.md.
 schema_version: 1
 id: qwen3.5-0.8b/ortgenai-int4-cpu
 # Experimental: .NET equal to the Python binding on the proposed int4 fixture (22/22 greedy sequences, step-0
@@ -41,7 +41,7 @@ origin:
     - path: LICENSE
       sha256: "bbedc3fda3305820b977265f01b8619d87570a6739de3a5582c3464840f1e57a"
       size: 11544
-    # Not in the Hub repository: Starling's local int4 build of the weights above (execution.graph) and the
+    # Not in the Hub repository: Starling's int4 build of the weights above (execution.graph) and the
     # transformers 5.18.0 runtime tokenizer the builder writes (processing.tokenizer). genai_config.json is
     # byte-identical to the fp32x build's.
     - path: transformers-5.18.0/tokenizer.json
@@ -56,6 +56,14 @@ origin:
     - path: ortgenai-int4/model.onnx.data
       sha256: "709e08797497f609547f7aef1387cfb35bd0deb3f4039acf001f0680b23f9745"
       size: 541523968
+    # The guidance files of the variant directory (hosting revision r2): a copy of transformers-5.18.0/tokenizer.json
+    # and the checkpoint's tokenizer_config.json, unchanged. ONNX Runtime GenAI's guided decoding reads both.
+    - path: ortgenai-int4/tokenizer.json
+      sha256: "a5cd9732badce41de57e6efce8302930ded1c1188c5f81feb2bd6c24c4a1941f"
+      size: 19989339
+    - path: ortgenai-int4/tokenizer_config.json
+      sha256: "49e2b6e395f959f077f1e992b338919c0d4a9732fc6e613995e06557f843500c"
+      size: 16709
   attribution: >-
     Qwen3.5-0.8B by the Qwen team, Alibaba Cloud (Qwen/Qwen3.5-0.8B, Apache-2.0). ONNX Runtime GenAI model builder by
     Microsoft (MIT).
@@ -64,13 +72,13 @@ rights:
   code_license: MIT
   weights_license: Apache-2.0
   tokenizer_terms: Apache-2.0
-  # blocked: no public int4 bundle exists (users build it from the downloadable checkpoint).
-  redistribution: blocked
+  redistribution: download
   notes: >-
     Weights and tokenizer: Apache-2.0 (card front matter and the LICENSE file at the pinned commit). The int4 ONNX files
-    are a conversion of those weights, which Apache-2.0 would permit redistributing with the license and attribution,
-    but Starling does not redistribute them: the user builds them from the pinned checkpoint with the bundle script.
-    Hosting them (as the fp32x and fp16x files are, in Starlinghq/qwen3.5-0.8b-ortgenai) is a separate decision.
+    are a quantized conversion of those weights; Apache-2.0 permits redistributing them with the license and
+    attribution. Hosting: every file in the snapshot layout, with README, NOTICE (which states the int4 quantization),
+    LICENSE and SHA256SUMS, in the public Hugging Face repository Starlinghq/qwen3.5-0.8b-ortgenai since hosting
+    revision r2 (execution.graph.hosting); downloading needs no token.
 
 behavior:
   tasks: [generation]
@@ -94,7 +102,6 @@ behavior:
       with the upstream Python binding on the same int4 graph. Task quality (GSM8K) is not measured for this profile.
   unsupported:
     - the CUDA provider (the graph is built for CPU; Qwen35ChatModel.Load rejects it)
-    - downloading the graph (not hosted; build locally)
     - tool definitions on this variant are untested (the template path is shared with fp32x)
     - image and video content (the checkpoint's vision tower is not built)
     - batching several prompts in one generator
@@ -139,7 +146,17 @@ execution:
     # declares float32 (sha256 295154cd6039372b0b16a30336b11deea6591320bf21ee4dc053a305684da311), -p int4 -e cpu,
     # --extra_options exclude_mtp=true: 151 MatMulNBits (4 bits, block 32, accuracy level 4) and a
     # GatherBlockQuantized embedding. Two builds on 2026-11-01 gave the same digests; model.onnx.data equals the M0
-    # build, model.onnx differs from M0's recorded 766e49f3... (evidence README section 2). No hosting.
+    # build, model.onnx differs from M0's recorded 766e49f3... (evidence README section 2). A rebuild on 2026-11-02
+    # gave the same digests, and those files were uploaded unchanged.
+    hosting:
+      # Download location of every file in the origin.files lock that Qwen35ModelAssets uses (chat_template.jinja,
+      # transformers-5.18.0/tokenizer.json, ortgenai-int4/): <source_base><path>. Hosting revision r2 added the int4
+      # variant (r1, 95a690c1774f144957cb7b76986a9126e8b1bb5f, held fp32x and fp16x only). The digests, not the address,
+      # pin the bytes.
+      repository: https://huggingface.co/Starlinghq/qwen3.5-0.8b-ortgenai
+      revision: "22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45"
+      source_base: https://huggingface.co/Starlinghq/qwen3.5-0.8b-ortgenai/resolve/22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45/
+      source_status: public
     inputs:
       - { name: input_ids, type: int64, shape: [batch, sequence] }
       - { name: attention_mask, type: int64, shape: [batch, total_sequence] }
@@ -180,7 +197,7 @@ capabilities:
   conversation_state_reuse: unsupported
   tool_calling: untested
   reasoning_split: unsupported
-  structured_output: unsupported
+  structured_output: untested  # guidance files hosted since r2; guided decoding was run on fp32x only
   vision: unsupported
   long_context_1667_to_8192_tokens: untested
   long_context_over_8192_tokens: unsupported
@@ -230,9 +247,6 @@ maintenance:
   last_checked: 2026-11-01
   review_date: 2027-02-01
   known_issues:
-    - >-
-      Not hosted: users build the int4 graph from the pinned checkpoint with the bundle script (--variant int4) and
-      open it with Qwen35ModelAssets.OpenDirectory.
     - >-
       Fidelity to the checkpoint is not claimed: against the transformers fp32 reference the int4 build agrees on 1 of
       22 greedy sequences (M0). No task-quality floor exists yet.

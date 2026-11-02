@@ -18,15 +18,18 @@ public enum Qwen35Variant
     /// <summary>
     /// int4 graph built for the CPU provider (<c>-p int4 -e cpu</c>: RTN, block 32, accuracy level 4); CPU only.
     /// Experimental (profile <c>qwen3.5-0.8b/ortgenai-int4-cpu</c>): compared with the same graph run by the upstream
-    /// Python binding, not with the fp32 reference. Not hosted: build it locally with the bundle script
-    /// (<c>--variant int4</c>) and open it with <see cref="Qwen35ModelAssets.OpenDirectory"/>.
+    /// Python binding, not with the fp32 reference. Hosted since hosting revision r2 (<see cref="Qwen35ModelAssets.DownloadAsync"/>),
+    /// or build it locally with the bundle script (<c>--variant int4</c>) and open it with <see cref="Qwen35ModelAssets.OpenDirectory"/>.
     /// </summary>
     Int4,
 }
 
 /// <summary>Verified local paths of one variant's runtime files.</summary>
 /// <param name="Variant">The variant.</param>
-/// <param name="ModelDirectory">Directory with <c>genai_config.json</c>, <c>model.onnx</c> and <c>model.onnx.data</c>.</param>
+/// <param name="ModelDirectory">
+/// Directory with <c>genai_config.json</c>, <c>model.onnx</c>, <c>model.onnx.data</c>, and the <c>tokenizer.json</c> and
+/// <c>tokenizer_config.json</c> that ONNX Runtime GenAI's guided decoding reads.
+/// </param>
 /// <param name="TokenizerPath"><c>tokenizer.json</c> for the owned tokenizer (profile <c>qwen35-bpe-chat</c>).</param>
 /// <param name="ChatTemplatePath">The pinned <c>chat_template.jinja</c> (checked against <see cref="Qwen35ChatTemplate.TemplateSha256"/> at load).</param>
 /// <param name="Snapshot">The verified snapshot.</param>
@@ -47,8 +50,8 @@ public sealed record Qwen35ModelFiles(Qwen35Variant Variant, string ModelDirecto
 }
 
 /// <summary>
-/// The immutable asset locks of the profiles <c>qwen3.5-0.8b/ortgenai-fp32x</c> and <c>qwen3.5-0.8b/ortgenai-fp16x</c>,
-/// and explicit acquisition of those files. The Hub checkpoint they are built from has its own lock,
+/// The immutable asset locks of the profiles <c>qwen3.5-0.8b/ortgenai-fp32x</c>, <c>qwen3.5-0.8b/ortgenai-fp16x</c> and
+/// <c>qwen3.5-0.8b/ortgenai-int4-cpu</c>, and explicit acquisition of those files. The Hub checkpoint they are built from has its own lock,
 /// <see cref="Qwen35Checkpoint.Lock"/>. The model never downloads; call <see cref="DownloadAsync"/> once (setup
 /// step), then <see cref="OpenLocal"/> or <see cref="OpenDirectory"/> at startup.
 /// </summary>
@@ -59,6 +62,12 @@ public sealed record Qwen35ModelFiles(Qwen35Variant Variant, string ModelDirecto
 /// transformers 5.18.0 runtime tokenizer, equal to the <c>qwen35-bpe-chat</c> profile asset) are Starling's
 /// reproducible build of the pinned commit (<c>model-pipeline/reference/generation/build_ortgenai_bundle.py</c>), under
 /// the license of the weights (Apache-2.0, attribution in the package README).
+/// </para>
+/// <para>
+/// Each variant directory also holds the two files ONNX Runtime GenAI's guided decoding (llguidance) opens from the model
+/// directory: <see cref="VariantTokenizerFile"/> (a copy of <see cref="TokenizerFile"/>) and
+/// <see cref="VariantTokenizerConfigFile"/> (the checkpoint's <c>tokenizer_config.json</c> at <see cref="Revision"/>,
+/// unchanged; <see cref="Qwen35Checkpoint.Lock"/> pins the same digest).
 /// </para>
 /// <para>
 /// Every file, including the upstream <c>chat_template.jinja</c>, is downloaded from one place: the Hugging Face
@@ -94,11 +103,23 @@ public static class Qwen35ModelAssets
     /// <summary>Path of the chat template in the snapshot directory (a Hub file).</summary>
     public const string ChatTemplateFile = "chat_template.jinja";
 
-    /// <summary>Hugging Face repository that hosts every file of both locks, in the snapshot layout (public).</summary>
+    /// <summary>Name of the copy of <see cref="TokenizerFile"/> in each variant directory (read by guided decoding).</summary>
+    public const string VariantTokenizerFile = "tokenizer.json";
+
+    /// <summary>Name of the checkpoint's <c>tokenizer_config.json</c> in each variant directory (read by guided decoding).</summary>
+    public const string VariantTokenizerConfigFile = "tokenizer_config.json";
+
+    /// <summary>SHA-256 of <see cref="VariantTokenizerConfigFile"/>: the checkpoint's file at <see cref="Revision"/> (as in <see cref="Qwen35Checkpoint.Lock"/>).</summary>
+    public const string TokenizerConfigSha256 = "49e2b6e395f959f077f1e992b338919c0d4a9732fc6e613995e06557f843500c";
+
+    /// <summary>Hugging Face repository that hosts every file of the three locks, in the snapshot layout (public).</summary>
     public const string HostingRepository = "Starlinghq/qwen3.5-0.8b-ortgenai";
 
-    /// <summary>Pinned commit of <see cref="HostingRepository"/>.</summary>
-    public const string HostingRevision = "95a690c1774f144957cb7b76986a9126e8b1bb5f";
+    /// <summary>
+    /// Pinned commit of <see cref="HostingRepository"/>: r2, which adds the int4 variant and the guidance files of each
+    /// variant directory to r1 (<c>95a690c1774f144957cb7b76986a9126e8b1bb5f</c>) and keeps every r1 file.
+    /// </summary>
+    public const string HostingRevision = "22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45";
 
     /// <summary>Base address of the files: <c>resolve</c> at <see cref="HostingRevision"/>; a file's source is this plus its snapshot path.</summary>
     public const string HostingBaseUrl = "https://huggingface.co/" + HostingRepository + "/resolve/" + HostingRevision + "/";
@@ -112,14 +133,14 @@ public static class Qwen35ModelAssets
 
     private const long TokenizerSize = 19_989_339;
     private const long ChatTemplateSize = 7_755;
+    private const long TokenizerConfigSize = 16_709;
 
     private static readonly ModelAssetLock Fp32xLock = Build(Qwen35Variant.Fp32x,
         ("genai_config.json", 1_935, "e7e1957b2544fdad6170a9cc81cbbb1b88c8819b7016a609170ad7cbebba81ba"),
         ("model.onnx", 308_301, "4a052c4a1444c9437e00ffd48baecb0838d3d9ca1703c3153dbd46e945e84703"),
         ("model.onnx.data", 3_077_177_344, "129c58a320b6de7192713cc9c7e4ba744dcf7fabb0f57c6535021b45b3dc5143"));
 
-    // Not hosted: the graph files have no download source (DownloadAsync rejects the variant); the shared files do.
-    private static readonly ModelAssetLock Int4Lock = Build(Qwen35Variant.Int4, hosted: false,
+    private static readonly ModelAssetLock Int4Lock = Build(Qwen35Variant.Int4,
         ("genai_config.json", 1_935, "e7e1957b2544fdad6170a9cc81cbbb1b88c8819b7016a609170ad7cbebba81ba"),
         ("model.onnx", 364_388, "a41f341f106a1bb5b50eb67ca824cd9c324705141d88b027de0888f140e39cf7"),
         ("model.onnx.data", 541_523_968, "709e08797497f609547f7aef1387cfb35bd0deb3f4039acf001f0680b23f9745"));
@@ -138,7 +159,7 @@ public static class Qwen35ModelAssets
         _ => throw new ArgumentOutOfRangeException(nameof(variant), variant, "Unknown variant."),
     };
 
-    /// <summary>The lock of one variant: its three graph files, the tokenizer and the chat template.</summary>
+    /// <summary>The lock of one variant: the chat template, the tokenizer, and its variant directory (three graph files and the two guidance files).</summary>
     public static ModelAssetLock GetLock(Qwen35Variant variant) => variant switch
     {
         Qwen35Variant.Fp32x => Fp32xLock,
@@ -151,13 +172,6 @@ public static class Qwen35ModelAssets
     public static async Task<Qwen35ModelFiles> DownloadAsync(
         Qwen35Variant variant, ModelAcquisitionOptions? options = null, IProgress<ModelAssetProgress>? progress = null, CancellationToken cancellationToken = default)
     {
-        if (!IsHosted(variant))
-        {
-            throw new NotSupportedException(
-                $"The {VariantDirectory(variant)} variant is not hosted. Build it with model-pipeline/reference/generation/build_ortgenai_bundle.py " +
-                "--variant int4 into a snapshot directory and open it with OpenDirectory (the lock's digests must match).");
-        }
-
         using var store = new ModelAssetStore(options);
         return Qwen35ModelFiles.From(variant, await store.DownloadAsync(GetLock(variant), progress, cancellationToken).ConfigureAwait(false));
     }
@@ -173,22 +187,19 @@ public static class Qwen35ModelAssets
 
     /// <summary>
     /// Verifies an existing directory in the snapshot layout (<c>chat_template.jinja</c>, <see cref="TokenizerFile"/>,
-    /// <c>ortgenai-&lt;variant&gt;/</c>) against the variant's lock. Never downloads.
+    /// <c>ortgenai-&lt;variant&gt;/</c> with the guidance files) against the variant's lock. Never downloads.
     /// </summary>
     public static Qwen35ModelFiles OpenDirectory(string directory, Qwen35Variant variant, CacheVerification verification = CacheVerification.Sha256) =>
         Qwen35ModelFiles.From(variant, ModelAssetStore.VerifyDirectory(GetLock(variant), directory, verification));
 
-    /// <summary>True when <see cref="HostingRepository"/> serves the variant's graph files (fp32x, fp16x); int4 is local only.</summary>
-    public static bool IsHosted(Qwen35Variant variant) => variant is Qwen35Variant.Fp32x or Qwen35Variant.Fp16x;
+    /// <summary>True when <see cref="HostingRepository"/> at <see cref="HostingRevision"/> serves the variant's files: every variant since r2.</summary>
+    public static bool IsHosted(Qwen35Variant variant) => variant is Qwen35Variant.Fp32x or Qwen35Variant.Fp16x or Qwen35Variant.Int4;
 
     private static Uri HostedSource(string path) => new(HostingBaseUrl + path);
 
     internal static string GraphFile(Qwen35Variant variant, string name) => $"{VariantDirectory(variant)}/{name}";
 
-    private static ModelAssetLock Build(Qwen35Variant variant, params (string Name, long Size, string Sha256)[] graph) =>
-        Build(variant, hosted: true, graph);
-
-    private static ModelAssetLock Build(Qwen35Variant variant, bool hosted, params (string Name, long Size, string Sha256)[] graph)
+    private static ModelAssetLock Build(Qwen35Variant variant, params (string Name, long Size, string Sha256)[] graph)
     {
         string dir = VariantDirectory(variant);
         var files = new List<ModelAssetFile>
@@ -198,8 +209,11 @@ public static class Qwen35ModelAssets
         };
         foreach (var (name, size, sha) in graph)
         {
-            files.Add(new ModelAssetFile($"{dir}/{name}", size, sha, hosted ? HostedSource($"{dir}/{name}") : null));
+            files.Add(new ModelAssetFile($"{dir}/{name}", size, sha, HostedSource($"{dir}/{name}")));
         }
+
+        files.Add(new ModelAssetFile($"{dir}/{VariantTokenizerFile}", TokenizerSize, TokenizerSha256, HostedSource($"{dir}/{VariantTokenizerFile}")));
+        files.Add(new ModelAssetFile($"{dir}/{VariantTokenizerConfigFile}", TokenizerConfigSize, TokenizerConfigSha256, HostedSource($"{dir}/{VariantTokenizerConfigFile}")));
 
         return new ModelAssetLock($"qwen3.5-0.8b-{dir}", Repository, Revision, files);
     }

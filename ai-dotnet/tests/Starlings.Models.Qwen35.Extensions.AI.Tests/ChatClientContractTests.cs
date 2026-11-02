@@ -787,8 +787,9 @@ public sealed class ChatClientContractTests
         Assert.Equal(Qwen35CapabilityStatus.Supported, all["extensions_ai.cancellation"]);
         Assert.Equal(Qwen35CapabilityStatus.Experimental, all["extensions_ai.tools"]);
         Assert.Equal(Qwen35CapabilityStatus.Experimental, all["extensions_ai.function_invocation"]);
-        Assert.Equal(Qwen35CapabilityStatus.Unsupported, all["extensions_ai.tool_mode.required"]);
-        Assert.Equal(Qwen35CapabilityStatus.Unsupported, all["extensions_ai.structured_output"]);
+        // Guided: the hosted variant directories carry the guidance files since hosting revision r2.
+        Assert.Equal(Qwen35CapabilityStatus.Experimental, all["extensions_ai.tool_mode.required"]);
+        Assert.Equal(Qwen35CapabilityStatus.Experimental, all["extensions_ai.structured_output"]);
         Assert.Equal(Qwen35CapabilityStatus.Unsupported, all["extensions_ai.multimodal"]);
         Assert.Equal(Qwen35CapabilityStatus.Unsupported, all["extensions_ai.unseeded_sampling"]);
         Assert.False(all.ContainsKey("extensions_ai"));
