@@ -1,0 +1,16 @@
+# 2026-11-02T16:07:37Z STARLING_MODELS=~/.cache/starling-r3-qwen35-hosting/cache-r2 (files downloaded from Starlinghq/qwen3.5-0.8b-ortgenai@22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45); commit 7304bd2bb0a714eb88542e627bc8889b4428dbb0; STARLING_CUDA_TESTS=1 CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=1; GPU: NVIDIA GeForce RTX 4060 Ti, 00000000:04:00.0, 615.78.08
+xUnit.net v3 In-Process Runner v4.0.1+8ed8aa354c (64-bit .NET 10.0.14)
+  Discovering: Starlings.Models.Qwen35.Tests.Cuda
+  Discovered:  Starlings.Models.Qwen35.Tests.Cuda
+  Starting:    Starlings.Models.Qwen35.Tests.Cuda
+    Starlings.Models.Qwen35.Tests.Cuda.Fp16xCudaGuidanceTests.AJsonSchemaIsFollowed [OUTPUT] json_schema: 19 tokens, Stop: \{\n\ \ "city":\ "Paris",\n\ \ "country":\ "France"\n}
+    Starlings.Models.Qwen35.Tests.Cuda.Fp16xCudaGuidanceTests.ARegexIsFollowed [OUTPUT] regex: 6 tokens, Stop: FORCED-101
+    Starlings.Models.Qwen35.Tests.Cuda.Fp16xCudaGuidanceTests.TheRequiredToolGrammarYieldsOneParsedCall(fastForward: False) [OUTPUT] tool grammar: 40 tokens, Stop: <tool_call>\n<function=get_weather>\n<parameter=city>\nPorto\n</parameter>\n<parameter=units>\ncelsius\n</parameter>\n</function>\n</tool_call>
+    Starlings.Models.Qwen35.Tests.Cuda.Fp16xCudaGuidanceTests.TheRequiredToolGrammarYieldsOneParsedCall(fastForward: True) [OUTPUT] tool grammar, fast-forward: 40 tokens, Stop: <tool_call>\n<function=get_weather>\n<parameter=city>\nPorto\n</parameter>\n<parameter=units>\ncelsius\n</parameter>\n</function>\n</tool_call>
+    Starlings.Models.Qwen35.Tests.Cuda.Fp32xCudaGuidanceTests.AJsonSchemaIsFollowed [OUTPUT] json_schema: 19 tokens, Stop: \{\n\ \ "city":\ "Paris",\n\ \ "country":\ "France"\n}
+    Starlings.Models.Qwen35.Tests.Cuda.Fp32xCudaGuidanceTests.ARegexIsFollowed [OUTPUT] regex: 6 tokens, Stop: FORCED-101
+    Starlings.Models.Qwen35.Tests.Cuda.Fp32xCudaGuidanceTests.TheRequiredToolGrammarYieldsOneParsedCall(fastForward: False) [OUTPUT] tool grammar: 40 tokens, Stop: <tool_call>\n<function=get_weather>\n<parameter=city>\nPorto\n</parameter>\n<parameter=units>\ncelsius\n</parameter>\n</function>\n</tool_call>
+    Starlings.Models.Qwen35.Tests.Cuda.Fp32xCudaGuidanceTests.TheRequiredToolGrammarYieldsOneParsedCall(fastForward: True) [OUTPUT] tool grammar, fast-forward: 40 tokens, Stop: <tool_call>\n<function=get_weather>\n<parameter=city>\nPorto\n</parameter>\n<parameter=units>\ncelsius\n</parameter>\n</function>\n</tool_call>
+  Finished:    Starlings.Models.Qwen35.Tests.Cuda (ID = '7f6b48834baa83bad485586b4404d377d45c3b6ded378062943a7eb3cd9c1430')
+=== TEST EXECUTION SUMMARY ===
+   Starlings.Models.Qwen35.Tests.Cuda  Total: 10, Errors: 0, Failed: 0, Skipped: 0, Not Run: 0, Time: 24.982s

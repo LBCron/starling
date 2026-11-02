@@ -89,8 +89,8 @@ public sealed record Qwen35ChatOptions
     /// <see cref="Qwen35ToolGrammar.Build(IReadOnlyList{Qwen35Tool}, Qwen35ToolGrammarOptions?)"/> for a required tool
     /// call or <see cref="GenerationGuidance.JsonSchema"/> for JSON output; null (default) for unconstrained decoding,
     /// which this option leaves unchanged. Needs <c>tokenizer.json</c> and <c>tokenizer_config.json</c> in the variant's
-    /// model directory, which the published bundle does not have (<c>Qwen35ModelInfo.GuidanceMissingFiles</c>); a
-    /// guided request on such a directory fails with <see cref="NotSupportedException"/>. With
+    /// model directory, which the hosted bundle carries since hosting revision r2 (<c>Qwen35ModelInfo.GuidanceMissingFiles</c>); a
+    /// guided request on a directory without them fails with <see cref="NotSupportedException"/>. With
     /// <see cref="EnableThinking"/>, the constraint applies from the first completion token, which is reasoning text.
     /// </summary>
     public GenerationGuidance? Guidance { get; init; }

@@ -14,7 +14,10 @@ Recipe (``docs/m0/generation-backend-check.md`` sections 2 and 9, kickoff "Gener
 4. Lay the files out as the C# asset lock expects (``Qwen35ModelAssets``), relative to the snapshot directory:
    ``ortgenai-<variant>/{genai_config.json,model.onnx,model.onnx.data}``, ``transformers-5.18.0/tokenizer.json``
    (the builder's copy of the transformers 5.18.0 runtime tokenizer, equal to the ``qwen35-bpe-chat`` profile asset)
-   and ``chat_template.jinja`` (the snapshot's file; the C# renderer was ported from it).
+   and ``chat_template.jinja`` (the snapshot's file; the C# renderer was ported from it). Each variant directory also
+   gets the two files ONNX Runtime GenAI's guided decoding reads from the model directory (hosting revision r2):
+   ``tokenizer.json`` (a copy of ``transformers-5.18.0/tokenizer.json``) and ``tokenizer_config.json`` (the snapshot's
+   file, unchanged; not the builder's rewritten copy).
 5. Hash every output and compare with the pinned digests below; exit 1 on any difference. The builder output is
    used unmodified: runtime settings (pad id, provider, TF32) are overlays applied by the C# runtime, never edits.
 
@@ -48,6 +51,7 @@ SNAPSHOT = {
     "model.safetensors-00001-of-00001.safetensors": "04b1c301231dd422b8860db31311ab2721511346a32cb1e079c4c4e5f1fe4696",
     "model.safetensors.index.json": "d8a08838a613b025eb7952ed9db11696213e57e76a375661ef5c12f9dd5dcf4e",
     "chat_template.jinja": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80",
+    "tokenizer_config.json": "49e2b6e395f959f077f1e992b338919c0d4a9732fc6e613995e06557f843500c",
 }
 # config.json after the float32 overlay (step 2), serialized as below.
 FLOAT32_CONFIG_SHA256 = "295154cd6039372b0b16a30336b11deea6591320bf21ee4dc053a305684da311"
@@ -98,6 +102,11 @@ SHARED = {
     "chat_template.jinja": ("273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80", 7755),
 }
 GRAPH_FILES = ("genai_config.json", "model.onnx", "model.onnx.data")
+# Guidance files of each variant directory (bundle-relative name -> (sha256, size)).
+GUIDANCE = {
+    "tokenizer.json": SHARED["transformers-5.18.0/tokenizer.json"],
+    "tokenizer_config.json": (SNAPSHOT["tokenizer_config.json"], 16709),
+}
 
 
 def sha256_file(path: Path) -> str:
@@ -206,7 +215,10 @@ def main(argv: list[str] | None = None) -> int:
         if sha256_file(build_dir / "chat_template.jinja") != SHARED["chat_template.jinja"][0]:
             print(f"{variant}: the builder's chat_template.jinja differs from the snapshot's", file=sys.stderr)
             return 1
+        shutil.copy2(built_tokenizer, dest / "tokenizer.json")
+        shutil.copy2(args.snapshot / "tokenizer_config.json", dest / "tokenizer_config.json")
         expected.update(EXPECTED[variant])
+        expected.update({f"ortgenai-{variant}/{name}": pin for name, pin in GUIDANCE.items()})
 
     tok_dir = args.out / "transformers-5.18.0"
     tok_dir.mkdir(parents=True, exist_ok=True)

@@ -1,7 +1,7 @@
 // Streaming console chat with Qwen/Qwen3.5-0.8B from the Starlings packages.
 //
-//   dotnet run -- download [--cache <dir>] [--variant fp32x|fp16x]           explicit acquisition (network)
-//   dotnet run -- chat [--cache <dir> | --snapshot <dir>] [--variant fp32x|fp16x] [--cuda] [--thinking] [--max-new <n>] [--chat-client]
+//   dotnet run -- download [--cache <dir>] [--variant fp32x|fp16x|int4]           explicit acquisition (network)
+//   dotnet run -- chat [--cache <dir> | --snapshot <dir>] [--variant fp32x|fp16x|int4] [--cuda] [--thinking] [--max-new <n>] [--chat-client]
 //                                                                             offline: interactive streaming chat
 //   dotnet run -- ask  [same options] "question"                             offline: one streamed answer, then exit
 //
@@ -35,7 +35,7 @@ async Task<int> ToolBody()
 {
     if (args.Length == 0 || args[0] is not ("download" or "chat" or "ask"))
     {
-        Console.Error.WriteLine("usage: QwenChat download [--cache <dir>] [--variant fp32x|fp16x] | chat|ask [--cache <dir> | --snapshot <dir>] [--variant fp32x|fp16x] [--cuda] [--thinking] [--max-new <n>] [--chat-client] [question]");
+        Console.Error.WriteLine("usage: QwenChat download [--cache <dir>] [--variant fp32x|fp16x|int4] | chat|ask [--cache <dir> | --snapshot <dir>] [--variant fp32x|fp16x|int4] [--cuda] [--thinking] [--max-new <n>] [--chat-client] [question]");
         return 2;
     }
 
@@ -58,7 +58,7 @@ async Task<int> ToolBody()
                 snapshot = args[++i];
                 break;
             case "--variant" when i + 1 < args.Length:
-                variant = args[++i] == "fp16x" ? Qwen35Variant.Fp16x : Qwen35Variant.Fp32x;
+                variant = args[++i] switch { "fp16x" => Qwen35Variant.Fp16x, "int4" => Qwen35Variant.Int4, _ => Qwen35Variant.Fp32x };
                 break;
             case "--cuda":
                 cuda = true;

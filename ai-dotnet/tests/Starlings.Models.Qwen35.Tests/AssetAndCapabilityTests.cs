@@ -11,22 +11,37 @@ public sealed class AssetAndCapabilityTests
     [Theory]
     [InlineData(Qwen35Variant.Fp32x, "ortgenai-fp32x", 3_077_177_344L)]
     [InlineData(Qwen35Variant.Fp16x, "ortgenai-fp16x", 1_572_143_104L)]
+    [InlineData(Qwen35Variant.Int4, "ortgenai-int4", 541_523_968L)]
     public void LocksPinTheBuildAndTheSharedFiles(Qwen35Variant variant, string dir, long dataSize)
     {
         var l = Qwen35ModelAssets.GetLock(variant);
         Assert.Equal("Qwen/Qwen3.5-0.8B", l.Repository);
         Assert.Equal("2fc06364715b967f1860aea9cf38778875588b17", l.Revision);
         Assert.Equal(
-            ["chat_template.jinja", "transformers-5.18.0/tokenizer.json", $"{dir}/genai_config.json", $"{dir}/model.onnx", $"{dir}/model.onnx.data"],
+            [
+                "chat_template.jinja", "transformers-5.18.0/tokenizer.json", $"{dir}/genai_config.json", $"{dir}/model.onnx", $"{dir}/model.onnx.data",
+                $"{dir}/tokenizer.json", $"{dir}/tokenizer_config.json",
+            ],
             l.Files.Select(f => f.Path));
         Assert.Equal(dataSize, l.GetFile($"{dir}/model.onnx.data").Size);
         Assert.Equal(Qwen35ChatTemplate.TemplateSha256, l.GetFile("chat_template.jinja").Sha256);
         Assert.Equal(Qwen35ModelAssets.TokenizerSha256, l.GetFile(Qwen35ModelAssets.TokenizerFile).Sha256);
 
-        // Every file from the hosting repository, pinned by commit, at its snapshot path.
+        // The guidance files of the variant directory: a copy of the shared tokenizer, and the checkpoint's own
+        // tokenizer_config.json (the digest and size Qwen35Checkpoint.Lock pins).
+        var copy = l.GetFile($"{dir}/tokenizer.json");
+        var shared = l.GetFile(Qwen35ModelAssets.TokenizerFile);
+        Assert.Equal((shared.Size, shared.Sha256), (copy.Size, copy.Sha256));
+        var config = l.GetFile($"{dir}/tokenizer_config.json");
+        var hub = Qwen35Checkpoint.Lock.GetFile("tokenizer_config.json");
+        Assert.Equal((hub.Size, hub.Sha256), (config.Size, config.Sha256));
+
+        // Every file from the hosting repository, pinned by commit (r2), at its snapshot path.
+        Assert.Equal("22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45", Qwen35ModelAssets.HostingRevision);
         Assert.All(l.Files, f => Assert.Equal(
-            $"https://huggingface.co/Starlinghq/qwen3.5-0.8b-ortgenai/resolve/95a690c1774f144957cb7b76986a9126e8b1bb5f/{f.Path}",
+            $"https://huggingface.co/Starlinghq/qwen3.5-0.8b-ortgenai/resolve/22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45/{f.Path}",
             f.Source!.AbsoluteUri));
+        Assert.True(Qwen35ModelAssets.IsHosted(variant));
         Assert.False(Qwen35ModelAssets.HostingIsPrivate);
         // Round trip through the JSON lock format.
         var parsed = ModelAssetLock.Parse(l.ToJson());
@@ -34,27 +49,13 @@ public sealed class AssetAndCapabilityTests
     }
 
     [Fact]
-    public void TheInt4LockPinsTheLocalBuildWithoutAHostedGraph()
+    public void TheInt4LockPinsTheBuiltWeights()
     {
         var l = Qwen35ModelAssets.GetLock(Qwen35Variant.Int4);
         Assert.Equal("qwen3.5-0.8b-ortgenai-int4", l.Name);
-        Assert.Equal(
-            ["chat_template.jinja", "transformers-5.18.0/tokenizer.json", "ortgenai-int4/genai_config.json", "ortgenai-int4/model.onnx", "ortgenai-int4/model.onnx.data"],
-            l.Files.Select(f => f.Path));
         // The weights are byte-identical to the M0 int4 CPU build (docs/m0/generation-backend-check.md section 2).
         Assert.Equal("709e08797497f609547f7aef1387cfb35bd0deb3f4039acf001f0680b23f9745", l.GetFile("ortgenai-int4/model.onnx.data").Sha256);
-        Assert.Equal(541_523_968L, l.GetFile("ortgenai-int4/model.onnx.data").Size);
-        Assert.All(l.Files.Where(f => f.Path.StartsWith("ortgenai-int4/", StringComparison.Ordinal)), f => Assert.Null(f.Source));
-        Assert.False(Qwen35ModelAssets.IsHosted(Qwen35Variant.Int4));
-        Assert.True(Qwen35ModelAssets.IsHosted(Qwen35Variant.Fp32x));
-        Assert.True(Qwen35ModelAssets.IsHosted(Qwen35Variant.Fp16x));
-    }
-
-    [Fact]
-    public async Task TheInt4VariantIsNotDownloadable()
-    {
-        var ex = await Assert.ThrowsAsync<NotSupportedException>(() => Qwen35ModelAssets.DownloadAsync(Qwen35Variant.Int4, cancellationToken: TestContext.Current.CancellationToken));
-        Assert.Contains("build_ortgenai_bundle.py", ex.Message, StringComparison.Ordinal);
+        Assert.Equal("a41f341f106a1bb5b50eb67ca824cd9c324705141d88b027de0888f140e39cf7", l.GetFile("ortgenai-int4/model.onnx").Sha256);
     }
 
     [Fact]
@@ -65,7 +66,7 @@ public sealed class AssetAndCapabilityTests
         Assert.Equal(Qwen35CapabilityStatus.Experimental, Qwen35Capabilities.All["chat.greedy.int4.cpu"]);
         Assert.Equal(Qwen35CapabilityStatus.Experimental, Qwen35Capabilities.All["quantized.int4.cpu"]);
         Assert.Equal(Qwen35CapabilityStatus.Unsupported, Qwen35Capabilities.All["int4.cuda"]);
-        Assert.Equal(Qwen35CapabilityStatus.Unsupported, Qwen35Capabilities.All["asset_acquisition.download.int4"]);
+        Assert.Equal(Qwen35CapabilityStatus.Experimental, Qwen35Capabilities.All["asset_acquisition.download.int4"]);
         // The Stable profiles stay unquantized.
         Assert.Equal(Qwen35CapabilityStatus.Unsupported, Qwen35Capabilities.All["quantized"]);
     }
@@ -137,8 +138,10 @@ public sealed class AssetAndCapabilityTests
         Assert.Equal(Qwen35CapabilityStatus.Experimental, all["tool_calling"]);
         Assert.Equal(Qwen35CapabilityStatus.Experimental, all["template.tools"]);
         Assert.Equal(Qwen35CapabilityStatus.Experimental, all["template.tool_messages"]);
-        Assert.Equal(Qwen35CapabilityStatus.Unsupported, all["extensions_ai.tool_mode.required"]);
-        Assert.Equal(Qwen35CapabilityStatus.Unsupported, all["structured_output"]);
+        // Guided decoding needs the variant directory's guidance files, hosted since r2.
+        Assert.Equal(Qwen35CapabilityStatus.Experimental, all["extensions_ai.tool_mode.required"]);
+        Assert.Equal(Qwen35CapabilityStatus.Experimental, all["extensions_ai.structured_output"]);
+        Assert.Equal(Qwen35CapabilityStatus.Experimental, all["structured_output"]);
         Assert.Equal(Qwen35CapabilityStatus.Unsupported, all["batch"]);
         Assert.Equal(Qwen35CapabilityStatus.Unsupported, all["cancellation.inside_a_step"]);
         Assert.Equal(Qwen35CapabilityStatus.Unsupported, all["lora"]);
