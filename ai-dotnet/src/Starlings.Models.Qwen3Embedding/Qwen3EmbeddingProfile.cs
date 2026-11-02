@@ -21,10 +21,12 @@ public enum Qwen3EmbeddingTask
 /// </summary>
 /// <remarks>
 /// <para>
-/// <b>Graphs.</b> The graphs are not hosted yet, so there is no download step: build them with the recipe
-/// (<c>export_qwen3_onnx.py</c>, then <c>release_qwen3_onnx.py</c>, CPU, fp32) from the pinned snapshot. Two
-/// independent exports give the same bytes, and <see cref="RuntimeLock"/> records those bytes; the embedder and the
-/// reranker verify a directory against it before loading (<see cref="OpenDirectory"/>).
+/// <b>Graphs.</b> The graphs are Starling's export of the pinned checkpoints (<c>export_qwen3_onnx.py</c>, then
+/// <c>release_qwen3_onnx.py</c>, CPU, fp32; two independent exports give the same bytes), hosted with the upstream files
+/// they need in the public Hugging Face repository <see cref="HostingRepository"/> at <see cref="HostingRevision"/>.
+/// <see cref="RuntimeLock"/> pins every file by size and SHA-256; <see cref="Qwen3EmbeddingModelAssets.DownloadAsync"/>
+/// fetches them (no token needed), and the embedder and the reranker verify a directory against the lock before loading
+/// (<see cref="OpenDirectory"/>).
 /// </para>
 /// <para>
 /// <b>Shared geometry.</b> Both checkpoints are a Qwen3 decoder used non-autoregressively: hidden size 1024, 28 layers,
@@ -88,15 +90,20 @@ public sealed class Qwen3EmbeddingProfile
     public const string RerankSuffix = "<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n";
 
     private Qwen3EmbeddingProfile(string id, Qwen3EmbeddingTask task, string repository, string revision, string tokenizerProfile,
-        ModelAssetFile[] files, IReadOnlyDictionary<string, string> prompts)
+        string hostingRepository, string hostingRevision, ModelAssetFile[] files, IReadOnlyDictionary<string, string> prompts)
     {
+        HostingRepository = hostingRepository;
+        HostingRevision = hostingRevision;
         Id = id;
         Task = task;
         Repository = repository;
         Revision = revision;
         TokenizerProfile = tokenizerProfile;
         Prompts = prompts;
-        RuntimeLock = new ModelAssetLock(id + "-onnx", repository, revision, files);
+        RuntimeLock = new ModelAssetLock(id + "-onnx", repository, revision, files)
+        {
+            Hosting = new ModelAssetHosting(hostingRepository, hostingRevision),
+        };
     }
 
     /// <summary>
@@ -109,6 +116,8 @@ public sealed class Qwen3EmbeddingProfile
         "Qwen/Qwen3-Embedding-0.6B",
         "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
         "qwen3-bpe-embedding",
+        "Starlinghq/qwen3-embedding-0.6b-onnx",
+        EmbeddingHostingRevisionValue,
         [
             new(GraphFile, 337132, "de6805d74481fefc313ea470de3877f64fe4093c99ce9d1172a026128d90d864"),
             new(GraphDataFile, 2383077376, "7c7569e58783ee0ad8c5fb797d7944aa4f5928af53fb4c1f626f71885af22969"),
@@ -135,6 +144,8 @@ public sealed class Qwen3EmbeddingProfile
         "Qwen/Qwen3-Reranker-0.6B",
         "e61197ed45024b0ed8a2d74b80b4d909f1255473",
         "qwen3-bpe-chat",
+        "Starlinghq/qwen3-reranker-0.6b-onnx",
+        RerankerHostingRevisionValue,
         [
             new(GraphFile, 337355, "b162410db82c0e26f231cda7ddf1ec659ed6707c90e82e5556fb8f1076997581"),
             new(GraphDataFile, 2383085568, "fbfe2bddcffc9e8b4a1145bf02f4ebc99119e57e38d32bf7f04172a7d0cf9c7c"),
@@ -144,6 +155,9 @@ public sealed class Qwen3EmbeddingProfile
             new("chat_template.jinja", 741, "6f682162495ec5b39fd9005c01b6aa2a74669379fe967039f1e2cbbe8752369d"),
         ],
         new Dictionary<string, string>(StringComparer.Ordinal).AsReadOnly());
+
+    private const string EmbeddingHostingRevisionValue = "0585005027acc7232133808914cd8bc2a4bd1ea8";
+    private const string RerankerHostingRevisionValue = "0f951df2baec8e9ac7f884f349d2820a34aa85e5";
 
     /// <summary>Every built-in profile.</summary>
     public static IReadOnlyList<Qwen3EmbeddingProfile> BuiltIn { get; } = [Embedding06B, Reranker06B];
@@ -160,6 +174,16 @@ public sealed class Qwen3EmbeddingProfile
     /// <summary>Full upstream commit SHA.</summary>
     public string Revision { get; }
 
+    /// <summary>
+    /// The public Hugging Face repository that hosts the released directory (<c>Starlinghq/qwen3-embedding-0.6b-onnx</c>,
+    /// <c>Starlinghq/qwen3-reranker-0.6b-onnx</c>): the graph, its external data, the upstream files it needs, a notice
+    /// and the license.
+    /// </summary>
+    public string HostingRepository { get; }
+
+    /// <summary>Full commit SHA of <see cref="HostingRepository"/> that <see cref="RuntimeLock"/> downloads from.</summary>
+    public string HostingRevision { get; }
+
     /// <summary>The Starlings.Tokenizers profile that qualifies the pinned <c>tokenizer.json</c>.</summary>
     public string TokenizerProfile { get; }
 
@@ -172,8 +196,8 @@ public sealed class Qwen3EmbeddingProfile
     /// <summary>
     /// Size and SHA-256 of every file of a released directory: the graph and its external data (from the export recipe)
     /// and the upstream files at <see cref="Revision"/>. <see cref="ModelAssetLock.Repository"/> and
-    /// <see cref="ModelAssetLock.Revision"/> name the upstream checkpoint; the graph files are not in that repository and
-    /// are not downloadable yet.
+    /// <see cref="ModelAssetLock.Revision"/> name the upstream checkpoint; <see cref="ModelAssetLock.Hosting"/> names
+    /// <see cref="HostingRepository"/> at <see cref="HostingRevision"/>, where every file is downloaded from.
     /// </summary>
     public ModelAssetLock RuntimeLock { get; }
 

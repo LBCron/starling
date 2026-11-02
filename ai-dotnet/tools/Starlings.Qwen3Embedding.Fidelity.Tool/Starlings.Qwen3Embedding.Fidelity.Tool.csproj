@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The dotnet stage of the qwen3-embedding-onnx-cpu-v1 onboarding route (model-pipeline/src/model_pipeline/onboarding_qwen3_embedding.py). -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Starlings.Models.Qwen3Embedding/Starlings.Models.Qwen3Embedding.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Entry-point wrapper: an escaping exception gives "error:" and exit code 70, not an abort and core dump. -->
+    <Compile Include="../Shared/ToolMain.cs" Link="Shared/ToolMain.cs" />
+  </ItemGroup>
+
+</Project>

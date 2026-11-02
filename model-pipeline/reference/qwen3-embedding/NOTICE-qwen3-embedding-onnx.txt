@@ -1,5 +1,5 @@
 Qwen3-Embedding-0.6B ONNX graph (model.onnx, model.onnx.data)
-Release: qwen3-embedding-0.6b-onnx-r1, hosted at https://huggingface.co/Starlinghq/qwen3-embedding-0.6b-onnx (tag r1)
+Release: qwen3-embedding-0.6b-onnx-r1, hosted at https://huggingface.co/Starlinghq/qwen3-embedding-0.6b-onnx
 
 These files are a derivative of the Qwen3-Embedding-0.6B model weights published by the Qwen team, Alibaba Cloud:
 

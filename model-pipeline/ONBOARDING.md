@@ -255,6 +255,37 @@ accepts only the pinned official ONNX exports `PaddlePaddle/PP-OCRv5_mobile_det_
 References and the comparison policy are proposals; no protected tolerances or fixtures exist for this profile, and
 there is no registry manifest yet (the maintainer adds it with the adopted tolerances).
 
+## Qwen3 Embedding route
+
+The `qwen3-embedding-onnx-cpu-v1` plugin (`src/model_pipeline/onboarding_qwen3_embedding.py`, design issue #144) runs
+`recipes/qwen3-embedding-0.6b-cpu.yaml` and `recipes/qwen3-reranker-0.6b-cpu.yaml`. It accepts only the pinned
+`Qwen/Qwen3-Embedding-0.6B` and `Qwen/Qwen3-Reranker-0.6B` checkpoints and the Starling-built graphs hosted at
+`Starlinghq/qwen3-embedding-0.6b-onnx` and `Starlinghq/qwen3-reranker-0.6b-onnx` (candidate `behavior.hosting`: repository,
+full commit SHA, size and SHA-256 of `model.onnx` and `model.onnx.data`). Stages: `assets`, `environment`, `reference`,
+`build`, `onnx`, `dotnet`, `evaluate`, `review`.
+
+```sh
+.venv/bin/model-pipeline run model-pipeline/recipes/qwen3-embedding-0.6b-cpu.yaml \
+  --snapshot "$PWD/.models/snapshots/Qwen_Qwen3-Embedding-0.6B@97b0c614" \
+  --reference-python "$PWD/.models/venv-qwen3-embedding/bin/python" \
+  --out "$PWD/artifacts/onboarding/qwen3-embedding-0.6b" --threads 2 --timeout 3600
+```
+
+- `--snapshot` is the upstream snapshot with the files the candidate pins (PyTorch weights included). The reference
+  environment is `reference/qwen3-embedding/requirements.txt` (Python 3.11, torch 2.14.1 CPU, transformers 5.18.0,
+  sentence-transformers 6.1.0, onnxruntime 1.30.0).
+- `build` runs the export recipe (`export_qwen3_onnx.py`, then `release_qwen3_onnx.py`) and requires the released graph
+  and external data to be byte-identical to the hosted files, so the evidence is about the bytes
+  `Qwen3EmbeddingModelAssets.DownloadAsync` fetches.
+- `onnx` runs `verify_qwen3_onnx.py` (ONNX Runtime against PyTorch fp32, hidden states included; card cosines and
+  sentence-transformers cross-checks); `reference` runs `run_qwen3_reference.py`; `dotnet` runs
+  `ai-dotnet/tools/Starlings.Qwen3Embedding.Fidelity.Tool` on the released directory, from text and from the reference
+  ids. The evaluator applies the candidate's predeclared policy, which may not exceed the route caps of issue #144
+  (`hidden_max_abs` 5e-3, `embedding_max_abs` 1e-3, `score_max_abs` 1e-2).
+- Memory: the graphs use eager attention, about `rows x 16 x width^2` float32 per layer, so short cases run in padded
+  batches of at most 8 rows and long cases alone. Peak use stays below 20 GB; run the pipeline inside a memory limit
+  (for example `systemd-run --user --scope -p MemoryMax=20G`) on a shared machine.
+
 ## Add another execution plugin
 
 1. Specify the upstream behavior contract and exact source assets in a reviewed registry manifest or proposed candidate contract. Reuse existing tokenizer/runtime components only where their supported parameters match.

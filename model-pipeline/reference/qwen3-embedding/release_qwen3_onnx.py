@@ -1,5 +1,5 @@
 """Release step for the Qwen3 Embedding series 0.6B graphs (hosted as `Starlinghq/qwen3-embedding-0.6b-onnx` and
-`Starlinghq/qwen3-reranker-0.6b-onnx`, tag `r1`). CPU only.
+`Starlinghq/qwen3-reranker-0.6b-onnx`, release `r1`). CPU only.
 
 Turns an export of `export_qwen3_onnx.py` (`model.onnx` plus its external data) into the files Starling hosts:
 

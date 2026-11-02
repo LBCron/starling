@@ -2,7 +2,8 @@
 
 Cases: the model card's example inputs, every text of the tokenizer corpus (`tokenizer-corpus-v1.jsonl`, including the
 empty string), and two long inputs of about 4,000 and 8,000 tokens built by cycling through the corpus texts. Short
-cases run through ONNX Runtime as one right-padded batch, long cases one at a time; the PyTorch reference runs every
+cases run through ONNX Runtime in right-padded batches (at most 8 rows, sorted by length, sized to bound the
+attention memory), long cases one at a time; the PyTorch reference runs every
 case alone, without padding.
 
 - `embedding`: reference `AutoModel` `last_hidden_state`, last-token pooling and L2 normalization (the card's
@@ -53,6 +54,8 @@ RERANK_PREFIX = (
 )
 RERANK_SUFFIX = "<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
 LONG_TARGETS = (4000, 8000)
+BATCH_ROWS = 8
+BATCH_CELLS = 8 * 1024 * 1024  # rows x width^2: 512 MiB per float32 [rows, width, width] slice of one head
 
 
 def corpus_texts(path: Path) -> list[tuple[str, str]]:
@@ -92,13 +95,35 @@ def l2(x: np.ndarray) -> np.ndarray:
     return x / np.linalg.norm(x, axis=-1, keepdims=True)
 
 
+def short_batches(lengths: dict[int, int]) -> list[list[int]]:
+    """Short cases in right-padded batches of at most `BATCH_ROWS` rows and `BATCH_CELLS` padded tokens squared.
+
+    ONNX Runtime CPU keeps the attention scores of a batch as `[rows, 16, width, width]` float32, so one batch of every
+    short case (width about 2,300) needs tens of GB. Cases are sorted by length; each batch still mixes lengths, so
+    padding is exercised.
+    """
+    batches: list[list[int]] = []
+    for i in sorted(lengths, key=lambda k: (lengths[k], k)):
+        if batches:
+            last = batches[-1]
+            width = max(lengths[i], *(lengths[j] for j in last))
+            if len(last) < BATCH_ROWS and (len(last) + 1) * width * width <= BATCH_CELLS:
+                last.append(i)
+                continue
+        batches.append([i])
+    return batches
+
+
 def ort_outputs(sess, inputs: list[list[int]], long_ids: set[int]) -> list[list[np.ndarray]]:
-    """Per case, the graph outputs over its valid tokens: short cases as one batch, long cases alone."""
+    """Per case, the graph outputs over its valid tokens: short cases in padded batches, long cases alone."""
     out: list[list[np.ndarray] | None] = [None] * len(inputs)
-    short = [i for i in range(len(inputs)) if i not in long_ids]
-    got, _ = run_ort(sess, [inputs[i] for i in short])
-    for row, i in enumerate(short):
-        out[i] = [g[row, : len(inputs[i])] for g in got]
+    short = {i: len(inputs[i]) for i in range(len(inputs)) if i not in long_ids}
+    for batch in short_batches(short):
+        got, _ = run_ort(sess, [inputs[i] for i in batch])
+        for row, i in enumerate(batch):
+            out[i] = [g[row, : len(inputs[i])].copy() for g in got]
+        del got
+        gc.collect()
     for i in sorted(long_ids):
         got, _ = run_ort(sess, [inputs[i]])
         out[i] = [g[0] for g in got]

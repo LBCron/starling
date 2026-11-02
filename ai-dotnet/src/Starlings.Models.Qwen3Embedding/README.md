@@ -2,7 +2,15 @@
 
 **Experimental.** [Qwen/Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B) text embeddings and [Qwen/Qwen3-Reranker-0.6B](https://huggingface.co/Qwen/Qwen3-Reranker-0.6B) query-document reranking on ONNX Runtime CPU (fp32), with owned tokenization from `Starlings.Tokenizers` (profiles `qwen3-bpe-embedding` and `qwen3-bpe-chat`). Both checkpoints are a Qwen3 decoder used non-autoregressively (hidden 1024, 28 layers); design: starlinghq/starling#144.
 
-There is no registry manifest, onboarding evidence or hosted graph for these profiles yet, so nothing here is Preview or Stable, and there is no download step.
+The graphs are hosted publicly on Hugging Face (`Starlinghq/qwen3-embedding-0.6b-onnx`, `Starlinghq/qwen3-reranker-0.6b-onnx`), pinned by commit, size and SHA-256. Nothing here is Preview or Stable.
+
+<!-- catalog:maturity profiles=qwen3-embedding-0.6b/*,qwen3-reranker-0.6b/* -->
+Maturity is per profile, generated from the registry manifests by `model-pipeline catalog` (do not edit this table by hand). Gates, evidence and capabilities per profile: the [model catalog](https://github.com/starlinghq/starling/blob/main/docs/catalog/README.md).
+
+| Profile | Maturity | Platforms |
+| --- | --- | --- |
+| `qwen3-embedding-0.6b/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; linux-x64 cuda: unsupported; windows-x64 cpu: untested |
+<!-- /catalog:maturity -->
 
 ## Profiles
 
@@ -13,9 +21,23 @@ There is no registry manifest, onboarding evidence or hosted graph for these pro
 
 Each profile pins the size and SHA-256 of every file of the released directory: `model.onnx` and `model.onnx.data` (about 2.4 GB of external weights) from the export recipe, and the upstream `tokenizer.json`, `config.json`, `tokenizer_config.json` and `config_sentence_transformers.json` or `chat_template.jinja`. A directory is verified before a session is created.
 
-## Building the graphs
+## Getting the files
 
-The graphs are built locally, on CPU, with the hash-locked recipe in [`model-pipeline/reference/qwen3-embedding/`](https://github.com/starlinghq/starling/tree/main/model-pipeline/reference/qwen3-embedding) (`requirements.txt`), from a snapshot of the pinned upstream revision:
+```csharp
+using Starlings.Models.Qwen3Embedding;
+
+// Setup step, once (about 2.4 GB per profile; public, no token needed). Inference never downloads.
+var embeddingFiles = await Qwen3EmbeddingModelAssets.DownloadAsync(Qwen3EmbeddingProfile.Embedding06B);
+var rerankerFiles = await Qwen3EmbeddingModelAssets.DownloadAsync(Qwen3EmbeddingProfile.Reranker06B);
+// At startup, offline: Qwen3EmbeddingModelAssets.OpenLocal(profile) returns the verified cached snapshot.
+```
+
+| Profile | Hosting repository | Commit |
+| --- | --- | --- |
+| `qwen3-embedding-0.6b` | [`Starlinghq/qwen3-embedding-0.6b-onnx`](https://huggingface.co/Starlinghq/qwen3-embedding-0.6b-onnx) | `0585005027acc7232133808914cd8bc2a4bd1ea8` |
+| `qwen3-reranker-0.6b` | [`Starlinghq/qwen3-reranker-0.6b-onnx`](https://huggingface.co/Starlinghq/qwen3-reranker-0.6b-onnx) | `0f951df2baec8e9ac7f884f349d2820a34aa85e5` |
+
+The hosted graphs are Starling's export of the pinned checkpoints with the hash-locked recipe in [`model-pipeline/reference/qwen3-embedding/`](https://github.com/starlinghq/starling/tree/main/model-pipeline/reference/qwen3-embedding) (`requirements.txt`, CPU, fp32). The recipe reproduces them byte for byte, so a directory built locally opens the same way:
 
 ```sh
 python export_qwen3_onnx.py --model embedding --model-dir <Qwen/Qwen3-Embedding-0.6B@97b0c614> --out <export>
@@ -24,19 +46,17 @@ python export_qwen3_onnx.py --model reranker --model-dir <Qwen/Qwen3-Reranker-0.
 python release_qwen3_onnx.py --model reranker --model-dir <same snapshot> --export <export>/model.onnx --out <release>
 ```
 
-Two independent exports give the same bytes, which are the digests the profiles pin.
-
 ## Use
 
 ```csharp
 using Starlings.Models.Qwen3Embedding;
 
-using var embedder = Qwen3TextEmbedder.Create("/models/qwen3-embedding-0.6b-release");
+using var embedder = Qwen3TextEmbedder.Create(embeddingFiles.Directory);   // or a directory built with the recipe
 float[] query = embedder.Embed("What is the capital of China?", prompt: "query");
 float[] document = embedder.Embed("The capital of China is Beijing.");   // prompt "none"
 float cosine = query.Zip(document, (a, b) => a * b).Sum();                // both are L2-normalized
 
-using var reranker = Qwen3Reranker.Create("/models/qwen3-reranker-0.6b-release");
+using var reranker = Qwen3Reranker.Create(rerankerFiles.Directory);
 float[] scores = reranker.Score("What is the capital of China?", ["The capital of China is Beijing.", "Gravity is a force."]);
 ```
 
@@ -58,15 +78,18 @@ The application references the ONNX Runtime native package (`Microsoft.ML.OnnxRu
 | `IEmbeddingGenerator` (Extensions.AI package) | experimental |
 | Matryoshka (MRL) dimensions below 1024 | unsupported (rejected) |
 | CUDA | unsupported (CPU sessions only) |
-| Download of the graphs | unsupported until the graphs are hosted |
+| Download of the released directories (`Qwen3EmbeddingModelAssets`) | experimental |
 | fp16/bf16 graphs, the 4B and 8B checkpoints, more than 8192 tokens | unsupported |
 
 `Qwen3EmbeddingCapabilities` carries the same statuses in code.
 
-## Evidence so far
+## Evidence
 
-- The embedding graph reproduces the model card's four query-document cosines within 4e-7 (published anchor, 1e-3 bound) and sentence-transformers `encode` within 2.1e-7, on CPU (recipe `verify_qwen3_onnx.py`).
-- This package's tests compare, when a released directory is available, the embeddings and reranker scores against PyTorch fp32 references for the card's examples and a few edge cases, and check that padded batches equal single rows.
+The `qwen3-embedding-onnx-cpu-v1` onboarding route ran for real on CPU on 2026-11-02 ([`docs/evidence/qwen3-embedding-onboarding-2026-11-02/`](https://github.com/starlinghq/starling/tree/main/docs/evidence/qwen3-embedding-onboarding-2026-11-02)). Both runs rebuilt the graphs with the recipe and found them byte-identical to the hosted files.
+
+- **Embedding: passed** (558 checks). .NET embeddings from text and from ids within 6.0e-7 of PyTorch fp32 (bound 1e-4), the card's four query-document cosines within 3.6e-7 of the published values, token ids equal on all 62 cases. Registry profile `qwen3-embedding-0.6b/onnx-fp32-cpu`, Experimental.
+- **Reranker: failed on one bound.** .NET scores within 2.4e-5 of PyTorch (bound 1e-3) and token ids equal on all 56 cases, but the graph's final hidden state differs from PyTorch by up to 3.7e-3 on two long inputs (2,058 and 6,649 tokens), above the predeclared 2e-3. The bound was not changed; the reranker profile has no registry manifest until the maintainer decides it.
+- The longest evaluated inputs have about 6,600 tokens, not the full 8,192.
 - The tokenizer profiles are exact on 137/137 conformance cases in starlinghq/tokenizers.
 
 Weights: Apache-2.0 (Qwen). Template attribution: `THIRD-PARTY-NOTICES.md`.

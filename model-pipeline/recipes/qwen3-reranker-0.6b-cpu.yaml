@@ -1,0 +1,6 @@
+recipe_version: 1
+id: qwen3-reranker-0.6b-cpu
+plugin: qwen3-embedding-onnx-cpu-v1
+manifest: model-pipeline/candidates/qwen3-reranker-0.6b/profile.json
+reference_corpus: model-pipeline/reference/corpus/tokenizer-corpus-v1.jsonl
+reference_environment: model-pipeline/reference/qwen3-embedding/requirements.txt
