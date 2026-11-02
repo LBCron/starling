@@ -17,9 +17,10 @@ public sealed record Qwen3RankedDocument(int Index, string Document, float Score
 /// (<see cref="Qwen3EmbeddingCapabilities.Reranking"/>).
 /// </summary>
 /// <remarks>
-/// A pair longer than 8192 tokens has its instruction, query and document text truncated from the right (longest
-/// first); the template's prefix and suffix are always kept. Concurrent calls are safe; <see cref="Dispose"/> is
-/// idempotent.
+/// A pair longer than 8192 tokens keeps the template's prefix and suffix; the content between them
+/// (<c>"&lt;Instruct&gt;: ...\n&lt;Query&gt;: ...\n&lt;Document&gt;: ..."</c>) is one sequence cut from the right, so the
+/// end of the document goes first, and a very long query (or instruction) can cut away the whole document part. This
+/// matches the model card's snippet. Concurrent calls are safe; <see cref="Dispose"/> is idempotent.
 /// </remarks>
 public sealed class Qwen3Reranker : IReranker, IDisposable
 {

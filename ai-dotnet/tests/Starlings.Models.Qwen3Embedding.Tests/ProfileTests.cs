@@ -52,8 +52,8 @@ public sealed class ProfileTests
         Assert.Equal(CapabilityStatus.Experimental, Qwen3EmbeddingCapabilities.Embeddings);
         Assert.Equal(CapabilityStatus.Experimental, Qwen3EmbeddingCapabilities.Reranking);
         Assert.Equal(CapabilityStatus.Experimental, Qwen3EmbeddingCapabilities.Batching);
-        Assert.Equal(CapabilityStatus.Untested, Qwen3EmbeddingCapabilities.MatryoshkaDimensions);
-        Assert.Equal(CapabilityStatus.Untested, Qwen3EmbeddingCapabilities.Cuda);
+        Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.MatryoshkaDimensions);
+        Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.Cuda);
         Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.Download);
         Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.ReducedPrecision);
         Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.LargerCheckpoints);

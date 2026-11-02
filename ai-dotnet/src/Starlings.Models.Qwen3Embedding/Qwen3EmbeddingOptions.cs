@@ -13,10 +13,11 @@ public sealed record Qwen3EmbeddingOptions
 
     /// <summary>
     /// Padded cells (rows x longest row) per call at most, or null for no budget. A row longer than the budget runs
-    /// alone. Default 16,384: the attention mask and scores grow with the square of the row length, so long rows run in
-    /// small groups.
+    /// alone. Default 8192: the graph uses eager attention, whose scores grow with the square of the row length (about
+    /// 16 heads x 8192^2 x 4 bytes, roughly 4.3 GB per layer, for one 8192-token row), so a maximum-length row runs alone.
+    /// A budget of 16,384 lets two 8192-token rows share a call and needs about twice that transient memory.
     /// </summary>
-    public int? MaxBatchTokens { get; init; } = 16384;
+    public int? MaxBatchTokens { get; init; } = 8192;
 
     /// <summary>How the released directory is checked before loading. Default SHA-256 of every file (about 2.4 GB read).</summary>
     public CacheVerification Verification { get; init; } = CacheVerification.Sha256;

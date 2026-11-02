@@ -19,17 +19,20 @@ public static class Qwen3EmbeddingCapabilities
     /// <summary>Right-padded batches of several rows per ONNX Runtime call, with a row and an optional padded-cell budget.</summary>
     public const CapabilityStatus Batching = CapabilityStatus.Experimental;
 
-    /// <summary>Inputs up to 8192 tokens; longer input is truncated from the right (the reranker truncates only the query and document text).</summary>
+    /// <summary>Inputs up to 8192 tokens; longer input is truncated from the right (the reranker keeps the template prefix and suffix and cuts the end of the instruction, query and document content, the document first).</summary>
     public const CapabilityStatus LongInput = CapabilityStatus.Experimental;
 
     /// <summary>Microsoft.Extensions.AI <c>IEmbeddingGenerator</c> (Starlings.Models.Qwen3Embedding.Extensions.AI).</summary>
     public const CapabilityStatus ExtensionsAI = CapabilityStatus.Experimental;
 
-    /// <summary>Matryoshka (MRL) output dimensions below 1024. Not offered: requests for another dimension are rejected.</summary>
-    public const CapabilityStatus MatryoshkaDimensions = CapabilityStatus.Untested;
+    /// <summary>
+    /// Matryoshka (MRL) output dimensions below 1024. Not offered: a request for another dimension is rejected with
+    /// <see cref="NotSupportedException"/>. Becomes Untested or Experimental once MRL slicing exists.
+    /// </summary>
+    public const CapabilityStatus MatryoshkaDimensions = CapabilityStatus.Unsupported;
 
-    /// <summary>ONNX Runtime CUDA. The sessions are CPU only.</summary>
-    public const CapabilityStatus Cuda = CapabilityStatus.Untested;
+    /// <summary>ONNX Runtime CUDA. Not offered: the sessions are CPU only. Becomes Untested or Experimental once a CUDA session path exists.</summary>
+    public const CapabilityStatus Cuda = CapabilityStatus.Unsupported;
 
     /// <summary>Downloading the graphs. Not offered until the graphs are hosted; build them with the export recipe.</summary>
     public const CapabilityStatus Download = CapabilityStatus.Unsupported;

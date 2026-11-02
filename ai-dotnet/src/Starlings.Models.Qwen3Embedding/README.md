@@ -40,9 +40,9 @@ using var reranker = Qwen3Reranker.Create("/models/qwen3-reranker-0.6b-release")
 float[] scores = reranker.Score("What is the capital of China?", ["The capital of China is Beijing.", "Gravity is a force."]);
 ```
 
-- **Prompts.** `query` is the upstream instruction `"Instruct: Given a web search query, retrieve relevant passages that answer the query\nQuery:"` (no trailing space); `none` and `document` are empty. `Qwen3TextEmbedder.FormatQuery(task, query)` writes a query for a task of your own.
+- **Prompts.** `query` is the upstream instruction `"Instruct: Given a web search query, retrieve relevant passages that answer the query\nQuery:"` (no trailing space); `none` and `document` are empty. `Qwen3TextEmbedder.FormatQuery(task, query)` writes a query for a task of your own. **Warning:** the `ITextEmbedder` members (`EmbedBatch(texts, tokenCounts)`) embed text exactly as given (prompt `none`), and `Qwen3EmbeddingGenerator` uses `none` unless a prompt is set, so a generic retrieval consumer that passes raw queries gets them embedded without the instruction and lower retrieval quality, with no error. Format queries with `FormatQuery`, or use `prompt: "query"`.
 - **Reranker template.** `prefix + "<Instruct>: {instruction}\n<Query>: {query}\n<Document>: {document}" + suffix`, each part tokenized without special tokens, as the model card's transformers snippet. The instruction defaults to `Qwen3EmbeddingProfile.DefaultRerankInstruction`.
-- **Length.** 8192 tokens per input. Longer text is truncated from the right: the embedding keeps the appended `<|endoftext|>`, the reranker truncates only the instruction, query and document text. Attention memory grows with the square of the length; `Qwen3EmbeddingOptions.MaxBatchTokens` (default 16,384 padded cells) keeps long rows in small calls.
+- **Length.** 8192 tokens per input. Longer text is truncated from the right: the embedding keeps the appended `<|endoftext|>`, the reranker keeps the template prefix and suffix and cuts the content (`<Instruct>`, `<Query>`, `<Document>` as one sequence) from the right, so the document tail goes first and a very long query can cut away the whole document. The graph uses eager attention, so memory grows with the square of the length: one 8192-token row needs roughly 4.3 GB of attention scores per layer. `Qwen3EmbeddingOptions.MaxBatchTokens` (default 8192 padded cells) makes a maximum-length row run alone; a budget of 16,384 lets two such rows share a call and roughly doubles that.
 - **Batching.** Rows are right-padded with `<|endoftext|>` (151643) and read at `sum(mask) - 1`, in input order, `MaxBatchSize` rows (default 8) per call.
 - **Microsoft.Extensions.AI.** `Starlings.Models.Qwen3Embedding.Extensions.AI` adds `Qwen3EmbeddingGenerator`, an `IEmbeddingGenerator<string, Embedding<float>>`.
 
@@ -56,8 +56,8 @@ The application references the ONNX Runtime native package (`Microsoft.ML.OnnxRu
 | Named prompts and custom instructions | experimental |
 | Batching; inputs up to 8192 tokens (right truncation) | experimental |
 | `IEmbeddingGenerator` (Extensions.AI package) | experimental |
-| Matryoshka (MRL) dimensions below 1024 | untested (rejected) |
-| CUDA | untested (CPU sessions only) |
+| Matryoshka (MRL) dimensions below 1024 | unsupported (rejected) |
+| CUDA | unsupported (CPU sessions only) |
 | Download of the graphs | unsupported until the graphs are hosted |
 | fp16/bf16 graphs, the 4B and 8B checkpoints, more than 8192 tokens | unsupported |
 

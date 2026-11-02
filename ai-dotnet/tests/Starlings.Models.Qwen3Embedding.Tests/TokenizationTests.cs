@@ -87,6 +87,9 @@ public sealed class TokenizationTests
         }
 
         Assert.Throws<InvalidOperationException>(() => tokenization.TokenizeText("x", string.Empty));
+        Assert.Throws<ArgumentNullException>(() => tokenization.CountPair(null!, "q", "d"));
+        Assert.Throws<ArgumentNullException>(() => tokenization.CountPair("i", null!, "d"));
+        Assert.Throws<ArgumentNullException>(() => tokenization.CountPair("i", "q", null!));
     }
 
     [Fact]

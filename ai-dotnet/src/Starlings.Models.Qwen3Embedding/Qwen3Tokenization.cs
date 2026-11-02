@@ -117,6 +117,9 @@ internal sealed class Qwen3Tokenization
     public int CountPair(string instruction, string query, string document)
     {
         RequireTask(Qwen3EmbeddingTask.Reranking);
+        ArgumentNullException.ThrowIfNull(instruction);
+        ArgumentNullException.ThrowIfNull(query);
+        ArgumentNullException.ThrowIfNull(document);
         return _prefix.Length + _suffix.Length
             + _untruncated.Encode(RerankContent(instruction, query, document), addSpecialTokens: false).Count;
     }
