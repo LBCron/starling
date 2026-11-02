@@ -28,7 +28,13 @@ int ToolBody()
         return 2;
     }
 
-    int threads = options.TryGetValue("--threads", out var rawThreads) ? int.Parse(rawThreads, CultureInfo.InvariantCulture) : 2;
+    int threads = 2;
+    if (options.TryGetValue("--threads", out var rawThreads)
+        && (!int.TryParse(rawThreads, NumberStyles.None, CultureInfo.InvariantCulture, out threads) || threads is < 1 or > 64))
+    {
+        Console.Error.WriteLine("--threads must be an integer from 1 to 64");
+        return 2;
+    }
     using var candidate = JsonDocument.Parse(File.ReadAllText(options["--profile"]));
     var problems = ContractProblems(candidate.RootElement, out var profile);
     if (problems.Count > 0)
@@ -167,6 +173,12 @@ static List<string> ContractProblems(JsonElement candidate, out Qwen3EmbeddingPr
     var hosting = behavior.GetProperty("hosting");
     Same("behavior.hosting.repo", hosting.GetProperty("repo").GetString(), profile.HostingRepository);
     Same("behavior.hosting.revision", hosting.GetProperty("revision").GetString(), profile.HostingRevision);
+    var hostedPaths = hosting.GetProperty("files").EnumerateArray().Select(f => f.GetProperty("path").GetString()).ToHashSet(StringComparer.Ordinal);
+    foreach (string required in new[] { Qwen3EmbeddingProfile.GraphFile, Qwen3EmbeddingProfile.GraphDataFile }.Where(p => !hostedPaths.Contains(p)))
+    {
+        problems.Add($"behavior.hosting.files: missing {required}");
+    }
+
     foreach (var file in hosting.GetProperty("files").EnumerateArray())
     {
         string path = file.GetProperty("path").GetString()!;

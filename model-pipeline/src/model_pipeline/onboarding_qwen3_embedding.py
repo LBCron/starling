@@ -453,7 +453,18 @@ def build_stages(
         script(
             out,
             "run_qwen3_reference.py",
-            ["--model", model, "--model-dir", str(snapshot), "--corpus", str(corpus), "--out", str(out)],
+            [
+                "--model",
+                model,
+                "--model-dir",
+                str(snapshot),
+                "--corpus",
+                str(corpus),
+                "--out",
+                str(out),
+                "--threads",
+                str(threads),
+            ],
         )
         record = json.loads((out / "reference.json").read_text(encoding="utf-8"))
         return {"cases": len(record["cases"]), "reference_status": "proposed"}
@@ -632,8 +643,11 @@ def build_stages(
             for relative in (
                 "ai-dotnet/tools/Starlings.Qwen3Embedding.Fidelity.Tool",
                 "ai-dotnet/src/Starlings.Models.Qwen3Embedding",
+                "ai-dotnet/src/Starlings.Models.Abstractions",
                 "ai-dotnet/src/Starlings.Runtime.Onnx",
                 "ai-dotnet/src/Starlings.Acquisition",
+                "ai-dotnet/src/Shared/Batching",
+                "ai-dotnet/tools/Shared",
             )
             if (root / relative).is_dir()
         ),

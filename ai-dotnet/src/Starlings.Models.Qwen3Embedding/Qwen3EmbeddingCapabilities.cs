@@ -2,8 +2,10 @@ namespace Starlings.Models.Qwen3Embedding;
 
 /// <summary>
 /// Explicit support status of each capability of this package (plan section 9). A capability not listed here is not
-/// supported. Nothing in this package is qualified: the onboarding evidence is development parity on CPU, and the
-/// profiles are Experimental (starlinghq/starling#144).
+/// supported. Nothing in this package is qualified: the onboarding evidence is development parity on CPU. Registry
+/// maturity is per profile: the embedding profile is Experimental, and the reranker profile has no registry manifest
+/// until its hidden-state bound is decided (starlinghq/starling#144). These constants are the package's capability
+/// statuses, not registry maturity.
 /// </summary>
 public static class Qwen3EmbeddingCapabilities
 {

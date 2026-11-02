@@ -28,6 +28,11 @@ fixture is protected, and nothing here is binding.
 - .NET: the library and `ai-dotnet/tools/Starlings.Qwen3Embedding.Fidelity.Tool` from this change (the pipeline records
   the working tree as `c231221a-dirty`, the base commit plus this change), ONNX Runtime 1.30.0, `Starlings.Tokenizers`
   0.3.4.
+- After these runs, review fixes changed only run plumbing, not computed values: the reference stage now receives
+  `--threads` (it defaulted to 2, the count used here), the `dotnet` stage fingerprint now also covers
+  `Starlings.Models.Abstractions` and the shared batching and tool sources, and the fidelity tool rejects a bad
+  `--threads` value or a candidate that omits a hosted graph file. The recorded stage fingerprints in `*/run.json`
+  are from before those fixes.
 
 ## Embedding: passed
 
