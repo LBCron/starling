@@ -1,0 +1,8 @@
+# 2026-11-02T16:06:44Z STARLING_MODELS=~/.cache/starling-r3-qwen35-hosting/cache-r2 (files downloaded from Starlinghq/qwen3.5-0.8b-ortgenai@22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45); commit 7304bd2bb0a714eb88542e627bc8889b4428dbb0; CPU: Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz
+xUnit.net v3 In-Process Runner v4.0.1+8ed8aa354c (64-bit .NET 10.0.14)
+  Discovering: Starlings.Models.Qwen35.Extensions.AI.Tests
+  Discovered:  Starlings.Models.Qwen35.Extensions.AI.Tests
+  Starting:    Starlings.Models.Qwen35.Extensions.AI.Tests
+  Finished:    Starlings.Models.Qwen35.Extensions.AI.Tests (ID = '6b70bc464f05c4003322bcda98474eef423971c2fa4048211f7e67665462b1b6')
+=== TEST EXECUTION SUMMARY ===
+   Starlings.Models.Qwen35.Extensions.AI.Tests  Total: 19, Errors: 0, Failed: 0, Skipped: 0, Not Run: 0, Time: 28.457s
