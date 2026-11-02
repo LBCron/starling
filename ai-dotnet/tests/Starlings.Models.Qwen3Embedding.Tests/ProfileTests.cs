@@ -28,7 +28,17 @@ public sealed class ProfileTests
             Assert.Equal(profile.Revision, profile.RuntimeLock.Revision);
             Assert.True(profile.RuntimeLock.GetFile(Qwen3EmbeddingProfile.GraphDataFile).Size > 2_000_000_000L);
             Assert.Equal(6, profile.RuntimeLock.Files.Count);
+            Assert.Equal(profile.HostingRepository, profile.RuntimeLock.HostingRepository);
+            Assert.Equal(profile.HostingRevision, profile.RuntimeLock.HostingRevision);
+            Assert.Matches("^[0-9a-f]{40}$", profile.HostingRevision);
+            Assert.StartsWith("Starlinghq/", profile.HostingRepository, StringComparison.Ordinal);
+            Assert.All(profile.RuntimeLock.Files, file => Assert.Null(file.Source));
         }
+
+        Assert.Equal("Starlinghq/qwen3-embedding-0.6b-onnx", embedding.HostingRepository);
+        Assert.Equal("Starlinghq/qwen3-reranker-0.6b-onnx", reranker.HostingRepository);
+        Assert.Same(embedding.RuntimeLock, Qwen3EmbeddingModelAssets.Embedding06B.Lock);
+        Assert.Same(reranker.RuntimeLock, Qwen3EmbeddingModelAssets.Reranker06B.Lock);
 
         Assert.Equal("aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
             reranker.RuntimeLock.GetFile(Qwen3EmbeddingProfile.TokenizerFile).Sha256);
@@ -54,7 +64,7 @@ public sealed class ProfileTests
         Assert.Equal(CapabilityStatus.Experimental, Qwen3EmbeddingCapabilities.Batching);
         Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.MatryoshkaDimensions);
         Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.Cuda);
-        Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.Download);
+        Assert.Equal(CapabilityStatus.Experimental, Qwen3EmbeddingCapabilities.Download);
         Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.ReducedPrecision);
         Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.LargerCheckpoints);
         Assert.Equal(CapabilityStatus.Unsupported, Qwen3EmbeddingCapabilities.BeyondMaxTokens);

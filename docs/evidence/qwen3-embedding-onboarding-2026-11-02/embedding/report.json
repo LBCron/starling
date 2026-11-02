@@ -1,0 +1,2869 @@
+{
+  "checks": [
+    {
+      "detail": "{\"model.onnx\": [337132, \"de6805d74481fefc313ea470de3877f64fe4093c99ce9d1172a026128d90d864\"], \"model.onnx.data\": [2383077376, \"7c7569e58783ee0ad8c5fb797d7944aa4f5928af53fb4c1f626f71885af22969\"]}",
+      "id": "build/hosted-bytes",
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/all/hidden_max_abs",
+      "max_abs": 0.0010704994201660156,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/card-query-0/hidden_max_abs",
+      "max_abs": 0.000148773193359375,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/card-query-1/hidden_max_abs",
+      "max_abs": 0.000148773193359375,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/card-doc-0/hidden_max_abs",
+      "max_abs": 9.1552734375e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/card-doc-1/hidden_max_abs",
+      "max_abs": 4.482269287109375e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/empty/hidden_max_abs",
+      "max_abs": 7.82012939453125e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/space-only/hidden_max_abs",
+      "max_abs": 5.2094459533691406e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/ascii-sentence/hidden_max_abs",
+      "max_abs": 9.1552734375e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/ascii-punct/hidden_max_abs",
+      "max_abs": 0.0001697540283203125,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/ascii-case/hidden_max_abs",
+      "max_abs": 4.9591064453125e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/digits/hidden_max_abs",
+      "max_abs": 8.490309119224548e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/ws-leading-trailing/hidden_max_abs",
+      "max_abs": 5.14984130859375e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/ws-multi-space/hidden_max_abs",
+      "max_abs": 4.00543212890625e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/ws-tab-newline/hidden_max_abs",
+      "max_abs": 7.772445678710938e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/ws-unicode-spaces/hidden_max_abs",
+      "max_abs": 3.719329833984375e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/ws-zero-width/hidden_max_abs",
+      "max_abs": 0.00021886825561523438,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/control-chars/hidden_max_abs",
+      "max_abs": 4.38690185546875e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/bom/hidden_max_abs",
+      "max_abs": 8.726119995117188e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/replacement-char/hidden_max_abs",
+      "max_abs": 6.580352783203125e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/accents-precomposed/hidden_max_abs",
+      "max_abs": 7.2479248046875e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/accents-decomposed/hidden_max_abs",
+      "max_abs": 7.2479248046875e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/combining-stack/hidden_max_abs",
+      "max_abs": 0.0001983642578125,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/devanagari/hidden_max_abs",
+      "max_abs": 6.341934204101562e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/thai/hidden_max_abs",
+      "max_abs": 8.96453857421875e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/arabic/hidden_max_abs",
+      "max_abs": 0.0001010894775390625,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/hebrew/hidden_max_abs",
+      "max_abs": 8.96453857421875e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/rtl-mixed/hidden_max_abs",
+      "max_abs": 6.198883056640625e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/chinese/hidden_max_abs",
+      "max_abs": 5.340576171875e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/japanese/hidden_max_abs",
+      "max_abs": 5.817413330078125e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/korean/hidden_max_abs",
+      "max_abs": 4.100799560546875e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/korean-jamo/hidden_max_abs",
+      "max_abs": 0.00014972686767578125,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/cyrillic-greek/hidden_max_abs",
+      "max_abs": 0.000118255615234375,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/german-turkish-case/hidden_max_abs",
+      "max_abs": 7.62939453125e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/nfkc-compat/hidden_max_abs",
+      "max_abs": 6.246566772460938e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/math-alnum-astral/hidden_max_abs",
+      "max_abs": 0.0001125335693359375,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/emoji-basic/hidden_max_abs",
+      "max_abs": 0.0001735687255859375,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/emoji-zwj/hidden_max_abs",
+      "max_abs": 0.00010395050048828125,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/emoji-modifiers/hidden_max_abs",
+      "max_abs": 8.392333984375e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/cjk-ext-b/hidden_max_abs",
+      "max_abs": 0.00023031234741210938,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/unknown-char/hidden_max_abs",
+      "max_abs": 0.00013113021850585938,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/special-literal-s/hidden_max_abs",
+      "max_abs": 6.127357482910156e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/special-literal-mask/hidden_max_abs",
+      "max_abs": 4.1484832763671875e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/special-lookalike-spaced/hidden_max_abs",
+      "max_abs": 5.53131103515625e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/special-lookalike-qwen/hidden_max_abs",
+      "max_abs": 7.82012939453125e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/special-lookalike-gliner/hidden_max_abs",
+      "max_abs": 5.7697296142578125e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/e5-query-prefix/hidden_max_abs",
+      "max_abs": 0.000102996826171875,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/e5-passage-prefix/hidden_max_abs",
+      "max_abs": 6.604194641113281e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/repeated-char/hidden_max_abs",
+      "max_abs": 0.00012969970703125,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/no-spaces-long-word/hidden_max_abs",
+      "max_abs": 8.0108642578125e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/long-english/hidden_max_abs",
+      "max_abs": 0.0010704994201660156,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/long-mixed/hidden_max_abs",
+      "max_abs": 0.0005474090576171875,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/pair-ascii/hidden_max_abs",
+      "max_abs": 6.103515625e-05,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/pair-multilingual/hidden_max_abs",
+      "max_abs": 0.000102996826171875,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/pair-empty-second/hidden_max_abs",
+      "max_abs": 0.0001239776611328125,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/long-4000/hidden_max_abs",
+      "max_abs": 0.000732421875,
+      "status": "passed"
+    },
+    {
+      "bound": 0.002,
+      "id": "python-onnx/long-8000/hidden_max_abs",
+      "max_abs": 0.0006508827209472656,
+      "status": "passed"
+    },
+    {
+      "id": "python-onnx/eos-last",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "python-onnx/all/embedding_max_abs",
+      "max_abs": 6.034970283508301e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 0.001,
+      "id": "python-onnx/card/cosine_max_abs",
+      "max_abs": 3.8743019104003906e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "sentence-transformers/card/embedding_max_abs",
+      "max_abs": 2.551823854446411e-07,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-query-0/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-query-0/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-query-0/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/card-query-0/embedding_max_abs",
+      "max_abs": 1.695533251768605e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/card-query-0/norm_max_abs",
+      "max_abs": 2.110968733148866e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/card-query-0/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/card-query-0/embedding_max_abs",
+      "max_abs": 1.695533251768605e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/card-query-0/norm_max_abs",
+      "max_abs": 2.110968733148866e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-query-1/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-query-1/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-query-1/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/card-query-1/embedding_max_abs",
+      "max_abs": 2.7215644263917094e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/card-query-1/norm_max_abs",
+      "max_abs": 9.538841938550036e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/card-query-1/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/card-query-1/embedding_max_abs",
+      "max_abs": 2.7215644263917094e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/card-query-1/norm_max_abs",
+      "max_abs": 9.538841938550036e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-doc-0/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-doc-0/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-doc-0/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/card-doc-0/embedding_max_abs",
+      "max_abs": 2.3115702438292196e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/card-doc-0/norm_max_abs",
+      "max_abs": 3.3118360276418457e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/card-doc-0/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/card-doc-0/embedding_max_abs",
+      "max_abs": 2.3115702438292196e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/card-doc-0/norm_max_abs",
+      "max_abs": 3.3118360276418457e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-doc-1/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-doc-1/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/card-doc-1/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/card-doc-1/embedding_max_abs",
+      "max_abs": 1.8903256049189465e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/card-doc-1/norm_max_abs",
+      "max_abs": 3.975313744852826e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/card-doc-1/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/card-doc-1/embedding_max_abs",
+      "max_abs": 1.8903256049189465e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/card-doc-1/norm_max_abs",
+      "max_abs": 3.975313744852826e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-empty/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-empty/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-empty/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-empty/embedding_max_abs",
+      "max_abs": 6.034093570708721e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-empty/norm_max_abs",
+      "max_abs": 1.7264136786820927e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-empty/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-empty/embedding_max_abs",
+      "max_abs": 6.034093570708721e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-empty/norm_max_abs",
+      "max_abs": 1.7264136786820927e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-space-only/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-space-only/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-space-only/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-space-only/embedding_max_abs",
+      "max_abs": 9.238466730119785e-08,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-space-only/norm_max_abs",
+      "max_abs": 5.3438586888887585e-11,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-space-only/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-space-only/embedding_max_abs",
+      "max_abs": 9.238466730119785e-08,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-space-only/norm_max_abs",
+      "max_abs": 5.3438586888887585e-11,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ascii-sentence/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ascii-sentence/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ascii-sentence/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-ascii-sentence/embedding_max_abs",
+      "max_abs": 2.669846296300682e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-ascii-sentence/norm_max_abs",
+      "max_abs": 1.8851632477279168e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-ascii-sentence/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-ascii-sentence/embedding_max_abs",
+      "max_abs": 2.669846296300682e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-ascii-sentence/norm_max_abs",
+      "max_abs": 1.8851632477279168e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ascii-punct/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ascii-punct/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ascii-punct/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-ascii-punct/embedding_max_abs",
+      "max_abs": 1.4114768600442806e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-ascii-punct/norm_max_abs",
+      "max_abs": 5.674483771755945e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-ascii-punct/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-ascii-punct/embedding_max_abs",
+      "max_abs": 1.4114768600442806e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-ascii-punct/norm_max_abs",
+      "max_abs": 5.674483771755945e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ascii-case/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ascii-case/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ascii-case/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-ascii-case/embedding_max_abs",
+      "max_abs": 1.1955115318540432e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-ascii-case/norm_max_abs",
+      "max_abs": 2.525325726310257e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-ascii-case/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-ascii-case/embedding_max_abs",
+      "max_abs": 1.1955115318540432e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-ascii-case/norm_max_abs",
+      "max_abs": 2.525325726310257e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-digits/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-digits/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-digits/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-digits/embedding_max_abs",
+      "max_abs": 2.836881256157442e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-digits/norm_max_abs",
+      "max_abs": 8.407817775335502e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-digits/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-digits/embedding_max_abs",
+      "max_abs": 2.836881256157442e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-digits/norm_max_abs",
+      "max_abs": 8.407817775335502e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-leading-trailing/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-leading-trailing/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-leading-trailing/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-ws-leading-trailing/embedding_max_abs",
+      "max_abs": 2.0999607086569227e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-ws-leading-trailing/norm_max_abs",
+      "max_abs": 1.7956047759781768e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-ws-leading-trailing/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-ws-leading-trailing/embedding_max_abs",
+      "max_abs": 2.0999607086569227e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-ws-leading-trailing/norm_max_abs",
+      "max_abs": 1.7956047759781768e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-multi-space/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-multi-space/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-multi-space/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-ws-multi-space/embedding_max_abs",
+      "max_abs": 1.440003163158659e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-ws-multi-space/norm_max_abs",
+      "max_abs": 1.0952394546848154e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-ws-multi-space/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-ws-multi-space/embedding_max_abs",
+      "max_abs": 1.440003163158659e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-ws-multi-space/norm_max_abs",
+      "max_abs": 1.0952394546848154e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-tab-newline/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-tab-newline/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-tab-newline/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-ws-tab-newline/embedding_max_abs",
+      "max_abs": 1.725159635545398e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-ws-tab-newline/norm_max_abs",
+      "max_abs": 7.318190498040167e-11,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-ws-tab-newline/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-ws-tab-newline/embedding_max_abs",
+      "max_abs": 1.725159635545398e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-ws-tab-newline/norm_max_abs",
+      "max_abs": 7.318190498040167e-11,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-unicode-spaces/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-unicode-spaces/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-unicode-spaces/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-ws-unicode-spaces/embedding_max_abs",
+      "max_abs": 2.4673621654494604e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-ws-unicode-spaces/norm_max_abs",
+      "max_abs": 4.4630610318563413e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-ws-unicode-spaces/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-ws-unicode-spaces/embedding_max_abs",
+      "max_abs": 2.4673621654494604e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-ws-unicode-spaces/norm_max_abs",
+      "max_abs": 4.4630610318563413e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-zero-width/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-zero-width/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-ws-zero-width/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-ws-zero-width/embedding_max_abs",
+      "max_abs": 1.856080431936885e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-ws-zero-width/norm_max_abs",
+      "max_abs": 8.147298391492086e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-ws-zero-width/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-ws-zero-width/embedding_max_abs",
+      "max_abs": 1.856080431936885e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-ws-zero-width/norm_max_abs",
+      "max_abs": 8.147298391492086e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-control-chars/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-control-chars/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-control-chars/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-control-chars/embedding_max_abs",
+      "max_abs": 2.1208574676329084e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-control-chars/norm_max_abs",
+      "max_abs": 4.12950384998112e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-control-chars/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-control-chars/embedding_max_abs",
+      "max_abs": 2.1208574676329084e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-control-chars/norm_max_abs",
+      "max_abs": 4.12950384998112e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-bom/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-bom/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-bom/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-bom/embedding_max_abs",
+      "max_abs": 1.596565656659943e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-bom/norm_max_abs",
+      "max_abs": 1.1543108691114412e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-bom/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-bom/embedding_max_abs",
+      "max_abs": 1.596565656659943e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-bom/norm_max_abs",
+      "max_abs": 1.1543108691114412e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-replacement-char/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-replacement-char/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-replacement-char/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-replacement-char/embedding_max_abs",
+      "max_abs": 1.5935855865456539e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-replacement-char/norm_max_abs",
+      "max_abs": 2.627875916871858e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-replacement-char/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-replacement-char/embedding_max_abs",
+      "max_abs": 1.5935855865456539e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-replacement-char/norm_max_abs",
+      "max_abs": 2.627875916871858e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-accents-precomposed/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-accents-precomposed/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-accents-precomposed/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-accents-precomposed/embedding_max_abs",
+      "max_abs": 2.553047418578369e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-accents-precomposed/norm_max_abs",
+      "max_abs": 4.348577165025347e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-accents-precomposed/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-accents-precomposed/embedding_max_abs",
+      "max_abs": 2.553047418578369e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-accents-precomposed/norm_max_abs",
+      "max_abs": 4.348577165025347e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-accents-decomposed/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-accents-decomposed/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-accents-decomposed/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-accents-decomposed/embedding_max_abs",
+      "max_abs": 2.553047418578369e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-accents-decomposed/norm_max_abs",
+      "max_abs": 4.348577165025347e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-accents-decomposed/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-accents-decomposed/embedding_max_abs",
+      "max_abs": 2.553047418578369e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-accents-decomposed/norm_max_abs",
+      "max_abs": 4.348577165025347e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-combining-stack/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-combining-stack/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-combining-stack/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-combining-stack/embedding_max_abs",
+      "max_abs": 2.634579520221364e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-combining-stack/norm_max_abs",
+      "max_abs": 2.435323165350667e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-combining-stack/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-combining-stack/embedding_max_abs",
+      "max_abs": 2.634579520221364e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-combining-stack/norm_max_abs",
+      "max_abs": 2.435323165350667e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-devanagari/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-devanagari/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-devanagari/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-devanagari/embedding_max_abs",
+      "max_abs": 1.9695536613434372e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-devanagari/norm_max_abs",
+      "max_abs": 1.4740395570811415e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-devanagari/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-devanagari/embedding_max_abs",
+      "max_abs": 1.9695536613434372e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-devanagari/norm_max_abs",
+      "max_abs": 1.4740395570811415e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-thai/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-thai/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-thai/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-thai/embedding_max_abs",
+      "max_abs": 1.9717757988174656e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-thai/norm_max_abs",
+      "max_abs": 4.5097303669194844e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-thai/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-thai/embedding_max_abs",
+      "max_abs": 1.9717757988174656e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-thai/norm_max_abs",
+      "max_abs": 4.5097303669194844e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-arabic/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-arabic/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-arabic/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-arabic/embedding_max_abs",
+      "max_abs": 2.2054077148531137e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-arabic/norm_max_abs",
+      "max_abs": 3.901533984773664e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-arabic/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-arabic/embedding_max_abs",
+      "max_abs": 2.2054077148531137e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-arabic/norm_max_abs",
+      "max_abs": 3.901533984773664e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-hebrew/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-hebrew/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-hebrew/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-hebrew/embedding_max_abs",
+      "max_abs": 1.6825192451774829e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-hebrew/norm_max_abs",
+      "max_abs": 7.01631197586039e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-hebrew/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-hebrew/embedding_max_abs",
+      "max_abs": 1.6825192451774829e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-hebrew/norm_max_abs",
+      "max_abs": 7.01631197586039e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-rtl-mixed/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-rtl-mixed/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-rtl-mixed/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-rtl-mixed/embedding_max_abs",
+      "max_abs": 2.587496199610989e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-rtl-mixed/norm_max_abs",
+      "max_abs": 3.6659342228517744e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-rtl-mixed/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-rtl-mixed/embedding_max_abs",
+      "max_abs": 2.587496199610989e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-rtl-mixed/norm_max_abs",
+      "max_abs": 3.6659342228517744e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-chinese/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-chinese/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-chinese/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-chinese/embedding_max_abs",
+      "max_abs": 2.0903525066451323e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-chinese/norm_max_abs",
+      "max_abs": 1.0584118026457645e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-chinese/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-chinese/embedding_max_abs",
+      "max_abs": 2.0903525066451323e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-chinese/norm_max_abs",
+      "max_abs": 1.0584118026457645e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-japanese/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-japanese/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-japanese/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-japanese/embedding_max_abs",
+      "max_abs": 1.8298211083411092e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-japanese/norm_max_abs",
+      "max_abs": 2.8225013437577218e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-japanese/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-japanese/embedding_max_abs",
+      "max_abs": 1.8298211083411092e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-japanese/norm_max_abs",
+      "max_abs": 2.8225013437577218e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-korean/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-korean/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-korean/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-korean/embedding_max_abs",
+      "max_abs": 1.8642376327544785e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-korean/norm_max_abs",
+      "max_abs": 1.3688048472459968e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-korean/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-korean/embedding_max_abs",
+      "max_abs": 1.8642376327544785e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-korean/norm_max_abs",
+      "max_abs": 1.3688048472459968e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-korean-jamo/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-korean-jamo/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-korean-jamo/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-korean-jamo/embedding_max_abs",
+      "max_abs": 1.3795877075450935e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-korean-jamo/norm_max_abs",
+      "max_abs": 2.2366647423055497e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-korean-jamo/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-korean-jamo/embedding_max_abs",
+      "max_abs": 1.3795877075450935e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-korean-jamo/norm_max_abs",
+      "max_abs": 2.2366647423055497e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-cyrillic-greek/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-cyrillic-greek/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-cyrillic-greek/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-cyrillic-greek/embedding_max_abs",
+      "max_abs": 3.0597273635579736e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-cyrillic-greek/norm_max_abs",
+      "max_abs": 2.853752900655593e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-cyrillic-greek/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-cyrillic-greek/embedding_max_abs",
+      "max_abs": 3.0597273635579736e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-cyrillic-greek/norm_max_abs",
+      "max_abs": 2.853752900655593e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-german-turkish-case/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-german-turkish-case/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-german-turkish-case/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-german-turkish-case/embedding_max_abs",
+      "max_abs": 2.589532389638341e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-german-turkish-case/norm_max_abs",
+      "max_abs": 6.696238008530031e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-german-turkish-case/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-german-turkish-case/embedding_max_abs",
+      "max_abs": 2.589532389638341e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-german-turkish-case/norm_max_abs",
+      "max_abs": 6.696238008530031e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-nfkc-compat/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-nfkc-compat/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-nfkc-compat/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-nfkc-compat/embedding_max_abs",
+      "max_abs": 2.433312129984655e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-nfkc-compat/norm_max_abs",
+      "max_abs": 2.0839041603437636e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-nfkc-compat/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-nfkc-compat/embedding_max_abs",
+      "max_abs": 2.433312129984655e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-nfkc-compat/norm_max_abs",
+      "max_abs": 2.0839041603437636e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-math-alnum-astral/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-math-alnum-astral/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-math-alnum-astral/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-math-alnum-astral/embedding_max_abs",
+      "max_abs": 3.134864273064697e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-math-alnum-astral/norm_max_abs",
+      "max_abs": 7.471473439935039e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-math-alnum-astral/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-math-alnum-astral/embedding_max_abs",
+      "max_abs": 3.134864273064697e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-math-alnum-astral/norm_max_abs",
+      "max_abs": 7.471473439935039e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-emoji-basic/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-emoji-basic/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-emoji-basic/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-emoji-basic/embedding_max_abs",
+      "max_abs": 2.0756653022757643e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-emoji-basic/norm_max_abs",
+      "max_abs": 2.474163096621851e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-emoji-basic/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-emoji-basic/embedding_max_abs",
+      "max_abs": 2.0756653022757643e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-emoji-basic/norm_max_abs",
+      "max_abs": 2.474163096621851e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-emoji-zwj/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-emoji-zwj/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-emoji-zwj/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-emoji-zwj/embedding_max_abs",
+      "max_abs": 2.008100891126574e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-emoji-zwj/norm_max_abs",
+      "max_abs": 1.408509420208759e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-emoji-zwj/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-emoji-zwj/embedding_max_abs",
+      "max_abs": 2.008100891126574e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-emoji-zwj/norm_max_abs",
+      "max_abs": 1.408509420208759e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-emoji-modifiers/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-emoji-modifiers/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-emoji-modifiers/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-emoji-modifiers/embedding_max_abs",
+      "max_abs": 2.376548004154322e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-emoji-modifiers/norm_max_abs",
+      "max_abs": 1.233706470316065e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-emoji-modifiers/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-emoji-modifiers/embedding_max_abs",
+      "max_abs": 2.376548004154322e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-emoji-modifiers/norm_max_abs",
+      "max_abs": 1.233706470316065e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-cjk-ext-b/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-cjk-ext-b/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-cjk-ext-b/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-cjk-ext-b/embedding_max_abs",
+      "max_abs": 2.6830840110791954e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-cjk-ext-b/norm_max_abs",
+      "max_abs": 3.8809477853618546e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-cjk-ext-b/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-cjk-ext-b/embedding_max_abs",
+      "max_abs": 2.6830840110791954e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-cjk-ext-b/norm_max_abs",
+      "max_abs": 3.8809477853618546e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-unknown-char/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-unknown-char/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-unknown-char/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-unknown-char/embedding_max_abs",
+      "max_abs": 2.1824753951987796e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-unknown-char/norm_max_abs",
+      "max_abs": 1.368763102860271e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-unknown-char/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-unknown-char/embedding_max_abs",
+      "max_abs": 2.1824753951987796e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-unknown-char/norm_max_abs",
+      "max_abs": 1.368763102860271e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-literal-s/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-literal-s/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-literal-s/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-special-literal-s/embedding_max_abs",
+      "max_abs": 1.621766319258311e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-special-literal-s/norm_max_abs",
+      "max_abs": 8.213120183953038e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-special-literal-s/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-special-literal-s/embedding_max_abs",
+      "max_abs": 1.621766319258311e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-special-literal-s/norm_max_abs",
+      "max_abs": 8.213120183953038e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-literal-mask/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-literal-mask/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-literal-mask/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-special-literal-mask/embedding_max_abs",
+      "max_abs": 1.6800509262254737e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-special-literal-mask/norm_max_abs",
+      "max_abs": 2.1946163775155014e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-special-literal-mask/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-special-literal-mask/embedding_max_abs",
+      "max_abs": 1.6800509262254737e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-special-literal-mask/norm_max_abs",
+      "max_abs": 2.1946163775155014e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-lookalike-spaced/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-lookalike-spaced/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-lookalike-spaced/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-special-lookalike-spaced/embedding_max_abs",
+      "max_abs": 1.6287487029920111e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-special-lookalike-spaced/norm_max_abs",
+      "max_abs": 2.951230371195379e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-special-lookalike-spaced/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-special-lookalike-spaced/embedding_max_abs",
+      "max_abs": 1.6287487029920111e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-special-lookalike-spaced/norm_max_abs",
+      "max_abs": 2.951230371195379e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-lookalike-qwen/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-lookalike-qwen/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-lookalike-qwen/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-special-lookalike-qwen/embedding_max_abs",
+      "max_abs": 2.880246229176181e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-special-lookalike-qwen/norm_max_abs",
+      "max_abs": 1.8385017952482485e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-special-lookalike-qwen/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-special-lookalike-qwen/embedding_max_abs",
+      "max_abs": 2.880246229176181e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-special-lookalike-qwen/norm_max_abs",
+      "max_abs": 1.8385017952482485e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-lookalike-gliner/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-lookalike-gliner/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-special-lookalike-gliner/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-special-lookalike-gliner/embedding_max_abs",
+      "max_abs": 1.7506909751746624e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-special-lookalike-gliner/norm_max_abs",
+      "max_abs": 3.414188931571971e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-special-lookalike-gliner/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-special-lookalike-gliner/embedding_max_abs",
+      "max_abs": 1.7506909751746624e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-special-lookalike-gliner/norm_max_abs",
+      "max_abs": 3.414188931571971e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-e5-query-prefix/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-e5-query-prefix/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-e5-query-prefix/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-e5-query-prefix/embedding_max_abs",
+      "max_abs": 1.6712824821296657e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-e5-query-prefix/norm_max_abs",
+      "max_abs": 9.023448654943422e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-e5-query-prefix/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-e5-query-prefix/embedding_max_abs",
+      "max_abs": 1.6712824821296657e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-e5-query-prefix/norm_max_abs",
+      "max_abs": 9.023448654943422e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-e5-passage-prefix/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-e5-passage-prefix/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-e5-passage-prefix/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-e5-passage-prefix/embedding_max_abs",
+      "max_abs": 1.4691545487111046e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-e5-passage-prefix/norm_max_abs",
+      "max_abs": 9.916144572130747e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-e5-passage-prefix/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-e5-passage-prefix/embedding_max_abs",
+      "max_abs": 1.4691545487111046e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-e5-passage-prefix/norm_max_abs",
+      "max_abs": 9.916144572130747e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-repeated-char/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-repeated-char/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-repeated-char/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-repeated-char/embedding_max_abs",
+      "max_abs": 2.2405632019162347e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-repeated-char/norm_max_abs",
+      "max_abs": 1.7311809763498331e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-repeated-char/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-repeated-char/embedding_max_abs",
+      "max_abs": 2.2405632019162347e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-repeated-char/norm_max_abs",
+      "max_abs": 1.7311809763498331e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-no-spaces-long-word/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-no-spaces-long-word/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-no-spaces-long-word/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-no-spaces-long-word/embedding_max_abs",
+      "max_abs": 1.897044010143456e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-no-spaces-long-word/norm_max_abs",
+      "max_abs": 2.9145907909366997e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-no-spaces-long-word/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-no-spaces-long-word/embedding_max_abs",
+      "max_abs": 1.897044010143456e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-no-spaces-long-word/norm_max_abs",
+      "max_abs": 2.9145907909366997e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-long-english/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-long-english/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-long-english/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-long-english/embedding_max_abs",
+      "max_abs": 1.8579061888956971e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-long-english/norm_max_abs",
+      "max_abs": 9.742563422676653e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-long-english/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-long-english/embedding_max_abs",
+      "max_abs": 1.8579061888956971e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-long-english/norm_max_abs",
+      "max_abs": 9.742563422676653e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-long-mixed/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-long-mixed/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-long-mixed/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-long-mixed/embedding_max_abs",
+      "max_abs": 1.8987717437940477e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-long-mixed/norm_max_abs",
+      "max_abs": 1.847326736026389e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-long-mixed/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-long-mixed/embedding_max_abs",
+      "max_abs": 1.8987717437940477e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-long-mixed/norm_max_abs",
+      "max_abs": 1.847326736026389e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-pair-ascii/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-pair-ascii/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-pair-ascii/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-pair-ascii/embedding_max_abs",
+      "max_abs": 2.2760938501314998e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-pair-ascii/norm_max_abs",
+      "max_abs": 2.4922247598979652e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-pair-ascii/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-pair-ascii/embedding_max_abs",
+      "max_abs": 2.2760938501314998e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-pair-ascii/norm_max_abs",
+      "max_abs": 2.4922247598979652e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-pair-multilingual/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-pair-multilingual/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-pair-multilingual/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-pair-multilingual/embedding_max_abs",
+      "max_abs": 2.108028573991061e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-pair-multilingual/norm_max_abs",
+      "max_abs": 2.455939007717234e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-pair-multilingual/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-pair-multilingual/embedding_max_abs",
+      "max_abs": 2.108028573991061e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-pair-multilingual/norm_max_abs",
+      "max_abs": 2.455939007717234e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-pair-empty-second/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-pair-empty-second/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/corpus-pair-empty-second/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/corpus-pair-empty-second/embedding_max_abs",
+      "max_abs": 1.3824828910824483e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/corpus-pair-empty-second/norm_max_abs",
+      "max_abs": 9.319969240806358e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/corpus-pair-empty-second/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/corpus-pair-empty-second/embedding_max_abs",
+      "max_abs": 1.3824828910824483e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/corpus-pair-empty-second/norm_max_abs",
+      "max_abs": 9.319969240806358e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-space-only/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-space-only/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-space-only/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/query-space-only/embedding_max_abs",
+      "max_abs": 4.805038089777947e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/query-space-only/norm_max_abs",
+      "max_abs": 2.6393776053623696e-11,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/query-space-only/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/query-space-only/embedding_max_abs",
+      "max_abs": 4.805038089777947e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/query-space-only/norm_max_abs",
+      "max_abs": 2.6393776053623696e-11,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ascii-sentence/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ascii-sentence/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ascii-sentence/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/query-ascii-sentence/embedding_max_abs",
+      "max_abs": 2.389685058584723e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/query-ascii-sentence/norm_max_abs",
+      "max_abs": 8.778455740099389e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/query-ascii-sentence/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/query-ascii-sentence/embedding_max_abs",
+      "max_abs": 2.389685058584723e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/query-ascii-sentence/norm_max_abs",
+      "max_abs": 8.778455740099389e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ascii-punct/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ascii-punct/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ascii-punct/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/query-ascii-punct/embedding_max_abs",
+      "max_abs": 2.0340036511416054e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/query-ascii-punct/norm_max_abs",
+      "max_abs": 1.0632624780626543e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/query-ascii-punct/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/query-ascii-punct/embedding_max_abs",
+      "max_abs": 2.0340036511416054e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/query-ascii-punct/norm_max_abs",
+      "max_abs": 1.0632624780626543e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ascii-case/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ascii-case/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ascii-case/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/query-ascii-case/embedding_max_abs",
+      "max_abs": 1.6253021955549285e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/query-ascii-case/norm_max_abs",
+      "max_abs": 1.039783370515579e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/query-ascii-case/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/query-ascii-case/embedding_max_abs",
+      "max_abs": 1.6253021955549285e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/query-ascii-case/norm_max_abs",
+      "max_abs": 1.039783370515579e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-digits/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-digits/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-digits/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/query-digits/embedding_max_abs",
+      "max_abs": 2.645678415305608e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/query-digits/norm_max_abs",
+      "max_abs": 6.523522833035145e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/query-digits/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/query-digits/embedding_max_abs",
+      "max_abs": 2.645678415305608e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/query-digits/norm_max_abs",
+      "max_abs": 6.523522833035145e-10,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ws-leading-trailing/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ws-leading-trailing/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ws-leading-trailing/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/query-ws-leading-trailing/embedding_max_abs",
+      "max_abs": 2.5392903327953187e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/query-ws-leading-trailing/norm_max_abs",
+      "max_abs": 1.6839184491246328e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/query-ws-leading-trailing/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/query-ws-leading-trailing/embedding_max_abs",
+      "max_abs": 2.5392903327953187e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/query-ws-leading-trailing/norm_max_abs",
+      "max_abs": 1.6839184491246328e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ws-multi-space/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ws-multi-space/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ws-multi-space/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/query-ws-multi-space/embedding_max_abs",
+      "max_abs": 2.2765654945217095e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/query-ws-multi-space/norm_max_abs",
+      "max_abs": 1.4077192744821332e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/query-ws-multi-space/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/query-ws-multi-space/embedding_max_abs",
+      "max_abs": 2.2765654945217095e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/query-ws-multi-space/norm_max_abs",
+      "max_abs": 1.4077192744821332e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ws-tab-newline/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ws-tab-newline/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/query-ws-tab-newline/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/query-ws-tab-newline/embedding_max_abs",
+      "max_abs": 2.3263953399799142e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/query-ws-tab-newline/norm_max_abs",
+      "max_abs": 1.1686522860543391e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/query-ws-tab-newline/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/query-ws-tab-newline/embedding_max_abs",
+      "max_abs": 2.3263953399799142e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/query-ws-tab-newline/norm_max_abs",
+      "max_abs": 1.1686522860543391e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/long-4000/token_ids",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/long-4000/eos-last",
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-text/long-4000/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-text/long-4000/embedding_max_abs",
+      "max_abs": 1.6868531990069796e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-text/long-4000/norm_max_abs",
+      "max_abs": 4.2497907415395275e-09,
+      "status": "passed"
+    },
+    {
+      "id": "dotnet-ids/long-4000/finite",
+      "status": "passed"
+    },
+    {
+      "bound": 0.0001,
+      "id": "dotnet-ids/long-4000/embedding_max_abs",
+      "max_abs": 1.6868531990069796e-07,
+      "status": "passed"
+    },
+    {
+      "bound": 1e-05,
+      "id": "dotnet-ids/long-4000/norm_max_abs",
+      "max_abs": 4.2497907415395275e-09,
+      "status": "passed"
+    },
+    {
+      "bound": 0.001,
+      "id": "dotnet-text/card/cosine_max_abs",
+      "max_abs": 3.5762786865234375e-07,
+      "status": "passed"
+    }
+  ],
+  "failed_checks": 0,
+  "failures": [],
+  "policy": {
+    "card_cosine_max_abs": 0.001,
+    "embedding_max_abs": 0.0001,
+    "hidden_max_abs": 0.002,
+    "non_finite": "fail",
+    "norm_max_abs": 1e-05,
+    "score_max_abs": 0.001,
+    "token_ids": "exact"
+  },
+  "profile": "qwen3-embedding-0.6b/onnx-fp32-cpu",
+  "qualification_status": "unapproved",
+  "reference_status": "proposed",
+  "status": "passed",
+  "task": "embeddings"
+}

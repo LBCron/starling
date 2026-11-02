@@ -77,6 +77,7 @@
     <Project Path="tools/Starlings.Bert.Fidelity.Tool/Starlings.Bert.Fidelity.Tool.csproj" />
     <Project Path="tools/Starlings.Whisper.Fidelity.Tool/Starlings.Whisper.Fidelity.Tool.csproj" />
     <Project Path="tools/Starlings.PaddleOcr.Fidelity.Tool/Starlings.PaddleOcr.Fidelity.Tool.csproj" />
+    <Project Path="tools/Starlings.Qwen3Embedding.Fidelity.Tool/Starlings.Qwen3Embedding.Fidelity.Tool.csproj" />
     <Project Path="tools/Starlings.Kev.Fidelity.Tool/Starlings.Kev.Fidelity.Tool.csproj" />
     <Project Path="tools/Starlings.Generation.Fidelity/Starlings.Generation.Fidelity.csproj" />
     <Project Path="tools/Starlings.Acquisition.Tool/Starlings.Acquisition.Tool.csproj" />

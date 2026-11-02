@@ -441,6 +441,7 @@ def test_every_registered_plugin_declares_its_distribution_source():
         "kev-onnx-cpu-v1": True,
         "whisper-onnx-cpu-v1": True,
         "ppocr-onnx-cpu-v1": True,
+        "qwen3-embedding-onnx-cpu-v1": True,
     }
     with pytest.raises(PipelineError, match="SHARED_DISTRIBUTION"):
         onboarding_plugins.uses_shared_distribution(SimpleNamespace(SHARED_DISTRIBUTION="yes"))

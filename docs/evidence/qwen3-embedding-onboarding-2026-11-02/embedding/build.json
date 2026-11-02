@@ -1,0 +1,31 @@
+{
+  "exporter": "dynamo",
+  "hosted_bytes_match": true,
+  "hosting": {
+    "files": [
+      {
+        "path": "model.onnx",
+        "sha256": "de6805d74481fefc313ea470de3877f64fe4093c99ce9d1172a026128d90d864",
+        "size": 337132
+      },
+      {
+        "path": "model.onnx.data",
+        "sha256": "7c7569e58783ee0ad8c5fb797d7944aa4f5928af53fb4c1f626f71885af22969",
+        "size": 2383077376
+      }
+    ],
+    "repo": "Starlinghq/qwen3-embedding-0.6b-onnx",
+    "revision": "0585005027acc7232133808914cd8bc2a4bd1ea8"
+  },
+  "opset": 20,
+  "released_graph": {
+    "model.onnx": [
+      337132,
+      "de6805d74481fefc313ea470de3877f64fe4093c99ce9d1172a026128d90d864"
+    ],
+    "model.onnx.data": [
+      2383077376,
+      "7c7569e58783ee0ad8c5fb797d7944aa4f5928af53fb4c1f626f71885af22969"
+    ]
+  }
+}

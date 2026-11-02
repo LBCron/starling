@@ -14,6 +14,7 @@ Command-line tools for acquisition, fidelity stage results, operational qualific
 | [`Starlings.Kev.Fidelity.Tool`](#starlingskevfidelitytool) | The .NET stage of the `kev-onnx-cpu-v1` onboarding route. | yes |
 | [`Starlings.Whisper.Fidelity.Tool`](#starlingswhisperfidelitytool) | The .NET stage of the `whisper-onnx-cpu-v1` onboarding route. | yes |
 | [`Starlings.PaddleOcr.Fidelity.Tool`](#starlingspaddleocrfidelitytool) | The .NET stage of the `ppocr-onnx-cpu-v1` onboarding route. | yes |
+| [`Starlings.Qwen3Embedding.Fidelity.Tool`](#starlingsqwen3embeddingfidelitytool) | The .NET stage of the `qwen3-embedding-onnx-cpu-v1` onboarding route. | yes |
 | [`Starlings.Soak.Tool`](#starlingssoaktool) | Gate G4 soak for every model profile. | yes |
 | [`Starlings.Gliner2.CudaStress`](#starlingsgliner2cudastress) | Local reproducer for the GLiNER2 CUDA wrong output. | no (local) |
 | [`Shared/ToolMain.cs`](#sharedtoolmaincs) | Common entry-point wrapper. | n/a (source) |
@@ -107,6 +108,10 @@ Starlings.PaddleOcr.Fidelity.Tool --profile <candidate.json> --snapshot <dir wit
 ```
 
 The .NET stage of the `ppocr-onnx-cpu-v1` onboarding route (`model-pipeline/src/model_pipeline/onboarding_ppocr.py`). It checks the candidate contract against the library's constants and asset locks, then for every corpus image decodes the PNG (through `Starlings.Models.EmbeddingGemma2.Imaging.SkiaSharp`) and records: the detector input and the public `PaddleOcrEngine.Recognize` lines; the probability map and recognizer probabilities of the reference's own inputs and the CTC text of those probabilities; the owned DB post-processing of the reference probability map; and the recognizer input cropped from each reference box. Writes `dotnet.json` plus a float32 tensor sidecar. Exit 2 on a usage error.
+## Starlings.Qwen3Embedding.Fidelity.Tool
+
+The .NET stage of the `qwen3-embedding-onnx-cpu-v1` onboarding route (`model-pipeline/src/model_pipeline/onboarding_qwen3_embedding.py`). It checks the candidate contract against the built-in `Qwen3EmbeddingProfile` (upstream revision, hosting repository and commit, graph digests, prompts, special token ids, reranker template), opens the released directory through the profile's lock, then for every reference case records the library's token ids and its output from the text (right-padded batches of up to 8 rows) and from the reference ids: the L2-normalized embedding, or the reranker score. Embedding runs add the card's four query-document cosines; reranker runs add the template's prefix and suffix ids and the public `Score` API on the card pairs. Writes `dotnet.json`. Exit 2 on a usage error, 1 on a contract mismatch.
+
 ## Starlings.Kev.Fidelity.Tool
 
 ```sh

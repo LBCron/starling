@@ -1,0 +1,31 @@
+{
+  "exporter": "dynamo",
+  "hosted_bytes_match": true,
+  "hosting": {
+    "files": [
+      {
+        "path": "model.onnx",
+        "sha256": "b162410db82c0e26f231cda7ddf1ec659ed6707c90e82e5556fb8f1076997581",
+        "size": 337355
+      },
+      {
+        "path": "model.onnx.data",
+        "sha256": "fbfe2bddcffc9e8b4a1145bf02f4ebc99119e57e38d32bf7f04172a7d0cf9c7c",
+        "size": 2383085568
+      }
+    ],
+    "repo": "Starlinghq/qwen3-reranker-0.6b-onnx",
+    "revision": "0f951df2baec8e9ac7f884f349d2820a34aa85e5"
+  },
+  "opset": 20,
+  "released_graph": {
+    "model.onnx": [
+      337355,
+      "b162410db82c0e26f231cda7ddf1ec659ed6707c90e82e5556fb8f1076997581"
+    ],
+    "model.onnx.data": [
+      2383085568,
+      "fbfe2bddcffc9e8b4a1145bf02f4ebc99119e57e38d32bf7f04172a7d0cf9c7c"
+    ]
+  }
+}

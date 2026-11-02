@@ -1,0 +1,196 @@
+# Qwen3 Embedding series (Starlings.Models.Qwen3Embedding, design #144, model request #108): Qwen/Qwen3-Embedding-0.6B
+# through Starling's fp32 ONNX export (hosted at Starlinghq/qwen3-embedding-0.6b-onnx) on ONNX Runtime 1.30.0, CPU
+# provider. Admission: model-pipeline/admissions/qwen3-embedding.md (Experimental, 2026-11-02). Candidate contract:
+# model-pipeline/candidates/qwen3-embedding-0.6b/profile.json (onboarding route qwen3-embedding-onnx-cpu-v1,
+# recipes/qwen3-embedding-0.6b-cpu.yaml). Development evidence: docs/evidence/qwen3-embedding-onboarding-2026-11-02/
+# (558 checks passed). References are proposed, nothing is adopted into protected/, and no gate has run.
+schema_version: 1
+id: qwen3-embedding-0.6b/onnx-fp32-cpu
+# Experimental: development parity on the onboarding route only (proposed references, predeclared candidate policy); no gate ran.
+maturity: experimental
+
+origin:
+  code:
+    # Starling's export recipe (model-pipeline/reference/qwen3-embedding/, export_qwen3_onnx.py then
+    # release_qwen3_onnx.py) at main when the graph was released: upstream ships PyTorch weights only.
+    url: https://github.com/starlinghq/starling
+    revision: "c231221ae1582243d6d9108bd401e6f602e737cb"
+  weights:
+    url: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B
+    revision: "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3"
+  files:
+    # Qwen3EmbeddingProfile.Embedding06B.RuntimeLock: Starlinghq/qwen3-embedding-0.6b-onnx at the pinned commit, the
+    # export plus the original files of Qwen/Qwen3-Embedding-0.6B at 97b0c614 unchanged.
+    - path: config.json
+      sha256: "b5bf1f51fc45be473a54718cef92448d90a1be001bf9b9a44b8c7f10a19feaa9"
+      size: 727
+    - path: config_sentence_transformers.json
+      sha256: "10667c72ddb772627bf1780cb7f86af8e2ae0032b8c243c731172064105c6961"
+      size: 215
+    - path: model.onnx
+      sha256: "de6805d74481fefc313ea470de3877f64fe4093c99ce9d1172a026128d90d864"
+      size: 337132
+    - path: model.onnx.data
+      sha256: "7c7569e58783ee0ad8c5fb797d7944aa4f5928af53fb4c1f626f71885af22969"
+      size: 2383077376
+    - path: tokenizer.json
+      sha256: "def76fb086971c7867b829c23a26261e38d9d74e02139253b38aeb9df8b4b50a"
+      size: 11423705
+    - path: tokenizer_config.json
+      sha256: "253153d0738ceb4c668d2eff957714dd2bea0b56de772a9fdccd96cbf517e6a0"
+      size: 9706
+  attribution: >-
+    Qwen3-Embedding-0.6B by the Qwen team, Alibaba Cloud (Qwen/Qwen3-Embedding-0.6B, Apache-2.0). fp32 ONNX export by
+    Starling (model-pipeline/reference/qwen3-embedding/export_qwen3_onnx.py).
+
+rights:
+  code_license: MIT OR Apache-2.0
+  weights_license: Apache-2.0
+  tokenizer_terms: Apache-2.0
+  redistribution: download
+  notes: >-
+    Weights and tokenizer: Apache-2.0 (license: apache-2.0 in the model card front matter of Qwen/Qwen3-Embedding-0.6B
+    at 97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3). The hosting repository carries the Apache License 2.0 and a NOTICE
+    stating the modifications (model-pipeline/reference/qwen3-embedding/NOTICE-qwen3-embedding-onnx.txt). Nothing is
+    bundled in the package: the application downloads the pinned files explicitly
+    (Qwen3EmbeddingModelAssets.DownloadAsync) from the public repository Starlinghq/qwen3-embedding-0.6b-onnx, verified
+    by size and SHA-256.
+
+behavior:
+  tasks: [embedding]
+  # Including the prompt and the appended <|endoftext|> (Qwen3EmbeddingProfile.DefaultMaxTokens).
+  max_input_tokens: 8192
+  offsets_unit: none
+  # Right truncation that keeps the appended <|endoftext|>.
+  truncation: truncate-right
+  defaults:
+    pooling: last token (the hidden state at sum(attention_mask) - 1, the appended <|endoftext|>)
+    normalize: l2
+    dimension: 1024
+    prompts: "none = ''; document = ''; query = 'Instruct: Given a web search query, retrieve relevant passages that answer the query\\nQuery:' (no trailing space); never applied implicitly"
+    batching: right padding with <|endoftext|> and mask 0, MaxBatchSize rows per call (default 8), MaxBatchTokens padded cells (default 8192)
+    threads: Qwen3EmbeddingOptions.Threads intra-op (default 4)
+  unsupported:
+    - "GPU execution providers (CUDA, DirectML, CoreML)"
+    - "fp16, bf16 and quantized graphs"
+    - "Matryoshka (MRL) dimensions below 1024 (rejected)"
+    - "the 4B and 8B checkpoints"
+    - "inputs longer than 8192 tokens without truncation"
+    - "streaming"
+    - "training and fine-tuning"
+    - "ML.NET adapter"
+
+processing:
+  tokenizer:
+    # The owned tokenizer pinned in ai-dotnet/Directory.Packages.props; ONNX Runtime receives ids only.
+    package: Starlings.Tokenizers
+    version: 0.3.4
+    # Byte-level BPE with the Sequence[ByteLevel, TemplateProcessing] post-processor that appends <|endoftext|>.
+    profile_id: qwen3-bpe-embedding
+    algorithm: byte-level-bpe
+    assets:
+      - path: tokenizer.json
+        sha256: "def76fb086971c7867b829c23a26261e38d9d74e02139253b38aeb9df8b4b50a"
+        size: 11423705
+    backend_tokenizer_dependency: false
+
+execution:
+  backend:
+    name: onnxruntime
+    version: 1.30.0
+    binding: Microsoft.ML.OnnxRuntime
+  precision: fp32
+  variant: reference
+  graph:
+    # Qwen3EmbeddingProfile.Embedding06B.RuntimeLock: these graph files and the upstream files above.
+    assets:
+      - path: model.onnx
+        sha256: "de6805d74481fefc313ea470de3877f64fe4093c99ce9d1172a026128d90d864"
+        size: 337132
+      - path: model.onnx.data
+        sha256: "7c7569e58783ee0ad8c5fb797d7944aa4f5928af53fb4c1f626f71885af22969"
+        size: 2383077376
+    hosting:
+      # Public repository; the digests, not the address, pin the bytes. The export recipe reproduces them byte for byte.
+      repository: https://huggingface.co/Starlinghq/qwen3-embedding-0.6b-onnx
+      revision: "0585005027acc7232133808914cd8bc2a4bd1ea8"
+      source_base: https://huggingface.co/Starlinghq/qwen3-embedding-0.6b-onnx/resolve/0585005027acc7232133808914cd8bc2a4bd1ea8/
+      source_status: public
+      produced_by:
+        - model-pipeline/reference/qwen3-embedding/export_qwen3_onnx.py (PyTorch dynamo exporter, opset 20, fp32)
+        - model-pipeline/reference/qwen3-embedding/release_qwen3_onnx.py (metadata stripped, one external data file)
+    inputs:
+      - { name: input_ids, type: int64, shape: [batch, sequence] }
+      - { name: attention_mask, type: int64, shape: [batch, sequence] }
+    outputs:
+      - { name: last_hidden_state, type: float32, shape: [batch, sequence, 1024] }
+
+capabilities:
+  # Starlings.Models.Qwen3Embedding (Qwen3EmbeddingCapabilities). Experimental where the onboarding route compared the C#
+  # package with the PyTorch reference (no adopted reference, no gate); unsupported where the package does not offer it;
+  # untested where no evidence exists.
+  batch: experimental
+  streaming: unsupported
+  cancellation: experimental  # between batch chunks
+  persistence: unsupported
+  training: unsupported
+  aot: untested
+  extensions_ai: experimental  # Starlings.Models.Qwen3Embedding.Extensions.AI (Qwen3EmbeddingGenerator)
+  mlnet: unsupported
+  text: experimental
+  prompts: experimental
+  long_input: experimental  # evidence up to 6,572 tokens; 8,192 by construction
+  asset_acquisition: experimental  # Qwen3EmbeddingModelAssets.DownloadAsync from the public hosting repository
+  built_in_profile: experimental  # Qwen3EmbeddingProfile.Embedding06B
+  matryoshka_dimensions: unsupported
+  gpu: unsupported
+
+compatibility:
+  # Linux x64 CPU: development evidence from the onboarding route on 2026-11-02. No gate.
+  - os: linux
+    arch: x64
+    provider: cpu
+    status: experimental
+    verified: 2026-11-02
+  - os: windows
+    arch: x64
+    provider: cpu
+    status: untested
+  - os: linux
+    arch: x64
+    provider: cuda
+    status: unsupported
+
+qualification:
+  reference_runner: model-pipeline/reference/qwen3-embedding/run_qwen3_reference.py
+  # No protected fixtures exist for this profile: the proposed corpus the recipe runs (recipes/qwen3-embedding-0.6b-cpu.yaml).
+  fixtures: model-pipeline/reference/corpus/tokenizer-corpus-v1.jsonl
+  # No protected tolerances: the predeclared candidate policy (evaluation.policy, status proposed). Adoption into
+  # protected/ is a separate change.
+  tolerances: model-pipeline/candidates/qwen3-embedding-0.6b/profile.json
+  gates:
+    G0: { status: not-run }
+    G1: { status: not-run }
+    G2: { status: not-run }
+    G3: { status: not-run }
+    G4: { status: not-run }
+    G5: { status: not-run }
+    G6: { status: not-run }
+    G7: { status: not-run }
+
+maintenance:
+  owner: Mark
+  latest_known_upstream_revision: "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3"
+  latest_verified_upstream_revision: "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3"
+  last_checked: 2026-11-02
+  review_date: 2027-02-02
+  known_issues:
+    - >-
+      The references are proposed, not adopted into protected/, and no gate has run; every capability is at most
+      experimental.
+    - >-
+      The graph uses eager attention: memory grows with the square of the input length (about 4.3 GB of attention
+      scores per layer for one 8,192-token row). The longest evaluated input has 6,572 tokens.
+    - >-
+      ITextEmbedder and Qwen3EmbeddingGenerator embed text as given (prompt none); queries need the query prompt or
+      Qwen3TextEmbedder.FormatQuery for full retrieval quality.

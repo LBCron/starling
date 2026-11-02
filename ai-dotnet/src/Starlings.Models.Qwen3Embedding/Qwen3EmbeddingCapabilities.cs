@@ -2,8 +2,8 @@ namespace Starlings.Models.Qwen3Embedding;
 
 /// <summary>
 /// Explicit support status of each capability of this package (plan section 9). A capability not listed here is not
-/// supported. Nothing in this package is qualified: there is no registry manifest or onboarding evidence yet
-/// (starlinghq/starling#144).
+/// supported. Nothing in this package is qualified: the onboarding evidence is development parity on CPU, and the
+/// profiles are Experimental (starlinghq/starling#144).
 /// </summary>
 public static class Qwen3EmbeddingCapabilities
 {
@@ -34,8 +34,11 @@ public static class Qwen3EmbeddingCapabilities
     /// <summary>ONNX Runtime CUDA. Not offered: the sessions are CPU only. Becomes Untested or Experimental once a CUDA session path exists.</summary>
     public const CapabilityStatus Cuda = CapabilityStatus.Unsupported;
 
-    /// <summary>Downloading the graphs. Not offered until the graphs are hosted; build them with the export recipe.</summary>
-    public const CapabilityStatus Download = CapabilityStatus.Unsupported;
+    /// <summary>
+    /// Downloading the released directory from the public Starlinghq hosting repositories, pinned by commit, size and
+    /// SHA-256 (<see cref="Qwen3EmbeddingModelAssets.DownloadAsync"/>).
+    /// </summary>
+    public const CapabilityStatus Download = CapabilityStatus.Experimental;
 
     /// <summary>fp16 or bf16 graphs.</summary>
     public const CapabilityStatus ReducedPrecision = CapabilityStatus.Unsupported;

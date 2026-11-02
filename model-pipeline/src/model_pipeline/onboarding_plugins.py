@@ -15,6 +15,7 @@ PLUGINS = {
     "kev-onnx-cpu-v1": "model_pipeline.onboarding_kev",
     "whisper-onnx-cpu-v1": "model_pipeline.onboarding_whisper",
     "ppocr-onnx-cpu-v1": "model_pipeline.onboarding_ppocr",
+    "qwen3-embedding-onnx-cpu-v1": "model_pipeline.onboarding_qwen3_embedding",
 }
 
 

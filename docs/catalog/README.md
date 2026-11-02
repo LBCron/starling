@@ -40,6 +40,7 @@ Gate cells link to the evidence the manifest records. The Stable readiness colum
 | [nomic-embed-text-v1.5/onnx-fp32-cpu](../../model-pipeline/registry/nomic-embed-text-v1.5/onnx-fp32-cpu/manifest.yaml) | embedding | experimental | Mark | 2027-01-23 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
 | [qwen2.5-0.5b-instruct/ortgenai-fp32-cpu](../../model-pipeline/registry/qwen2.5-0.5b-instruct/ortgenai-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-18 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_requests, long_context |
 | [qwen3-0.6b/ortgenai-fp32-cpu](../../model-pipeline/registry/qwen3-0.6b/ortgenai-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-18 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_requests, long_context |
+| [qwen3-embedding-0.6b/onnx-fp32-cpu](../../model-pipeline/registry/qwen3-embedding-0.6b/onnx-fp32-cpu/manifest.yaml) | embedding | experimental | Mark | 2027-02-02 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
 | [qwen3.5-0.8b/ortgenai-fp16x-cuda](../../model-pipeline/registry/qwen3.5-0.8b/ortgenai-fp16x-cuda/manifest.yaml) | generation | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp16x-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp16x-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp16x-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
 | [qwen3.5-0.8b/ortgenai-fp32x-cpu](../../model-pipeline/registry/qwen3.5-0.8b/ortgenai-fp32x-cpu/manifest.yaml) | generation | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cpu/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cpu/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cpu/README.md) | [passed](../evidence/g4-soak-1h-2026-10-14/README.md) | [passed](../evidence/qualification-2026-10-15/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
 | [qwen3.5-0.8b/ortgenai-fp32x-cuda](../../model-pipeline/registry/qwen3.5-0.8b/ortgenai-fp32x-cuda/manifest.yaml) | generation | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
@@ -78,6 +79,7 @@ Gate cells link to the evidence the manifest records. The Stable readiness colum
 | nomic-embed-text-v1.5/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
 | qwen2.5-0.5b-instruct/ortgenai-fp32-cpu | onnxruntime-genai 0.17.1 | Microsoft.ML.OnnxRuntimeGenAI 0.17.1 | fp32 | reference |
 | qwen3-0.6b/ortgenai-fp32-cpu | onnxruntime-genai 0.17.1 | Microsoft.ML.OnnxRuntimeGenAI 0.17.1 | fp32 | reference |
+| qwen3-embedding-0.6b/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
 | qwen3.5-0.8b/ortgenai-fp16x-cuda | onnxruntime-genai 0.17.1 | Microsoft.ML.OnnxRuntimeGenAI.Cuda 0.17.1 | fp16 | reference |
 | qwen3.5-0.8b/ortgenai-fp32x-cpu | onnxruntime-genai 0.17.1 | Microsoft.ML.OnnxRuntimeGenAI 0.17.1 | fp32 | reference |
 | qwen3.5-0.8b/ortgenai-fp32x-cuda | onnxruntime-genai 0.17.1 | Microsoft.ML.OnnxRuntimeGenAI.Cuda 0.17.1 | fp32 | reference |
@@ -506,6 +508,26 @@ One table per family, one column per profile. Rows are every capability any prof
 | usage | experimental |
 | vision | unsupported |
 
+### qwen3-embedding-0.6b
+
+| Capability | onnx-fp32-cpu |
+| --- | --- |
+| batch | experimental |
+| streaming | unsupported |
+| cancellation | experimental |
+| persistence | unsupported |
+| training | unsupported |
+| aot | untested |
+| extensions_ai | experimental |
+| mlnet | unsupported |
+| asset_acquisition | experimental |
+| built_in_profile | experimental |
+| gpu | unsupported |
+| long_input | experimental |
+| matryoshka_dimensions | unsupported |
+| prompts | experimental |
+| text | experimental |
+
 ### qwen3.5-0.8b
 
 | Capability | ortgenai-fp16x-cuda | ortgenai-fp32x-cpu | ortgenai-fp32x-cuda | ortgenai-int4-cpu |
@@ -699,6 +721,9 @@ One table per family, one column per profile. Rows are every capability any prof
 - `qwen3-0.6b/ortgenai-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
 - `qwen3-0.6b/ortgenai-fp32-cpu`: Bundle reproducibility was shown on one machine (two builds, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.
 - `qwen3-0.6b/ortgenai-fp32-cpu`: QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting.
+- `qwen3-embedding-0.6b/onnx-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
+- `qwen3-embedding-0.6b/onnx-fp32-cpu`: The graph uses eager attention: memory grows with the square of the input length (about 4.3 GB of attention scores per layer for one 8,192-token row). The longest evaluated input has 6,572 tokens.
+- `qwen3-embedding-0.6b/onnx-fp32-cpu`: ITextEmbedder and Qwen3EmbeddingGenerator embed text as given (prompt none); queries need the query prompt or Qwen3TextEmbedder.FormatQuery for full retrieval quality.
 - `qwen3.5-0.8b/ortgenai-fp16x-cuda`: Contract hardware: an NVIDIA GeForce RTX 3090 (Ampere, sm_86), driver 580, CUDA 13 runtime. The CUDA gates G1 to G5 (G4 and G5 in the binding 2026-10-16 round) ran on RTX 3090s, and the per-release GPU regression is pinned to the RTX 3090 and refuses any other GPU (tools/ci/runpod.py). Its first run, 38857860186, landed on an RTX 4090 (Ada) before the pin: every check of this profile passed there, but embeddinggemma-2/video-fp32-cuda failed G2 (docs/evidence/gpu-regression-2026-10-16/README.md). Other NVIDIA GPUs, including the RTX 4090, are untested and outside the contract.
 - `qwen3.5-0.8b/ortgenai-fp16x-cuda`: Concurrency on CUDA: requests are serialized step by step (concurrent ONNX Runtime GenAI 0.17.1 generators produced wrong tokens); concurrent_requests means that serialized mode.
 - `qwen3.5-0.8b/ortgenai-fp16x-cuda`: Cancellation is checked between decode steps and, with chunked prefill (the CUDA default), between prefill chunks; never inside a native call.
