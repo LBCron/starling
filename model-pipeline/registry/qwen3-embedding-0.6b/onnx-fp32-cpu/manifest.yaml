@@ -11,8 +11,9 @@ maturity: experimental
 
 origin:
   code:
-    # Starling's export recipe (model-pipeline/reference/qwen3-embedding/, export_qwen3_onnx.py then
-    # release_qwen3_onnx.py) at main when the graph was released: upstream ships PyTorch weights only.
+    # Starling's export scripts (model-pipeline/reference/qwen3-embedding/, export_qwen3_onnx.py then
+    # release_qwen3_onnx.py) at main when the graph was released: upstream ships PyTorch weights only. The hosted
+    # NOTICE and README text comes from the change that added this manifest, not from this revision.
     url: https://github.com/starlinghq/starling
     revision: "c231221ae1582243d6d9108bd401e6f602e737cb"
   weights:
@@ -139,8 +140,10 @@ capabilities:
   mlnet: unsupported
   text: experimental
   prompts: experimental
-  long_input: experimental  # evidence up to 6,572 tokens; 8,192 by construction
-  asset_acquisition: experimental  # Qwen3EmbeddingModelAssets.DownloadAsync from the public hosting repository
+  long_input: experimental  # evidence up to 6,572 tokens; untested from there to 8,192 (max_input_tokens)
+  # Qwen3EmbeddingModelAssets.DownloadAsync from the public hosting repository. Evidence: lock match and HEAD checks;
+  # no end-to-end download recorded yet.
+  asset_acquisition: experimental
   built_in_profile: experimental  # Qwen3EmbeddingProfile.Embedding06B
   matryoshka_dimensions: unsupported
   gpu: unsupported

@@ -31,8 +31,12 @@ fixture is protected, and nothing here is binding.
 - After these runs, review fixes changed only run plumbing, not computed values: the reference stage now receives
   `--threads` (it defaulted to 2, the count used here), the `dotnet` stage fingerprint now also covers
   `Starlings.Models.Abstractions` and the shared batching and tool sources, and the fidelity tool rejects a bad
-  `--threads` value or a candidate that omits a hosted graph file. The recorded stage fingerprints in `*/run.json`
-  are from before those fixes.
+  `--threads` value or a candidate that omits a hosted graph file. A doc comment in `Qwen3EmbeddingCapabilities.cs` and
+  two regenerated catalog blocks also changed after the runs, documentation only:
+  `ai-dotnet/src/Starlings.Models.Qwen3Embedding/README.md` and `ai-dotnet/src/Starlings.Acquisition/README.md`. The
+  recorded stage fingerprints in `*/run.json` are from before those changes, and `embedding/review.json` records the
+  candidate commit as `c231221a…-dirty` (the base commit plus this change's uncommitted working tree), not a commit of
+  this branch.
 
 ## Embedding: passed
 

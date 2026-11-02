@@ -21,7 +21,6 @@ import json
 import math
 import os
 import shutil
-from dataclasses import replace
 from pathlib import Path
 
 from model_pipeline import fixtures
@@ -663,5 +662,5 @@ def build_stages(
         source_reader(stage("onnx", ("build", "environment"), onnx, {"corpus": corpus}), candidate, snapshot),
         stage("dotnet", ("reference", "build", "environment"), dotnet, dotnet_inputs),
         stage("evaluate", ("reference", "build", "onnx", "dotnet"), evaluation),
-        replace(stage("review", ("assets", "build", "evaluate"), review)),
+        stage("review", ("assets", "build", "evaluate"), review),
     ]

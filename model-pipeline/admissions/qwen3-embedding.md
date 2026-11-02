@@ -6,13 +6,13 @@ pipeline stage 1. Facts were read from the Hub at the pinned revisions; every pi
 | Field | Value |
 | --- | --- |
 | Candidate | `Qwen/Qwen3-Embedding-0.6B` (text embeddings) and `Qwen/Qwen3-Reranker-0.6B` (reranking), through Starling's fp32 ONNX export hosted at `Starlinghq/qwen3-embedding-0.6b-onnx` and `Starlinghq/qwen3-reranker-0.6b-onnx` |
-| Code revision | Export recipe `model-pipeline/reference/qwen3-embedding/` at `c231221ae1582243d6d9108bd401e6f602e737cb` (no upstream code is run: the reference is transformers' own `Qwen3Model`) |
+| Code revision | Export scripts `model-pipeline/reference/qwen3-embedding/` (`export_qwen3_onnx.py`, `release_qwen3_onnx.py`) at `c231221ae1582243d6d9108bd401e6f602e737cb`; the hosted NOTICE and README text comes from this change, not from `c231221a` (graph bytes are unaffected: the export script is identical and the release script differs only in its docstring). No upstream code is run: the reference is transformers' own `Qwen3Model` |
 | Weight revision | Embedding `97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3`; reranker `e61197ed45024b0ed8a2d74b80b4d909f1255473`. Hosting: `0585005027acc7232133808914cd8bc2a4bd1ea8` and `0f951df2baec8e9ac7f884f349d2820a34aa85e5` |
 | Requested by / demand evidence | #108, #100; a decoder-based multilingual embedder and reranker pair at 0.6B, the sizes the card's MTEB results lead with |
 | Proposed owner | Mark |
 | Proposed maturity at first release | Experimental |
 | Decision | Proposed in this change, for the maintainer: admit `qwen3-embedding-0.6b/onnx-fp32-cpu` at Experimental (registry manifest added). Hold the reranker profile: its onboarding run failed the predeclared hidden-state bound (see Open risks). The package stays out of the release set until both profiles of the package are decided. |
-| Decided by and date | Pending maintainer review (proposed 2026-11-02) |
+| Decided by and date | Pending: merging the PR that adds this record is the decision. |
 
 ## Rights (hard blockers)
 
@@ -70,6 +70,11 @@ two threads (about 15 minutes each, export included).
 - **Reranker hidden-state drift.** The reranker's final hidden state differs from PyTorch by 3.65e-3 at 6,649 tokens and
   2.12e-3 at 2,058 tokens, above the predeclared 2e-3 (route cap 5e-3), while the score stays within 2.7e-5. The bound
   was not changed after the result; the maintainer decides whether the reranker candidate takes a bound within the cap
-  or the hidden state is checked only for embeddings.
+  or the hidden state is checked only for embeddings. Either way this is a route-code change, not only a candidate
+  edit: `validate_candidate_behavior` requires `evaluation.policy` to equal the shared `POLICY` constant in
+  `onboarding_qwen3_embedding.py`, so a reranker-specific bound needs a per-task policy there, with a test.
 - References are proposed and no gate has run.
-- Inputs of the full 8,192 tokens were not evaluated.
+- Inputs of the full 8,192 tokens were not evaluated: long input is untested above 6,572 (embedding) and 6,649
+  (reranker) tokens.
+- `Qwen3EmbeddingModelAssets.DownloadAsync` has not been run end to end against the hosting repositories; the
+  evidence is the lock match (size and SHA-256 of every hosted file) and HEAD checks.
