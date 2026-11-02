@@ -14,7 +14,9 @@ reachable). r2 adds two things in one Hub commit:
   pinned).
 
 Every r1 file keeps its bytes; only `README.md`, `NOTICE` and `SHA256SUMS` were rewritten to describe r2 (the
-`LICENSE` travels unchanged). `hosting-r2-SHA256SUMS` is the `SHA256SUMS` file of the commit.
+`LICENSE` travels unchanged). The Hub also appended four LFS lines to `.gitattributes` (1,724 to 1,987 bytes:
+`ortgenai-{fp32x,fp16x,int4}/tokenizer.json` and `ortgenai-int4/model.onnx.data`); no lock names that file.
+`hosting-r2-SHA256SUMS` is the `SHA256SUMS` file of the commit.
 
 Nothing here sets a tolerance, a gate or a golden. No `model-pipeline/protected/` file changed.
 
@@ -66,8 +68,19 @@ constraint, not a reference.
 | Log | Runs | Result |
 | --- | --- | --- |
 | `guidance-cpu-tests.log` | `GuidanceCpuModelTests` (fp32x, CPU: regex, JSON schema, required tool grammar with and without fast-forward tokens, fast-forward text equality) and `AssetAndCapabilityTests` | 22 passed, 0 skipped |
-| `guided-chat-client-tests.log` | `GuidedRealModelTests` (the IChatClient: `ToolMode` RequireAny and RequireSpecific, JSON `ResponseFormat`) and `GuidedDecodingTests` | 19 passed, 0 skipped |
+| `guided-chat-client-tests.log` | `GuidedRealModelTests` (the IChatClient: `ToolMode` RequireAny, JSON `ResponseFormat`) and `GuidedDecodingTests` (request mapping, including RequireSpecific, on a scripted backend) | 19 passed, 0 skipped |
+| `guided-chat-client-outputs.log` | `GuidedRealModelTests` rerun after review with each constrained output written to the log, plus a RequireSpecific case on the real model | 3 passed, 0 skipped |
 | `guidance-cuda-tests.log` | `Fp32xCudaGuidanceTests`, `Fp16xCudaGuidanceTests` (new: regex, JSON schema, required tool grammar with and without fast-forward), RTX 4060 Ti | 10 passed, 0 skipped |
+
+The IChatClient outputs in `guided-chat-client-outputs.log` (fp32x, CPU):
+
+| Request | Finish | Output |
+| --- | --- | --- |
+| "What's the weather in Porto?", `RequireAny` over `get_weather`, `get_time` | `tool_calls` | `get_weather({"city":"Porto"})` |
+| "What time is it in Porto?", `RequireSpecific("get_weather")` over the same tools | `tool_calls` | `get_weather({"city":"Porto"})` |
+| "What is 6 times 7? Reply as JSON.", JSON schema `{"answer": integer}` | `stop` | `{"answer": 42}` |
+
+The IChatClient checks ran on CPU only; the CUDA runs use the typed API, so the adapter itself has no CUDA run.
 
 ## 5. What changed in status
 
