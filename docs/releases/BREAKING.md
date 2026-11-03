@@ -18,20 +18,27 @@ Marked `[Obsolete]` (a warning, `error: false`) and removed in the next minor ve
 | `E5Capabilities.All`, `EmbeddingGemma2Capabilities.All`, `Gliner2Capabilities.All` | `Starlings.Models.E5`, `Starlings.Models.EmbeddingGemma2`, `Starlings.Models.Gliner2` | `XCapabilities.Statuses` | 0.4.0 |
 | `E5Capabilities.Profiles`, `EmbeddingGemma2Capabilities.Profiles`, `Gliner2Capabilities.Profiles` | `Starlings.Models.E5`, `Starlings.Models.EmbeddingGemma2`, `Starlings.Models.Gliner2` | `XCapabilities.ProfileCapabilities[profile].Capabilities` | 0.4.0 |
 | `EmbeddingGemma2InputTooLongException.MaximumTokens` | `Starlings.Models.EmbeddingGemma2` | `MaxTokens` (on `Starlings.Models.InputTooLongException`) | 0.4.0 |
-| `WhisperCapabilities.StableProfile` | `Starlings.Models.Whisper` (not yet published) | `WhisperCapabilities.CpuProfile` (same value) | unreleased (source only) |
+| `WhisperCapabilities.StableProfile` | `Starlings.Models.Whisper` (not yet published) | `WhisperCapabilities.CpuProfile` (same value) | 0.4.0 (source only) |
 
 The [`Starlings.Models.Abstractions` README](../../ai-dotnet/src/Starlings.Models.Abstractions/README.md#migrating-from-the-per-package-types) has the migration for the first six rows.
 
 ## Unreleased
 
-Merged to `main` after 0.4.0; collected in [`unreleased.md`](unreleased.md). Nothing here is published yet.
+Merged to `main` after 0.5.0; collected in [`unreleased.md`](unreleased.md). Nothing here is published yet.
 
-- **Obsolete:** `WhisperCapabilities.StableProfile`, replaced by `WhisperCapabilities.CpuProfile` (the profile is Experimental, not Stable). `Starlings.Models.Whisper` has not been published to nuget.org, so this affects only source consumers.
-- **`Starlings.Models.Whisper` (source only).** `WhisperModelAssets.Lock` adds `onnx/decoder_with_past_model_fp16.onnx`: a cache acquired earlier makes `WhisperModelAssets.OpenLocal` and `OpenDirectory` throw `ModelAssetMissingException` until `DownloadAsync` runs again, with either `DecoderMode`. KV-cache decoding is the default (`WhisperOptions.DecoderMode = WhisperDecoderMode.FullContext` keeps the previous loop). `WhisperOptions.NoTimestamps = false` makes `Transcribe` return the timestamped decode's text. `WhisperTokenizer.Decode` drops timestamp tokens.
-- **`Starlings.Models.Whisper` long-form transcription (source only, #222).** `WhisperTranscriber.Transcribe` and `TranscribeWithTimestamps` accept clips longer than 3000 mel frames (480,160 samples or more), which earlier code refused with `ArgumentException`, and transcribe them in 30 s windows; `TranscribeMelWithTimestamps` takes a spectrogram of any number of frames instead of exactly `[128, 3000]`. `WhisperMelSpectrogram.ExtractChunk` still refuses clips over 30 s.
-- **`Starlings.Models.Kev`: `KevModelProfile` has two new `required` members (#246).** `CheckpointLock` and `BaseCheckpointLock` (`ModelAssetLock`) are `required init`, like the record's other members, so code that creates its own `KevModelProfile` with an object initializer no longer compiles until it sets both (error CS9035). `KevModelProfile.Kev08B`, `Kev4B`, `All` and `with` copies of them are unaffected. The package now depends on `Starlings.Acquisition` (exact version), as does `Starlings.Models.QwenChat`.
+- Nothing yet.
+
+## 0.5.0
+
+Record: [`ai-0.5.0.md`](ai-0.5.0.md), "Upgrading from 0.4.0".
+
+- **`Starlings.Models.Kev`: `KevModelProfile` has two new `required` members (#246).** `CheckpointLock` and `BaseCheckpointLock` (`ModelAssetLock`) are `required init`, like the record's other members, so code that creates its own `KevModelProfile` with an object initializer no longer compiles until it sets both (error CS9035). `KevModelProfile.Kev08B`, `Kev4B`, `All` and `with` copies of them are unaffected. This is an exception to the one-minor-version notice (support policy, rule 5): a new `required` member cannot first be announced with `[Obsolete]`, and the members are `required` so that no `KevModelProfile` exists without the checkpoint locks that pin its Hub files. The package now depends on `Starlings.Acquisition` (exact version), as does `Starlings.Models.QwenChat`.
 - **`Starlings.Models.Qwen35.OnnxGenAI`: hosting revision r2 (#139, #163).** Each variant's lock (`Qwen35ModelAssets.GetLock`) adds `ortgenai-<variant>/tokenizer.json` and `ortgenai-<variant>/tokenizer_config.json`: a cache acquired earlier makes `Qwen35ModelAssets.OpenLocal` and `OpenDirectory` throw `ModelAssetMissingException` until `DownloadAsync` runs again, whether or not guidance is used. `DownloadAsync(Qwen35Variant.Int4)` now downloads instead of throwing `NotSupportedException`, and `IsHosted` is true for every variant.
-- **Tokenizer pin** `Starlings.Tokenizers [0.3.4]` (0.3.2 in 0.4.0): additive; outputs of existing profiles are unchanged.
+- **New transitive dependencies.** `Starlings.Models.Kev` and `Starlings.Models.QwenChat` now bring `Starlings.Acquisition`; `Starlings.Models.Kev.Onnx`, `Starlings.Models.Qwen35.OnnxGenAI`, `Starlings.Models.QwenChat.OnnxGenAI` and `Starlings.Models.Lfm3` now bring `Starlings.Models.Abstractions`, at the same version.
+- **`Starlings.Models.E5`: CUDA capability record.** `E5Capabilities.ProfileCapabilities["multilingual-e5-small/onnx-fp32-cuda"].Capabilities` now contains `concurrent_calls` (Supported); code that read the missing key as anything else sees the stated status.
+- **Tokenizer pin** unchanged: `Starlings.Tokenizers [0.3.4]`, as in 0.4.0.
+- **Not removed:** the members marked `[Obsolete]` in 0.4.0 (see [Pending removals](#pending-removals)) are still present and behave as before. 0.4.0 was not tagged when this candidate was prepared; if it is never published, consumers first see these warnings in 0.5.0, and the one-minor-version notice of the support policy counts from the first published version that carries them.
+- `Starlings.Models.Qwen3Embedding` and `.Extensions.AI` are new in source and not published (pending the reranker decision, #144, #100), so nothing in them is a published API.
 - No member was removed.
 
 ## 0.4.0
@@ -61,6 +68,13 @@ Record: [`ai-0.4.0.md`](ai-0.4.0.md), "Upgrading from 0.3.0".
 - `Qwen35ChatModel` on CPU prefills prompts above 1,024 tokens in 1,024-token chunks unless `PrefillChunkTokens` is set (`int.MaxValue` keeps the one-call prefill).
 - Build diagnostics: an executable or test project that references a model runtime package without a native package gets `STARLINGS001` or `STARLINGS003`; one with both a CPU and a GPU native package of one runtime fails with `STARLINGS002` or `STARLINGS004`.
 - `Starlings.Models.Bert` (first publish; for users of the library from source): `bge-m3` and `bge-reranker-v2-m3` `RuntimeLock`s have 3 files (`onnx/model.onnx_data` added); download again.
+
+**Recorded after the candidate (#272; listed under "Unreleased" until 0.5.0's candidate):**
+
+- **Obsolete (source only):** `WhisperCapabilities.StableProfile`, replaced by `WhisperCapabilities.CpuProfile` (the profile is Experimental, not Stable). `Starlings.Models.Whisper` has not been published to nuget.org, so this affects only source consumers.
+- **`Starlings.Models.Whisper` (source only).** `WhisperModelAssets.Lock` adds `onnx/decoder_with_past_model_fp16.onnx`: a cache acquired earlier makes `WhisperModelAssets.OpenLocal` and `OpenDirectory` throw `ModelAssetMissingException` until `DownloadAsync` runs again, with either `DecoderMode`. KV-cache decoding is the default (`WhisperOptions.DecoderMode = WhisperDecoderMode.FullContext` keeps the previous loop). `WhisperOptions.NoTimestamps = false` makes `Transcribe` return the timestamped decode's text. `WhisperTokenizer.Decode` drops timestamp tokens.
+- **`Starlings.Models.Whisper` long-form transcription (source only, #222).** `WhisperTranscriber.Transcribe` and `TranscribeWithTimestamps` accept clips longer than 3000 mel frames (480,160 samples or more), which earlier code refused with `ArgumentException`, and transcribe them in 30 s windows; `TranscribeMelWithTimestamps` takes a spectrogram of any number of frames instead of exactly `[128, 3000]`. `WhisperMelSpectrogram.ExtractChunk` still refuses clips over 30 s.
+- **Tokenizer pin** `Starlings.Tokenizers [0.3.4]` (0.3.0 in 0.3.0): additive; outputs of existing profiles are unchanged.
 
 **Removed:** nothing.
 

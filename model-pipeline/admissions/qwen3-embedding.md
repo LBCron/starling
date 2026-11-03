@@ -11,8 +11,8 @@ pipeline stage 1. Facts were read from the Hub at the pinned revisions; every pi
 | Requested by / demand evidence | #108, #100; a decoder-based multilingual embedder and reranker pair at 0.6B, the sizes the card's MTEB results lead with |
 | Proposed owner | Mark |
 | Proposed maturity at first release | Experimental |
-| Decision | Proposed in this change, for the maintainer: admit `qwen3-embedding-0.6b/onnx-fp32-cpu` at Experimental (registry manifest added). Hold the reranker profile: its onboarding run failed the predeclared hidden-state bound (see Open risks). The package stays out of the release set until both profiles of the package are decided. |
-| Decided by and date | Pending: merging the PR that adds this record is the decision. |
+| Decision | Admitted at maturity Experimental: `qwen3-embedding-0.6b/onnx-fp32-cpu` (registry manifest `model-pipeline/registry/qwen3-embedding-0.6b/onnx-fp32-cpu/manifest.yaml`). The reranker profile is held: its onboarding run failed the predeclared hidden-state bound (see Open risks), and its decision stays open in #144 and #100. The packages `Starlings.Models.Qwen3Embedding` and `.Extensions.AI` stay source only, out of the release set, until the reranker profile is decided (`docs/releases/ai-0.5.0.md`, "Not published"). |
+| Decided by and date | Decided 2026-11-02 by the maintainer's delegate (agent), revisitable (embedding profile only; closes #108). Proposed in #275, recorded in the ai-dotnet 0.5.0 release-candidate change. |
 
 ## Rights (hard blockers)
 

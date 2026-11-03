@@ -14,7 +14,7 @@ yet and no release gate has run.
 
 ## Install
 
-Not published to nuget.org: the package is not in the 0.4.0 publishable set. Build it from this repository (a
+Not published to nuget.org: the package is not in the 0.5.0 publishable set. Build it from this repository (a
 `ProjectReference` to `ai-dotnet/src/Starlings.Models.PaddleOcr/Starlings.Models.PaddleOcr.csproj`) and add
 `Microsoft.ML.OnnxRuntime` (CPU natives) to the application.
 
