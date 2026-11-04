@@ -94,12 +94,43 @@
         },
         "truncation": { "enum": ["error", "truncate-right", "truncate-left", "chunk"] },
         "defaults": { "type": "object" },
+        "generation": {
+          "description": "How a generation profile serves each generation feature; present exactly when tasks has generation. Each value follows a capabilities row (model_pipeline.manifest.GENERATION_TRACE): `untested` when the row is untested or absent, `none` when it is unsupported. The row keeps the status. Informational (docs/kickoff.md, \"Capability record fields\"), but an `untested` value blocks Stable.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["tool_call_mode", "structured_output", "state_reuse", "caching_style", "max_output_tokens"],
+          "properties": {
+            "tool_call_mode": {
+              "description": "`template`: tools are rendered into the chat template and calls are parsed from the completion.",
+              "enum": ["none", "template", "untested"]
+            },
+            "structured_output": {
+              "description": "`grammar`: decoding is constrained by a grammar.",
+              "enum": ["none", "grammar", "untested"]
+            },
+            "state_reuse": {
+              "description": "Reuse of prefix or conversation state across requests.",
+              "enum": ["none", "untested"]
+            },
+            "caching_style": {
+              "description": "Prompt caching across requests.",
+              "enum": ["none", "untested"]
+            },
+            "max_output_tokens": {
+              "description": "Upper bound on the completion tokens of one request, shared with the prompt: equal to max_input_tokens, because prompt plus completion must fit it. The exception to the `none` rule: `untested` when the max_new_tokens row is unsupported too, since this field has no `none`.",
+              "oneOf": [{ "type": "integer", "minimum": 1 }, { "const": "untested" }]
+            }
+          }
+        },
         "unsupported": {
           "description": "Upstream features this profile does not implement.",
           "type": "array",
           "items": { "type": "string" }
         }
-      }
+      },
+      "if": { "properties": { "tasks": { "contains": { "const": "generation" } } } },
+      "then": { "required": ["generation"] },
+      "else": { "not": { "required": ["generation"] } }
     },
 
     "processing": {

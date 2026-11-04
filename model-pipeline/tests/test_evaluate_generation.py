@@ -121,6 +121,13 @@ class Repo:
         m = load(SYNTHETIC)
         m["id"] = PROFILE
         m["behavior"].update(tasks=["generation"])
+        m["behavior"]["generation"] = {
+            "tool_call_mode": "untested",
+            "structured_output": "untested",
+            "state_reuse": "untested",
+            "caching_style": "untested",
+            "max_output_tokens": "untested",
+        }
         m["qualification"]["fixtures"] = f"{PROTECTED}/reference"
         m["qualification"]["tolerances"] = f"{PROTECTED}/fp32-cpu/tolerances.yaml"
         self.manifest = root / "model-pipeline" / "registry" / PROFILE / "manifest.yaml"

@@ -17,7 +17,7 @@ Types the Starlings model packages share, with no ONNX Runtime dependency (it re
 
 ## Maturity
 
-<!-- catalog:maturity profiles=multilingual-e5-small/onnx-fp32-cpu,multilingual-e5-small/onnx-fp32-cuda,embeddinggemma-2/*,gliner2-base-v1/*,all-minilm-l6-v2/*,bge-small-en-v1.5/*,bge-base-en-v1.5/*,bge-m3/*,ms-marco-minilm-l6-v2/*,bge-reranker-v2-m3/*,nomic-embed-text-v1.5/*,kev-0.8b/*,kev-4b/*,qwen3.5-0.8b/*,qwen3-0.6b/*,qwen2.5-0.5b-instruct/*,lfm3-1.7b/*,whisper-large-v3-turbo/* -->
+<!-- catalog:maturity profiles=multilingual-e5-small/onnx-fp32-cpu,multilingual-e5-small/onnx-fp32-cuda,embeddinggemma-2/*,gliner2-base-v1/*,all-minilm-l6-v2/*,bge-small-en-v1.5/*,bge-base-en-v1.5/*,bge-m3/*,ms-marco-minilm-l6-v2/*,bge-reranker-v2-m3/*,nomic-embed-text-v1.5/*,paraphrase-multilingual-minilm-l12-v2/*,kev-0.8b/*,kev-4b/*,qwen3.5-0.8b/*,qwen3-0.6b/*,qwen2.5-0.5b-instruct/*,lfm3-1.7b/*,whisper-large-v3-turbo/* -->
 Maturity is per profile, generated from the registry manifests by `model-pipeline catalog` (do not edit this table by hand). Gates, evidence and capabilities per profile: the [model catalog](https://github.com/starlinghq/starling/blob/main/docs/catalog/README.md).
 
 | Profile | Maturity | Platforms |
@@ -44,6 +44,7 @@ Maturity is per profile, generated from the registry manifests by `model-pipelin
 | `multilingual-e5-small/onnx-fp32-cpu` | stable | linux-x64 cpu: supported; windows-x64 cpu: experimental |
 | `multilingual-e5-small/onnx-fp32-cuda` | stable | linux-x64 cuda: supported; windows-x64 cuda: untested |
 | `nomic-embed-text-v1.5/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
+| `paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `qwen3-0.6b/ortgenai-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `qwen3.5-0.8b/ortgenai-fp16x-cuda` | stable | linux-x64 cuda: supported; windows-x64 cuda: untested |
@@ -69,8 +70,11 @@ Maturity is per profile, generated from the registry manifests by `model-pipelin
 | `Platforms` | every `compatibility` row | informational |
 | `StopTokenIds` | `behavior.defaults.stop_token_ids` | informational |
 | `Capabilities` | the `capabilities` map, key for key | informational |
+| `Generation` (null for a profile that does not generate): `ToolCallMode`, `StructuredOutput`, `StateReuse`, `CachingStyle`, `MaxOutputTokens` | `behavior.generation` | informational, Experimental API |
 
 Contract fields of a Stable profile change only with a new profile or a release note under the [support policy](https://github.com/starlinghq/starling/blob/main/docs/support-policy.md). The fine-grained, package-wide keys (for example `batch.token_budget`) stay in each package's `XCapabilities.Statuses`.
+
+`Generation` is Experimental API: it can change in any release until a release note promotes a field to the contract. That split is the ["Capability record fields" row](https://github.com/starlinghq/starling/blob/main/docs/kickoff.md) of the kickoff decisions, and it is revisitable: changing that row and this table is enough. Each `Generation` value says how a feature works and follows one capability row, which keeps the status: `Untested` when the row is untested or absent, `None` when it is unsupported. So `TemplateRendered` next to `Capabilities["tool_calling"] == Experimental` means an experimental feature, not a supported one. `MaxOutputTokens` is an upper bound shared with the prompt (a request whose prompt plus completion exceed `MaxInputTokens` is refused, so it cannot be passed unchanged as a completion limit), not a qualified completion length, and it is null when `max_new_tokens` is untested, unsupported or not recorded. The default completion length stays in the manifest (`behavior.defaults.max_new_tokens`).
 
 ```csharp
 using Starlings.Models;
@@ -131,7 +135,7 @@ foreach (var r in best)
     Console.WriteLine($"{r.Score:F3} (was #{r.Index + 1}, {r.Item.Score:F3})  {r.Item.Record.Text}");
 ```
 
-The helpers are API only: their maturity is the reranker profile's (every reranker profile is Experimental; see the `Starlings.Models.Bert` README).
+The helpers are API only: their maturity is the reranker profile's (every reranker profile is Experimental; see the `Starlings.Models.Bert` README). For a complete program, see the [`E5RerankSearch` sample](https://github.com/starlinghq/starling/tree/main/ai-dotnet/samples/E5RerankSearch).
 
 ## Migrating from the per-package types
 

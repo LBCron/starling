@@ -1,0 +1,3 @@
+2026-11-04 02:08:52.591106393 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyFromHost after /model/attn_mask_reformat/past_key_subgraph/Gather/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:52.591322674 [W:onnxruntime:, transformer_memcpy.cc:111 ApplyImpl] 1 Memcpy nodes are added to the graph main_graph for CUDAExecutionProvider. It might have negative impact on performance (including unable to run CUDA graph). Set session_options.log_severity_level=1 to see the detail logs before this message.
+[count] 'Force fallback to CPU execution' lines: 188

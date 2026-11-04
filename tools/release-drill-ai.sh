@@ -839,7 +839,7 @@ mkdir -p "$models"
 mkdir -p "$work/bert-empty"
 offline "${bert_checker[@]}" "$work/bert-empty" | tee "$work/consumer-bert.log" || fail "BERT checker failed"
 grep -qx 'RESULT: PASS' "$work/consumer-bert.log" || fail "BERT checker did not pass"
-echo "ok:   Starlings.Models.Bert: the seven built-in profiles parse from the package alone, offline; Create verifies before loading"
+echo "ok:   Starlings.Models.Bert: the eight built-in profiles parse from the package alone, offline; Create verifies before loading"
 
 if [[ "$cuda_only" == 1 ]]; then
     echo "note: --cuda-only: the CPU runs (steps 7 to 10 and 12) were skipped; the CPU consumers were restored and built"

@@ -195,6 +195,7 @@ def build(registry: Path = DEFAULT_REGISTRY, repo_root: Path = REPO_ROOT) -> dic
                 "maturity": m["maturity"],
                 "tasks": list(m["behavior"]["tasks"]),
                 "behavior": _behavior(m),
+                "generation": m["behavior"].get("generation"),
                 "qualified_providers": _qualified_providers(m),
                 "owner": maintenance["owner"],
                 "review_date": str(maintenance["review_date"]),
@@ -227,7 +228,10 @@ def build(registry: Path = DEFAULT_REGISTRY, repo_root: Path = REPO_ROOT) -> dic
             "capability": ["supported", "unsupported", "experimental", "untested", UNRECORDED],
             "gate": ["passed", "failed", "checklist", "not-run", NO_GATE],
         },
-        "stable_rule": "every gate G0-G7 passed and no capability untested (model_pipeline.manifest.stable_blockers)",
+        "stable_rule": (
+            "every gate G0-G7 passed and no capability or generation field untested "
+            "(model_pipeline.manifest.stable_blockers)"
+        ),
         "gates": list(GATES),
         "capabilities": capability_names,
         "platforms": [p.label for p in platforms],
@@ -306,7 +310,8 @@ def _render_readme(catalog: dict[str, Any], out: Path, repo_root: Path) -> str:
         "## Profiles",
         "",
         "Gate cells link to the evidence the manifest records. The Stable readiness column applies the validator's "
-        "Stable rules (every gate G0 to G7 `passed`, no capability `untested`) and lists exactly what fails them. "
+        "Stable rules (every gate G0 to G7 `passed`, no capability or generation field `untested`) and lists exactly "
+        "what fails them, a generation field as `generation.<field>`. "
         "Stable also needs regression support: CPU regression runs weekly on the self-hosted qualification "
         "runner, and GPU regression runs for every release (and on demand) on a RunPod GPU pod, so a CUDA profile "
         "is not promoted until that per-release GPU run is green for it.",
@@ -360,6 +365,38 @@ def _render_readme(catalog: dict[str, Any], out: Path, repo_root: Path) -> str:
         lines += _table(
             ["Capability", *(p["profile"] for p in members)],
             [[c, *(p["capabilities"][c] for p in members)] for c in names],
+        )
+
+    generators = [p for p in profiles if p["generation"] is not None]
+    if generators:
+        lines += [
+            "",
+            "## Generation",
+            "",
+            'Informational (docs/kickoff.md, "Capability record fields"). Each value follows a capability row, which '
+            "keeps the status: `untested` when the row is untested or absent, `none` when it is unsupported. An "
+            "`untested` value is a Stable blocker. Max output tokens is an upper bound shared with the prompt, not a "
+            "completion budget, and has no `none`: it is `untested` when its row is unsupported too.",
+            "",
+        ]
+        lines += _table(
+            ["Profile", "Tool calls", "Structured output", "State reuse", "Caching", "Max output tokens"],
+            [
+                [
+                    p["id"],
+                    *(
+                        p["generation"][field]
+                        for field in (
+                            "tool_call_mode",
+                            "structured_output",
+                            "state_reuse",
+                            "caching_style",
+                            "max_output_tokens",
+                        )
+                    ),
+                ]
+                for p in generators
+            ],
         )
 
     lines += ["", "## Known issues", ""]
@@ -506,6 +543,12 @@ _STATUS = {
 }
 
 
+_TOOL_CALL_MODE = {"none": "None", "template": "TemplateRendered", "untested": "Untested"}
+_STRUCTURED_OUTPUT = {"none": "None", "grammar": "Grammar", "untested": "Untested"}
+_STATE_REUSE = {"none": "None", "untested": "Untested"}
+_CACHING_STYLE = {"none": "None", "untested": "Untested"}
+
+
 def _cs_string(text: str) -> str:
     return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -523,6 +566,21 @@ def _cs_platform(row: dict[str, Any]) -> str:
         y, mo, d = (int(x) for x in str(row["verified"]).split("-"))
         args.append(f"Verified: new DateOnly({y}, {mo}, {d})")
     return "new ProfilePlatform(" + ", ".join(args) + ")"
+
+
+def _cs_generation(generation: dict[str, Any] | None) -> list[str]:
+    """The record's `Generation` initializer; nothing for a profile that does not generate."""
+    if generation is None:
+        return []
+    maximum = generation["max_output_tokens"]
+    return [
+        "                Generation = new ProfileGeneration(",
+        f"                    ProfileToolCallMode.{_TOOL_CALL_MODE[generation['tool_call_mode']]},",
+        f"                    ProfileStructuredOutput.{_STRUCTURED_OUTPUT[generation['structured_output']]},",
+        f"                    ProfileStateReuse.{_STATE_REUSE[generation['state_reuse']]},",
+        f"                    ProfileCachingStyle.{_CACHING_STYLE[generation['caching_style']]},",
+        f"                    MaxOutputTokens: {'null' if maximum == 'untested' else maximum}),",
+    ]
 
 
 def _render_capability_source(globs: str, namespace: str, manifests: list[dict[str, Any]]) -> str:
@@ -570,6 +628,7 @@ def _render_capability_source(globs: str, namespace: str, manifests: list[dict[s
                 for name, status in m["capabilities"].items()
             ),
             "                },",
+            *_cs_generation(m["behavior"].get("generation")),
             "            },",
         ]
     lines += ["        };", "}", ""]

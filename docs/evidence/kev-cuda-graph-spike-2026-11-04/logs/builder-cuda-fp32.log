@@ -1,0 +1,4 @@
+Valid precision + execution provider combinations are: FP32 CPU, FP32 CUDA, FP16 CUDA, FP16 DML, FP16 TRT-RTX, BF16 CUDA, BF16 TRT-RTX, INT8 CPU, INT8 CUDA, INT8 WebGPU, INT4 CPU, INT4 CUDA, INT4 DML,
+Extra options: {'exclude_lm_head': 'true', 'exclude_mtp': 'true'}
+Skipping the MTP head: exclude_mtp is set.
+Warning: could not read generation_config.json (/home/mark/Projects/AI-models/kev/kev-merged-fp32 does not appear to have a file named generation_config.json. Checkout 'https://huggingface.co//home/ma

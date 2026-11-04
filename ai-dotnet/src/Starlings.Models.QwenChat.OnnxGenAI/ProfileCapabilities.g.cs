@@ -60,6 +60,12 @@ internal static class GeneratedProfileCapabilities
                     ["vision"] = Status.Unsupported,
                     ["long_context"] = Status.Untested,
                 },
+                Generation = new ProfileGeneration(
+                    ProfileToolCallMode.TemplateRendered,
+                    ProfileStructuredOutput.Untested,
+                    ProfileStateReuse.None,
+                    ProfileCachingStyle.None,
+                    MaxOutputTokens: 32768),
             },
             ["qwen3-0.6b/ortgenai-fp32-cpu"] = new ModelProfileCapabilities
             {
@@ -105,6 +111,12 @@ internal static class GeneratedProfileCapabilities
                     ["vision"] = Status.Unsupported,
                     ["long_context"] = Status.Untested,
                 },
+                Generation = new ProfileGeneration(
+                    ProfileToolCallMode.TemplateRendered,
+                    ProfileStructuredOutput.Untested,
+                    ProfileStateReuse.None,
+                    ProfileCachingStyle.None,
+                    MaxOutputTokens: 40960),
             },
         };
 }

@@ -1,0 +1,371 @@
+{
+ "records": 64,
+ "questions": 79,
+ "1_single_rows": {
+  "hidden_at_readouts_max_abs": {
+   "n": 79,
+   "max": 0.0002155303955078125,
+   "mean": 0.00010847517206699033,
+   "p50": 0.00010180473327636719,
+   "p99": 0.0002095794677734375
+  },
+  "probability_max_abs": {
+   "n": 79,
+   "max": 4.026293754577637e-05,
+   "mean": 4.652525811114266e-06,
+   "p50": 1.9744038581848145e-06,
+   "p99": 3.307998180389403e-05
+  },
+  "argmax_flips": 0
+ },
+ "2_cached_state_rows": {
+  "probability_vs_torch_probs_layout": {
+   "n": 79,
+   "max": 4.073977470397949e-05,
+   "mean": 4.588826736317405e-06,
+   "p50": 1.9073486328125e-06,
+   "p99": 3.285944461822509e-05
+  },
+  "probability_vs_ort_single_rows": {
+   "n": 79,
+   "max": 1.7285346984863281e-06,
+   "mean": 2.683067393689593e-07,
+   "p50": 1.1920928955078125e-07,
+   "p99": 1.2636184692382806e-06
+  }
+ },
+ "3_padded_batches": {
+  "probability_vs_row_alone": {
+   "n": 25,
+   "max": 5.960464477539062e-07,
+   "mean": 2.0921695977449418e-07,
+   "p50": 1.7881393432617188e-07,
+   "p99": 5.888938903808593e-07
+  },
+  "note": "batches are a record's question rows (different lengths); single-question records skipped"
+ },
+ "nonfinite_records": [],
+ "per_record": [
+  {
+   "id": "banking77/test/914",
+   "questions": 1,
+   "max_abs_prob": 2.562999725341797e-06
+  },
+  {
+   "id": "banking77/test/2384",
+   "questions": 1,
+   "max_abs_prob": 2.6226043701171875e-06
+  },
+  {
+   "id": "banking77/test/1889",
+   "questions": 1,
+   "max_abs_prob": 2.384185791015625e-07
+  },
+  {
+   "id": "banking77/test/2151",
+   "questions": 1,
+   "max_abs_prob": 2.980232238769531e-07
+  },
+  {
+   "id": "banking77/test/2021",
+   "questions": 1,
+   "max_abs_prob": 2.8014183044433594e-06
+  },
+  {
+   "id": "boolq/validation/2583",
+   "questions": 1,
+   "max_abs_prob": 1.4960765838623047e-05
+  },
+  {
+   "id": "boolq/validation/1688",
+   "questions": 1,
+   "max_abs_prob": 4.51505184173584e-06
+  },
+  {
+   "id": "boolq/validation/2259",
+   "questions": 1,
+   "max_abs_prob": 3.159046173095703e-06
+  },
+  {
+   "id": "boolq/validation/3125",
+   "questions": 1,
+   "max_abs_prob": 3.635883331298828e-06
+  },
+  {
+   "id": "agnews/test/4295",
+   "questions": 3,
+   "max_abs_prob": 1.9490718841552734e-05
+  },
+  {
+   "id": "agnews/test/1594",
+   "questions": 3,
+   "max_abs_prob": 7.431954145431519e-07
+  },
+  {
+   "id": "agnews/test/2095",
+   "questions": 3,
+   "max_abs_prob": 1.9788742065429688e-05
+  },
+  {
+   "id": "agnews/test/788",
+   "questions": 3,
+   "max_abs_prob": 5.424022674560547e-06
+  },
+  {
+   "id": "mnli/validation_matched/6391",
+   "questions": 1,
+   "max_abs_prob": 2.0265579223632812e-06
+  },
+  {
+   "id": "mnli/validation_matched/1483",
+   "questions": 1,
+   "max_abs_prob": 4.038214683532715e-06
+  },
+  {
+   "id": "mnli/validation_matched/5554",
+   "questions": 1,
+   "max_abs_prob": 1.1414289474487305e-05
+  },
+  {
+   "id": "mnli/validation_matched/9311",
+   "questions": 1,
+   "max_abs_prob": 2.86102294921875e-06
+  },
+  {
+   "id": "sst5/test/1504",
+   "questions": 1,
+   "max_abs_prob": 1.3440847396850586e-05
+  },
+  {
+   "id": "sst5/test/1397",
+   "questions": 1,
+   "max_abs_prob": 1.023709774017334e-05
+  },
+  {
+   "id": "sst5/test/80",
+   "questions": 1,
+   "max_abs_prob": 5.7220458984375e-06
+  },
+  {
+   "id": "sst5/test/1358",
+   "questions": 1,
+   "max_abs_prob": 4.026293754577637e-05
+  },
+  {
+   "id": "yelp/test/37665",
+   "questions": 2,
+   "max_abs_prob": 4.231929779052734e-06
+  },
+  {
+   "id": "yelp/test/41534",
+   "questions": 2,
+   "max_abs_prob": 4.76837158203125e-06
+  },
+  {
+   "id": "yelp/test/42665",
+   "questions": 2,
+   "max_abs_prob": 9.715557098388672e-06
+  },
+  {
+   "id": "yelp/test/47852",
+   "questions": 2,
+   "max_abs_prob": 1.430511474609375e-05
+  },
+  {
+   "id": "yelp/test/30827",
+   "questions": 2,
+   "max_abs_prob": 1.2099742889404297e-05
+  },
+  {
+   "id": "trec/test/439",
+   "questions": 1,
+   "max_abs_prob": 7.152557373046875e-07
+  },
+  {
+   "id": "trec/test/99",
+   "questions": 1,
+   "max_abs_prob": 3.300607204437256e-06
+  },
+  {
+   "id": "trec/test/128",
+   "questions": 1,
+   "max_abs_prob": 1.4808028936386108e-07
+  },
+  {
+   "id": "trec/test/5",
+   "questions": 1,
+   "max_abs_prob": 1.4901161193847656e-08
+  },
+  {
+   "id": "dbpedia14/test/54600",
+   "questions": 1,
+   "max_abs_prob": 1.1920928955078125e-07
+  },
+  {
+   "id": "dbpedia14/test/58685",
+   "questions": 1,
+   "max_abs_prob": 1.1932570487260818e-08
+  },
+  {
+   "id": "dbpedia14/test/5327",
+   "questions": 1,
+   "max_abs_prob": 2.384185791015625e-07
+  },
+  {
+   "id": "dbpedia14/test/17197",
+   "questions": 1,
+   "max_abs_prob": 1.1920928955078125e-07
+  },
+  {
+   "id": "amazon/test/1582",
+   "questions": 1,
+   "max_abs_prob": 3.4570693969726562e-06
+  },
+  {
+   "id": "amazon/test/2250",
+   "questions": 1,
+   "max_abs_prob": 1.5795230865478516e-06
+  },
+  {
+   "id": "amazon/test/3159",
+   "questions": 1,
+   "max_abs_prob": 5.941838026046753e-07
+  },
+  {
+   "id": "amazon/test/3194",
+   "questions": 1,
+   "max_abs_prob": 1.8477439880371094e-06
+  },
+  {
+   "id": "imdb/test/21815",
+   "questions": 1,
+   "max_abs_prob": 3.5762786865234375e-07
+  },
+  {
+   "id": "imdb/test/14193",
+   "questions": 1,
+   "max_abs_prob": 2.086162567138672e-06
+  },
+  {
+   "id": "imdb/test/5146",
+   "questions": 1,
+   "max_abs_prob": 4.470348358154297e-06
+  },
+  {
+   "id": "imdb/test/21177",
+   "questions": 1,
+   "max_abs_prob": 7.152557373046875e-07
+  },
+  {
+   "id": "banking77/test/914/permuted",
+   "questions": 1,
+   "max_abs_prob": 4.589557647705078e-06
+  },
+  {
+   "id": "banking77/test/2269/none_present",
+   "questions": 1,
+   "max_abs_prob": 7.987022399902344e-06
+  },
+  {
+   "id": "agnews/test/6365/none_absent",
+   "questions": 1,
+   "max_abs_prob": 3.2782554626464844e-06
+  },
+  {
+   "id": "agnews/test/6119/permuted",
+   "questions": 3,
+   "max_abs_prob": 3.5762786865234375e-07
+  },
+  {
+   "id": "mnli/validation_matched/8798/none_present",
+   "questions": 1,
+   "max_abs_prob": 1.5944242477416992e-06
+  },
+  {
+   "id": "mnli/validation_matched/6391/none_absent",
+   "questions": 1,
+   "max_abs_prob": 7.152557373046875e-07
+  },
+  {
+   "id": "trec/test/143/none_present",
+   "questions": 1,
+   "max_abs_prob": 2.4437904357910156e-06
+  },
+  {
+   "id": "trec/test/213/none_absent",
+   "questions": 1,
+   "max_abs_prob": 6.288290023803711e-06
+  },
+  {
+   "id": "dbpedia14/test/14504/permuted",
+   "questions": 1,
+   "max_abs_prob": 1.1920928955078125e-07
+  },
+  {
+   "id": "dbpedia14/test/33467/none_present",
+   "questions": 1,
+   "max_abs_prob": 3.4086406230926514e-07
+  },
+  {
+   "id": "contrastive/return_window/v3-control-dev-return_window-0006/b",
+   "questions": 1,
+   "max_abs_prob": 1.5974044799804688e-05
+  },
+  {
+   "id": "contrastive/spend_threshold/v3-control-dev-spend_threshold-0004/a",
+   "questions": 1,
+   "max_abs_prob": 3.5762786865234375e-07
+  },
+  {
+   "id": "contrastive/age_eligibility/v3-control-dev-age_eligibility-0001/b",
+   "questions": 1,
+   "max_abs_prob": 1.9669532775878906e-06
+  },
+  {
+   "id": "contrastive/age_eligibility/v3-control-dev-age_eligibility-0013/a",
+   "questions": 1,
+   "max_abs_prob": 9.667128324508667e-07
+  },
+  {
+   "id": "contrastive/quantity_limit/v3-control-dev-quantity_limit-0010/b",
+   "questions": 1,
+   "max_abs_prob": 7.078051567077637e-08
+  },
+  {
+   "id": "composition/v3-composition-dev/atom/3/relevant/a",
+   "questions": 1,
+   "max_abs_prob": 2.086162567138672e-07
+  },
+  {
+   "id": "composition/v3-composition-dev/conjunction/0/relevant/a",
+   "questions": 1,
+   "max_abs_prob": 7.227063179016113e-06
+  },
+  {
+   "id": "composition/v3-composition-dev/disjunction/0/irrelevant/b",
+   "questions": 1,
+   "max_abs_prob": 5.960464477539063e-08
+  },
+  {
+   "id": "composition/v3-composition-dev/exception/1/irrelevant/a",
+   "questions": 1,
+   "max_abs_prob": 3.1054019927978516e-05
+  },
+  {
+   "id": "composition/v3-composition-dev/conditional/2/relevant/b",
+   "questions": 1,
+   "max_abs_prob": 7.763504981994629e-06
+  },
+  {
+   "id": "composition/v3-composition-dev/nested_and/3/relevant/a",
+   "questions": 1,
+   "max_abs_prob": 9.417533874511719e-06
+  },
+  {
+   "id": "composition/v3-composition-dev/nested_or/3/irrelevant/b",
+   "questions": 1,
+   "max_abs_prob": 3.8743019104003906e-07
+  }
+ ],
+ "onnxruntime": "1.30.0"
+}

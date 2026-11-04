@@ -101,6 +101,14 @@ behavior:
       of 22 development prompts and the whole greedy sequence on 21 of 22 (this profile's proposed fixture; M0 saw 8
       and 21). The claim is parity of the .NET runtime
       with the upstream Python binding on the same int4 graph. Task quality (GSM8K) is not measured for this profile.
+  # Informational, Experimental API (docs/kickoff.md, "Capability record fields"). The validator compares each
+  # value with its capabilities row. max_output_tokens is a bound shared with the prompt, not a completion budget.
+  generation:
+    tool_call_mode: untested
+    structured_output: grammar
+    state_reuse: none
+    caching_style: none
+    max_output_tokens: 8192
   unsupported:
     - the CUDA provider (the graph is built for CPU; Qwen35ChatModel.Load rejects it)
     - tool calling on this variant is untested beyond the required tool grammar (the template path is shared with fp32x)
