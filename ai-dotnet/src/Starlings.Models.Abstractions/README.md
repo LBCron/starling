@@ -131,7 +131,7 @@ foreach (var r in best)
     Console.WriteLine($"{r.Score:F3} (was #{r.Index + 1}, {r.Item.Score:F3})  {r.Item.Record.Text}");
 ```
 
-The helpers are API only: their maturity is the reranker profile's (every reranker profile is Experimental; see the `Starlings.Models.Bert` README).
+The helpers are API only: their maturity is the reranker profile's (every reranker profile is Experimental; see the `Starlings.Models.Bert` README). For a complete program, see the [`E5RerankSearch` sample](https://github.com/starlinghq/starling/tree/main/ai-dotnet/samples/E5RerankSearch).
 
 ## Migrating from the per-package types
 

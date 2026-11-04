@@ -78,7 +78,7 @@ await foreach (var update in chat.GetStreamingResponseAsync("In one sentence, wh
     Console.Write(update.Text);
 ```
 
-Nine complete programs are in [`ai-dotnet/samples/`](ai-dotnet/samples): semantic search with e5 (`E5Search`) and with an in-memory `Microsoft.Extensions.VectorData` collection (`E5VectorStore`), text, image and video search with EmbeddingGemma 2 (`EmbeddingGemma2Search`), entity extraction with GLiNER2 (`Gliner2Ner`), streaming chat with Qwen3.5 (`QwenChat`), local question answering over your own files (`LocalRag`), multilingual ticket triage in an ML.NET pipeline (`TicketTriage`), and e5 search in the browser from Blazor WebAssembly (`E5BrowserSearch`) and from a JavaScript page (`E5BrowserJs`), both on the not yet published browser packages.
+Ten complete programs are in [`ai-dotnet/samples/`](ai-dotnet/samples): semantic search with e5 (`E5Search`), with an in-memory `Microsoft.Extensions.VectorData` collection (`E5VectorStore`) and with a reranking second stage (`E5RerankSearch`, Experimental), text, image and video search with EmbeddingGemma 2 (`EmbeddingGemma2Search`), entity extraction with GLiNER2 (`Gliner2Ner`), streaming chat with Qwen3.5 (`QwenChat`), local question answering over your own files (`LocalRag`), multilingual ticket triage in an ML.NET pipeline (`TicketTriage`), and e5 search in the browser from Blazor WebAssembly (`E5BrowserSearch`) and from a JavaScript page (`E5BrowserJs`), both on the not yet published browser packages.
 
 ## Models
 

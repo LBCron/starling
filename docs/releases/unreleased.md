@@ -17,3 +17,7 @@ Every package that tokenizes now pins `Starlings.Tokenizers [0.3.5]` (0.3.4 in `
 Both revisions use one cache path, because the path is keyed on the upstream revision. So an app on 0.5.0 and a newer app that share a cache directory invalidate each other, and rolling back hits the same thing: each `DownloadAsync` replaces `model.onnx` with its own revision, and the other package then fails as above until it downloads again. Give the two apps separate cache directories.
 
 The same stamp exposure in the Qwen3.5 int4 graph (`c98b9fc`) is not part of this change.
+
+## Reranking sample
+
+New sample `ai-dotnet/samples/E5RerankSearch`: multilingual-e5-small retrieves the top 5 from an in-memory `Microsoft.Extensions.VectorData` collection and `bge-reranker-v2-m3` reorders them with `Reranking.RerankAsync`, on the published 0.5.0 packages, with its lock file and recorded output. The helpers and the reranker profile stay Experimental: gates G0 to G7 have not run for `bge-reranker-v2-m3/onnx-fp32-cpu`. No code changes in any package; the `Starlings.Models.Abstractions` README links the sample, which ships with that package's next release.
