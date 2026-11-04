@@ -177,10 +177,16 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
         }
     }
 
-    /// <summary>The process-wide <see cref="AppContext"/> switch for ONNX Runtime's CPU arena on this route.</summary>
+    /// <summary>The process-wide <see cref="AppContext"/> switch that turns ONNX Runtime's CPU arena back on for this route.</summary>
     internal const string CpuMemoryArenaSwitch = "Starlings.Models.Bert.CpuMemoryArena";
 
-    internal static bool? CpuMemoryArena() => AppContext.TryGetSwitch(CpuMemoryArenaSwitch, out bool enabled) ? enabled : null;
+    /// <summary>
+    /// ONNX Runtime's CPU arena is off on this route unless <see cref="CpuMemoryArenaSwitch"/> is set: with it on, one
+    /// 8,192-token gte-reranker-modernbert-base pair at four threads kept 10 GB resident after its first run and 19 GB
+    /// from its second run on, for the life of the session; with it off, resident memory falls back after each run
+    /// (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04/). Outputs are unchanged.
+    /// </summary>
+    internal static bool CpuMemoryArena() => AppContext.TryGetSwitch(CpuMemoryArenaSwitch, out bool enabled) && enabled;
 
     /// <summary>The caller's token limit, when set, is positive and within the profile's limit; it never raises it.</summary>
     internal static void ValidateTokenLimit(int? maxTokens, int profileMaxTokens)
