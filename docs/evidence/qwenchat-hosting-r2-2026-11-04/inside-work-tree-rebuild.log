@@ -1,0 +1,23 @@
+# Rerun of the first-build case of section 2 of the evidence README (#278), run on 2026-11-04 at tree 4919f57.
+# Environment: .models/venv-generation of the Starling checkout, inside a Git work tree. CPU only.
+# Command, for <p> in qwen3, qwen25:
+#   <venv>/bin/python model-pipeline/reference/qwen-chat/build_bundle.py --candidate model-pipeline/candidates/<p>/profile.json --snapshot <snapshot> --out <out>
+# Both runs exited 0.
+## qwen3
+a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8  chat_template.jinja
+0af5816836cdd4414bc38239443ec2fe1f554ca44daf282b48f07e3768e264e4  genai_config.json
+d8c66e98638c00c1cb6a78af24dec7283a6c402b0d639db5ae98c77c6d917e3f  model.onnx
+2f800ce53e4c864ff5c96e99f869dc4ca0973f0c64c1f1860eea302093b3d7c4  model.onnx.data
+aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4  tokenizer.json
+d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101  tokenizer_config.json
+producer_version 0.17.1+83de55a
+bundle-lock.json equals qwen3/bundle-lock.json of this evidence: True
+## qwen25
+cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f  chat_template.jinja
+a023918fb6dfdf680b0267bdb4ead00083a954194d8178d8fb1af7a0d9adbe63  genai_config.json
+938a56f1c87fd63ca29dfcba0c45642dc93f7913f12ab70715e9db6e3ea410e7  model.onnx
+4269c6a8f794c9db3f1304c18ead66ca8aa6eb67e57b8bbe1b815cdbdecd7f99  model.onnx.data
+c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539  tokenizer.json
+5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583  tokenizer_config.json
+producer_version 0.17.1+83de55a
+bundle-lock.json equals qwen25/bundle-lock.json of this evidence: True

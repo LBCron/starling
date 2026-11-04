@@ -7493,7 +7493,7 @@
       "last_checked": "2026-10-18",
       "known_issues": [
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
-        "Bundle reproducibility was shown on one machine (two builds, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.",
+        "Bundle reproducibility was shown on one machine (two builds from two environments, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.",
         "QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting."
       ],
       "execution": {
@@ -7769,7 +7769,7 @@
       "last_checked": "2026-10-18",
       "known_issues": [
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
-        "Bundle reproducibility was shown on one machine (two builds, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.",
+        "Bundle reproducibility was shown on one machine (two builds from two environments, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.",
         "QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting."
       ],
       "execution": {

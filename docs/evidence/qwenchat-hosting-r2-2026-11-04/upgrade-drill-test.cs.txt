@@ -1,0 +1,59 @@
+using Starlings.Acquisition;
+using Starlings.Models.QwenChat;
+
+namespace Starlings.Models.QwenChat.Tests;
+
+// Temporary drill for the r2 evidence; not committed. Seeds a cache as 0.5.0 left it (r2's five unchanged files plus the
+// r1 graph), then upgrades it. STARLING_DRILL_SEED holds <profile folder>/<six files>.
+public sealed class UpgradeDrillTemporary(ITestOutputHelper output)
+{
+    [Theory]
+    [InlineData("qwen3-0.6b/ortgenai-fp32-cpu", "qwen3-0.6b-ortgenai")]
+    [InlineData("qwen2.5-0.5b-instruct/ortgenai-fp32-cpu", "qwen2.5-0.5b-instruct-ortgenai")]
+    public async Task R1CacheUpgrades(string id, string folder)
+    {
+        string? seed = Environment.GetEnvironmentVariable("STARLING_DRILL_SEED");
+        Assert.SkipWhen(seed is null, "set STARLING_DRILL_SEED");
+        QwenChatProfile profile = QwenChatProfile.FromId(id);
+        string cache = Directory.CreateDirectory(Path.Combine(seed!, "cache-" + folder)).FullName;
+        try
+        {
+            var options = new ModelAcquisitionOptions { CacheDirectory = cache, UseEnvironmentToken = false };
+            ModelAssetLock assetLock = QwenChatModelAssets.Lock(profile);
+            string snapshot;
+            using (var store = new ModelAssetStore(options))
+            {
+                snapshot = store.GetSnapshotDirectory(assetLock);
+            }
+            Directory.CreateDirectory(snapshot);
+            foreach (QwenChatBundleFile file in profile.BundleFiles)
+            {
+                string source = file.Path == "model.onnx"
+                    ? Path.Combine(seed!, folder, "r1-model.onnx")
+                    : Path.Combine(seed!, folder, "r2", file.Path);
+                File.Copy(source, Path.Combine(snapshot, file.Path));
+            }
+
+            var failure = Assert.Throws<ModelAssetIntegrityException>(() => QwenChatModelAssets.OpenLocal(profile, options));
+            output.WriteLine($"{id}: OpenLocal on the r1 cache threw {failure.GetType().Name}: {failure.Message}");
+
+            var sizeOnly = new ModelAcquisitionOptions { CacheDirectory = cache, UseEnvironmentToken = false, Verification = CacheVerification.Size };
+            string opened = QwenChatModelAssets.OpenLocal(profile, sizeOnly);
+            var refused = Assert.Throws<InvalidDataException>(() => QwenChatModel.Load(profile, opened));
+            output.WriteLine($"{id}: size-only OpenLocal passed, Load threw {refused.GetType().Name}: {refused.Message}");
+
+            DateTime start = DateTime.UtcNow;
+            string directory = await QwenChatModelAssets.DownloadAsync(profile, options, cancellationToken: TestContext.Current.CancellationToken);
+            Assert.Equal(directory, QwenChatModelAssets.OpenLocal(profile, options));
+            foreach (QwenChatBundleFile file in profile.BundleFiles)
+            {
+                var info = new FileInfo(Path.Combine(directory, file.Path));
+                output.WriteLine($"{id}: {file.Path} {(info.LastWriteTimeUtc >= start ? "written by the download" : "reused from the cache")}");
+            }
+        }
+        finally
+        {
+            Directory.Delete(cache, recursive: true);
+        }
+    }
+}
