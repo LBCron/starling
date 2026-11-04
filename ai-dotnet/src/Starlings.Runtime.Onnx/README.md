@@ -4,7 +4,7 @@ ONNX Runtime session ownership for Starlings models: provider selection with no 
 
 ## Maturity
 
-<!-- catalog:maturity profiles=multilingual-e5-small/onnx-fp32-cpu,multilingual-e5-small/onnx-fp32-cuda,gliner2-base-v1/*,embeddinggemma-2/*,kev-0.8b/*,kev-4b/*,whisper-large-v3-turbo/*,all-minilm-l6-v2/*,bge-small-en-v1.5/*,bge-base-en-v1.5/*,bge-m3/*,ms-marco-minilm-l6-v2/*,bge-reranker-v2-m3/*,nomic-embed-text-v1.5/* -->
+<!-- catalog:maturity profiles=multilingual-e5-small/onnx-fp32-cpu,multilingual-e5-small/onnx-fp32-cuda,gliner2-base-v1/*,embeddinggemma-2/*,kev-0.8b/*,kev-4b/*,whisper-large-v3-turbo/*,all-minilm-l6-v2/*,bge-small-en-v1.5/*,bge-base-en-v1.5/*,bge-m3/*,ms-marco-minilm-l6-v2/*,bge-reranker-v2-m3/*,nomic-embed-text-v1.5/*,paraphrase-multilingual-minilm-l12-v2/* -->
 Maturity is per profile, generated from the registry manifests by `model-pipeline catalog` (do not edit this table by hand). Gates, evidence and capabilities per profile: the [model catalog](https://github.com/starlinghq/starling/blob/main/docs/catalog/README.md).
 
 | Profile | Maturity | Platforms |
@@ -30,6 +30,7 @@ Maturity is per profile, generated from the registry manifests by `model-pipelin
 | `multilingual-e5-small/onnx-fp32-cpu` | stable | linux-x64 cpu: supported; windows-x64 cpu: experimental |
 | `multilingual-e5-small/onnx-fp32-cuda` | stable | linux-x64 cuda: supported; windows-x64 cuda: untested |
 | `nomic-embed-text-v1.5/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
+| `paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `whisper-large-v3-turbo/onnx-fp16-cpu` | experimental | linux-x64 cpu: experimental; linux-x64 cuda: untested; windows-x64 cpu: untested |
 <!-- /catalog:maturity -->
 
@@ -132,3 +133,32 @@ When a session's native memory is released (after `Dispose` and the last in-flig
 - Dedicated run threads: with `OnnxSessionOptions.DedicatedRunThreads = true`, runs execute on a small process-wide set of long-lived threads owned by this package, and the caller blocks until its run completes. A thread is started only when every existing one is busy, up to `Environment.ProcessorCount`; further concurrent runs wait for a free one. `null`, the default, runs on the calling thread for sessions created directly and lets a model package choose (EmbeddingGemma 2 and e5 use them on CPU). Why: without ONNX Runtime's CPU arena, a run allocates and frees its buffers with `malloc` on the thread that calls it, and glibc serves each thread from its own malloc arena. The free memory at the top of a non-main arena stays resident: `malloc_trim` does not return it, and `free` returns it only above the dynamic trim threshold (up to 64 MiB). When runs come from a rotating set of thread-pool threads, more and more arenas each keep 20 to 60 MiB, and resident memory steps up over an hour. On the dedicated threads the same few arenas serve every run, so that memory is reused. Results are the same either way. Cancellation works the same (the token sets ONNX Runtime's terminate flag); a run started from a dedicated thread executes inline. `OnnxSessionDiagnostics.DedicatedRunThreads` reports the setting. Evidence: [EmbeddingGemma 2 soak reliability](https://github.com/starlinghq/starling/blob/main/docs/evidence/eg2-soak-reliability/README.md).
 - Trims after load and after each run: `OnnxSessionOptions.TrimNativeHeapAfterLoad` calls `malloc_trim(0)` once when the session has been created, and `OnnxSessionOptions.TrimNativeHeapAfterRun` calls it on the thread that ran, after each run. `null`, the default, means off for sessions created directly and lets a model package choose (the EmbeddingGemma 2 image and video path turns both on for its CPU sessions). Why: creating a large session allocates and frees copies of the graph and its initializers, and glibc keeps that memory resident while the session lives (about 400 MiB for the EmbeddingGemma 2 vision and multimodal sessions, varying from load to load). A run without ONNX Runtime's arena leaves its freed buffers as free chunks in the running thread's heap (60 to 190 MiB per thread for EmbeddingGemma 2 images, rising in steps). The trim returns both; it cannot return the top chunk of a non-main heap. The run trim is part of the run (milliseconds) and the next run faults the pages in again, so it suits runs that take seconds, not short ones. The `AppContext` switch above turns both off. `OnnxSessionDiagnostics.TrimNativeHeapAfterLoad` and `TrimNativeHeapAfterRun` report them. Evidence: [EmbeddingGemma 2 image loaded soak](https://github.com/starlinghq/starling/blob/main/docs/evidence/eg2-image-loaded-soak/README.md).
 - Transparent huge pages: with `/sys/kernel/mm/transparent_hugepage/enabled` set to `always`, the kernel's khugepaged collapses partly used 2 MiB ranges of the heaps into huge pages and fills in their absent pages, so resident memory can rise over time with no allocation behind it. A library cannot change that policy for its host; `madvise` (the Ubuntu default) or `never` avoids it.
+
+### Setting `MALLOC_MMAP_THRESHOLD_`
+
+Some profiles need `MALLOC_MMAP_THRESHOLD_=65536` on Linux: GLiNER2 (CPU and CUDA), EmbeddingGemma 2 `video-fp32-cuda` (recommended for `image-fp32-cuda`), and long-running Kev processes. Each model package's README states which of its profiles need it and why.
+
+glibc reads the variable when the process starts, before `Main`, so it must be in the environment the process is started with. Setting it from application code (`Environment.SetEnvironmentVariable`) or in `runtimeconfig.json` has no effect, and this package does not set it for you: it never calls `mallopt`, because that would change the allocator of the whole host process. The variable applies to the whole process, and only glibc reads it (musl, Windows and macOS ignore it).
+
+A systemd unit, or a drop-in from `systemctl edit <unit>`:
+
+```ini
+[Service]
+Environment=MALLOC_MMAP_THRESHOLD_=65536
+```
+
+A Dockerfile, on a glibc base image:
+
+```dockerfile
+ENV MALLOC_MMAP_THRESHOLD_=65536
+```
+
+A launcher script. `exec` replaces the shell, so signals reach the application:
+
+```sh
+#!/bin/sh
+export MALLOC_MMAP_THRESHOLD_=65536
+exec dotnet /opt/myapp/MyApp.dll "$@"
+```
+
+To check a running process: `tr '\0' '\n' </proc/<pid>/environ | grep '^MALLOC_'`.

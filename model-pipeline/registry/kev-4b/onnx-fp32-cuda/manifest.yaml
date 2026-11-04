@@ -183,7 +183,7 @@ processing:
     # tokenizer.json (the same bytes for both sizes), not the base file base/tokenizer.json (admissions/kev.md,
     # "Tokenizer profile").
     package: Starlings.Tokenizers
-    version: 0.3.4
+    version: 0.3.5
     profile_id: qwen2-bpe-kev
     algorithm: byte-level-bpe
     assets:
@@ -339,6 +339,7 @@ maintenance:
   # inventory"; package README).
   latest_known_upstream_revision: "6cfce5c2fa4b4bd64026336ab649c5ca78857d52"
   latest_verified_upstream_revision: "139fdd94f1b6a6ad80cc15e08fcb99cac885a101"
+  last_checked: 2026-11-03
   review_date: 2027-01-05
   known_issues:
     - >-

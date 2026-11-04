@@ -64,7 +64,7 @@ This is the contract of profile `gliner2-base-v1/onnx-fp32-cpu`. Its Stable labe
 | --- | --- |
 | Profile | `gliner2-base-v1/onnx-fp32-cpu` (registry manifest `model-pipeline/registry/gliner2-base-v1/onnx-fp32-cpu/manifest.yaml`). |
 | Model | `fastino/gliner2-base-v1` at `f9634218e53580c56edf0de97ca1a7d3f1c2354e`; GLiNER2 source `55656fbfa01d3d4a77485e1a1eeeaf682990ccdf`. The ONNX graph is Starling's reproducible export (`onnx/gliner2-entities-fp32.onnx`, digest in `Gliner2ModelAssets`), downloaded with no token from the public repository `Starlinghq/gliner2-base-v1-onnx` at `c02c3350`. |
-| Tokenizer | `Starlings.Tokenizers` `0.3.4`, profile `gliner2-base-v1-unigram` (fast-tokenizer semantics; byte-fallback pieces map to `[UNK]` as GLiNER2 does). |
+| Tokenizer | `Starlings.Tokenizers` `0.3.5`, profile `gliner2-base-v1-unigram` (fast-tokenizer semantics; byte-fallback pieces map to `[UNK]` as GLiNER2 does). |
 | Runtime | ONNX Runtime 1.30.0 (the application adds `Microsoft.ML.OnnxRuntime` 1.30.0 CPU natives), fp32, .NET 10. |
 | Supported platform | Linux x64, CPU, with the deployment setting below. Gates G1 to G5 ran on an Intel Core i7-5820K (Haswell-E, 6 cores and 12 threads, AVX2 and FMA, no AVX-512), .NET 10.0.12. Until 2026-10-22 the weekly qualification reran G1 to G3 on the release sets and a one-hour soak (with the setting) on GitHub-hosted `ubuntu-latest` x64. Since 2026-10-23 ([#134](https://github.com/starlinghq/starling/pull/134)) it runs on the self-hosted `qualification` runner: the maintainer's workstation, the same Intel Core i7-5820K (6 cores and 12 threads, AVX2 and FMA, no AVX-512), transparent huge pages `madvise`. |
 | Linux deployment requirement | Start the process with `MALLOC_MMAP_THRESHOLD_=65536`. The G4 qualification soak passed with it; see [Memory on Linux](#memory-on-linux). |
@@ -128,7 +128,7 @@ Status: experimental (capability `classification`), CPU only. Evidence on Linux 
 
 ## Memory on Linux
 
-**Deployment requirement: set `MALLOC_MMAP_THRESHOLD_=65536` in the environment of a Linux process that runs this profile (CPU or CUDA).**
+**Deployment requirement: set `MALLOC_MMAP_THRESHOLD_=65536` in the environment of a Linux process that runs this profile (CPU or CUDA).** The systemd, Dockerfile and launcher-script forms are in the [`Starlings.Runtime.Onnx` README](https://github.com/starlinghq/starling/blob/main/ai-dotnet/src/Starlings.Runtime.Onnx/README.md#setting-malloc_mmap_threshold_).
 
 With default glibc settings, a process that loads and unloads the extractor repeatedly keeps freed native memory resident: about 1.2 to 1.5 GiB between loads, rising by about 65 to 90 MiB over the first half hour of cycling and then holding. This is allocator retention (glibc malloc's resident high-water mark and fragmentation), not a leak: with the threshold set, every unload returns what the load and its requests allocated. But the soak's growth rule, which is not changed for this, judges the default run: the one-hour default soak fit 81 to 82 MiB/h over the whole run and failed the rule, although the curve flattens after about 30 minutes. With `MALLOC_MMAP_THRESHOLD_=65536` the footprint after unloading held at about 76 MiB, the loaded footprint was about 740 MiB lower, and the one-hour G4 soak passed.
 

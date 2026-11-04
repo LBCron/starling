@@ -17,7 +17,7 @@
       "none"
     ]
   },
-  "stable_rule": "every gate G0-G7 passed and no capability untested (model_pipeline.manifest.stable_blockers)",
+  "stable_rule": "every gate G0-G7 passed and no capability or generation field untested (model_pipeline.manifest.stable_blockers)",
   "gates": [
     "G0",
     "G1",
@@ -214,6 +214,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -482,6 +483,7 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -750,6 +752,7 @@
         "dimension": 1024,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -1018,6 +1021,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -1287,6 +1291,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -1555,12 +1560,13 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu"
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-11",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "The image release set's reference stage tensors regenerate byte-identical only on the reference CPU at 6 threads; the accepted soft-token and token-embedding arrays are hosted at Starlinghq/starling-release-references (commit and file digests in the protected hosted-reference.json, #71), and the evaluator checks every array against the protected tensors.json, so the scheduled G2 needs no regeneration.",
         "One accepted release image (79 MP) exceeds the default 50,000,000-pixel limit; G1 and G2 pass with the limit raised for it (image_over_default_pixel_limit_with_option, experimental); the default stays a memory bound.",
@@ -1843,12 +1849,13 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-11",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "Contract hardware: an NVIDIA GeForce RTX 3090 (Ampere, sm_86), driver 580, CUDA 13 runtime. The CUDA gates G1 to G5 (G4 and G5 in the binding 2026-10-16 round) ran on RTX 3090s, and the per-release GPU regression is pinned to the RTX 3090 and refuses any other GPU (tools/ci/runpod.py). Its first run, 38857860186, landed on an RTX 4090 (Ada) before the pin: every check of this profile passed there, but embeddinggemma-2/video-fp32-cuda failed G2 (docs/evidence/gpu-regression-2026-10-16/README.md). Other NVIDIA GPUs, including the RTX 4090, are untested and outside the contract.",
         "Linux memory: MALLOC_MMAP_THRESHOLD_=65536 is recommended, not required (the Starlings.Models.EmbeddingGemma2 README, \"Memory on Linux\"); the G4 soak and the per-release soak smoke test ran without it.",
@@ -2135,12 +2142,13 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu"
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-10",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "The text release set's reference embeddings.jsonl regenerates byte-identical only on the reference CPU (on two hosted runners it differed by up to 8e-7); it is committed under protected/ since #60, so the scheduled G2 reads that file. Linux memory: the hosted soak's earlier growth (about 160 MB/h) was glibc retention after unloading plus transparent huge pages `always` on the runner image, not a leak (docs/evidence/scheduled-regression-fix/); Starlings.Runtime.Onnx calls malloc_trim on session release (on by default; opt out per session or per process), and the qualification soak runs with THP `madvise`. On `always` hosts resident memory can look larger without any leak.",
         "Evaluator run 2026-10-11 (docs/evidence/embeddinggemma2-dotnet/, CPU): G1 passed; G2 failed only on export.token_embeddings (Python ORT vs PyTorch): the tolerance file's |d| <= 1e-4 * max(1, |ref|) judged per value gives 1.7e-2, while the per-case max |d| / max(1, max |ref|) the bound was set from is 6.2e-6. Which reading binds is a maintainer decision; every .NET check passed.",
@@ -2424,12 +2432,13 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-10",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "Contract hardware: an NVIDIA GeForce RTX 3090 (Ampere, sm_86), driver 580, CUDA 13 runtime. The CUDA gates G1 to G5 (G4 and G5 in the binding 2026-10-16 round) ran on RTX 3090s, and the per-release GPU regression is pinned to the RTX 3090 and refuses any other GPU (tools/ci/runpod.py). Its first run, 38857860186, landed on an RTX 4090 (Ada) before the pin: every check of this profile passed there, but embeddinggemma-2/video-fp32-cuda failed G2 (docs/evidence/gpu-regression-2026-10-16/README.md). Other NVIDIA GPUs, including the RTX 4090, are untested and outside the contract.",
         "Linux memory: no MALLOC_* setting is required; the runtime calls malloc_trim on session release (on by default).",
@@ -2715,12 +2724,13 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu"
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-11",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "The hosted one-hour soak failed the growth rule in every run from #68 to 2026-10-16 (about 280 MB/h). Fixed in the library: no ONNX Runtime CPU arena (#83), dedicated run threads (#86), native heap trims after load and after each run and reused request buffers on the image and video path (#93). It passed in three consecutive full qualification runs with every soak twice (#93) and in the runs since; no MALLOC_* setting is required on CPU.",
         "The video release set's reference stage tensors regenerate byte-identical only on the reference CPU; the accepted soft-token and token-embedding arrays are hosted at Starlinghq/starling-release-references (commit and file digests in the protected hosted-reference.json, #71), and the evaluator checks every array against the protected tensors.json, so the scheduled G2 needs no regeneration.",
@@ -3006,12 +3016,13 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-11",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "Contract hardware: an NVIDIA GeForce RTX 3090 (Ampere, sm_86), driver 580, CUDA 13 runtime. The CUDA gates G1 to G5 (G4 and G5 in the binding 2026-10-16 round) ran on RTX 3090s, and the per-release GPU regression is pinned to the RTX 3090 and refuses any other GPU (tools/ci/runpod.py). The RTX 4090 (Ada) is outside the contract: in run 38857860186, before the pin, this profile's G2 failed there on the final embedding (max abs 1.009e-5 against the unchanged 1e-5, commons-video-04). Other NVIDIA GPUs are untested.",
         "Linux memory: MALLOC_MMAP_THRESHOLD_=65536 is a deployment requirement (the Starlings.Models.EmbeddingGemma2 README, \"Image and video on CUDA\"); the binding G4 soak and the per-release soak smoke test ran with it.",
@@ -3300,6 +3311,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu",
         "cuda"
@@ -3590,6 +3602,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
@@ -3882,10 +3895,11 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-05",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "model.onnx.data is not byte-reproducible across builds: the fp32 LoRA merge differs in a few floats of the LoRA-merged projections between runs (reduction order). The lock pins the measured bundle; a rebuilt bundle needs its own digests and its own evidence (KevDecisionModel.Create with explicit paths).",
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
@@ -4156,10 +4170,11 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-05",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "model.onnx.data is not byte-reproducible across builds: the fp32 LoRA merge differs in a few floats of the LoRA-merged projections between runs (reduction order). The lock pins the measured bundle; a rebuilt bundle needs its own digests and its own evidence (KevDecisionModel.Create with explicit paths).",
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
@@ -4433,10 +4448,11 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": null,
+      "last_checked": "2026-11-03",
       "known_issues": [
         "No binding tolerance for Kev-4B: the protected file binds Kev-0.8B, and one transfer-v4 development question (2.05e-4) exceeds its 2e-4 probability bound by 2.5% (no flip, identical accuracy). The binding bound for 4B is the maintainer's decision.",
         "model.onnx.data is not byte-reproducible across builds (the fp32 LoRA merge; see execution.graph). The lock pins the measured bundle; a rebuilt bundle needs its own digests and its own evidence (KevDecisionModel.Create with explicit paths).",
@@ -4706,10 +4722,11 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": null,
+      "last_checked": "2026-11-03",
       "known_issues": [
         "No binding tolerance for Kev-4B: the protected file binds Kev-0.8B, and on CPU one transfer-v4 development question (2.05e-4) exceeds its 2e-4 probability bound by 2.5% (no flip, identical accuracy). The binding bound for 4B is the maintainer's decision.",
         "Evidence is local: one RTX 3090 workstation. The per-release GPU regression and the gates have not run for this profile; other NVIDIA GPUs are untested.",
@@ -4985,10 +5002,17 @@
           124900
         ]
       },
+      "generation": {
+        "tool_call_mode": "none",
+        "structured_output": "none",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": "untested"
+      },
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-28",
-      "last_checked": "2026-10-28",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "The export's fidelity to the PyTorch checkpoint is unmeasured: run_lfm3.py reference executes the checkpoint's own modeling code and has not run. The evidence compares the .NET loop with Python ONNX Runtime on the same graph.",
         "No reference fixtures are adopted into protected/ and no gate has run; every capability is at most experimental.",
@@ -5238,6 +5262,7 @@
         "untested_capabilities": [
           "aot",
           "concurrent_calls",
+          "generation.max_output_tokens",
           "generation_cuda",
           "generation_fp16",
           "long_context"
@@ -5260,6 +5285,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -5529,6 +5555,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu"
       ],
@@ -5817,6 +5844,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
@@ -6107,6 +6135,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -6384,6 +6413,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -6662,6 +6692,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -6936,6 +6967,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -7215,6 +7247,277 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
+      "qualified_providers": [],
+      "owner": "Mark",
+      "review_date": "2027-01-23",
+      "last_checked": null,
+      "known_issues": [
+        "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
+        "Vectors are not unit length (normalize: none); normalize them before cosine or dot-product comparison."
+      ],
+      "execution": {
+        "runtime": "onnxruntime",
+        "runtime_version": "1.30.0",
+        "binding": "Microsoft.ML.OnnxRuntime",
+        "binding_version": null,
+        "precision": "fp32",
+        "variant": "reference"
+      },
+      "gates": {
+        "G0": {
+          "status": "not-run"
+        },
+        "G1": {
+          "status": "not-run"
+        },
+        "G2": {
+          "status": "not-run"
+        },
+        "G3": {
+          "status": "not-run"
+        },
+        "G4": {
+          "status": "not-run"
+        },
+        "G5": {
+          "status": "not-run"
+        },
+        "G6": {
+          "status": "not-run"
+        },
+        "G7": {
+          "status": "not-run"
+        }
+      },
+      "capabilities": {
+        "batch": "experimental",
+        "streaming": "unsupported",
+        "cancellation": "experimental",
+        "persistence": "unsupported",
+        "training": "unsupported",
+        "aot": "untested",
+        "extensions_ai": "unsupported",
+        "mlnet": "unsupported",
+        "asset_acquisition": "unrecorded",
+        "asset_acquisition_download": "unrecorded",
+        "asset_verification_offline": "experimental",
+        "audio": "unrecorded",
+        "batch_sort_by_length": "experimental",
+        "batch_token_budget": "experimental",
+        "bf16": "unrecorded",
+        "built_in_profile": "experimental",
+        "bundle_lock_verification": "unrecorded",
+        "cache_storage": "unrecorded",
+        "calibrated_temperature": "unrecorded",
+        "calibration_fitting": "unrecorded",
+        "cancellation_inside_a_step": "unrecorded",
+        "chat_template_owned_text": "unrecorded",
+        "chat_template_text": "unrecorded",
+        "chat_template_thinking_switch": "unrecorded",
+        "chunked_prefill": "unrecorded",
+        "chunking": "unrecorded",
+        "classification": "unrecorded",
+        "compression_ratio_threshold": "unrecorded",
+        "concurrent_calls": "unrecorded",
+        "concurrent_calls_unserialized": "unrecorded",
+        "concurrent_requests": "unrecorded",
+        "condition_on_previous_text": "unrecorded",
+        "conversation_state_reuse": "unrecorded",
+        "count_gate_closed": "unrecorded",
+        "date_facts": "unrecorded",
+        "decision_choice": "unrecorded",
+        "decision_noul": "unrecorded",
+        "decision_score": "unrecorded",
+        "delimiter_escaping": "unrecorded",
+        "embedding_pretokenized": "unrecorded",
+        "embedding_text": "unrecorded",
+        "enable_thinking": "unrecorded",
+        "entity_extraction": "unrecorded",
+        "fp16": "unrecorded",
+        "generation": "unrecorded",
+        "generation_cuda": "unrecorded",
+        "generation_fp16": "unrecorded",
+        "generation_greedy": "unrecorded",
+        "gpu": "unsupported",
+        "greedy_generation": "unrecorded",
+        "guided_decoding": "unrecorded",
+        "http_server": "unrecorded",
+        "image": "unrecorded",
+        "image_16_bit": "unrecorded",
+        "image_alpha_compositing": "unrecorded",
+        "image_batch": "unrecorded",
+        "image_budget_280": "unrecorded",
+        "image_budget_other": "unrecorded",
+        "image_decode_gif_bmp_webp": "unrecorded",
+        "image_decode_gif_transparency": "unrecorded",
+        "image_decode_png_jpeg": "unrecorded",
+        "image_exif_orientation_opt_in": "unrecorded",
+        "image_interleaved_text": "unrecorded",
+        "image_matryoshka": "unrecorded",
+        "image_multiple_per_input": "unrecorded",
+        "image_over_default_pixel_limit_with_option": "unrecorded",
+        "image_prompts": "unrecorded",
+        "input_2050_to_8192_tokens": "unrecorded",
+        "input_over_512_tokens": "unrecorded",
+        "input_over_8192_tokens": "unrecorded",
+        "input_up_to_2049_tokens": "unrecorded",
+        "kv_cache": "unrecorded",
+        "label_descriptions": "unrecorded",
+        "language_detection": "unrecorded",
+        "logprob_threshold": "unrecorded",
+        "logprobs": "unrecorded",
+        "long_context": "unrecorded",
+        "long_context_1667_to_8192_tokens": "unrecorded",
+        "long_context_over_8192_tokens": "unrecorded",
+        "long_input": "unrecorded",
+        "matryoshka": "unrecorded",
+        "matryoshka_dimensions": "unrecorded",
+        "max_new_tokens": "unrecorded",
+        "mixed_label_sets_in_batch": "unrecorded",
+        "multithreaded_cross_origin_isolated": "unrecorded",
+        "no_speech_detection": "unrecorded",
+        "non_english": "unrecorded",
+        "offsets_original_text": "unrecorded",
+        "option_isolation": "unrecorded",
+        "plain_deduplicated_output": "unrecorded",
+        "prefill_chunking": "unrecorded",
+        "prefix_reuse": "unrecorded",
+        "probability_rounding": "unrecorded",
+        "prompts": "unrecorded",
+        "prompts_query_document": "unrecorded",
+        "prompts_task": "unrecorded",
+        "proxy_worker": "unrecorded",
+        "quantized": "unrecorded",
+        "query_instruction": "unrecorded",
+        "question_isolation": "unrecorded",
+        "raw_probabilities": "unrecorded",
+        "reasoning_parsing": "unrecorded",
+        "reasoning_split": "unrecorded",
+        "relation_extraction": "unrecorded",
+        "request_isolation": "unrecorded",
+        "sampling": "unrecorded",
+        "sampling_seeded": "unrecorded",
+        "single_thread_without_isolation": "unrecorded",
+        "state_cache_within_request": "unrecorded",
+        "state_json_rendering": "unrecorded",
+        "state_over_8192_tokens": "unrecorded",
+        "state_prefix_reuse_across_requests": "unrecorded",
+        "step0_logits": "unrecorded",
+        "stop_sequences": "unrecorded",
+        "stop_tokens": "unrecorded",
+        "structured_extraction": "unrecorded",
+        "structured_output": "unrecorded",
+        "temperature_fallback": "unrecorded",
+        "text": "experimental",
+        "text_only_inputs": "unrecorded",
+        "tf32": "unrecorded",
+        "timestamps": "unrecorded",
+        "tokenizer_owned": "unrecorded",
+        "tool_calling": "unrecorded",
+        "transcription": "unrecorded",
+        "transcription_cuda": "unrecorded",
+        "translation": "unrecorded",
+        "usage": "unrecorded",
+        "usage_output_tokens": "unrecorded",
+        "video": "unrecorded",
+        "video_audio_track": "unrecorded",
+        "video_batch": "unrecorded",
+        "video_decode_ffmpeg8": "unrecorded",
+        "video_decode_ffmpeg9": "unrecorded",
+        "video_decode_rotation_90": "unrecorded",
+        "video_decode_rotation_other": "unrecorded",
+        "video_decode_streams": "unrecorded",
+        "video_decoded_frames_with_timing": "unrecorded",
+        "video_frames_without_timing": "unrecorded",
+        "video_frames_without_timing_opt_in": "unrecorded",
+        "video_hdr": "unrecorded",
+        "video_interlaced": "unrecorded",
+        "video_interleaved_image": "unrecorded",
+        "video_interleaved_text": "unrecorded",
+        "video_matryoshka": "unrecorded",
+        "video_multiple_per_input": "unrecorded",
+        "video_pre_sampled_frames": "unrecorded",
+        "video_prompts": "unrecorded",
+        "video_timestamps": "unrecorded",
+        "video_variable_frame_rate": "unrecorded",
+        "vision": "unrecorded",
+        "wasm_aot": "unrecorded",
+        "wasm_interpreter": "unrecorded",
+        "word_timestamps": "unrecorded"
+      },
+      "compatibility": {
+        "linux-x64 cpu": {
+          "status": "experimental"
+        },
+        "linux-x64 cuda": {
+          "status": "unrecorded"
+        },
+        "linux-x64 wasm chromium-153": {
+          "status": "unrecorded"
+        },
+        "linux-x64 wasm firefox": {
+          "status": "unrecorded"
+        },
+        "linux-x64 webgpu chromium-153": {
+          "status": "unrecorded"
+        },
+        "linux-x64 webgpu firefox": {
+          "status": "unrecorded"
+        },
+        "macos-arm64 wasm safari": {
+          "status": "unrecorded"
+        },
+        "macos-arm64 webgpu safari": {
+          "status": "unrecorded"
+        },
+        "windows-x64 cpu": {
+          "status": "untested"
+        },
+        "windows-x64 cuda": {
+          "status": "unrecorded"
+        },
+        "windows-x64 wasm chromium": {
+          "status": "unrecorded"
+        },
+        "windows-x64 webgpu chromium": {
+          "status": "unrecorded"
+        }
+      },
+      "stable_readiness": {
+        "ready": false,
+        "gates_not_passed": [
+          "G0",
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "G7"
+        ],
+        "untested_capabilities": [
+          "aot"
+        ]
+      },
+      "scheduled_regression": true
+    },
+    {
+      "id": "paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu",
+      "family": "paraphrase-multilingual-minilm-l12-v2",
+      "profile": "onnx-fp32-cpu",
+      "manifest": "model-pipeline/registry/paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu/manifest.yaml",
+      "maturity": "experimental",
+      "tasks": [
+        "embedding"
+      ],
+      "behavior": {
+        "max_input_tokens": 128,
+        "truncation": "truncate-right",
+        "dimension": 384,
+        "stop_token_ids": []
+      },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -7487,13 +7790,20 @@
           151643
         ]
       },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "untested",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 32768
+      },
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-18",
       "last_checked": "2026-10-18",
       "known_issues": [
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
-        "Bundle reproducibility was shown on one machine (two builds, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.",
+        "Bundle reproducibility was shown on one machine (two builds from two environments, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.",
         "QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting."
       ],
       "execution": {
@@ -7740,6 +8050,7 @@
         "untested_capabilities": [
           "aot",
           "concurrent_requests",
+          "generation.structured_output",
           "long_context"
         ]
       },
@@ -7763,13 +8074,20 @@
           151643
         ]
       },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "untested",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 40960
+      },
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-18",
       "last_checked": "2026-10-18",
       "known_issues": [
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
-        "Bundle reproducibility was shown on one machine (two builds, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.",
+        "Bundle reproducibility was shown on one machine (two builds from two environments, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.",
         "QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting."
       ],
       "execution": {
@@ -8016,6 +8334,7 @@
         "untested_capabilities": [
           "aot",
           "concurrent_requests",
+          "generation.structured_output",
           "long_context"
         ]
       },
@@ -8036,6 +8355,7 @@
         "dimension": 1024,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-02-02",
@@ -8309,6 +8629,13 @@
           248046,
           248044
         ]
+      },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "grammar",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 8192
       },
       "qualified_providers": [
         "cuda"
@@ -8603,6 +8930,13 @@
           248044
         ]
       },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "grammar",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 8192
+      },
       "qualified_providers": [
         "cpu"
       ],
@@ -8892,6 +9226,13 @@
           248046,
           248044
         ]
+      },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "grammar",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 8192
       },
       "qualified_providers": [
         "cuda"
@@ -9186,6 +9527,13 @@
           248044
         ]
       },
+      "generation": {
+        "tool_call_mode": "untested",
+        "structured_output": "grammar",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 8192
+      },
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-02-01",
@@ -9346,7 +9694,7 @@
         "stop_sequences": "experimental",
         "stop_tokens": "experimental",
         "structured_extraction": "unrecorded",
-        "structured_output": "untested",
+        "structured_output": "experimental",
         "temperature_fallback": "unrecorded",
         "text": "unrecorded",
         "text_only_inputs": "unrecorded",
@@ -9439,8 +9787,8 @@
         "untested_capabilities": [
           "aot",
           "extensions_ai",
+          "generation.tool_call_mode",
           "long_context_1667_to_8192_tokens",
-          "structured_output",
           "tool_calling"
         ]
       },
@@ -9461,10 +9809,11 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
-      "last_checked": "2026-10-23",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "No reference fixtures are adopted into protected/ and no gate has run; every capability is at most experimental.",
         "The evidence covers English only (eight LibriSpeech clips, 1.6 s to 59.1 s, asr-corpus-v3); other languages are untested.",

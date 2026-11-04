@@ -269,8 +269,8 @@
       },
       "Starlings.Tokenizers": {
         "type": "Transitive",
-        "resolved": "0.3.4",
-        "contentHash": "YYBHbSofthVVprGN9ZTwbAvi8tjrGhWds1NPfN+szBx4CoJCrSxz65LUfX6lexUM5s3JHh9HuqzTA/jxPyp4TA=="
+        "resolved": "0.3.5",
+        "contentHash": "GZbD9I/QpykJcRFJ6TBV5rxpR0B0/rcuBj0Yk2Sxcclrckjn/yqmIHQbHNJ/89dQh02bsH/1hNP+P0EfvwoPCA=="
       },
       "System.Numerics.Tensors": {
         "type": "Transitive",
@@ -285,7 +285,7 @@
         "dependencies": {
           "Starlings.Acquisition": "[0.3.0, )",
           "Starlings.Runtime.Onnx": "[0.3.0, )",
-          "Starlings.Tokenizers": "[0.3.4, 0.3.4]"
+          "Starlings.Tokenizers": "[0.3.5, 0.3.5]"
         }
       },
       "starlings.models.e5.browser": {

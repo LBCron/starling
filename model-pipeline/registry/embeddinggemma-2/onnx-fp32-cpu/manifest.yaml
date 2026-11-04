@@ -121,7 +121,7 @@ processing:
   tokenizer:
     # 0.3.0 (the code of 0.3.0-preview.1, released without a preview suffix) is the published tokenizer (starlinghq/tokenizers): the qualified 0.1.0-preview.4 behavior plus BERT WordPiece components this profile does not use; every conformance fixture passes unchanged.
     package: Starlings.Tokenizers
-    version: 0.3.4
+    version: 0.3.5
     profile_id: gemma-bpe-embeddinggemma2
     algorithm: bpe
     assets:
@@ -242,9 +242,12 @@ qualification:
 
 maintenance:
   owner: Mark
-  latest_known_upstream_revision: "914f7f89142e33e77833254d9c9b90c3cef7303b"
+  # main moved to f9972ac2 (2026-10-28): only README.md changed (technical report link and citation, a table
+  # reformat, revised MIEB and MAEB figures; license line unchanged). README.md is locked, so G0 reruns before any pin
+  # move; no other file changed, so nothing that affects inference moved (#279).
+  latest_known_upstream_revision: "f9972ac22e696a105c482202646979e33e4b5a1e"
   latest_verified_upstream_revision: "914f7f89142e33e77833254d9c9b90c3cef7303b"
-  last_checked: 2026-10-10
+  last_checked: 2026-11-03
   review_date: 2027-01-05
   known_issues:
     - >-

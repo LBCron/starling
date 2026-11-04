@@ -111,6 +111,14 @@ behavior:
     pad_token_id_overlay: >-
       248319 (an embedding row the tokenizer never produces) instead of 248044, because ONNX Runtime GenAI masks prompt
       positions equal to pad_token_id and 248044 is <|endoftext|>, which users can type.
+  # Informational, Experimental API (docs/kickoff.md, "Capability record fields"). The validator compares each
+  # value with its capabilities row. max_output_tokens is a bound shared with the prompt, not a completion budget.
+  generation:
+    tool_call_mode: template
+    structured_output: grammar
+    state_reuse: none
+    caching_style: none
+    max_output_tokens: 8192
   unsupported:
     - tool definitions, tool calls and tool messages (the owned template renderer has no tools input)
     - image and video content (the checkpoint's vision tower is not built)
@@ -131,7 +139,7 @@ processing:
   tokenizer:
     # 0.3.0 (the code of 0.3.0-preview.1, released without a preview suffix) is the published tokenizer (starlinghq/tokenizers): the qualified 0.1.0-preview.4 behavior plus BERT WordPiece components this profile does not use; every conformance fixture passes unchanged.
     package: Starlings.Tokenizers
-    version: 0.3.4
+    version: 0.3.5
     profile_id: qwen35-bpe-chat
     algorithm: byte-level-bpe
     assets:

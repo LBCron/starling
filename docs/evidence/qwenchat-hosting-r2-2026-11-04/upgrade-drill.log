@@ -1,0 +1,18 @@
+passed Starlings.Models.QwenChat.Tests.UpgradeDrillTemporary.R1CacheUpgrades(id: "qwen3-0.6b/ortgenai-fp32-cpu", folder: "qwen3-0.6b-ortgenai") (38s 051ms)
+    qwen3-0.6b/ortgenai-fp32-cpu: OpenLocal on the r1 cache threw ModelAssetIntegrityException: qwen3-0.6b-ortgenai-fp32-cpu: model.onnx at <cache>/cache-qwen3-0.6b-ortgenai/Qwen/Qwen3-0.6B/c1899de289a
+    qwen3-0.6b/ortgenai-fp32-cpu: size-only OpenLocal passed, Load threw InvalidDataException: Bundle asset mismatch: model.onnx.
+    qwen3-0.6b/ortgenai-fp32-cpu: genai_config.json reused from the cache
+    qwen3-0.6b/ortgenai-fp32-cpu: model.onnx written by the download
+    qwen3-0.6b/ortgenai-fp32-cpu: model.onnx.data reused from the cache
+    qwen3-0.6b/ortgenai-fp32-cpu: tokenizer.json reused from the cache
+    qwen3-0.6b/ortgenai-fp32-cpu: tokenizer_config.json reused from the cache
+    qwen3-0.6b/ortgenai-fp32-cpu: chat_template.jinja reused from the cache
+passed Starlings.Models.QwenChat.Tests.UpgradeDrillTemporary.R1CacheUpgrades(id: "qwen2.5-0.5b-instruct/ortgenai-fp32-cpu", folder: "qwen2.5-0.5b-instruct-ortgenai") (21s 707ms)
+    qwen2.5-0.5b-instruct/ortgenai-fp32-cpu: OpenLocal on the r1 cache threw ModelAssetIntegrityException: qwen2.5-0.5b-instruct-ortgenai-fp32-cpu: model.onnx at <cache>/cache-qwen2.5-0.5b-instruct-ort
+    qwen2.5-0.5b-instruct/ortgenai-fp32-cpu: size-only OpenLocal passed, Load threw InvalidDataException: Bundle asset mismatch: model.onnx.
+    qwen2.5-0.5b-instruct/ortgenai-fp32-cpu: genai_config.json reused from the cache
+    qwen2.5-0.5b-instruct/ortgenai-fp32-cpu: model.onnx written by the download
+    qwen2.5-0.5b-instruct/ortgenai-fp32-cpu: model.onnx.data reused from the cache
+    qwen2.5-0.5b-instruct/ortgenai-fp32-cpu: tokenizer.json reused from the cache
+    qwen2.5-0.5b-instruct/ortgenai-fp32-cpu: tokenizer_config.json reused from the cache
+    qwen2.5-0.5b-instruct/ortgenai-fp32-cpu: chat_template.jinja reused from the cache

@@ -12,8 +12,8 @@ internal static class CapabilityRecordChecks
 {
     /// <summary>
     /// <paramref name="records"/> holds exactly the profiles of <paramref name="manifests"/>, and every record equals
-    /// its manifest: maturity, max input tokens, truncation, dimension, qualified providers, platform rows, stop token
-    /// ids and the whole capabilities map.
+    /// its manifest: maturity, max input tokens, truncation, dimension, tasks, qualified providers, platform rows, stop
+    /// token ids, the whole capabilities map and the generation fields.
     /// </summary>
     public static void AssertRecordsEqualManifests(IReadOnlyDictionary<string, ModelProfileCapabilities> records, IEnumerable<RegistryManifest> manifests)
     {
@@ -33,6 +33,7 @@ internal static class CapabilityRecordChecks
                 ? [.. s.Split(',').Select(x => int.Parse(x.Trim(), CultureInfo.InvariantCulture))]
                 : [];
             Assert.Equal(stops, record.StopTokenIds);
+            Assert.Equal(manifest.Behavior["tasks"].Split(',').Select(t => t.Trim()), record.Tasks);
 
             Assert.Equal(manifest.CompatibilityRows.Count, record.Platforms.Count);
             for (int i = 0; i < record.Platforms.Count; i++)
@@ -62,8 +63,76 @@ internal static class CapabilityRecordChecks
                 // The validator refuses Stable with an untested capability; the record follows the same rule.
                 Assert.DoesNotContain(CapabilityStatus.Untested, record.Capabilities.Values);
             }
+
+            AssertGenerationEqualsManifest(manifest, record);
         }
     }
+
+    /// <summary>
+    /// The record's generation fields equal the manifest's, field by field, and each follows its capability row. A profile
+    /// has them exactly when its tasks include generation.
+    /// </summary>
+    private static void AssertGenerationEqualsManifest(RegistryManifest manifest, ModelProfileCapabilities record)
+    {
+        string id = manifest.Id;
+        bool generates = record.Tasks.Contains("generation");
+        Assert.True(generates == manifest.Behavior.ContainsKey("generation.tool_call_mode"), $"{id}: tasks and behavior.generation disagree");
+        if (record.Generation is not { } generation)
+        {
+            Assert.False(generates, $"{id}: a generation profile without Generation");
+            return;
+        }
+
+        Assert.True(generates, $"{id}: Generation on a profile that does not generate");
+        Assert.Equal(manifest.Behavior["generation.tool_call_mode"], Name(generation.ToolCallMode));
+        Assert.Equal(manifest.Behavior["generation.structured_output"], Name(generation.StructuredOutput));
+        Assert.Equal(manifest.Behavior["generation.state_reuse"], Name(generation.StateReuse));
+        Assert.Equal(manifest.Behavior["generation.caching_style"], Name(generation.CachingStyle));
+        string maxOutput = manifest.Behavior["generation.max_output_tokens"];
+        Assert.Equal(maxOutput == "untested" ? null : int.Parse(maxOutput, CultureInfo.InvariantCulture), generation.MaxOutputTokens);
+
+        // Every value traces to a capability row: a second, independent reading of the validator's rule.
+        Assert.Equal(Expected(record, "template", "tool_calling"), Name(generation.ToolCallMode));
+        Assert.Equal(Expected(record, "grammar", "structured_output", "guided_decoding"), Name(generation.StructuredOutput));
+        Assert.Equal(Expected(record, null, "conversation_state_reuse", "prefix_reuse"), Name(generation.StateReuse));
+        Assert.Equal(Expected(record, null, "conversation_state_reuse", "prefix_reuse"), Name(generation.CachingStyle));
+        var maxNewTokens = Row(record, "max_new_tokens");
+        Assert.Equal(maxNewTokens is CapabilityStatus.Supported or CapabilityStatus.Experimental ? record.MaxInputTokens : null, generation.MaxOutputTokens);
+
+        if (record.Maturity == ProfileMaturity.Stable)
+        {
+            Assert.NotEqual(ProfileToolCallMode.Untested, generation.ToolCallMode);
+            Assert.NotEqual(ProfileStructuredOutput.Untested, generation.StructuredOutput);
+            Assert.NotEqual(ProfileStateReuse.Untested, generation.StateReuse);
+            Assert.NotEqual(ProfileCachingStyle.Untested, generation.CachingStyle);
+            Assert.NotNull(generation.MaxOutputTokens);
+        }
+    }
+
+    /// <summary>The first recorded of <paramref name="keys"/>, or null when the profile records none of them.</summary>
+    private static CapabilityStatus? Row(ModelProfileCapabilities record, params string[] keys)
+    {
+        foreach (string key in keys)
+        {
+            if (record.Capabilities.TryGetValue(key, out var status))
+            {
+                return status;
+            }
+        }
+
+        return null;
+    }
+
+    /// <summary>The generation value a capability row allows; <paramref name="available"/> is null where no value exists yet.</summary>
+    private static string? Expected(ModelProfileCapabilities record, string? available, params string[] keys) => Row(record, keys) switch
+    {
+        null or CapabilityStatus.Untested => "untested",
+        CapabilityStatus.Unsupported => "none",
+        _ => available,
+    };
+
+    /// <summary>A generation enum value as the manifests spell it.</summary>
+    private static string Name(Enum value) => value is ProfileToolCallMode.TemplateRendered ? "template" : value.ToString().ToLowerInvariant();
 
     /// <summary>A status as the manifests spell it.</summary>
     public static string Name(CapabilityStatus status) => status.ToString().ToLowerInvariant();

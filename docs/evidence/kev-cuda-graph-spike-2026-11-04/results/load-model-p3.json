@@ -1,0 +1,18 @@
+{
+ "graph": "/home/mark/Projects/AI-models/kev/spike-2026-11-04/export-cuda-fp32/model-p3.onnx",
+ "steps": [
+  {
+   "step": "create session (CUDA EP, use_tf32=0)",
+   "ok": true
+  },
+  {
+   "step": "state pass, 600 tokens, empty cache",
+   "ok": true
+  },
+  {
+   "step": "row of 40 tokens from the cached state",
+   "ok": true
+  }
+ ],
+ "onnxruntime": "1.30.0"
+}

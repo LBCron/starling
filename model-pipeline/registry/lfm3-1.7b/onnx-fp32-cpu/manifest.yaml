@@ -76,6 +76,15 @@ behavior:
     enable_thinking: true              # the template's default; Lfm3ChatModel.Chat takes enableThinking
     template: "lfm3-text-v1: text system, user and assistant turns, enable_thinking and preserve_thinking"
     request_state: one Lfm3Sequence (convolution and attention caches) per request; requests share the weights only.
+  # Informational, Experimental API (docs/kickoff.md, "Capability record fields"). The validator compares each
+  # value with its capabilities row. max_output_tokens is a bound shared with the prompt, not a completion budget.
+  # max_output_tokens is untested because the capabilities map has no max_new_tokens row.
+  generation:
+    tool_call_mode: none
+    structured_output: none
+    state_reuse: none
+    caching_style: none
+    max_output_tokens: untested
   unsupported:
     - sampling, including the card's temperature 0.1, top_k 50, repetition_penalty 1.1
     - logprobs and guided decoding
@@ -90,7 +99,7 @@ processing:
     package: Starlings.Tokenizers
     # The repository pin (every manifest names it; the release drills check). 0.3.3 is the first version with
     # lfm3-bpe-chat (the Llama 3 split regex); 0.3.2 rejected this tokenizer at load.
-    version: 0.3.4
+    version: 0.3.5
     # The export's tokenizer.json (the checkpoint's file without its final newline: the same JSON) through the
     # lfm3-bpe-chat profile (byte-level BPE, Llama 3 split regex, ignore_merges).
     profile_id: lfm3-bpe-chat
@@ -197,9 +206,11 @@ qualification:
 
 maintenance:
   owner: Mark
-  latest_known_upstream_revision: "c680759afee1ce8310c90d6c621f4558200dee77"
+  # The export repository's main moved to e90558fd (2026-11-03): only README.md (card) and configuration_lfm3.py (now
+  # the copy in the LFM3-1.7B checkpoint at its pin) changed. Neither is in this profile's lock, so the pin stays (#279).
+  latest_known_upstream_revision: "e90558fd7388a536a029a4196ddc1c90a234ae9b"
   latest_verified_upstream_revision: "c680759afee1ce8310c90d6c621f4558200dee77"
-  last_checked: 2026-10-28
+  last_checked: 2026-11-03
   review_date: 2027-01-28
   known_issues:
     - >-
