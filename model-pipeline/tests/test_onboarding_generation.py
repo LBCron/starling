@@ -122,6 +122,51 @@ def test_graph_stamped_with_a_foreign_commit_is_refused(tmp_path, monkeypatch):
         module.verify_producer_version(graph)
 
 
+@pytest.mark.parametrize("stamp_accepted", [True, False])
+def test_main_hides_git_from_the_builder_and_refuses_a_bad_stamp_before_output(tmp_path, monkeypatch, stamp_accepted):
+    module = builder(monkeypatch)
+    snapshot = tmp_path / "snapshot"
+    snapshot.mkdir()
+    (snapshot / "tokenizer.json").write_text("{}")
+    (snapshot / "tokenizer_config.json").write_text(json.dumps({"chat_template": "t"}))
+    candidate = tmp_path / "candidate.json"
+    candidate.write_text(json.dumps({"id": "p", "origin": {"files": []}}))
+    out = tmp_path / "out"
+    builds = []
+    verified = []
+
+    def build(argv, **kwargs):
+        built = Path(argv[argv.index("-o") + 1])
+        built.mkdir()
+        for name in ("model.onnx", "model.onnx.data", "genai_config.json"):
+            (built / name).write_text(name)
+        builds.append(kwargs["env"])
+
+    def verify(graph):
+        verified.append(graph.name)
+        if not stamp_accepted:
+            raise ValueError("stamp")
+
+    monkeypatch.setattr(module.metadata, "version", lambda _: module.BUILDER_VERSION)
+    monkeypatch.setattr(module.subprocess, "run", build)
+    monkeypatch.setattr(module, "verified_copy", lambda *_: "c" * 64)
+    monkeypatch.setattr(module, "verify_producer_version", verify)
+    arguments = ["--candidate", str(candidate), "--snapshot", str(snapshot), "--out", str(out)]
+    monkeypatch.setattr(module.sys, "argv", ["build_bundle.py", *arguments])
+
+    if stamp_accepted:
+        assert module.main() == 0
+    else:
+        with pytest.raises(ValueError, match="stamp"):
+            module.main()
+
+    assert len(builds) == 1
+    assert builds[0]["GIT_DIR"].endswith("no-git-directory")
+    assert not Path(builds[0]["GIT_DIR"]).exists()
+    assert verified == ["model.onnx"]
+    assert (out / "model.onnx").exists() is stamp_accepted
+
+
 def test_verified_copy_rejects_corruption_and_never_changes_source(tmp_path, monkeypatch):
     module = builder(monkeypatch)
     snapshot = tmp_path / "source"

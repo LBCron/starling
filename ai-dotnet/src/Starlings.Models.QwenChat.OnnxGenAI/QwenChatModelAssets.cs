@@ -8,12 +8,12 @@ namespace Starlings.Models.QwenChat;
 /// pass the returned directory to <see cref="QwenChatModel.Load"/>.
 /// </summary>
 /// <remarks>
-/// The Hub repositories of the originals ship no ONNX Runtime GenAI build, so the bundle is Starling's reproducible
+/// The Hub repositories of the originals ship no ONNX Runtime GenAI build, so the bundle is Starling's
 /// build of the pinned original (<c>model-pipeline/reference/qwen-chat/build_bundle.py</c>, builder 0.17.1), under the
 /// license of the weights (Apache-2.0). Each profile's six files are hosted publicly, one Hugging Face repository per
 /// profile (<see cref="HostingRepository"/>) at a pinned commit (<see cref="HostingRevision"/>, tag <c>r1</c>), in the
 /// bundle layout; downloading needs no token. The digests in the profile, not the address, pin the bytes, so a bundle
-/// built locally with the script loads the same way.
+/// built locally with the script loads only when it has those digests, which it does not today (#278).
 /// </remarks>
 public static class QwenChatModelAssets
 {

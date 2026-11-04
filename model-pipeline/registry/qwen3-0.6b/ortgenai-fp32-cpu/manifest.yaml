@@ -78,7 +78,7 @@ rights:
     C# template renderer adapts the upstream chat_template (Apache-2.0; THIRD-PARTY-NOTICES.md and LICENSE.Qwen.txt in
     the package). Hosting decided by Mark on 2026-10-19 (admissions/qwen-chat.md): Starling redistributes the built
     bundle, publicly, in Starlinghq/qwen3-0.6b-ortgenai (tag r1) with LICENSE, NOTICE and SHA256SUMS; QwenChatModelAssets pins it by commit
-    and QwenChatModel.Load accepts only the pinned digests. A locally built bundle (build_bundle.py) loads the same way.
+    and QwenChatModel.Load accepts only the pinned digests. A locally built bundle (build_bundle.py) loads only with the same digests, which it does not give today (#278).
 
 behavior:
   tasks: [generation]
@@ -152,7 +152,8 @@ execution:
   variant: reference
   graph:
     # build_bundle.py: onnxruntime-genai 0.17.1 builder -p fp32 -e cpu on the verified original. Two builds on
-    # 2026-10-18 gave the same digests. Hosted (graph.hosting); building locally gives the same bytes.
+    # 2026-10-18 gave the same digests, stamped with that checkout's HEAD (1bada25). Hosted (graph.hosting).
+    # build_bundle.py now stamps the wheel's commit (83de55a), so model.onnx built locally differs from the pin (#278).
     assets:
       - path: genai_config.json
         sha256: "0af5816836cdd4414bc38239443ec2fe1f554ca44daf282b48f07e3768e264e4"
