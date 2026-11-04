@@ -1,0 +1,7 @@
+{
+ "graph": "/home/mark/Projects/AI-models/kev/spike-2026-11-04/export-cuda-fp32/model.onnx",
+ "onnxruntime_genai": "0.17.1",
+ "onnxruntime": "1.30.0",
+ "ok": false,
+ "error": "Load model from /home/mark/Projects/AI-models/kev/spike-2026-11-04/export-cuda-fp32/model.onnx failed:Invalid model. Node input 'past_key_values.0.key' is not a graph input, initializer, or output of a previous node."
+}

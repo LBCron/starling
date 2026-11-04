@@ -4,17 +4,17 @@ Issue #140, ask 1, step 2 of the triage plan. Development evidence on an RTX 406
 
 ## Result
 
-- **Negative as asked.** The builder's `-e cuda -p fp32` export does not load under ONNX Runtime 1.30.0, and after the load repair it cannot continue from a cached state. It takes three hand repairs to run Kev's path.
+- **Negative as asked.** The builder's `-e cuda -p fp32` export does not load under ONNX Runtime GenAI 0.17.1 or plain ONNX Runtime 1.30.0, and after the load repair it cannot continue from a cached state. It takes three hand repairs to run Kev's path.
 - **This graph has no `GroupQueryAttention`.** The builder uses `MultiHeadAttention` here, because it has no fp32 `GroupQueryAttention` configuration for CUDA, and ONNX Runtime 1.30.0 keeps the fp32 node on the CPU in the current bundle. After the repairs all attention runs on the device. `GroupQueryAttention` on the device exists only in the fp16 and bf16 exports.
 - **The state cache leaves the device on every graph with a plain `Run`.** It stays there only when the caller binds `present.*` to the device (I/O binding). `KevDecisionModel` uses a plain `Run`, so a new graph alone does not keep the cache on the device.
-- **Latency improves.** With 4 questions, against the current profile's 270 ms: repaired fp32 184 ms, or 146 ms with the cache on the device. fp16 is 83 ms and 67 ms. fp16 is not parity-equal to the fp32 profile.
+- **Latency improves.** With 4 questions, against the current profile's 270 to 287 ms: repaired fp32 184 ms, or 146 ms with the cache on the device. With 8 questions, against 467 to 508 ms: 282 ms and 217 ms. fp16 is 83 and 67 ms, and 136 to 146 and 107 ms, but it is not parity-equal to the fp32 profile.
 - **Load sensitivity needs both changes.** The graph alone more than halves the time at load but it still tracks load. Repaired fp32 with the cache on the device held 269 ms at load 40 to 49, while the host path took 530 ms at load 22 to 26.
 - **Recommended next step:** a reproducible repaired fp32 graph plus device-bound caching in `KevDecisionModel`, run first from .NET on the RTX 3090. See [Recommendation](#recommendation).
 
 ## Setup
 
 - Intel i7-5820K (12 threads), Linux 7.2.8, NVIDIA GeForce RTX 4060 Ti 16 GB (`CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=1`), driver 615.78.08. The RTX 3090 was not used.
-- Python 3.12.14, `onnxruntime-gpu` 1.30.0, `onnxruntime-genai` 0.17.1, onnx 1.23.1. CUDA EP with `use_tf32=0`, read back from the session. Intra-op threads left at the ONNX Runtime default.
+- Python 3.12.14 (the GenAI load check: Python 3.11 with `onnxruntime-genai-cuda` 0.17.1), `onnxruntime-gpu` 1.30.0, `onnxruntime-genai` 0.17.1, onnx 1.23.1. CUDA EP with `use_tf32=0`, read back from the session. Intra-op threads left at the ONNX Runtime default.
 - The machine was shared with CI runners and other jobs throughout. Every cell records the 1-minute load average before and after. Load changed during the run, so cells are not all comparable; the tables say so where it matters.
 
 Commands are in [run_spike.sh](run_spike.sh), the measurement in [spike_s1.py](spike_s1.py), and the repairs in [patches/](patches/). Each step ran inside `systemd-run --user --scope -p MemoryMax=20G -p MemorySwapMax=0`:
@@ -23,7 +23,8 @@ Commands are in [run_spike.sh](run_spike.sh), the measurement in [spike_s1.py](s
 python -m onnxruntime_genai.models.builder -i kev-merged-fp32 -o export-cuda-fp32 -p fp32 -e cuda -c cache \
   --extra_options exclude_lm_head=true exclude_mtp=true
 run_spike.sh patch; run_spike.sh load; run_spike.sh placement; run_spike.sh parity
-run_spike.sh bench; run_spike.sh hog 12; run_spike.sh bench rep2
+run_spike.sh bench; run_spike.sh hog 12; run_spike.sh bench rep2; run_spike.sh bench quiet
+<genai-cuda python> -I genai_load.py
 ```
 
 ### Graphs
@@ -39,7 +40,9 @@ Today's export is byte-identical to the one in `admissions/kev.md`, so the build
 
 ## Does it load?
 
-Each stage on the CUDA EP, with a 600-token state and then a 40-token row from its cache ([results/load-*.json](results/)).
+`onnxruntime_genai.Model` 0.17.1 on the as-built export fails with the same error as the first row below ([results/load-model-genai.json](results/load-model-genai.json)). GenAI's generation loop is not what Kev runs: the Kev package uses a plain ONNX Runtime session, so the rest of this page does too.
+
+Each stage on a plain session on the CUDA EP, with a 600-token state and then a 40-token row from its cache ([results/load-*.json](results/)).
 
 | Graph | Session | State pass | Row from cache | Error |
 | --- | --- | --- | --- | --- |
@@ -96,17 +99,21 @@ Load 5 to 7 for the 4-question cells. The 8-question cells ran as other jobs sta
 | 8 | fp16 | host | 146 | 335 | 132 | 40 | 106 | 57% | 11–14 |
 | 8 | fp16 | device | 106 | 112 | 103 | 35 | 71 | 91% | 12–13 |
 
-Relative to the current profile with a host cache, using p50 at 4 questions and `min` at 8 questions:
+### Repeat
 
-| Graph, cache | 4 questions | 8 questions |
-| --- | ---: | ---: |
-| current, device | 0.98 | 1.00 |
-| repaired fp32, host | 0.68 | 0.61 |
-| repaired fp32, device | 0.54 | 0.47 |
-| fp16, host | 0.31 | 0.29 |
-| fp16, device | 0.25 | 0.23 |
+The same cells again (`quiet`), started when other work had stopped. Load was 3 to 7 at 4 questions and 7 to 12 at 8, most of it this run's own CPU threads. The ratios are p50 against the current profile with a host cache.
 
-- Binding the cache does nothing for the current graph, because `GroupQueryAttention` on the CPU forces the copies anyway.
+| Graph | Cache | 4 questions p50 (p90) ms | Ratio | 8 questions p50 (p90) ms | Ratio |
+| --- | --- | ---: | ---: | ---: | ---: |
+| current | host | 287 (293) | 1.00 | 467 (619) | 1.00 |
+| current | device | 280 (283) | 0.97 | 595 (683) | 1.27 |
+| repaired fp32 | host | 184 (185) | 0.64 | 281 (283) | 0.60 |
+| repaired fp32 | device | 146 (147) | 0.51 | 217 (220) | 0.46 |
+| fp16 | host | 83 (83) | 0.29 | 136 (144) | 0.29 |
+| fp16 | device | 66 (67) | 0.23 | 108 (116) | 0.23 |
+
+- The repaired and fp16 cells repeat to within a few milliseconds. The current graph varies far more, because it depends on the CPU.
+- Binding the cache gains nothing on the current graph, and at 8 questions it was slower in both passes, though those cells ran at higher load than their host pairs. `GroupQueryAttention` on the CPU forces the copies anyway.
 - On the repaired graph, binding saves about 7 ms per row and 7 ms per state pass.
 - The GPU is now the limit: 87 to 97% busy on the repaired graph with a quiet CPU, against 46 to 60% today. S1 saw 31 to 51% on the RTX 3090.
 - An earlier host-only pass gave the same picture: p50 286, 184, 83 ms at 4 questions and 560, 281, 132 ms at 8. Its result files were overwritten by the run above, so these six numbers have no file here.
@@ -146,8 +153,8 @@ Host and device modes gave bit-identical probabilities in all six graph and ques
 - **This is Python, not .NET.** Neither `KevDecisionModel` nor the Corvid path ran. The graph signature, the session digest lock and the cached path of the repaired graph were not exercised from C#. `OnnxModelSession` has `CreateIoBinding`, `CreateDeviceMemoryInfo` and `RunWithBinding`, but `KevDecisionModel` does not use them, and device binding of the Kev cache from C# was not tried.
 - **The device cache was only measured.** Its lifetime, cancellation, concurrent callers and growth over time were not tested, and `KevState` keeps host values today.
 - No soak, no gate, no long-state run. The earlier ceiling of the fp32 mask (8,192 tokens passed, 12,288 failed) comes from `admissions/kev.md`, and 8,192 is also `MaxStateTokens`, so the limit itself needs a check.
-- `use_tf32=1`, bf16 and Kev-4B were not measured. Newer ONNX Runtime and GenAI versions were not run.
-- No quiet-machine repeat of the 8-question cells: load stayed high at the end of the time box.
+- `use_tf32=1`, bf16 and Kev-4B were not measured. Newer ONNX Runtime and GenAI versions were not run. A repaired graph was not loaded through GenAI.
+- No fully idle run. Even the repeat had 7 to 12 load at 8 questions, and the current graph's own threads are part of that.
 
 ## Recommendation
 
