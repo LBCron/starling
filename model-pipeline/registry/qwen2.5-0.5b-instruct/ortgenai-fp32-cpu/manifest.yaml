@@ -103,6 +103,15 @@ behavior:
     pad_token_id_overlay: >-
       151935 (the unused last embedding row) instead of 151643, because ONNX Runtime GenAI masks prompt positions equal
       to pad_token_id and 151643 is <|endoftext|>, which users can type.
+  # Informational, Experimental API (docs/kickoff.md, "Capability record fields"). The validator compares each
+  # value with its capabilities row. max_output_tokens is a bound shared with the prompt, not a completion budget.
+  # structured_output is untested because the capabilities map has no row for it.
+  generation:
+    tool_call_mode: template
+    structured_output: untested
+    state_reuse: none
+    caching_style: none
+    max_output_tokens: 32768
   unsupported:
     - image, audio and video content
     - reasoning content (the template has no reasoning block; ReasoningContent on assistant history is not rendered)

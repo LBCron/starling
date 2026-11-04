@@ -37,6 +37,88 @@ def test_mutable_or_short_revisions_are_rejected(tmp_path, revision):
     assert validate_file(path)
 
 
+def generator(m):
+    m["behavior"]["tasks"] = ["generation"]
+    m["behavior"]["generation"] = {
+        "tool_call_mode": "template",
+        "structured_output": "untested",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": m["behavior"]["max_input_tokens"],
+    }
+    m["capabilities"].update(tool_calling="experimental", conversation_state_reuse="unsupported")
+    m["capabilities"]["max_new_tokens"] = "experimental"
+
+
+def test_generation_fields_that_follow_their_capability_rows_are_valid(tmp_path):
+    assert validate_file(write_variant(tmp_path, generator)) == []
+
+
+def test_generation_section_is_required_exactly_for_generation_profiles(tmp_path):
+    def drop(m):
+        generator(m)
+        del m["behavior"]["generation"]
+
+    def extra(m):
+        section = {"tool_call_mode": "none"}
+        m["behavior"]["generation"] = section
+
+    assert any("generation" in p.message for p in validate_file(write_variant(tmp_path, drop)))
+    assert validate_file(write_variant(tmp_path, extra))
+
+
+@pytest.mark.parametrize(
+    ("capability", "status", "field", "value"),
+    [
+        ("tool_calling", "unsupported", "tool_call_mode", "template"),  # unsupported is none
+        ("tool_calling", "untested", "tool_call_mode", "template"),  # untested is untested
+        ("tool_calling", "experimental", "tool_call_mode", "none"),
+        ("structured_output", "unsupported", "structured_output", "grammar"),
+        ("guided_decoding", "unsupported", "structured_output", "grammar"),
+        (None, None, "structured_output", "grammar"),  # no row: never invented
+        (None, None, "structured_output", "none"),
+        ("conversation_state_reuse", "experimental", "state_reuse", "none"),  # no value for it yet
+        ("conversation_state_reuse", "untested", "caching_style", "none"),
+        ("max_new_tokens", "untested", "max_output_tokens", 512),
+        ("max_new_tokens", "experimental", "max_output_tokens", 8),  # not max_input_tokens
+    ],
+)
+def test_generation_fields_must_follow_their_capability_rows(tmp_path, capability, status, field, value):
+    def edit(m):
+        generator(m)
+        if capability:
+            m["capabilities"][capability] = status
+        m["behavior"]["generation"][field] = value
+
+    problems = validate_file(write_variant(tmp_path, edit))
+    assert any(p.location == f"behavior/generation/{field}" for p in problems), problems
+
+
+def test_structured_output_without_a_row_is_untested_and_lfm3_style_rows_are_read(tmp_path):
+    def edit(m):
+        generator(m)
+        m["capabilities"].pop("conversation_state_reuse")
+        m["capabilities"].update(prefix_reuse="unsupported", guided_decoding="unsupported")
+        m["capabilities"].pop("max_new_tokens")
+        m["behavior"]["generation"].update(structured_output="none", max_output_tokens="untested")
+
+    assert validate_file(write_variant(tmp_path, edit)) == []
+
+
+def test_stable_refuses_an_untested_generation_field(tmp_path):
+    def promote(m):
+        generator(m)
+        m["maturity"] = "stable"
+        m["capabilities"] = {k: "supported" for k in m["capabilities"]}
+        m["capabilities"]["conversation_state_reuse"] = "unsupported"
+        m["behavior"]["generation"]["max_output_tokens"] = m["behavior"]["max_input_tokens"]
+        for gate in GATES:
+            m["qualification"]["gates"][gate] = {"status": "passed", "evidence": "docs/evidence/g.md"}
+
+    problems = validate_file(write_variant(tmp_path, promote))
+    assert any("generation.structured_output" in p.message for p in problems), problems
+
+
 def test_stable_requires_every_gate_passed(tmp_path):
     def promote(m):
         m["maturity"] = "stable"

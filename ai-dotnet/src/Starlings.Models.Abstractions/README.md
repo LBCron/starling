@@ -69,8 +69,11 @@ Maturity is per profile, generated from the registry manifests by `model-pipelin
 | `Platforms` | every `compatibility` row | informational |
 | `StopTokenIds` | `behavior.defaults.stop_token_ids` | informational |
 | `Capabilities` | the `capabilities` map, key for key | informational |
+| `Generation` (null for a profile that does not generate): `ToolCallMode`, `StructuredOutput`, `StateReuse`, `CachingStyle`, `MaxOutputTokens` | `behavior.generation` | informational, Experimental API |
 
 Contract fields of a Stable profile change only with a new profile or a release note under the [support policy](https://github.com/starlinghq/starling/blob/main/docs/support-policy.md). The fine-grained, package-wide keys (for example `batch.token_budget`) stay in each package's `XCapabilities.Statuses`.
+
+`Generation` is Experimental API: it can change in any release until a release note promotes a field to the contract. That split is the ["Capability record fields" row](https://github.com/starlinghq/starling/blob/main/docs/kickoff.md) of the kickoff decisions, and it is revisitable: changing that row and this table is enough. Each `Generation` value says how a feature works and follows one capability row, which keeps the status: `Untested` when the row is untested or absent, `None` when it is unsupported. So `TemplateRendered` next to `Capabilities["tool_calling"] == Experimental` means an experimental feature, not a supported one. `MaxOutputTokens` is an upper bound shared with the prompt (a request whose prompt plus completion exceed `MaxInputTokens` is refused), not a qualified completion length, and it is null when `max_new_tokens` is untested or not recorded. The default completion length stays in the manifest (`behavior.defaults.max_new_tokens`).
 
 ```csharp
 using Starlings.Models;

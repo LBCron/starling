@@ -195,6 +195,7 @@ def build(registry: Path = DEFAULT_REGISTRY, repo_root: Path = REPO_ROOT) -> dic
                 "maturity": m["maturity"],
                 "tasks": list(m["behavior"]["tasks"]),
                 "behavior": _behavior(m),
+                "generation": m["behavior"].get("generation"),
                 "qualified_providers": _qualified_providers(m),
                 "owner": maintenance["owner"],
                 "review_date": str(maintenance["review_date"]),
@@ -362,6 +363,37 @@ def _render_readme(catalog: dict[str, Any], out: Path, repo_root: Path) -> str:
             [[c, *(p["capabilities"][c] for p in members)] for c in names],
         )
 
+    generators = [p for p in profiles if p["generation"] is not None]
+    if generators:
+        lines += [
+            "",
+            "## Generation",
+            "",
+            'Informational (docs/kickoff.md, "Capability record fields"). Each value follows a capability row, which '
+            "keeps the status: `untested` when the row is untested or absent, `none` when it is unsupported. Max "
+            "output tokens is an upper bound shared with the prompt, not a completion budget.",
+            "",
+        ]
+        lines += _table(
+            ["Profile", "Tool calls", "Structured output", "State reuse", "Caching", "Max output tokens"],
+            [
+                [
+                    p["id"],
+                    *(
+                        p["generation"][field]
+                        for field in (
+                            "tool_call_mode",
+                            "structured_output",
+                            "state_reuse",
+                            "caching_style",
+                            "max_output_tokens",
+                        )
+                    ),
+                ]
+                for p in generators
+            ],
+        )
+
     lines += ["", "## Known issues", ""]
     issues = [(p["id"], issue) for p in profiles for issue in p["known_issues"]]
     if issues:
@@ -506,6 +538,12 @@ _STATUS = {
 }
 
 
+_TOOL_CALL_MODE = {"none": "None", "template": "TemplateRendered", "untested": "Untested"}
+_STRUCTURED_OUTPUT = {"none": "None", "grammar": "Grammar", "untested": "Untested"}
+_STATE_REUSE = {"none": "None", "untested": "Untested"}
+_CACHING_STYLE = {"none": "None", "untested": "Untested"}
+
+
 def _cs_string(text: str) -> str:
     return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -523,6 +561,21 @@ def _cs_platform(row: dict[str, Any]) -> str:
         y, mo, d = (int(x) for x in str(row["verified"]).split("-"))
         args.append(f"Verified: new DateOnly({y}, {mo}, {d})")
     return "new ProfilePlatform(" + ", ".join(args) + ")"
+
+
+def _cs_generation(generation: dict[str, Any] | None) -> list[str]:
+    """The record's `Generation` initializer; nothing for a profile that does not generate."""
+    if generation is None:
+        return []
+    maximum = generation["max_output_tokens"]
+    return [
+        "                Generation = new ProfileGeneration(",
+        f"                    ProfileToolCallMode.{_TOOL_CALL_MODE[generation['tool_call_mode']]},",
+        f"                    ProfileStructuredOutput.{_STRUCTURED_OUTPUT[generation['structured_output']]},",
+        f"                    ProfileStateReuse.{_STATE_REUSE[generation['state_reuse']]},",
+        f"                    ProfileCachingStyle.{_CACHING_STYLE[generation['caching_style']]},",
+        f"                    MaxOutputTokens: {'null' if maximum == 'untested' else maximum}),",
+    ]
 
 
 def _render_capability_source(globs: str, namespace: str, manifests: list[dict[str, Any]]) -> str:
@@ -570,6 +623,7 @@ def _render_capability_source(globs: str, namespace: str, manifests: list[dict[s
                 for name, status in m["capabilities"].items()
             ),
             "                },",
+            *_cs_generation(m["behavior"].get("generation")),
             "            },",
         ]
     lines += ["        };", "}", ""]

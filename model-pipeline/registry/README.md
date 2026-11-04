@@ -13,4 +13,6 @@ The public catalog, [`docs/catalog/`](../../docs/catalog/README.md), is generate
 
 Validate with `model-pipeline validate registry`. After changing a manifest, regenerate the catalog with `model-pipeline catalog`; CI fails when it is stale.
 
+A profile whose `behavior.tasks` has `generation` also needs `behavior.generation` (tool-call mode, structured output, state reuse, caching style, max output tokens). The validator holds each value to its row in `capabilities`: `untested` when the row is untested or absent, `none` when it is unsupported. The `model-manifest.schema.json` descriptions give the rest.
+
 Quote every digest and revision in YAML. An unquoted all-digit SHA parses as a number and fails validation.
