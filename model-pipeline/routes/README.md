@@ -7,6 +7,7 @@ file, so they cannot drift apart.
 | File | Route | Read by |
 | --- | --- | --- |
 | [`bert-onnx-cpu-v1/contracts.json`](bert-onnx-cpu-v1/contracts.json) | `bert-onnx-cpu-v1` | `src/model_pipeline/onboarding_bert.py` (`load_contracts`, `validate_contracts`) and `ai-dotnet/src/Starlings.Models.Bert` (embedded resource `Starlings.Models.Bert.Contracts.json`; `BertModelProfile.SupportedRepositories`) |
+| [`genai-chat-cpu-v1/contracts.json`](genai-chat-cpu-v1/contracts.json) | `genai-chat-cpu-v1` | `src/model_pipeline/onboarding_genai_chat.py` (`load_contracts`, `validate_contracts`); `Starlings.Models.Phi4.Tests` compares `Phi4Checkpoint` with it |
 
 The other routes (e5, Qwen, Kev, Whisper) still keep their allow-lists in code.
 
@@ -38,3 +39,24 @@ and `BertModelProfile.Parse`).
 Add an entry with `model-pipeline scaffold <candidate>` ([ONBOARDING.md](../ONBOARDING.md#scaffold-a-bert-route-candidate)),
 not by hand. An entry is not a support claim: it lets the route run the candidate; gates, maturity and protected
 evidence are unchanged.
+
+## `genai-chat-cpu-v1/contracts.json`
+
+`format` is `starlings.genai-chat-route-contracts`, `format_version` is `1` and `route` is `genai-chat-cpu-v1`. `contracts` maps each Hugging Face repository to an object with exactly `id` (the profile id, ending in `/ortgenai-fp32-cpu`), `revision` (full commit SHA) and `behavior`. A candidate's `behavior` must equal the entry's field for field.
+
+| `behavior` field | Meaning | Allowed values |
+| --- | --- | --- |
+| `architecture`, `model_type` | The built-in transformers architecture and config type | strings; the reference refuses a class outside transformers |
+| `config` | Exactly `hidden_size`, `num_hidden_layers`, `num_attention_heads`, `num_key_value_heads`, `head_dim`, `intermediate_size`, `max_position_embeddings`, `original_max_position_embeddings`, `partial_rotary_factor`, `rope_type`, `tie_word_embeddings` | checked against the checkpoint's `config.json` by the bundle stage |
+| `vocab_size` | Rows of the embedding and the logits | positive integer |
+| `eos_token_ids` | The ids that end a turn, from `generation_config.json` | non-empty, inside the vocabulary |
+| `add_bos_token` | Whether the tokenizer adds a BOS | boolean |
+| `pad_token_id_overlay`, `pad_overlay_reason` | The pad id overlaid on the GenAI configuration, and why | an embedding row outside the EOS ids; the backend stage refuses a row the tokenizer uses |
+| `tokenizer_profile` | Owned tokenizer pipeline | `phi4-bpe-chat` |
+| `template`, `template_sha256` | Template id and SHA-256 of the upstream `chat_template` string | lowercase hex digest; the bundle stage checks it |
+| `max_new_tokens` | Default completion limit of a corpus row | positive integer |
+| `max_context_tokens` | Prompt plus completion must stay below this | at most `original_max_position_embeddings` |
+| `cache` | Cache statement of the evidence | string |
+| `tools`, `thinking`, `multimodal`, `long_context` | Explicit capability status | `supported`, `unsupported`, `experimental` or `untested` |
+
+An entry is not a support claim: it lets the route run the candidate; gates, maturity and protected evidence are unchanged. Unlike the BERT table, no .NET package reads this one at run time: whether one generic loader should is an open maintainer question (`docs/design/generic-genai-chat-route.md`).
