@@ -16,6 +16,16 @@ MANIFEST_NAME = "manifest.yaml"
 GATES = tuple(f"G{i}" for i in range(8))
 # Execution backend of the browser profiles (onnxruntime-web in a .NET browser-wasm app; follow-up plan W6).
 BROWSER_BACKEND = "onnxruntime-web"
+# `behavior.generation` field to the capability rows it follows, first recorded row first, and the value of a row whose
+# status is `supported` or `experimental`. None: no value exists for that yet, so such a row is a validation problem
+# until the field's vocabulary grows. `max_output_tokens` has its own rule (`_generation_value`).
+GENERATION_TRACE: dict[str, tuple[tuple[str, ...], str | None]] = {
+    "tool_call_mode": (("tool_calling",), "template"),
+    "structured_output": (("structured_output", "guided_decoding"), "grammar"),
+    "state_reuse": (("conversation_state_reuse", "prefix_reuse"), None),
+    "caching_style": (("conversation_state_reuse", "prefix_reuse"), None),
+    "max_output_tokens": (("max_new_tokens",), None),
+}
 
 
 def is_browser(manifest: dict[str, Any]) -> bool:
@@ -80,15 +90,46 @@ def stable_blockers(manifest: dict[str, Any]) -> StableBlockers:
     """The Stable rules, independent of the manifest's current maturity. The validator and the catalog share them."""
     capabilities = manifest.get("capabilities", {})
     gates = manifest.get("qualification", {}).get("gates", {})
+    generation = manifest.get("behavior", {}).get("generation") or {}
+    untested = [k for k, v in capabilities.items() if v == "untested"]
+    untested += [f"generation.{k}" for k, v in generation.items() if v == "untested"]
     return StableBlockers(
-        untested_capabilities=tuple(sorted(k for k, v in capabilities.items() if v == "untested")),
+        untested_capabilities=tuple(sorted(untested)),
         gates_not_passed=tuple(sorted(g for g in GATES if gates.get(g, {}).get("status") != "passed")),
     )
 
 
+def _generation_value(field: str, status: str | None, manifest: dict[str, Any]) -> object:
+    """The value `behavior.generation.<field>` must have for a capability row of `status` (None: no row), or None when
+    the field has no value for that status yet."""
+    if status in (None, "untested"):
+        return "untested"
+    if field == "max_output_tokens":
+        return manifest["behavior"]["max_input_tokens"] if status != "unsupported" else "untested"
+    return "none" if status == "unsupported" else GENERATION_TRACE[field][1]
+
+
+def _generation_problems(manifest: dict[str, Any]) -> list[tuple[str, str]]:
+    """Every `behavior.generation` value follows its capability row, so none of them is a second source of truth."""
+    generation = manifest["behavior"].get("generation")
+    if generation is None:
+        return []
+    capabilities = manifest["capabilities"]
+    problems = []
+    for field, (rows, _) in GENERATION_TRACE.items():
+        row = next((r for r in rows if r in capabilities), None)
+        status = capabilities[row] if row else None
+        expected = _generation_value(field, status, manifest)
+        if generation[field] != expected:
+            source = f"capabilities.{row} is {status}" if row else f"no capability row among {', '.join(rows)}"
+            wanted = "no value exists yet; extend the vocabulary" if expected is None else f"expected {expected}"
+            problems.append((f"behavior/generation/{field}", f"{source}: {wanted}, found {generation[field]}"))
+    return problems
+
+
 def _semantic_problems(manifest: dict[str, Any]) -> list[tuple[str, str]]:
     """Rules the schema cannot express."""
-    problems = []
+    problems = _generation_problems(manifest)
     if manifest.get("maturity") == "stable":
         blockers = stable_blockers(manifest)
         if blockers.untested_capabilities:

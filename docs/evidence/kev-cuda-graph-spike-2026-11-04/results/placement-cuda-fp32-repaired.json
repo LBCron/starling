@@ -1,0 +1,49 @@
+{
+ "graph": "/home/mark/Projects/AI-models/kev/spike-2026-11-04/export-cuda-fp32/model-p3.onnx",
+ "session_providers": [
+  "CUDAExecutionProvider",
+  "CPUExecutionProvider"
+ ],
+ "provider_options_use_tf32": "0",
+ "nodes_profiled": 949,
+ "nodes_by_provider": {
+  "CUDAExecutionProvider": 761,
+  "CPUExecutionProvider": 188
+ },
+ "cpu_nodes_by_op": {
+  "Gather": 53,
+  "Unsqueeze": 53,
+  "Concat": 27,
+  "Equal": 14,
+  "Where": 14,
+  "Reshape": 12,
+  "Mul": 12,
+  "Add": 1,
+  "Slice": 1,
+  "Squeeze": 1
+ },
+ "attention_ops": {
+  "LinearAttention on CUDAExecutionProvider": 18,
+  "MultiHeadAttention on CUDAExecutionProvider": 6
+ },
+ "kernel_ms_per_provider_state_pass_plus_2_rows": {
+  "CUDAExecutionProvider": 269.833,
+  "CPUExecutionProvider": 4.783
+ },
+ "top_ops_ms": {
+  "MatMul on CUDAExecutionProvider": 101.55,
+  "Mul on CUDAExecutionProvider": 80.733,
+  "CausalConvWithState on CUDAExecutionProvider": 19.466,
+  "MultiHeadAttention on CUDAExecutionProvider": 10.194,
+  "Sigmoid on CUDAExecutionProvider": 6.996,
+  "Where on CUDAExecutionProvider": 6.012,
+  "Cast on CUDAExecutionProvider": 5.828,
+  "LinearAttention on CUDAExecutionProvider": 5.419
+ },
+ "present_on_plain_run": "numpy (host)",
+ "present_bound_to_device": "cuda",
+ "cache_bytes_600_tokens": 34947072,
+ "state_tokens": 600,
+ "row_tokens": 82,
+ "onnxruntime": "1.30.0"
+}

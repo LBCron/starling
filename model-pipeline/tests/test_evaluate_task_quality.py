@@ -54,6 +54,14 @@ class Repo:
             (protected / "task-quality.yaml").write_text(yaml.safe_dump(budget), encoding="utf-8")
         m = load(SYNTHETIC)
         m["behavior"]["tasks"] = list(tasks)
+        if "generation" in tasks:
+            m["behavior"]["generation"] = {
+                "tool_call_mode": "untested",
+                "structured_output": "untested",
+                "state_reuse": "untested",
+                "caching_style": "untested",
+                "max_output_tokens": "untested",
+            }
         m["qualification"]["fixtures"] = PROTECTED
         m["qualification"]["tolerances"] = f"{PROTECTED}/tolerances.yaml"
         self.manifest = root / "model-pipeline" / "registry" / "synthetic" / "manifest.yaml"

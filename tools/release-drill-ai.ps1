@@ -418,7 +418,7 @@ try {
     New-Item -ItemType Directory -Path $bertEmpty | Out-Null
     $log = RunOffline -Log (Join-Path $work 'consumer-bert.log') -What 'BERT checker failed' -Exe dotnet -Arguments @((& $bin 'BertConsumer'), $bertEmpty)
     Assert-Match $log '^RESULT: PASS$' 'BERT checker did not pass'
-    Write-Host 'ok:   Starlings.Models.Bert: the seven built-in profiles parse from the package alone, offline'
+    Write-Host 'ok:   Starlings.Models.Bert: the eight built-in profiles parse from the package alone, offline'
 
     if ($mode -eq 'no-model') {
         Step '7. Acquisition of tokenizer.json only (real Hub download; no model)'
