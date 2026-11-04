@@ -1,0 +1,57 @@
+Onboarding stage assets: checking inputs
+Onboarding stage assets: cached
+Onboarding stage environment: checking inputs
+Onboarding stage environment: cached
+Onboarding stage reference: checking inputs
+Onboarding stage reference: cached
+Onboarding stage bundle: checking inputs
+Onboarding stage bundle: cached
+Onboarding stage backend: checking inputs
+Onboarding stage backend: cached
+Onboarding stage dotnet: checking inputs
+Onboarding stage dotnet: executing
+Onboarding stage dotnet: completed
+Onboarding stage evaluate: checking inputs
+Onboarding stage evaluate: executing
+Onboarding stage evaluate: completed
+Onboarding stage review: checking inputs
+Onboarding stage review: executing
+Onboarding stage review: completed
+{
+  "run_record": "<scratch>/run-qwen3/run.json",
+  "stages": {
+    "assets": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "backend": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "bundle": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "dotnet": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "environment": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "evaluate": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "reference": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "review": {
+      "cache_status": "executed",
+      "status": "completed"
+    }
+  },
+  "status": "completed"
+}

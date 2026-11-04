@@ -1,0 +1,337 @@
+{
+  "candidate_commit": "eea52b1586a03c43d32e4f79a913926fbdf4e192",
+  "development_parity": {
+    "comparisons": [
+      {
+        "backend": "python-genai",
+        "id": "greeting",
+        "logits_max_abs": 4.482269287109375e-05,
+        "logits_mean_abs": 6.8025570679099e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "greeting",
+        "logits_max_abs": 4.482269287109375e-05,
+        "logits_mean_abs": 6.8025570679099e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "arithmetic",
+        "logits_max_abs": 4.0531158447265625e-05,
+        "logits_mean_abs": 6.090796928668023e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "arithmetic",
+        "logits_max_abs": 4.0531158447265625e-05,
+        "logits_mean_abs": 6.090796928668023e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "system",
+        "logits_max_abs": 4.1961669921875e-05,
+        "logits_mean_abs": 6.765709617203604e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "system",
+        "logits_max_abs": 4.1961669921875e-05,
+        "logits_mean_abs": 6.765709617203604e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "multi-turn",
+        "logits_max_abs": 2.6226043701171875e-05,
+        "logits_mean_abs": 4.297013802233402e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "multi-turn",
+        "logits_max_abs": 2.6226043701171875e-05,
+        "logits_mean_abs": 4.297013802233402e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "assistant-thinking",
+        "logits_max_abs": 4.00543212890625e-05,
+        "logits_mean_abs": 6.35736657701501e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "assistant-thinking",
+        "logits_max_abs": 4.00543212890625e-05,
+        "logits_mean_abs": 6.35736657701501e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "reasoning-content",
+        "logits_max_abs": 7.009506225585938e-05,
+        "logits_mean_abs": 1.1521383203523314e-05
+      },
+      {
+        "backend": "dotnet",
+        "id": "reasoning-content",
+        "logits_max_abs": 7.009506225585938e-05,
+        "logits_mean_abs": 1.1521383203523314e-05
+      },
+      {
+        "backend": "python-genai",
+        "id": "whitespace",
+        "logits_max_abs": 4.38690185546875e-05,
+        "logits_mean_abs": 7.769288384480553e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "whitespace",
+        "logits_max_abs": 4.38690185546875e-05,
+        "logits_mean_abs": 7.769288384480553e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "empty-content",
+        "logits_max_abs": 5.4836273193359375e-05,
+        "logits_mean_abs": 7.946664157131606e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "empty-content",
+        "logits_max_abs": 5.4836273193359375e-05,
+        "logits_mean_abs": 7.946664157131606e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "chinese",
+        "logits_max_abs": 3.719329833984375e-05,
+        "logits_mean_abs": 5.691045155779735e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "chinese",
+        "logits_max_abs": 3.719329833984375e-05,
+        "logits_mean_abs": 5.691045155779735e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "unicode",
+        "logits_max_abs": 6.079673767089844e-05,
+        "logits_mean_abs": 9.867070818366209e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "unicode",
+        "logits_max_abs": 6.079673767089844e-05,
+        "logits_mean_abs": 9.867070818366209e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "endoftext-literal",
+        "logits_max_abs": 2.765655517578125e-05,
+        "logits_mean_abs": 4.471565354393923e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "endoftext-literal",
+        "logits_max_abs": 2.765655517578125e-05,
+        "logits_mean_abs": 4.471565354393923e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "role-lookalikes",
+        "logits_max_abs": 7.015466690063477e-05,
+        "logits_mean_abs": 9.924170277991568e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "role-lookalikes",
+        "logits_max_abs": 7.015466690063477e-05,
+        "logits_mean_abs": 9.924170277991568e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "long-prefill",
+        "logits_max_abs": 3.600120544433594e-05,
+        "logits_mean_abs": 7.228813892721356e-06
+      },
+      {
+        "backend": "dotnet",
+        "id": "long-prefill",
+        "logits_max_abs": 3.600120544433594e-05,
+        "logits_mean_abs": 7.228813892721356e-06
+      },
+      {
+        "backend": "python-genai",
+        "id": "one-token-limit",
+        "logits_max_abs": 6.031990051269531e-05,
+        "logits_mean_abs": 1.0934253968980058e-05
+      },
+      {
+        "backend": "dotnet",
+        "id": "one-token-limit",
+        "logits_max_abs": 6.031990051269531e-05,
+        "logits_mean_abs": 1.0934253968980058e-05
+      }
+    ],
+    "failures": [],
+    "format_version": 1,
+    "policy": {
+      "greedy_ids": "exact",
+      "logits_max_abs": 0.005,
+      "logits_mean_abs": 0.0005,
+      "prompt_ids": "exact",
+      "required_evidence": [
+        "prompt_text",
+        "prompt_ids",
+        "initial_logits",
+        "output_ids",
+        "finish_reason",
+        "stream",
+        "usage",
+        "cancellation",
+        "cache",
+        "isolation"
+      ]
+    },
+    "profile": "qwen2.5-0.5b-instruct/ortgenai-fp32-cpu",
+    "protected_release_qualification": "unapproved",
+    "reference_status": "proposed",
+    "rows": 14,
+    "status": "passed"
+  },
+  "distribution": "not-run",
+  "policy": {
+    "greedy_ids": "exact",
+    "logits_max_abs": 0.005,
+    "logits_mean_abs": 0.0005,
+    "prompt_ids": "exact",
+    "required_evidence": [
+      "prompt_text",
+      "prompt_ids",
+      "initial_logits",
+      "output_ids",
+      "finish_reason",
+      "stream",
+      "usage",
+      "cancellation",
+      "cache",
+      "isolation"
+    ]
+  },
+  "profile": "qwen2.5-0.5b-instruct/ortgenai-fp32-cpu",
+  "protected_fixture_adoption": false,
+  "protected_release_qualification": "unapproved",
+  "reference_status": "proposed",
+  "release_qualification": "unapproved",
+  "source_lock": {
+    "assets": [
+      {
+        "path": "LICENSE",
+        "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "size": 11343,
+        "verification": "pinned-size-and-sha256"
+      },
+      {
+        "path": "README.md",
+        "sha256": "b19c806a904db6dc878a0462e70b551f6b7ac78dfbb88c2eb966ca2b9109ae15",
+        "size": 4917,
+        "verification": "pinned-size-and-sha256"
+      },
+      {
+        "path": "config.json",
+        "sha256": "18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45",
+        "size": 659,
+        "verification": "pinned-size-and-sha256"
+      },
+      {
+        "path": "generation_config.json",
+        "sha256": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6",
+        "size": 242,
+        "verification": "pinned-size-and-sha256"
+      },
+      {
+        "path": "merges.txt",
+        "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+        "size": 1671839,
+        "verification": "pinned-size-and-sha256"
+      },
+      {
+        "path": "model.safetensors",
+        "sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+        "size": 988097824,
+        "verification": "pinned-size-and-sha256"
+      },
+      {
+        "path": "tokenizer.json",
+        "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+        "size": 7031645,
+        "verification": "pinned-size-and-sha256"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+        "size": 7305,
+        "verification": "pinned-size-and-sha256"
+      },
+      {
+        "path": "vocab.json",
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+        "size": 2776833,
+        "verification": "pinned-size-and-sha256"
+      }
+    ],
+    "origin": {
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+          "size": 11343
+        },
+        {
+          "path": "README.md",
+          "sha256": "b19c806a904db6dc878a0462e70b551f6b7ac78dfbb88c2eb966ca2b9109ae15",
+          "size": 4917
+        },
+        {
+          "path": "config.json",
+          "sha256": "18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45",
+          "size": 659
+        },
+        {
+          "path": "generation_config.json",
+          "sha256": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6",
+          "size": 242
+        },
+        {
+          "path": "merges.txt",
+          "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3",
+          "size": 1671839
+        },
+        {
+          "path": "model.safetensors",
+          "sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe",
+          "size": 988097824
+        },
+        {
+          "path": "tokenizer.json",
+          "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+          "size": 7031645
+        },
+        {
+          "path": "tokenizer_config.json",
+          "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+          "size": 7305
+        },
+        {
+          "path": "vocab.json",
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "size": 2776833
+        }
+      ],
+      "repo": "Qwen/Qwen2.5-0.5B-Instruct",
+      "revision": "7ae557604adf67be50417f59c2c2f167def9a775"
+    },
+    "profile": "qwen2.5-0.5b-instruct/ortgenai-fp32-cpu"
+  },
+  "support_status": "experimental",
+  "support_status_changed": false,
+  "task": "generation"
+}
