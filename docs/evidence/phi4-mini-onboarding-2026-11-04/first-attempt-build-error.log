@@ -1,0 +1,1 @@
+/home/mark/Projects/starling/.claude/worktrees/wf_fef03724-bac-2/ai-dotnet/tools/Starlings.GenAIChat.Fidelity/Program.cs(204,100): error CS1061: 'Phi4Model' does not contain a definition for 'Info' and no accessible extension method 'Info' accepting a first argument of type 'Phi4Model' could be foun

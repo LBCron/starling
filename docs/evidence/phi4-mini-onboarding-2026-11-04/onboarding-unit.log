@@ -1,0 +1,144 @@
+Onboarding stage assets: checking inputs
+Onboarding stage assets: executing
+Onboarding stage assets: completed
+Onboarding stage environment: checking inputs
+Onboarding stage environment: executing
+Onboarding stage environment: completed
+Onboarding stage reference: checking inputs
+Onboarding stage reference: executing
+Onboarding stage reference: completed
+Onboarding stage bundle: checking inputs
+Onboarding stage bundle: executing
+Onboarding stage bundle: completed
+Onboarding stage backend: checking inputs
+Onboarding stage backend: executing
+Onboarding stage backend: completed
+Onboarding stage dotnet: checking inputs
+Onboarding stage dotnet: executing
+Onboarding stage dotnet: failed: Command failed with exit code 1: /home/mark/.dotnet/dotnet
+{
+  "run_record": "/home/mark/Projects/starling/.claude/worktrees/wf_fef03724-bac-2/artifacts/onboarding/phi4-mini/run.json",
+  "stages": {
+    "assets": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "backend": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "bundle": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "dotnet": {
+      "cache_status": "executed",
+      "failure": {
+        "details": {
+          "argv": [
+            "/home/mark/.dotnet/dotnet",
+            "publish",
+            "/home/mark/Projects/starling/.claude/worktrees/wf_fef03724-bac-2/ai-dotnet/tools/Starlings.GenAIChat.Fidelity/Starlings.GenAIChat.Fidelity.csproj",
+            "-c",
+            "Release",
+            "-m:1",
+            "--disable-build-servers",
+            "--artifacts-path",
+            "/home/mark/Projects/starling/.claude/worktrees/wf_fef03724-bac-2/artifacts/onboarding/phi4-mini/stages/dotnet/ef73892717804407a950218d3273560e/output/dotnet-build-rjt8bq3u",
+            "--output",
+            "/home/mark/Projects/starling/.claude/worktrees/wf_fef03724-bac-2/artifacts/onboarding/phi4-mini/stages/dotnet/ef73892717804407a950218d3273560e/output/dotnet-build-rjt8bq3u/published",
+            "-p:RestoreLockedMode=true"
+          ],
+          "cwd": "/home/mark/Projects/starling/.claude/worktrees/wf_fef03724-bac-2",
+          "duration_seconds": 41.52991378994193,
+          "log_path": "/home/mark/Projects/starling/.claude/worktrees/wf_fef03724-bac-2/artifacts/onboarding/phi4-mini/stages/dotnet/ef73892717804407a950218d3273560e/output/build.log",
+          "returncode": 1,
+          "timeout_seconds": 7200
+        },
+        "message": "Command failed with exit code 1: /home/mark/.dotnet/dotnet",
+        "type": "PipelineError"
+      },
+      "status": "failed"
+    },
+    "environment": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "evaluate": {
+      "cache_status": "not-run",
+      "failure": {
+        "message": "Dependency failed"
+      },
+      "status": "blocked"
+    },
+    "reference": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "review": {
+      "cache_status": "not-run",
+      "failure": {
+        "message": "Dependency failed"
+      },
+      "status": "blocked"
+    }
+  },
+  "status": "failed"
+}
+Onboarding stage assets: checking inputs
+Onboarding stage assets: cached
+Onboarding stage environment: checking inputs
+Onboarding stage environment: cached
+Onboarding stage reference: checking inputs
+Onboarding stage reference: cached
+Onboarding stage bundle: checking inputs
+Onboarding stage bundle: cached
+Onboarding stage backend: checking inputs
+Onboarding stage backend: cached
+Onboarding stage dotnet: checking inputs
+Onboarding stage dotnet: executing
+Onboarding stage dotnet: completed
+Onboarding stage evaluate: checking inputs
+Onboarding stage evaluate: executing
+Onboarding stage evaluate: completed
+Onboarding stage review: checking inputs
+Onboarding stage review: executing
+Onboarding stage review: completed
+{
+  "run_record": "/home/mark/Projects/starling/.claude/worktrees/wf_fef03724-bac-2/artifacts/onboarding/phi4-mini/run.json",
+  "stages": {
+    "assets": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "backend": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "bundle": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "dotnet": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "environment": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "evaluate": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "reference": {
+      "cache_status": "cached",
+      "status": "completed"
+    },
+    "review": {
+      "cache_status": "executed",
+      "status": "completed"
+    }
+  },
+  "status": "completed"
+}

@@ -10,7 +10,7 @@ Model request #109. Plan section 7, pipeline stage 1. Facts were read on 2026-11
 | Requested by / demand evidence | #109. Hub on 2026-11-04: 340,545 downloads, 880 likes. Its triage calls it a natural step up from Qwen3.5-0.8B. No named consumer yet. |
 | Proposed owner | Unassigned |
 | Proposed maturity at first release | Experimental |
-| Decision | DECISION-LINE |
+| Decision | Proposed: admitted at maturity Experimental, `phi4-mini-instruct/ortgenai-fp32-cpu`, greedy text chat, CPU fp32 on Linux x64, prompt plus completion below 4,096 tokens. Source only: no package, no registry manifest and no hosted bundle. Development parity passed on all 14 corpus rows; protected G1/G2 did not run. This depends on two open items: the design note `docs/design/generic-genai-chat-route.md` is still proposed, and the choice between the thin loader and a generic loader is undecided. |
 | Decided by and date | Pending maintainer decision. |
 
 ## Rights (hard blockers)
@@ -71,11 +71,11 @@ Linux x64 CPU. The fp32 model takes about 16 GB of memory per process, so the fu
 
 ## Evidence
 
-EVIDENCE-LINE
+`docs/evidence/phi4-mini-onboarding-2026-11-04/README.md`: the `genai-chat-cpu-v1` route passed development parity on 2026-11-04 on all 14 corpus rows, CPU only, two threads, inside a 20 GiB limit. Against transformers, both Python GenAI and .NET had exact prompt and greedy ids, and initial logits within 2.14e-4 max absolute (bound 5e-3) and 4.27e-5 mean absolute (bound 5e-4). All seven .NET runtime checks held on every row. The run took about 59 minutes. The longest row is 366 tokens. This is development evidence, not release qualification.
 
 ## Open risks
 
-- The evidence stops at 4,096 tokens, which is short of what the model card advertises (128K). A long-context run is separate work.
+- The route is bounded at 4,096 tokens, which is short of what the model card advertises (128K), and the longest evaluated row is 366 tokens (361 prompt, 5 completion), so nothing near the bound has been exercised. A long-context run is separate work.
 - Bounds are the route's existing development policy, proposed. No fixture is protected, no tolerance is set, no gate has run.
 - 15.3 GB of graph data is a heavy CPU profile. With no hosted bundle, a user must have the snapshot and build it.
 - The evaluated corpus is 14 short conversations; the parity check is about faithfulness to the reference, not model quality.
