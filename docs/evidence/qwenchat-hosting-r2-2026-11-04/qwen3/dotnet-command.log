@@ -1,0 +1,15 @@
+Command: ["dotnet","<scratch>/run-qwen3/stages/dotnet/533b09ce89fe490abe4f9d5fb6f19e5c/output/dotnet-build-elun071s/published/Starlings.Generation.Fidelity.dll","--candidate","/home/mark/Projects/starling/.claude/worktrees/wf_b7d4d64b-09c-1/model-pipeline/candidates/qwen3/profile.json","--bundle","<scratch>/run-qwen3/stages/bundle/541f603150294b1690cdb2cb55b4056e/output","--corpus","/home/mark/Projects/starling/.claude/worktrees/wf_b7d4d64b-09c-1/model-pipeline/corpora/five-models/chat.jsonl","--out","<scratch>/run-qwen3/stages/dotnet/533b09ce89fe490abe4f9d5fb6f19e5c/output","--threads","2"]
+greeting: prompt=14 completion=9 stop=151645
+arithmetic: prompt=23 completion=8 stop=151645
+system: prompt=28 completion=16 stop=
+multi-turn: prompt=31 completion=2 stop=151645
+assistant-thinking: prompt=35 completion=1 stop=151645
+reasoning-content: prompt=35 completion=9 stop=151645
+whitespace: prompt=26 completion=9 stop=151645
+empty-content: prompt=12 completion=16 stop=
+chinese: prompt=18 completion=16 stop=
+unicode: prompt=22 completion=16 stop=
+endoftext-literal: prompt=27 completion=16 stop=
+role-lookalikes: prompt=23 completion=11 stop=151645
+long-prefill: prompt=370 completion=5 stop=151645
+one-token-limit: prompt=16 completion=1 stop=
