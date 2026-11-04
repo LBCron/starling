@@ -466,6 +466,18 @@ def test_inspect_recommends_the_qwen_route_for_qwen_decoders(
     assert (route["id"], route["status"], route["task"]) == ("qwen-genai-cpu-v1", "candidate", "generation")
 
 
+def test_inspect_recommends_the_genai_chat_route_for_phi3(tmp_path: Path) -> None:
+    config = {"model_type": "phi3", "architectures": ["Phi3ForCausalLM"], "hidden_size": 3072}
+    route = inspect_snapshot(_write_snapshot(tmp_path / "s", config, _qwen_tokenizer()))["plugin_route"]
+    assert (route["id"], route["status"], route["task"]) == ("genai-chat-cpu-v1", "candidate", "generation")
+    other = {"model_type": "phi3", "architectures": ["Phi3ForSequenceClassification"]}
+    assert (
+        inspect_snapshot(_write_snapshot(tmp_path / "t", other, _qwen_tokenizer()))["plugin_route"]["id"] == "unknown"
+    )
+    route = inspect_snapshot(_write_snapshot(tmp_path / "u", config, _WORDPIECE))["plugin_route"]
+    assert (route["id"], route["status"]) == ("unknown", "unknown")
+
+
 def test_inspect_refuses_the_qwen_route_for_another_head_or_tokenizer(tmp_path: Path) -> None:
     head = {"model_type": "qwen3", "architectures": ["Qwen3ForSequenceClassification"]}
     assert inspect_snapshot(_write_snapshot(tmp_path / "s", head, _qwen_tokenizer()))["plugin_route"]["id"] == "unknown"

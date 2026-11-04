@@ -38,6 +38,7 @@ assets=(
     "Qwen/Qwen3-Embedding-0.6B|97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3|tokenizer.json|def76fb086971c7867b829c23a26261e38d9d74e02139253b38aeb9df8b4b50a"
     "Qwen/Qwen2.5-0.5B-Instruct|7ae557604adf67be50417f59c2c2f167def9a775|tokenizer.json|c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539"
     "Diffuspace/Clover-35B-A3B-Preview|4b0402b65e523d0183a14c431955438714cb16ff|tokenizer.json|7c62ba7d8bb13291c94459896cd27537858beb58a88a037b09a150e213420988"
+    "microsoft/Phi-4-mini-instruct|cfbefacb99257ffa30c83adab238a50856ac3083|tokenizer.json|382cc235b56c725945e149cc25f191da667c836655efd0857b004320e90e91ea"
 )
 
 # target repo|commit|path|sha256 <- source repo|commit|path (the source must be in assets above)

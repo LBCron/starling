@@ -31,6 +31,8 @@
     <Project Path="src/Starlings.Acquisition/Starlings.Acquisition.csproj" />
     <Project Path="src/Starlings.Generation.Abstractions/Starlings.Generation.Abstractions.csproj" />
     <Project Path="src/Starlings.Generation.OnnxGenAI/Starlings.Generation.OnnxGenAI.csproj" />
+    <Project Path="src/Starlings.Models.Phi4/Starlings.Models.Phi4.csproj" />
+    <Project Path="src/Starlings.Models.Phi4.OnnxGenAI/Starlings.Models.Phi4.OnnxGenAI.csproj" />
     <Project Path="src/Starlings.Models.Qwen35/Starlings.Models.Qwen35.csproj" />
     <Project Path="src/Starlings.Models.Qwen35.OnnxGenAI/Starlings.Models.Qwen35.OnnxGenAI.csproj" />
     <Project Path="src/Starlings.Models.Qwen35.Extensions.AI/Starlings.Models.Qwen35.Extensions.AI.csproj" />
@@ -42,6 +44,7 @@
     <Project Path="tests/Starlings.Models.Whisper.Tests/Starlings.Models.Whisper.Tests.csproj" />
     <Project Path="tests/Starlings.Models.PaddleOcr.Tests/Starlings.Models.PaddleOcr.Tests.csproj" />
     <Project Path="tests/Starlings.Models.Clover.Tests/Starlings.Models.Clover.Tests.csproj" />
+    <Project Path="tests/Starlings.Models.Phi4.Tests/Starlings.Models.Phi4.Tests.csproj" />
     <Project Path="tests/Starlings.Models.Lfm3.Tests/Starlings.Models.Lfm3.Tests.csproj" />
     <Project Path="tests/Starlings.Models.Lfm3.Interventions.Tests/Starlings.Models.Lfm3.Interventions.Tests.csproj" />
     <Project Path="tests/Starlings.Runtime.Onnx.Tests/Starlings.Runtime.Onnx.Tests.csproj" />
@@ -80,6 +83,7 @@
     <Project Path="tools/Starlings.Qwen3Embedding.Fidelity.Tool/Starlings.Qwen3Embedding.Fidelity.Tool.csproj" />
     <Project Path="tools/Starlings.Kev.Fidelity.Tool/Starlings.Kev.Fidelity.Tool.csproj" />
     <Project Path="tools/Starlings.Generation.Fidelity/Starlings.Generation.Fidelity.csproj" />
+    <Project Path="tools/Starlings.GenAIChat.Fidelity/Starlings.GenAIChat.Fidelity.csproj" />
     <Project Path="tools/Starlings.Acquisition.Tool/Starlings.Acquisition.Tool.csproj" />
     <Project Path="tools/Starlings.Fidelity.Tool/Starlings.Fidelity.Tool.csproj" />
     <Project Path="tools/Starlings.Qwen35.Fidelity/Starlings.Qwen35.Fidelity.csproj" />

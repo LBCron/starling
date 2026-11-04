@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Data/**" CopyToOutputDirectory="PreserveNewest" />
+    <!-- The route's contract table: the definition's constants must equal it. -->
+    <None Include="../../../model-pipeline/routes/genai-chat-cpu-v1/contracts.json" Link="Data/contracts.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/Starlings.Models.Phi4.OnnxGenAI/Starlings.Models.Phi4.OnnxGenAI.csproj" />
+  </ItemGroup>
+
+</Project>

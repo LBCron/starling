@@ -1,0 +1,195 @@
+"""Build a flat-config CPU fp32 bundle of a genai-chat-cpu-v1 candidate using the pinned GenAI builder.
+
+Original assets are verified before use, copied to scratch, and never edited. The scratch config drops `auto_map` and
+the checkpoint's modeling files are not pinned, so the builder cannot reach remote code. The builder works in the
+system temporary directory (fp32 weights and graph, about 15 GB per profile): point TMPDIR at a disk when that is a
+memory file system.
+New graph digests remain observed candidate outputs requiring separate review.
+
+The builder stamps model.onnx with producer_version "<version>+<commit>", and it takes the commit from
+`git rev-parse HEAD` run from <environment>/lib before it falls back to the wheel's own commit. An environment inside
+any Git work tree therefore stamps that work tree's HEAD into the graph, so the same inputs give different bytes per
+checkout. The build hides Git from the builder and refuses any other stamp, so the graph no longer depends on where
+the environment lives.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import shutil
+import subprocess
+import sys
+import tempfile
+from importlib import metadata
+from pathlib import Path, PurePosixPath
+
+from common import write_json
+
+BUILDER_VERSION = "0.17.1"
+BUILDER_SOURCE = "83de55a1f3886cddbb32a5517e26adb3f9d65159"
+
+
+def digest(path: Path) -> str:
+    value = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            value.update(block)
+    return value.hexdigest()
+
+
+def builder_environment(environment: dict[str, str], scratch: Path) -> dict[str, str]:
+    """A missing Git directory makes the builder's commit probe fail, so it stamps the wheel's commit."""
+    return {**environment, "GIT_DIR": str(scratch / "no-git-directory")}
+
+
+def verify_producer_version(graph: Path) -> None:
+    """Refuse a graph whose stamp is not the pinned builder's: the stamp is part of the graph's digest."""
+    import onnx
+
+    expected = f"{BUILDER_VERSION}+{BUILDER_SOURCE[:7]}"
+    actual = onnx.load(graph, load_external_data=False).producer_version
+    if actual != expected:
+        raise ValueError(f"builder stamped producer_version {actual!r}, expected {expected!r}")
+
+
+def float32_config(config: dict, behavior: dict) -> dict:
+    """Only dtype declarations and auto_map change; these profiles have a flat text config."""
+    if config.get("model_type") != behavior["model_type"] or "text_config" in config:
+        raise ValueError("expected the candidate's flat text config")
+    result = json.loads(json.dumps(config))
+    result.pop("auto_map", None)
+    result["dtype"] = "float32"
+    result["torch_dtype"] = "float32"
+    return result
+
+
+def check_geometry(config: dict, behavior: dict) -> None:
+    """The checkpoint's config.json must equal the contract's geometry, the rope settings included."""
+    if config.get("architectures") != [behavior["architecture"]]:
+        raise ValueError("original config architecture differs from the contract")
+    derived = {
+        "head_dim": config["hidden_size"] // config["num_attention_heads"],
+        "rope_type": (config.get("rope_scaling") or {}).get("type"),
+    }
+    for key, expected in behavior["config"].items():
+        if config.get(key, derived.get(key)) != expected:
+            raise ValueError(f"original config {key} differs from admitted geometry")
+
+
+def verified_copy(candidate: dict, snapshot: Path, target: Path) -> str:
+    behavior = candidate["behavior"]
+    target.mkdir()
+    paths = set()
+    for record in candidate["origin"]["files"]:
+        relative = PurePosixPath(record["path"])
+        if relative.is_absolute() or ".." in relative.parts or "\\" in record["path"] or record["path"] in paths:
+            raise ValueError("unsafe or duplicate candidate asset path")
+        paths.add(record["path"])
+        source = snapshot / relative
+        if not source.is_file() or source.stat().st_size != record["size"] or digest(source) != record["sha256"]:
+            raise ValueError(f"asset mismatch: {record['path']}")
+        destination = target / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        if source.name == "config.json":
+            config = json.loads(source.read_text(encoding="utf-8"))
+            check_geometry(config, behavior)
+            write_json(destination, float32_config(config, behavior))
+        elif source.suffix == ".safetensors":
+            try:
+                os.link(source, destination)
+            except OSError:
+                shutil.copyfile(source, destination)
+        else:
+            shutil.copyfile(source, destination)
+    if not {"config.json", "tokenizer.json", "tokenizer_config.json"}.issubset(paths):
+        raise ValueError("candidate must pin config and tokenizer inputs")
+    return digest(target / "config.json")
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ("candidate", "snapshot", "out"):
+        parser.add_argument(f"--{name}", required=True, type=Path)
+    args = parser.parse_args()
+    candidate = json.loads(args.candidate.read_text(encoding="utf-8"))
+    if metadata.version("onnxruntime-genai") != BUILDER_VERSION:
+        raise ValueError("wrong GenAI builder version")
+    if args.out.resolve().is_relative_to(args.snapshot.resolve()) or args.snapshot.resolve().is_relative_to(
+        args.out.resolve()
+    ):
+        raise ValueError("output overlaps original snapshot")
+    args.out.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="genai-chat-builder-") as temporary:
+        work = Path(temporary)
+        source = work / "snapshot-float32"
+        config_digest = verified_copy(candidate, args.snapshot, source)
+        built = work / "built"
+        argv = [
+            sys.executable,
+            "-m",
+            "onnxruntime_genai.models.builder",
+            "-i",
+            str(source),
+            "-o",
+            str(built),
+            "-p",
+            "fp32",
+            "-e",
+            "cpu",
+            "-c",
+            str(work / "cache"),
+        ]
+        with (args.out / "builder.log").open("w", encoding="utf-8") as stream:
+            subprocess.run(  # noqa: S603 - fixed argv
+                argv,
+                check=True,
+                stdout=stream,
+                stderr=subprocess.STDOUT,
+                env=builder_environment(dict(os.environ), work),
+            )
+        verify_producer_version(built / "model.onnx")
+        for name in ("model.onnx", "model.onnx.data", "genai_config.json"):
+            shutil.copyfile(built / name, args.out / name)
+        # The owned tokenizer loads the original asset, not an implicit builder tokenizer.
+        shutil.copyfile(args.snapshot / "tokenizer.json", args.out / "tokenizer.json")
+        shutil.copyfile(args.snapshot / "tokenizer_config.json", args.out / "tokenizer_config.json")
+        config = json.loads((args.snapshot / "tokenizer_config.json").read_text(encoding="utf-8"))
+        template = config.get("chat_template")
+        if not isinstance(template, str):
+            raise ValueError("expected a single pinned string chat_template")
+        if hashlib.sha256(template.encode("utf-8")).hexdigest() != candidate["behavior"]["template_sha256"]:
+            raise ValueError("chat template differs from the contract's digest")
+        (args.out / "chat_template.jinja").write_text(template, encoding="utf-8")
+        files = [
+            {"path": name, "size": (args.out / name).stat().st_size, "sha256": digest(args.out / name)}
+            for name in (
+                "model.onnx",
+                "model.onnx.data",
+                "genai_config.json",
+                "tokenizer.json",
+                "tokenizer_config.json",
+                "chat_template.jinja",
+            )
+        ]
+        write_json(
+            args.out / "bundle-lock.json",
+            {
+                "format_version": 1,
+                "profile": candidate["id"],
+                "origin": candidate["origin"],
+                "builder": {"version": BUILDER_VERSION, "source_commit": BUILDER_SOURCE},
+                "float32_config_sha256": config_digest,
+                "precision": "fp32",
+                "provider": "CPUExecutionProvider",
+                "files": files,
+                "status": "proposed; observed graph bytes require independent review",
+            },
+        )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

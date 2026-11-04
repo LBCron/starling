@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Source only until the admission decision (model-pipeline/admissions/phi4-mini.md). -->
+    <IsPackable>false</IsPackable>
+    <!-- The types keep the namespace of the model definition package, so code moves by changing the package reference. -->
+    <RootNamespace>Starlings.Models.Phi4</RootNamespace>
+    <Description>microsoft/Phi-4-mini-instruct (revision cfbefacb) text chat generation in-process on ONNX Runtime GenAI 0.17.1, CPU fp32: Phi4Model over the model definition package. Experimental.</Description>
+    <PackageTags>phi;phi4;llm;chat;text-generation;onnxruntime-genai;streaming</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <ProjectReference Include="../Starlings.Models.Phi4/Starlings.Models.Phi4.csproj" />
+    <ProjectReference Include="../Starlings.Generation.OnnxGenAI/Starlings.Generation.OnnxGenAI.csproj" />
+    <PackageReference Include="Starlings.Tokenizers" />
+  </ItemGroup>
+
+</Project>

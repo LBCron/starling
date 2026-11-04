@@ -12,6 +12,7 @@ PLUGINS = {
     "e5-onnx-cpu-v1": "model_pipeline.onboarding_e5",
     "bert-onnx-cpu-v1": "model_pipeline.onboarding_bert",
     "qwen-genai-cpu-v1": "model_pipeline.onboarding_generation",
+    "genai-chat-cpu-v1": "model_pipeline.onboarding_genai_chat",
     "kev-onnx-cpu-v1": "model_pipeline.onboarding_kev",
     "whisper-onnx-cpu-v1": "model_pipeline.onboarding_whisper",
     "ppocr-onnx-cpu-v1": "model_pipeline.onboarding_ppocr",
