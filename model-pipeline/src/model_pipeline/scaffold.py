@@ -33,6 +33,7 @@ CORPORA = {
 TOKENIZER_DEFAULTS = {
     "bert-wordpiece-uncased": {"cls_token_id": 101, "sep_token_id": 102, "token_type_ids": True},
     "xlmr-unigram": {"cls_token_id": 0, "sep_token_id": 2, "token_type_ids": False},
+    "modernbert-bpe-gte-reranker": {"cls_token_id": 50281, "sep_token_id": 50282, "token_type_ids": False},
 }
 _NAME = re.compile(r"^[a-z0-9][a-z0-9.-]*$")
 _TEST_ANCHOR = "    public void ParsesOnlyDeclaredTaskContracts("

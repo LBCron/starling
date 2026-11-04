@@ -289,6 +289,42 @@ def test_xlmr_reranker_refuses_embeddings_task():
         bert.validate_candidate_behavior(contract)
 
 
+MODERNBERT_RERANKER = "Alibaba-NLP/gte-reranker-modernbert-base"
+
+
+def test_modernbert_reranker_uses_bpe_ids_and_no_segment_ids():
+    contract = candidate(MODERNBERT_RERANKER)
+    bert.validate_candidate_behavior(contract)
+    spec = bert.CONTRACTS[MODERNBERT_RERANKER]
+    assert (spec["task"], spec["max_tokens"], spec["output_name"]) == ("reranking", 8192, "logits")
+    assert (spec["tokenizer_profile"], spec["token_type_ids"]) == ("modernbert-bpe-gte-reranker", False)
+    assert (spec["vocabulary_size"], spec["cls_token_id"], spec["sep_token_id"], spec["pad_token_id"]) == (
+        50368,
+        50281,
+        50282,
+        50283,
+    )
+    assert spec["score_activation_source"] == "explicit"
+
+
+@pytest.mark.parametrize(
+    "key,value",
+    [
+        # tokenizer.json declares truncation and Fixed padding of 8000; transformers replaces both per call.
+        ("max_tokens", 8000),
+        ("max_tokens", 512),
+        ("pad_token_id", 0),
+        ("tokenizer_profile", "xlmr-unigram"),
+        ("score_activation", "sigmoid"),
+    ],
+)
+def test_modernbert_reranker_near_misses_are_refused(key, value):
+    contract = candidate(MODERNBERT_RERANKER)
+    contract["behavior"][key] = value
+    with pytest.raises(PipelineError, match="unsupported BERT behavior"):
+        bert.validate_candidate_behavior(contract)
+
+
 def test_policies_cannot_be_raised_after_reference_execution():
     contract = candidate()
     contract["evaluation"]["policy"]["embedding_max_abs"] = 0.1

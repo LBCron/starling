@@ -48,7 +48,7 @@ uvx --from huggingface_hub hf download <org>/<model> \
 .venv/bin/model-pipeline inspect .models/snapshots/<name>
 ```
 
-`inspect` is read-only. From `config.json`, `tokenizer.json` and `modules.json` its `plugin_route` suggests `e5-onnx-cpu-v1` (the pinned e5 geometry), `bert-onnx-cpu-v1` (a BERT, XLM-R or nomic-bert encoder with a tokenizer this checkout implements, plus sentence-transformers mean or CLS pooling, or a single-logit sequence-classification head), `qwen-genai-cpu-v1` (a `Qwen2ForCausalLM` or `Qwen3ForCausalLM` decoder with a supported BPE tokenizer) or `unknown`, with the reason. A suggestion is a candidate route, not a fit: check it against the table:
+`inspect` is read-only. From `config.json`, `tokenizer.json` and `modules.json` its `plugin_route` suggests `e5-onnx-cpu-v1` (the pinned e5 geometry), `bert-onnx-cpu-v1` (a BERT, XLM-R, nomic-bert or ModernBERT encoder with a tokenizer this checkout implements, plus sentence-transformers mean or CLS pooling, or a single-logit sequence-classification head), `qwen-genai-cpu-v1` (a `Qwen2ForCausalLM` or `Qwen3ForCausalLM` decoder with a supported BPE tokenizer) or `unknown`, with the reason. A suggestion is a candidate route, not a fit: check it against the table:
 
 | Route (plugin) | Fits when the model is... | Code to extend |
 | --- | --- | --- |
@@ -76,7 +76,7 @@ Use the existing MiniLM files as templates. To find every place they are registe
    The candidate has no license fields. State the code license, weights license and tokenizer terms in the issue and in the PR description.
 2. **Generate the rest with `model-pipeline scaffold <name>`.** It reads the candidate and prints, as JSON, every other input the route needs; `--write` applies them (pieces already present are reported as `unchanged`, and a candidate that contradicts an existing table entry is refused):
    - `model-pipeline/recipes/<name>-cpu.yaml`, with the task's five-model corpus (`--corpus <path>` for another one);
-   - the entry for the repo in `model-pipeline/routes/bert-onnx-cpu-v1/contracts.json` (task, `max_tokens`, pooling, width, normalization, vocabulary and special ids, output name, tokenizer profile, prompts). The cls and sep ids and the segment-id input come from the tokenizer profile (`bert-wordpiece-uncased`: 101, 102, with `token_type_ids`; `xlmr-unigram`: 0, 2, without); check them against the model's `tokenizer.json`;
+   - the entry for the repo in `model-pipeline/routes/bert-onnx-cpu-v1/contracts.json` (task, `max_tokens`, pooling, width, normalization, vocabulary and special ids, output name, tokenizer profile, prompts). The cls and sep ids and the segment-id input come from the tokenizer profile (`bert-wordpiece-uncased`: 101, 102, with `token_type_ids`; `xlmr-unigram`: 0, 2, without; `modernbert-bpe-gte-reranker`: 50281, 50282, without); check them against the model's `tokenizer.json`;
    - the `tools/fetch-tokenizer-assets.sh` line (`"<repo>|<sha>|tokenizer.json|<sha256>"`);
    - the profile row of the table in `ai-dotnet/src/Starlings.Models.Bert/README.md`;
    - the `InlineData` row of `ContractTests.ParsesOnlyDeclaredTaskContracts` (the test helper builds each profile from the contract table, so nothing else in it changes);

@@ -45,6 +45,7 @@ int Run()
         ["bge-m3"] = ("bge-m3/onnx-fp32-cpu", BertTask.Embeddings, 3),
         ["bge-reranker-v2-m3"] = ("bge-reranker-v2-m3/onnx-fp32-cpu", BertTask.Reranking, 3),
         ["bge-small"] = ("bge-small-en-v1.5/onnx-fp32-cpu", BertTask.Embeddings, 2),
+        ["gte-reranker-modernbert-base"] = ("gte-reranker-modernbert-base/onnx-fp32-cpu", BertTask.Reranking, 2),
         ["minilm"] = ("all-minilm-l6-v2/onnx-fp32-cpu", BertTask.Embeddings, 2),
         ["ms-marco"] = ("ms-marco-minilm-l6-v2/onnx-fp32-cpu", BertTask.Reranking, 2),
         ["nomic-embed"] = ("nomic-embed-text-v1.5/onnx-fp32-cpu", BertTask.Embeddings, 2),

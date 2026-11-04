@@ -57,7 +57,7 @@ _CONTRACT_FIELDS = {
     "prompts": dict,
 }
 _OPTIONAL_FIELDS = {"score_activation_source": str}
-TOKENIZER_PROFILES = {"bert-wordpiece-uncased", "xlmr-unigram"}
+TOKENIZER_PROFILES = {"bert-wordpiece-uncased", "xlmr-unigram", "modernbert-bpe-gte-reranker"}
 
 
 def _no_duplicate_keys(pairs: list[tuple[str, object]]) -> dict:

@@ -25,6 +25,7 @@ Gate cells link to the evidence the manifest records. The Stable readiness colum
 | [embeddinggemma-2/video-fp32-cuda](../../model-pipeline/registry/embeddinggemma-2/video-fp32-cuda/manifest.yaml) | video-embedding | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/embeddinggemma2-video-fp32-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/embeddinggemma2-video-fp32-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/embeddinggemma2-video-fp32-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
 | [gliner2-base-v1/onnx-fp32-cpu](../../model-pipeline/registry/gliner2-base-v1/onnx-fp32-cpu/manifest.yaml) | extraction | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/gliner2-onnx-fp32-cpu/README.md) | [passed](../evidence/release-set-gates-2026-10-14/gliner2-onnx-fp32-cpu/README.md) | [passed](../evidence/release-set-gates-2026-10-14/gliner2-onnx-fp32-cpu/README.md) | [passed](../evidence/qualification-2026-10-15/README.md) | [passed](../evidence/qualification-2026-10-15/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
 | [gliner2-base-v1/onnx-fp32-cuda](../../model-pipeline/registry/gliner2-base-v1/onnx-fp32-cuda/manifest.yaml) | extraction | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/gliner2-onnx-fp32-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/gliner2-onnx-fp32-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/gliner2-onnx-fp32-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
+| [gte-reranker-modernbert-base/onnx-fp32-cpu](../../model-pipeline/registry/gte-reranker-modernbert-base/onnx-fp32-cpu/manifest.yaml) | reranking | experimental | Mark | 2027-02-04 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
 | [kev-0.8b/onnx-fp32-cpu](../../model-pipeline/registry/kev-0.8b/onnx-fp32-cpu/manifest.yaml) | decision | experimental | Mark | 2027-01-05 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
 | [kev-0.8b/onnx-fp32-cuda](../../model-pipeline/registry/kev-0.8b/onnx-fp32-cuda/manifest.yaml) | decision | experimental | Mark | 2027-01-05 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_calls_unserialized; promotion also awaits a green per-release GPU regression run |
 | [kev-4b/onnx-fp32-cpu](../../model-pipeline/registry/kev-4b/onnx-fp32-cpu/manifest.yaml) | decision | experimental | Mark | 2027-01-05 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
@@ -64,6 +65,7 @@ Gate cells link to the evidence the manifest records. The Stable readiness colum
 | embeddinggemma-2/video-fp32-cuda | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime.Gpu.Linux 1.30.0 | fp32 | reference |
 | gliner2-base-v1/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
 | gliner2-base-v1/onnx-fp32-cuda | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime.Gpu.Linux 1.30.0 | fp32 | reference |
+| gte-reranker-modernbert-base/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
 | kev-0.8b/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
 | kev-0.8b/onnx-fp32-cuda | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime.Gpu.Linux 1.30.0 | fp32 | reference |
 | kev-4b/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
@@ -272,6 +274,25 @@ One table per family, one column per profile. Rows are every capability any prof
 | plain_deduplicated_output | unsupported | unsupported |
 | relation_extraction | unsupported | unsupported |
 | structured_extraction | unsupported | unsupported |
+
+### gte-reranker-modernbert-base
+
+| Capability | onnx-fp32-cpu |
+| --- | --- |
+| batch | experimental |
+| streaming | unsupported |
+| cancellation | experimental |
+| persistence | unsupported |
+| training | unsupported |
+| aot | untested |
+| extensions_ai | unsupported |
+| mlnet | unsupported |
+| asset_verification_offline | experimental |
+| batch_sort_by_length | experimental |
+| batch_token_budget | experimental |
+| built_in_profile | experimental |
+| gpu | unsupported |
+| text | experimental |
 
 ### kev-0.8b
 
@@ -658,6 +679,9 @@ One table per family, one column per profile. Rows are every capability any prof
 - `gliner2-base-v1/onnx-fp32-cuda`: The count gate (count_pred argmax 0 gives an empty result) never closed on the development corpus. The proposed capability cases (model-pipeline/proposed/gliner2-base-v1/capability-cases) add 12 public-text cases where it closes; they are not yet accepted fixtures.
 - `gliner2-base-v1/onnx-fp32-cuda`: CUDA parity evidence (PROPOSED.md) left out the two cases over 600 tokens from the padded-batch check because the GPU was shared; single-row parity covers all 58 cases (span logits max abs 4.0e-3, scores 2.5e-6).
 - `gliner2-base-v1/onnx-fp32-cuda`: Native runtime: Microsoft.ML.OnnxRuntime.Gpu.Linux 1.30.0 needs the CUDA 13 runtime and cuDNN 9 on the loader path; the package does not ship them.
+- `gte-reranker-modernbert-base/onnx-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
+- `gte-reranker-modernbert-base/onnx-fp32-cpu`: Scores are raw logits, not calibrated probabilities.
+- `gte-reranker-modernbert-base/onnx-fp32-cpu`: Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long pairs are costly on CPU: one to two minutes and about 11 GB for one pair of 8,000 to 8,192 tokens at four threads.
 - `kev-0.8b/onnx-fp32-cpu`: model.onnx.data is not byte-reproducible across builds: the fp32 LoRA merge differs in a few floats of the LoRA-merged projections between runs (reduction order). The lock pins the measured bundle; a rebuilt bundle needs its own digests and its own evidence (KevDecisionModel.Create with explicit paths).
 - `kev-0.8b/onnx-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
 - `kev-0.8b/onnx-fp32-cpu`: Most of the error against PyTorch comes from ONNX Runtime's CPU LinearAttention kernel (admissions/kev.md, GPU results); the bound is 2e-4 in probability.

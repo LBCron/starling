@@ -3868,6 +3868,276 @@
       "scheduled_regression": false
     },
     {
+      "id": "gte-reranker-modernbert-base/onnx-fp32-cpu",
+      "family": "gte-reranker-modernbert-base",
+      "profile": "onnx-fp32-cpu",
+      "manifest": "model-pipeline/registry/gte-reranker-modernbert-base/onnx-fp32-cpu/manifest.yaml",
+      "maturity": "experimental",
+      "tasks": [
+        "reranking"
+      ],
+      "behavior": {
+        "max_input_tokens": 8192,
+        "truncation": "truncate-right",
+        "dimension": null,
+        "stop_token_ids": []
+      },
+      "qualified_providers": [],
+      "owner": "Mark",
+      "review_date": "2027-02-04",
+      "last_checked": null,
+      "known_issues": [
+        "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
+        "Scores are raw logits, not calibrated probabilities.",
+        "Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long pairs are costly on CPU: one to two minutes and about 11 GB for one pair of 8,000 to 8,192 tokens at four threads."
+      ],
+      "execution": {
+        "runtime": "onnxruntime",
+        "runtime_version": "1.30.0",
+        "binding": "Microsoft.ML.OnnxRuntime",
+        "binding_version": null,
+        "precision": "fp32",
+        "variant": "reference"
+      },
+      "gates": {
+        "G0": {
+          "status": "not-run"
+        },
+        "G1": {
+          "status": "not-run"
+        },
+        "G2": {
+          "status": "not-run"
+        },
+        "G3": {
+          "status": "not-run"
+        },
+        "G4": {
+          "status": "not-run"
+        },
+        "G5": {
+          "status": "not-run"
+        },
+        "G6": {
+          "status": "not-run"
+        },
+        "G7": {
+          "status": "not-run"
+        }
+      },
+      "capabilities": {
+        "batch": "experimental",
+        "streaming": "unsupported",
+        "cancellation": "experimental",
+        "persistence": "unsupported",
+        "training": "unsupported",
+        "aot": "untested",
+        "extensions_ai": "unsupported",
+        "mlnet": "unsupported",
+        "asset_acquisition": "unrecorded",
+        "asset_acquisition_download": "unrecorded",
+        "asset_verification_offline": "experimental",
+        "audio": "unrecorded",
+        "batch_sort_by_length": "experimental",
+        "batch_token_budget": "experimental",
+        "bf16": "unrecorded",
+        "built_in_profile": "experimental",
+        "bundle_lock_verification": "unrecorded",
+        "cache_storage": "unrecorded",
+        "calibrated_temperature": "unrecorded",
+        "calibration_fitting": "unrecorded",
+        "cancellation_inside_a_step": "unrecorded",
+        "chat_template_owned_text": "unrecorded",
+        "chat_template_text": "unrecorded",
+        "chat_template_thinking_switch": "unrecorded",
+        "chunked_prefill": "unrecorded",
+        "chunking": "unrecorded",
+        "classification": "unrecorded",
+        "compression_ratio_threshold": "unrecorded",
+        "concurrent_calls": "unrecorded",
+        "concurrent_calls_unserialized": "unrecorded",
+        "concurrent_requests": "unrecorded",
+        "condition_on_previous_text": "unrecorded",
+        "conversation_state_reuse": "unrecorded",
+        "count_gate_closed": "unrecorded",
+        "date_facts": "unrecorded",
+        "decision_choice": "unrecorded",
+        "decision_noul": "unrecorded",
+        "decision_score": "unrecorded",
+        "delimiter_escaping": "unrecorded",
+        "embedding_pretokenized": "unrecorded",
+        "embedding_text": "unrecorded",
+        "enable_thinking": "unrecorded",
+        "entity_extraction": "unrecorded",
+        "fp16": "unrecorded",
+        "generation": "unrecorded",
+        "generation_cuda": "unrecorded",
+        "generation_fp16": "unrecorded",
+        "generation_greedy": "unrecorded",
+        "gpu": "unsupported",
+        "greedy_generation": "unrecorded",
+        "guided_decoding": "unrecorded",
+        "http_server": "unrecorded",
+        "image": "unrecorded",
+        "image_16_bit": "unrecorded",
+        "image_alpha_compositing": "unrecorded",
+        "image_batch": "unrecorded",
+        "image_budget_280": "unrecorded",
+        "image_budget_other": "unrecorded",
+        "image_decode_gif_bmp_webp": "unrecorded",
+        "image_decode_gif_transparency": "unrecorded",
+        "image_decode_png_jpeg": "unrecorded",
+        "image_exif_orientation_opt_in": "unrecorded",
+        "image_interleaved_text": "unrecorded",
+        "image_matryoshka": "unrecorded",
+        "image_multiple_per_input": "unrecorded",
+        "image_over_default_pixel_limit_with_option": "unrecorded",
+        "image_prompts": "unrecorded",
+        "input_2050_to_8192_tokens": "unrecorded",
+        "input_over_512_tokens": "unrecorded",
+        "input_over_8192_tokens": "unrecorded",
+        "input_up_to_2049_tokens": "unrecorded",
+        "kv_cache": "unrecorded",
+        "label_descriptions": "unrecorded",
+        "language_detection": "unrecorded",
+        "logprob_threshold": "unrecorded",
+        "logprobs": "unrecorded",
+        "long_context": "unrecorded",
+        "long_context_1667_to_8192_tokens": "unrecorded",
+        "long_context_over_8192_tokens": "unrecorded",
+        "long_input": "unrecorded",
+        "matryoshka": "unrecorded",
+        "matryoshka_dimensions": "unrecorded",
+        "max_new_tokens": "unrecorded",
+        "mixed_label_sets_in_batch": "unrecorded",
+        "multithreaded_cross_origin_isolated": "unrecorded",
+        "no_speech_detection": "unrecorded",
+        "non_english": "unrecorded",
+        "offsets_original_text": "unrecorded",
+        "option_isolation": "unrecorded",
+        "plain_deduplicated_output": "unrecorded",
+        "prefill_chunking": "unrecorded",
+        "prefix_reuse": "unrecorded",
+        "probability_rounding": "unrecorded",
+        "prompts": "unrecorded",
+        "prompts_query_document": "unrecorded",
+        "prompts_task": "unrecorded",
+        "proxy_worker": "unrecorded",
+        "quantized": "unrecorded",
+        "query_instruction": "unrecorded",
+        "question_isolation": "unrecorded",
+        "raw_probabilities": "unrecorded",
+        "reasoning_parsing": "unrecorded",
+        "reasoning_split": "unrecorded",
+        "relation_extraction": "unrecorded",
+        "request_isolation": "unrecorded",
+        "sampling": "unrecorded",
+        "sampling_seeded": "unrecorded",
+        "single_thread_without_isolation": "unrecorded",
+        "state_cache_within_request": "unrecorded",
+        "state_json_rendering": "unrecorded",
+        "state_over_8192_tokens": "unrecorded",
+        "state_prefix_reuse_across_requests": "unrecorded",
+        "step0_logits": "unrecorded",
+        "stop_sequences": "unrecorded",
+        "stop_tokens": "unrecorded",
+        "structured_extraction": "unrecorded",
+        "structured_output": "unrecorded",
+        "temperature_fallback": "unrecorded",
+        "text": "experimental",
+        "text_only_inputs": "unrecorded",
+        "tf32": "unrecorded",
+        "timestamps": "unrecorded",
+        "tokenizer_owned": "unrecorded",
+        "tool_calling": "unrecorded",
+        "transcription": "unrecorded",
+        "transcription_cuda": "unrecorded",
+        "translation": "unrecorded",
+        "usage": "unrecorded",
+        "usage_output_tokens": "unrecorded",
+        "video": "unrecorded",
+        "video_audio_track": "unrecorded",
+        "video_batch": "unrecorded",
+        "video_decode_ffmpeg8": "unrecorded",
+        "video_decode_ffmpeg9": "unrecorded",
+        "video_decode_rotation_90": "unrecorded",
+        "video_decode_rotation_other": "unrecorded",
+        "video_decode_streams": "unrecorded",
+        "video_decoded_frames_with_timing": "unrecorded",
+        "video_frames_without_timing": "unrecorded",
+        "video_frames_without_timing_opt_in": "unrecorded",
+        "video_hdr": "unrecorded",
+        "video_interlaced": "unrecorded",
+        "video_interleaved_image": "unrecorded",
+        "video_interleaved_text": "unrecorded",
+        "video_matryoshka": "unrecorded",
+        "video_multiple_per_input": "unrecorded",
+        "video_pre_sampled_frames": "unrecorded",
+        "video_prompts": "unrecorded",
+        "video_timestamps": "unrecorded",
+        "video_variable_frame_rate": "unrecorded",
+        "vision": "unrecorded",
+        "wasm_aot": "unrecorded",
+        "wasm_interpreter": "unrecorded",
+        "word_timestamps": "unrecorded"
+      },
+      "compatibility": {
+        "linux-x64 cpu": {
+          "status": "experimental"
+        },
+        "linux-x64 cuda": {
+          "status": "unrecorded"
+        },
+        "linux-x64 wasm chromium-153": {
+          "status": "unrecorded"
+        },
+        "linux-x64 wasm firefox": {
+          "status": "unrecorded"
+        },
+        "linux-x64 webgpu chromium-153": {
+          "status": "unrecorded"
+        },
+        "linux-x64 webgpu firefox": {
+          "status": "unrecorded"
+        },
+        "macos-arm64 wasm safari": {
+          "status": "unrecorded"
+        },
+        "macos-arm64 webgpu safari": {
+          "status": "unrecorded"
+        },
+        "windows-x64 cpu": {
+          "status": "untested"
+        },
+        "windows-x64 cuda": {
+          "status": "unrecorded"
+        },
+        "windows-x64 wasm chromium": {
+          "status": "unrecorded"
+        },
+        "windows-x64 webgpu chromium": {
+          "status": "unrecorded"
+        }
+      },
+      "stable_readiness": {
+        "ready": false,
+        "gates_not_passed": [
+          "G0",
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "G7"
+        ],
+        "untested_capabilities": [
+          "aot"
+        ]
+      },
+      "scheduled_regression": true
+    },
+    {
       "id": "kev-0.8b/onnx-fp32-cpu",
       "family": "kev-0.8b",
       "profile": "onnx-fp32-cpu",

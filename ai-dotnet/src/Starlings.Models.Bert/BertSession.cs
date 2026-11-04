@@ -26,10 +26,7 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
         _maxBatchTokens = maxBatchTokens;
         _sortByLength = sortByLength;
         var files = ModelAssetStore.VerifyDirectory(profile.RuntimeLock, snapshot, CacheVerification.Sha256);
-        // The profile requires truncation "longest_first" (BertModelProfile.Parse); stated here rather than left to the
-        // library's default, which is the same strategy and direction.
-        _tokenizer = Tokenizer.FromFile(files.GetFilePath(BertModelProfile.TokenizerFile))
-            .WithPadding(null).WithTruncation(new TruncationOptions(profile.MaxTokens, TruncationStrategy.LongestFirst, TruncationDirection.Right));
+        _tokenizer = ForProfile(Tokenizer.FromFile(files.GetFilePath(BertModelProfile.TokenizerFile)), profile.MaxTokens);
         _untruncated = _tokenizer.WithTruncation(null);
         SpecialTokenCount = _untruncated.Encode(string.Empty).Count;
         Session = OnnxModelSession.Create(files.GetFilePath(BertModelProfile.GraphFile), new OnnxSessionOptions
@@ -53,6 +50,16 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
             throw;
         }
     }
+
+    /// <summary>
+    /// The tokenizer as the route runs it: no padding and truncation to <paramref name="maxTokens"/>, whatever
+    /// <c>tokenizer.json</c> declares. The gte-reranker file declares Fixed 8000 padding and truncation to 8000, which
+    /// <see cref="Tokenizer.FromFile(string)"/> applies; transformers replaces both per call, so they are not the model's
+    /// contract. The profile requires truncation "longest_first" (BertModelProfile.Parse); stated here rather than left
+    /// to the library's default, which is the same strategy and direction.
+    /// </summary>
+    internal static Tokenizer ForProfile(Tokenizer tokenizer, int maxTokens) =>
+        tokenizer.WithPadding(null).WithTruncation(new TruncationOptions(maxTokens, TruncationStrategy.LongestFirst, TruncationDirection.Right));
 
     public BertModelProfile Profile { get; }
     public OnnxModelSession Session { get; }

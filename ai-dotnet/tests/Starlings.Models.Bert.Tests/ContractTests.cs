@@ -16,6 +16,7 @@ public sealed class ContractTests
     [InlineData("cross-encoder/ms-marco-MiniLM-L6-v2", 512, "none", BertTask.Reranking, 384)]
     [InlineData("Starlinghq/bge-reranker-v2-m3-onnx", 8192, "none", BertTask.Reranking, 1024)]
     [InlineData("nomic-ai/nomic-embed-text-v1.5", 8192, "mean", BertTask.Embeddings, 768)]
+    [InlineData("Alibaba-NLP/gte-reranker-modernbert-base", 8192, "none", BertTask.Reranking, 768)]
     public void ParsesOnlyDeclaredTaskContracts(string repository, int maxTokens, string pooling, BertTask task, int hiddenSize)
     {
         var profile = BertModelProfile.Parse(ProfileJson(repository));
@@ -47,6 +48,29 @@ public sealed class ContractTests
         Assert.Equal(("logits", "xlmr-unigram", false), (profile.OutputName, profile.TokenizerProfile, profile.TokenTypeIds));
         Assert.Equal((250002, 0, 2, 1), (profile.VocabularySize, profile.ClsTokenId, profile.SepTokenId, profile.PadTokenId));
         Assert.Equal("none", profile.Normalize);
+    }
+
+    [Fact]
+    public void ModernBertRerankerContractIsExactAndUsesNoSegmentIds()
+    {
+        var profile = BertModelProfile.BuiltIn("gte-reranker-modernbert-base");
+        Assert.Equal(("logits", "modernbert-bpe-gte-reranker", false), (profile.OutputName, profile.TokenizerProfile, profile.TokenTypeIds));
+        Assert.Equal((50368, 50281, 50282, 50283), (profile.VocabularySize, profile.ClsTokenId, profile.SepTokenId, profile.PadTokenId));
+        Assert.Equal((8192, BertTask.Reranking, "none"), (profile.MaxTokens, profile.Task, profile.Normalize));
+        Assert.Equal(40, profile.SourceLock.Revision.Length);
+    }
+
+    [Theory]
+    [InlineData("tokenizer_profile", "xlmr-unigram")]
+    [InlineData("max_tokens", 8000)]
+    [InlineData("max_tokens", 512)]
+    [InlineData("pad_token_id", 0)]
+    [InlineData("score_activation", "sigmoid")]
+    public void RejectsModernBertRerankerNearMisses(string key, object value)
+    {
+        var document = ProfileData("Alibaba-NLP/gte-reranker-modernbert-base");
+        ((Dictionary<string, object>)document["behavior"])[key] = value;
+        Assert.Throws<NotSupportedException>(() => BertModelProfile.Parse(JsonSerializer.Serialize(document)));
     }
 
     [Theory]

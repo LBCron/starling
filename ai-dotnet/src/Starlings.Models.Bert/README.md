@@ -3,7 +3,7 @@
 Experimental. The package is on nuget.org from release 0.4.0 (`docs/releases/ai-0.4.0.md`); keep every `Starlings.*`
 package at the same version. The API may still change.
 
-<!-- catalog:maturity profiles=all-minilm-l6-v2/*,bge-small-en-v1.5/*,bge-base-en-v1.5/*,bge-m3/*,ms-marco-minilm-l6-v2/*,bge-reranker-v2-m3/*,nomic-embed-text-v1.5/* -->
+<!-- catalog:maturity profiles=all-minilm-l6-v2/*,bge-small-en-v1.5/*,bge-base-en-v1.5/*,bge-m3/*,ms-marco-minilm-l6-v2/*,bge-reranker-v2-m3/*,nomic-embed-text-v1.5/*,gte-reranker-modernbert-base/* -->
 Maturity is per profile, generated from the registry manifests by `model-pipeline catalog` (do not edit this table by hand). Gates, evidence and capabilities per profile: the [model catalog](https://github.com/starlinghq/starling/blob/main/docs/catalog/README.md).
 
 | Profile | Maturity | Platforms |
@@ -13,6 +13,7 @@ Maturity is per profile, generated from the registry manifests by `model-pipelin
 | `bge-m3/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `bge-reranker-v2-m3/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `bge-small-en-v1.5/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
+| `gte-reranker-modernbert-base/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `ms-marco-minilm-l6-v2/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `nomic-embed-text-v1.5/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 <!-- /catalog:maturity -->
@@ -26,13 +27,14 @@ dotnet add package Microsoft.ML.OnnxRuntime --version 1.30.0     # CPU natives
 
 ## Overview
 
-Experimental CPU fp32 implementations for seven explicitly pinned candidate contracts:
+Experimental CPU fp32 implementations for eight explicitly pinned candidate contracts:
 `sentence-transformers/all-MiniLM-L6-v2` (mean/L2, 256 tokens), `BAAI/bge-small-en-v1.5`
 (CLS/L2, 512 tokens), `BAAI/bge-base-en-v1.5` (CLS/L2, 512 tokens, 768-wide),
 `BAAI/bge-m3` (CLS/L2, 8192 tokens, 1024-wide, XLM-R), `cross-encoder/ms-marco-MiniLM-L6-v2`
 (paired inputs, raw scalar logits, 512 tokens), `BAAI/bge-reranker-v2-m3` (XLM-R cross-encoder, raw scalar
-logits, 8192 tokens, from the Starling-built graph `Starlinghq/bge-reranker-v2-m3-onnx`), and `nomic-ai/nomic-embed-text-v1.5`
-(mean, no L2, 8192 tokens, 768-wide). Candidate parity is
+logits, 8192 tokens, from the Starling-built graph `Starlinghq/bge-reranker-v2-m3-onnx`), `nomic-ai/nomic-embed-text-v1.5`
+(mean, no L2, 8192 tokens, 768-wide), and `Alibaba-NLP/gte-reranker-modernbert-base` (ModernBERT cross-encoder, BPE,
+raw scalar logits, 8192 tokens). Candidate parity is
 development evidence; protected release qualification requires independent fixture adoption.
 
 Pick a built-in profile with `BertModelProfile.BuiltIn` (or load a candidate file with `BertModelProfile.Load`). `BertTextEmbedder.Create`
@@ -57,10 +59,10 @@ persistence, AOT, GPU providers, and unlisted model contracts are unsupported or
 
 ## Profiles
 
-The package carries the seven candidate contracts as built-in profiles: `BertModelProfile.BuiltIn(name)` parses the
+The package carries the eight candidate contracts as built-in profiles: `BertModelProfile.BuiltIn(name)` parses the
 embedded copy of `model-pipeline/candidates/<name>/profile.json` at the packed commit (linked at build time, so the
 package cannot drift from the repository), and `BertModelProfile.BuiltInIds` lists the names. `BertModelProfile.Load(path)`
-and `Parse(json)` still read a contract file or string. Every path accepts only these seven repositories, ONNX Runtime
+and `Parse(json)` still read a contract file or string. Every path accepts only these eight repositories, ONNX Runtime
 1.30.0 on `CPUExecutionProvider` in fp32, and the exact values below; anything else throws `NotSupportedException`.
 The per-repository values come from the route contract table `model-pipeline/routes/bert-onnx-cpu-v1/contracts.json`,
 which the package embeds and validates on first use and the Python allow-list of the onboarding route reads too;
@@ -76,6 +78,7 @@ Experimental; registry manifests under `model-pipeline/registry/`).
 | `ms-marco` | `ms-marco-minilm-l6-v2/onnx-fp32-cpu` | reranking | 512 | none | 384 (one logit out) | none | `none` |
 | `bge-reranker-v2-m3` | `bge-reranker-v2-m3/onnx-fp32-cpu` | reranking | 8192 | none | 1024 (one logit out) | none | `none` |
 | `nomic-embed` | `nomic-embed-text-v1.5/onnx-fp32-cpu` | embeddings | 8192 | mean | 768 | none | `none` |
+| `gte-reranker-modernbert-base` | `gte-reranker-modernbert-base/onnx-fp32-cpu` | reranking | 8192 | none | 768 (one logit out) | none | `none` |
 
 nomic-embed-text-v1.5 vectors are not unit length; normalize them before cosine or dot-product comparison.
 Its profile declares only the `none` prompt, so `Embed(text, "query")` throws `ArgumentException`; any task
@@ -87,6 +90,18 @@ fp32 export (`model-pipeline/reference/bert/export_reranker_onnx.py`). Pairs are
 without segment ids. Scores are raw logits (the model card's `normalize=False` default); apply a sigmoid for its 0-1
 mapping. FlagEmbedding's fp16 inference, its LLM-based and layerwise rerankers, and query/passage length splits
 (`max_length` per side) are not implemented; truncation is longest-first over the pair.
+
+gte-reranker-modernbert-base is the first ModernBERT profile. It runs the fp32 `onnx/model.onnx` of the upstream
+repository, after comparison with the transformers built-in `ModernBertForSequenceClassification` on the route's corpus.
+Pairs are encoded `[CLS] query [SEP] document [SEP]` without segment ids, with the BPE profile
+`modernbert-bpe-gte-reranker`. The pinned `tokenizer.json` declares truncation to 8000 and Fixed 8000 padding; the package
+replaces both at load with no padding and the profile's limit, as transformers does per call. The limit is 8192
+(`model_max_length`); the model card's transformers example passes `max_length=512`, and there is no per-call limit here,
+so shorten the text yourself to match it. Scores are raw logits; the sentence-transformers default applies a sigmoid.
+Onboarding evidence stops at the longest corpus row (1,468 tokens), and the .NET path is untested beyond it. Long pairs are
+also costly on CPU: one pair of 8,000 to 8,192 tokens took one to two minutes and about 11 GB at four threads, so use
+`maxBatchTokens` with long documents.
+The upstream fp16 and quantized graphs, Flash Attention 2 and GPU providers are not implemented.
 
 ## Use
 
