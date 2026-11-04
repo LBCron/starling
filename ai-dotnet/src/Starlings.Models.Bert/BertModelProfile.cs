@@ -116,8 +116,7 @@ public sealed class BertModelProfile
     /// <summary>
     /// Names of the profiles built into the package, one per supported repository: the candidate directory names of
     /// <c>model-pipeline/candidates/</c> (<c>bge-base</c>, <c>bge-m3</c>, <c>bge-reranker-v2-m3</c>, <c>bge-small</c>,
-    /// <c>minilm</c>, <c>ms-marco</c>, <c>nomic-embed</c>, <c>paraphrase-multilingual</c>), in ordinal order. Only candidates
-    /// the registry admits are built in.
+    /// <c>minilm</c>, <c>ms-marco</c>, <c>nomic-embed</c>, <c>paraphrase-multilingual</c>), in ordinal order.
     /// </summary>
     public static IReadOnlyList<string> BuiltInIds { get; } = Array.AsReadOnly(new[]
     {

@@ -27,11 +27,8 @@ public sealed class BuiltInProfileTests
     }
 
     [Fact]
-    public void BuiltInIdsAreEveryAdmittedCandidateTheRouteAccepts()
+    public void BuiltInIdsAreEveryCandidateTheRouteAccepts()
     {
-        // Built in = the route accepts the candidate and the registry admits it (a manifest at
-        // model-pipeline/registry/<profile id>/). A draft candidate the route accepts but the registry does not
-        // admit yet stays out of the package: BertModelProfile.Load still reads it.
         var accepted = new List<string>();
         foreach (string dir in Directory.EnumerateDirectories(Path.Combine(RepositoryRoot(), "model-pipeline", "candidates")))
         {
@@ -43,11 +40,8 @@ public sealed class BuiltInProfileTests
 
             try
             {
-                var profile = BertModelProfile.Load(file);
-                if (Directory.Exists(Path.Combine(RepositoryRoot(), "model-pipeline", "registry", profile.Id)))
-                {
-                    accepted.Add(Path.GetFileName(dir));
-                }
+                BertModelProfile.Load(file);
+                accepted.Add(Path.GetFileName(dir));
             }
             catch (NotSupportedException)
             {
