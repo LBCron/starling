@@ -4,6 +4,8 @@ import copy
 import hashlib
 import importlib.util
 import json
+import os
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -93,6 +95,76 @@ def test_flat_float32_overlay_changes_only_dtype_fields(monkeypatch):
     assert result == {**before, "dtype": "float32", "torch_dtype": "float32"}
     with pytest.raises(ValueError, match="flat"):
         module.float32_config({"model_type": "qwen3_5", "text_config": {}})
+
+
+def test_builder_cannot_see_the_git_work_tree_around_its_environment(tmp_path, monkeypatch):
+    module = builder(monkeypatch)
+    identity = ["-c", "user.name=t", "-c", "user.email=t@example.invalid"]
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    subprocess.run(["git", *identity, "-C", str(tmp_path), "commit", "-q", "--allow-empty", "-m", "x"], check=True)
+    probe = ["git", "rev-parse", "HEAD"]
+    assert subprocess.run(probe, cwd=tmp_path, check=False, capture_output=True).returncode == 0
+    hidden = module.builder_environment(dict(os.environ), tmp_path / "scratch")
+    assert subprocess.run(probe, cwd=tmp_path, env=hidden, check=False, capture_output=True).returncode != 0
+
+
+def test_graph_stamped_with_a_foreign_commit_is_refused(tmp_path, monkeypatch):
+    onnx = pytest.importorskip("onnx")
+    module = builder(monkeypatch)
+    graph = tmp_path / "model.onnx"
+    model = onnx.helper.make_model(onnx.helper.make_graph([], "g", [], []), producer_name="onnxruntime-genai")
+    model.producer_version = f"{module.BUILDER_VERSION}+{module.BUILDER_SOURCE[:7]}"
+    onnx.save(model, graph)
+    module.verify_producer_version(graph)
+    model.producer_version = f"{module.BUILDER_VERSION}+1bada25"
+    onnx.save(model, graph)
+    with pytest.raises(ValueError, match="1bada25"):
+        module.verify_producer_version(graph)
+
+
+@pytest.mark.parametrize("stamp_accepted", [True, False])
+def test_main_hides_git_from_the_builder_and_refuses_a_bad_stamp_before_output(tmp_path, monkeypatch, stamp_accepted):
+    module = builder(monkeypatch)
+    snapshot = tmp_path / "snapshot"
+    snapshot.mkdir()
+    (snapshot / "tokenizer.json").write_text("{}")
+    (snapshot / "tokenizer_config.json").write_text(json.dumps({"chat_template": "t"}))
+    candidate = tmp_path / "candidate.json"
+    candidate.write_text(json.dumps({"id": "p", "origin": {"files": []}}))
+    out = tmp_path / "out"
+    builds = []
+    verified = []
+
+    def build(argv, **kwargs):
+        built = Path(argv[argv.index("-o") + 1])
+        built.mkdir()
+        for name in ("model.onnx", "model.onnx.data", "genai_config.json"):
+            (built / name).write_text(name)
+        builds.append(kwargs["env"])
+
+    def verify(graph):
+        verified.append(graph.name)
+        if not stamp_accepted:
+            raise ValueError("stamp")
+
+    monkeypatch.setattr(module.metadata, "version", lambda _: module.BUILDER_VERSION)
+    monkeypatch.setattr(module.subprocess, "run", build)
+    monkeypatch.setattr(module, "verified_copy", lambda *_: "c" * 64)
+    monkeypatch.setattr(module, "verify_producer_version", verify)
+    arguments = ["--candidate", str(candidate), "--snapshot", str(snapshot), "--out", str(out)]
+    monkeypatch.setattr(module.sys, "argv", ["build_bundle.py", *arguments])
+
+    if stamp_accepted:
+        assert module.main() == 0
+    else:
+        with pytest.raises(ValueError, match="stamp"):
+            module.main()
+
+    assert len(builds) == 1
+    assert builds[0]["GIT_DIR"].endswith("no-git-directory")
+    assert not Path(builds[0]["GIT_DIR"]).exists()
+    assert verified == ["model.onnx"]
+    assert (out / "model.onnx").exists() is stamp_accepted
 
 
 def test_verified_copy_rejects_corruption_and_never_changes_source(tmp_path, monkeypatch):

@@ -2,6 +2,12 @@
 
 Original assets are verified before use, copied to scratch, and never edited.
 New graph digests remain observed candidate outputs requiring separate review.
+
+The builder stamps model.onnx with producer_version "<version>+<commit>", and it takes the commit from
+`git rev-parse HEAD` run from <environment>/lib before it falls back to the wheel's own commit. An environment inside
+any Git work tree therefore stamps that work tree's HEAD into the graph, so the same inputs give different bytes per
+checkout. The build hides Git from the builder and refuses any other stamp, so the graph no longer depends on where
+the environment lives.
 """
 
 from __future__ import annotations
@@ -31,6 +37,21 @@ def digest(path: Path) -> str:
         for block in iter(lambda: stream.read(1024 * 1024), b""):
             value.update(block)
     return value.hexdigest()
+
+
+def builder_environment(environment: dict[str, str], scratch: Path) -> dict[str, str]:
+    """A missing Git directory makes the builder's commit probe fail, so it stamps the wheel's commit."""
+    return {**environment, "GIT_DIR": str(scratch / "no-git-directory")}
+
+
+def verify_producer_version(graph: Path) -> None:
+    """Refuse a graph whose stamp is not the pinned builder's: the stamp is part of the graph's digest."""
+    import onnx
+
+    expected = f"{BUILDER_VERSION}+{BUILDER_SOURCE[:7]}"
+    actual = onnx.load(graph, load_external_data=False).producer_version
+    if actual != expected:
+        raise ValueError(f"builder stamped producer_version {actual!r}, expected {expected!r}")
 
 
 def float32_config(config: dict) -> dict:
@@ -112,7 +133,14 @@ def main() -> int:
             str(work / "cache"),
         ]
         with (args.out / "builder.log").open("w", encoding="utf-8") as stream:
-            subprocess.run(argv, check=True, stdout=stream, stderr=subprocess.STDOUT)  # noqa: S603 - fixed argv
+            subprocess.run(  # noqa: S603 - fixed argv
+                argv,
+                check=True,
+                stdout=stream,
+                stderr=subprocess.STDOUT,
+                env=builder_environment(dict(os.environ), work),
+            )
+        verify_producer_version(built / "model.onnx")
         for name in ("model.onnx", "model.onnx.data", "genai_config.json"):
             shutil.copyfile(built / name, args.out / name)
         # The owned tokenizer loads the original asset, not an implicit builder tokenizer.
