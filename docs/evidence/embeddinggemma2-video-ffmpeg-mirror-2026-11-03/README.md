@@ -10,7 +10,9 @@ Run on 2026-11-03 and 2026-11-04 at `493765b` on the maintainer's shared machine
 | G2 | **passed** | embedding max abs 1.29e-6 (1e-5); min cosine 0.999999999959 (0.9999995); soft tokens 2.37e-4 row-relative (1e-3); token embeddings 3.81e-4 (4e-3) | same |
 | G3 | **passed**, separate run | `video-retrieval-v1`, 50 queries, 50 videos: nDCG@10 0.8126 (minimum 0.797), MRR@10 0.7714 (minimum 0.751) | [`g3-retrieval/report.md`](g3-retrieval/report.md) |
 
-These equal the figures of the [2026-10-14 evidence](../release-set-gates-2026-10-14/embeddinggemma2-video-fp32-cpu/README.md). Nothing under `protected/` changed, and the evaluator verified the protected files against Git.
+These equal the figures of the [2026-10-14 evidence](../release-set-gates-2026-10-14/embeddinggemma2-video-fp32-cpu/README.md). The G3 embeddings are byte-identical to that evidence's run of 2026-10-15: the results file has SHA-256 `abda524cf373d68f19b05348df75378e51e76267ad0392c1166107f2bf3f38c1` in both reports, and `metrics` and `per_query` are equal. Nothing under `protected/` changed, and the evaluator verified the protected files against Git.
+
+Each `report.json` differs from the evaluator's file only in its local paths, which read `<work>`. That text is not part of any digest.
 
 ## The fetch
 
@@ -18,15 +20,23 @@ In the script run, both fetch steps passed from the mirror with their SHA-256 ch
 
 ## The killed producer
 
-In the script run, the G3 producer exited 137 (SIGKILL) at 23:17:32 local time, after 11 of 50 videos, so the evaluation had no results file and reported exit 2. The cause was not found. The user journal shows no systemd-oomd action, the kernel log is not readable from this account, the parent shell survived, and no core dump exists. Three CI runner jobs started at about that moment, and the CPU load was 39.8 on 12 cores.
+In the script run, the G3 producer exited 137 (SIGKILL) at about 07:18:32Z (23:18:32 local time), after 11 of 50 videos, so the evaluation had no results file and reported exit 2. That time is the start of the producer, 22:59:25 local, plus the 1,147 s the script recorded, and it matches the copy of the producer's log made just after exit. The log's own last write, at 23:17:32, is the line for the eleventh video, not the kill.
 
-The rerun used the same arguments in a scope with `MemoryMax=20G` and `MemorySwapMax=0`. It passed the point of failure and finished all 50 videos in 3,616 s, with a sampled peak RSS of 7.2 GB and RSS flat near 6 GB. That argues against growth in the producer. It does not rule out a kill by something else on the machine, and it cannot say what happened in the first run.
+The cause was not found. The user journal shows no systemd-oomd action, the kernel log is not readable from this account, the parent shell survived, and no core dump exists. CI jobs started at 07:16:34Z (`ai-dotnet`), 07:18:12Z (`ai release-candidate drill`) and 07:18:14Z (`docs site (docfx)`), so two of them started 18 to 20 s before the kill, and the CPU load was 39.8 on 12 cores. That is correlation only.
+
+The rerun used the same arguments in a scope with `MemoryMax=20G` and `MemorySwapMax=0`. It passed the point of failure and finished all 50 videos in 3,616 s. RSS has no data for about the first 9.5 minutes: the run started near 23:23:27, the first sampler read the wrong process and logged 4 MB, and the corrected one started at 23:33:01. The samples do cover the first run's kill point, 1,147 s into the run, and everything after it. Over that interval the peak was 7.2 GB, and the means of ten consecutive samples stayed between 5.4 and 6.5 GB. That argues against growth in the producer. It does not rule out a kill by something else on the machine, and it cannot say what happened in the first run.
 
 ## Not covered
 
 - The `tools/ci/runpod-cuda-pod.sh` change was linted, not run. No GPU pod was used.
 - This does not produce release-set evidence for the 0.4.0 or 0.5.0 tags themselves. That needs the qualification workflow.
-- The model-pipeline environment was a fresh install of this tree rather than the job's hash-locked one. The reference Python only fetched the media, as in the job.
+- The evaluator ran from a fresh install of this tree. The job installs it the same way, unlocked (`pip install -e model-pipeline`). Only the job's reference environment is hash-locked, and the reference Python only fetched the media, here and in the job.
+- A green script run. The kill is unexplained and could recur on the shared runners, so #277 stays open until the qualification workflow passes this profile.
+- The 22 fixture videos of `video-fp32-cpu`. CI does not regenerate them. Regenerating them needs the GPL build, which upstream deleted and the mirror does not carry, so it takes a private copy (`fetch_eg2_ffmpeg.sh --with-gpl`).
+
+## Open: third-party source
+
+The mirror carries FFmpeg's source, not the source of the libraries linked into these builds. In the FFmpeg 8 build, the `NEEDED` entries of `libavcodec`, `libavformat` and `libavfilter` name only FFmpeg and system libraries, and `lib/` bundles no other library, yet `libavcodec.so.62` holds `libtwolame` strings and `libavformat.so.62` holds `libbluray version 1.5.1`. Their exact revisions cannot be identified from what is published. The licences of those projects were not checked here. Whether the redistribution is acceptable is a maintainer decision, recorded on the pull request.
 
 ## Commands
 

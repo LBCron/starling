@@ -19,7 +19,7 @@ The release evaluation sets under `protected/*/release/` and `protected/release-
 
 ## FFmpeg builds (fetched by the video gates, not in this repository)
 
-`reference/embeddinggemma2/fetch_eg2_ffmpeg.sh`, `tools/release-gates.sh` and `tools/ci/runpod-cuda-pod.sh` download two FFmpeg LGPL shared builds, n8.1.3-17-gc389840894 and n9.0.2-28-g669f5ab083 (BtbN/FFmpeg-Builds autobuilds, LGPL 3.0 or later), from `Starlinghq/ffmpeg-lgpl-shared-builds` on Hugging Face, commit `ebbcfa02b5e6785acba4d8ad4361f320f94531af`. Upstream deleted those autobuilds, so that repository redistributes the archives unchanged, with the FFmpeg source at the same commits, and its README records their origin and the libraries they link statically. The GPL build used to generate the synthetic spike videos is not mirrored. No package contains these builds.
+`reference/embeddinggemma2/fetch_eg2_ffmpeg.sh`, `tools/release-gates.sh` and `tools/ci/runpod-cuda-pod.sh` download two FFmpeg LGPL shared builds, n8.1.3-17-gc389840894 and n9.0.2-28-g669f5ab083 (BtbN/FFmpeg-Builds autobuilds, LGPL 3.0 or later), from `Starlinghq/ffmpeg-lgpl-shared-builds` on Hugging Face, commit `ebbcfa02b5e6785acba4d8ad4361f320f94531af`. Upstream deleted those autobuilds, so that repository redistributes the archives unchanged, with the FFmpeg source at the same commits, and its README records their origin and configure lines. These builds also link third-party libraries statically: that source is not mirrored, and their exact revisions are not recorded. The GPL build used to generate the synthetic spike videos is not mirrored. No package contains these builds.
 
 ## Converted model graphs
 
