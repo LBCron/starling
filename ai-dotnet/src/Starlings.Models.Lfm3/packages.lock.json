@@ -10,9 +10,9 @@
       },
       "Starlings.Tokenizers": {
         "type": "Direct",
-        "requested": "[0.3.4, 0.3.4]",
-        "resolved": "0.3.4",
-        "contentHash": "YYBHbSofthVVprGN9ZTwbAvi8tjrGhWds1NPfN+szBx4CoJCrSxz65LUfX6lexUM5s3JHh9HuqzTA/jxPyp4TA=="
+        "requested": "[0.3.5, 0.3.5]",
+        "resolved": "0.3.5",
+        "contentHash": "GZbD9I/QpykJcRFJ6TBV5rxpR0B0/rcuBj0Yk2Sxcclrckjn/yqmIHQbHNJ/89dQh02bsH/1hNP+P0EfvwoPCA=="
       },
       "System.Numerics.Tensors": {
         "type": "Transitive",
@@ -26,13 +26,13 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.Extensions.AI.Abstractions": "[10.10.1, )",
-          "Starlings.Tokenizers": "[0.3.4, 0.3.4]"
+          "Starlings.Tokenizers": "[0.3.5, 0.3.5]"
         }
       },
       "starlings.models.abstractions": {
         "type": "Project",
         "dependencies": {
-          "Starlings.Acquisition": "[0.4.0, )"
+          "Starlings.Acquisition": "[0.5.0, )"
         }
       },
       "starlings.runtime.onnx": {
