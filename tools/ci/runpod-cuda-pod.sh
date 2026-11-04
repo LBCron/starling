@@ -279,12 +279,12 @@ ready() { [[ -f "$1/.complete" ]]; }
 prepare_ffmpeg() {
     ready "$CACHE/ffmpeg8" || {
         rm -rf "$CACHE/ffmpeg8" && sh model-pipeline/reference/embeddinggemma2/fetch_eg2_ffmpeg.sh "$CACHE/ffmpeg8" &&
-            rm -rf "$CACHE"/ffmpeg8/*gpl-shared-8.1.tar.xz "$CACHE"/ffmpeg8/*-gpl-shared-8.1 && touch "$CACHE/ffmpeg8/.complete"
+            rm -f "$CACHE"/ffmpeg8/*-lgpl-shared-8.1.tar.xz && touch "$CACHE/ffmpeg8/.complete"
     }
     ready "$CACHE/ffmpeg9" || {
         local a=ffmpeg-n9.0.2-28-g669f5ab083-linux64-lgpl-shared-9.0.tar.xz
         rm -rf "$CACHE/ffmpeg9" && mkdir -p "$CACHE/ffmpeg9" && cd "$CACHE/ffmpeg9" &&
-            curl -fsSL -o "$a" "https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-10-15-13-03/$a" &&
+            curl -fsSL -o "$a" "https://huggingface.co/datasets/Starlinghq/ffmpeg-lgpl-shared-builds/resolve/ebbcfa02b5e6785acba4d8ad4361f320f94531af/$a" &&
             echo "5838264a2cff06ddc6b7b2fc43edeb51358ead38fd56d82f83f49c270fe0f5ff  $a" | sha256sum -c - &&
             tar xf "$a" && rm -f "$a" && touch .complete
         cd "$REPO" || return 1

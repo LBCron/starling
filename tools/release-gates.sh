@@ -148,13 +148,14 @@ fetch_media() {
 }
 
 # fetch_ffmpeg <dir>: the pinned FFmpeg 8.1 LGPL shared build (fetch_eg2_ffmpeg.sh) and the FFmpeg 9.0 LGPL shared
-# build of the FFmpeg 9 adapter, each checked by SHA-256 (the same archives as tools/ci/runpod-cuda-pod.sh).
+# build of the FFmpeg 9 adapter, from the Starlinghq mirror at a pinned commit, each checked by SHA-256 (the same
+# archives as tools/ci/runpod-cuda-pod.sh).
 fetch_ffmpeg() {
     local a=ffmpeg-n9.0.2-28-g669f5ab083-linux64-lgpl-shared-9.0.tar.xz
     step ffmpeg8 sh model-pipeline/reference/embeddinggemma2/fetch_eg2_ffmpeg.sh "$1/ffmpeg8"
     # shellcheck disable=SC2016 # expanded by the inner sh
     step ffmpeg9 sh -c 'set -eu; mkdir -p "$1"; cd "$1"
-        curl -fsSL --retry 3 -o "$2" "https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-10-15-13-03/$2"
+        curl -fsSL --retry 3 -o "$2" "https://huggingface.co/datasets/Starlinghq/ffmpeg-lgpl-shared-builds/resolve/ebbcfa02b5e6785acba4d8ad4361f320f94531af/$2"
         echo "5838264a2cff06ddc6b7b2fc43edeb51358ead38fd56d82f83f49c270fe0f5ff  $2" | sha256sum -c -
         tar xf "$2"' ffmpeg9 "$1/ffmpeg9" "$a"
 }

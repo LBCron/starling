@@ -17,6 +17,10 @@ The release evaluation sets under `protected/*/release/` and `protected/release-
 | Wikimedia Commons media, G3 retrieval sets | per file (images: public domain, CC0, CC BY 2.0, 2.5, 3.0, 4.0; videos: public domain, CC BY 2.0, 3.0) | per file, verified through the Commons API | `protected/embeddinggemma-2/release/image-retrieval-v1/`, `video-retrieval-v1/`: referenced by URL and SHA-256 only, not redistributed; attribution per file in `dataset.json` and `licenses.json` |
 | Wikimedia Commons file descriptions | contributors of each file's description page | **CC BY-SA 4.0** (public domain where copied from public-domain captions) | the queries of `image-retrieval-v1/` and `video-retrieval-v1/` (selected by `reference/embeddinggemma2/select_eg2_retrieval.py`); each directory's `LICENSE` says so |
 
+## FFmpeg builds (fetched by the video gates, not in this repository)
+
+`reference/embeddinggemma2/fetch_eg2_ffmpeg.sh`, `tools/release-gates.sh` and `tools/ci/runpod-cuda-pod.sh` download two FFmpeg LGPL shared builds, n8.1.3-17-gc389840894 and n9.0.2-28-g669f5ab083 (BtbN/FFmpeg-Builds autobuilds, LGPL 3.0 or later), from `Starlinghq/ffmpeg-lgpl-shared-builds` on Hugging Face, commit `ebbcfa02b5e6785acba4d8ad4361f320f94531af`. Upstream deleted those autobuilds, so that repository redistributes the archives unchanged, with the FFmpeg source at the same commits, and its README records their origin and the libraries they link statically. The GPL build used to generate the synthetic spike videos is not mirrored. No package contains these builds.
+
 ## Converted model graphs
 
 The reference scripts below convert upstream model weights into graphs that Starling hosts on Hugging Face. The graphs are not in this tree; each hosted repository carries the upstream license and the notice named here, which lists the modifications (Apache-2.0, section 4(b)).
