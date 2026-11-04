@@ -140,7 +140,7 @@ These apply to every profile on Linux.
 
 ### Image and video on CUDA
 
-**Deployment requirement for `embeddinggemma-2/video-fp32-cuda`: set `MALLOC_MMAP_THRESHOLD_=65536` in the environment of a Linux process that runs it.** It is recommended for `image-fp32-cuda` too.
+**Deployment requirement for `embeddinggemma-2/video-fp32-cuda`: set `MALLOC_MMAP_THRESHOLD_=65536` in the environment of a Linux process that runs it.** It is recommended for `image-fp32-cuda` too. The systemd, Dockerfile and launcher-script forms are in the [`Starlings.Runtime.Onnx` README](https://github.com/starlinghq/starling/blob/main/ai-dotnet/src/Starlings.Runtime.Onnx/README.md#setting-malloc_mmap_threshold_).
 
 With default glibc settings, a process that loads and unloads the multimodal embedder repeatedly keeps about 0.7 to 0.8 GiB of freed native memory resident in glibc's main heap between loads, and that high-water mark creeps upward with each new peak (allocator retention, not a leak: `malloc_trim` returns it and the trimmed series is flat). In 12-minute CUDA soaks with the thread fix below, the default video run failed the soak's growth rule on the loaded series (316 MiB/h fitted); with `MALLOC_MMAP_THRESHOLD_=65536` the image and video footprints were about half as large and flat. Device memory is returned at every unload, and the cuDNN, cuBLAS and driver mappings do not grow.
 

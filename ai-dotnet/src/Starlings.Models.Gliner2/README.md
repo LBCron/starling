@@ -128,7 +128,7 @@ Status: experimental (capability `classification`), CPU only. Evidence on Linux 
 
 ## Memory on Linux
 
-**Deployment requirement: set `MALLOC_MMAP_THRESHOLD_=65536` in the environment of a Linux process that runs this profile (CPU or CUDA).**
+**Deployment requirement: set `MALLOC_MMAP_THRESHOLD_=65536` in the environment of a Linux process that runs this profile (CPU or CUDA).** The systemd, Dockerfile and launcher-script forms are in the [`Starlings.Runtime.Onnx` README](https://github.com/starlinghq/starling/blob/main/ai-dotnet/src/Starlings.Runtime.Onnx/README.md#setting-malloc_mmap_threshold_).
 
 With default glibc settings, a process that loads and unloads the extractor repeatedly keeps freed native memory resident: about 1.2 to 1.5 GiB between loads, rising by about 65 to 90 MiB over the first half hour of cycling and then holding. This is allocator retention (glibc malloc's resident high-water mark and fragmentation), not a leak: with the threshold set, every unload returns what the load and its requests allocated. But the soak's growth rule, which is not changed for this, judges the default run: the one-hour default soak fit 81 to 82 MiB/h over the whole run and failed the rule, although the curve flattens after about 30 minutes. With `MALLOC_MMAP_THRESHOLD_=65536` the footprint after unloading held at about 76 MiB, the loaded footprint was about 740 MiB lower, and the one-hour G4 soak passed.
 
