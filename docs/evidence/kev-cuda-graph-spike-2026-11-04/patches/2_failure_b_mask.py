@@ -1,4 +1,4 @@
-"""Repair 1 for failure B of the onnxruntime-genai 0.17.1 `-e cuda -p fp32` export (MultiHeadAttention path).
+"""Repair 2, the first for failure B of the onnxruntime-genai 0.17.1 `-e cuda -p fp32` export (MultiHeadAttention path).
 
 Failure: a multi-token run on a non-empty cache (the Kev question branch continuing from the cached state) fails in
 /model/attn_mask_reformat/input_ids_subgraph/Expand: the causal triangle is built as [S, S] (S = new tokens) and cannot
@@ -8,7 +8,7 @@ Repair: build the triangle as [S, past + S] with row i allowing columns < past +
   - ConstantOfShape_2's shape becomes [S, past + S] (Concat_2's second input -> Unsqueeze_3, which is past + S);
     its last dim then drives the existing column Range;
   - the row operand of Less becomes Reshape(Range(0, S) + 1 + past, [-1, 1]) instead of the column range reshaped.
-Input: model-patched.onnx (repair 1 of failure A). Weights untouched.
+Input: the output of repair 1, for failure A. Weights untouched.
 """
 
 import sys

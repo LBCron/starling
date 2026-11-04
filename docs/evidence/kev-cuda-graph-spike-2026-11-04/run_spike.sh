@@ -1,5 +1,5 @@
 #!/bin/bash
-# Kev-0.8B CUDA graph spike, 2026-11-04. Usage: run_all.sh patch|load|placement|bench|load-hog
+# Kev-0.8B CUDA graph spike, 2026-11-04. Usage: run_spike.sh patch|load|placement|present|parity|bench [prefix]|hog [loops]
 set -uo pipefail
 K=/home/mark/Projects/AI-models/kev
 S=$K/spike-2026-11-04
@@ -31,6 +31,11 @@ placement)
   spike placement --onnx "$BUNDLE/model.onnx" "${COMMON[@]}" --out "$R/placement-current.json" 2>"$S/logs/placement-current.stderr"
   spike placement --onnx "$E/model-p3.onnx" "${COMMON[@]}" --out "$R/placement-cuda-fp32-repaired.json" 2>"$S/logs/placement-cuda-fp32-repaired.stderr"
   spike placement --onnx "$K/onnx-cuda-fp16/model.onnx" "${COMMON[@]}" --out "$R/placement-cuda-fp16.json" 2>"$S/logs/placement-cuda-fp16.stderr"
+  ;;
+present)
+  spike present --onnx "$BUNDLE/model.onnx" "${COMMON[@]}" --out "$R/present-current.json"
+  spike present --onnx "$E/model-p3.onnx" "${COMMON[@]}" --out "$R/present-cuda-fp32-repaired.json"
+  spike present --onnx "$K/onnx-cuda-fp16/model.onnx" "${COMMON[@]}" --out "$R/present-cuda-fp16.json"
   ;;
 bench)
   # One process per cell. $2: result prefix, default "bench".

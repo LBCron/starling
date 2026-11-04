@@ -3,8 +3,10 @@
 Subcommands:
   load       Try to create a session on a graph and, if that works, run a state pass and a multi-token row from its
              cache. Prints the exact error of the first step that fails. Never raises.
-  placement  Session profiling of one state pass and one cached row: nodes per provider, CPU-side nodes by op, kernel
-             time per provider, and where a `present.*` output lives.
+  placement  Session profiling of one state pass and two cached rows: nodes per provider, CPU-side nodes by op and
+             kernel time per provider.
+  present    Where every `present.*` output of a state pass lives: read with `OrtValue.device_name()` after a plain run
+             and after binding the outputs to the device.
   bench      Latency of `Decide`'s layout: one state pass, then each question as a row from the state's cache.
 
 `bench --cache host` keeps the cache in host memory, which is what `KevDecisionModel` does: plain `Run`, outputs in
@@ -156,10 +158,6 @@ class Graph:
         return io.copy_outputs_to_cpu()[0]
 
 
-def device_of(value) -> str:
-    return value.device_name() if hasattr(value, "device_name") else "numpy (host)"
-
-
 def cmd_load(args) -> dict:
     result = {"graph": str(args.onnx), "steps": []}
 
@@ -207,7 +205,6 @@ def cmd_placement(args) -> dict:
             nodes[ev["name"][: -len("_kernel_time")]] = (a.get("op_name"), a["provider"])
             kernel_us[a["provider"]] += ev["dur"]
             op_us[f"{a.get('op_name')} on {a['provider']}"] += ev["dur"]
-    device_cache = graph.state_device(state)
     return {
         "graph": str(args.onnx),
         "session_providers": session.get_providers(),
@@ -226,11 +223,29 @@ def cmd_placement(args) -> dict:
         ),
         "kernel_ms_per_provider_state_pass_plus_2_rows": {k: v / 1000 for k, v in kernel_us.items()},
         "top_ops_ms": {k: v / 1000 for k, v in op_us.most_common(8)},
-        "present_on_plain_run": device_of(past[graph.past[0]]),
-        "present_bound_to_device": device_of(device_cache["values"][graph.past[0]]),
         "cache_bytes_600_tokens": int(sum(v.nbytes for v in past.values())),
         "state_tokens": len(state),
         "row_tokens": len(branches[3]["ids"]),
+    }
+
+
+def cmd_present(args) -> dict:
+    session = make_session(args.onnx)
+    graph = Graph(session)
+    state, _ = load_tokens(args.fixtures, args.long_fixture, args.state_tokens)
+    # `session.run` returns numpy, which says nothing about the device, so the plain run keeps OrtValues. No output is
+    # preallocated, as with a plain `Run`, and ONNX Runtime picks where the fetched value lives.
+    feed = {**graph.scalars(state, 0), **graph.empty}
+    plain = session.run_with_ort_values(
+        graph.present, {name: ort.OrtValue.ortvalue_from_numpy(value) for name, value in feed.items()}
+    )
+    bound = graph.state_device(state)["values"]
+    return {
+        "graph": str(args.onnx),
+        "state_tokens": len(state),
+        "present_outputs": len(graph.present),
+        "plain_run_devices": dict(Counter(v.device_name() for v in plain)),
+        "bound_devices": dict(Counter(v.device_name() for v in bound.values())),
     }
 
 
@@ -338,7 +353,7 @@ def cmd_bench(args) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=["load", "placement", "bench"])
+    parser.add_argument("command", choices=["load", "placement", "present", "bench"])
     parser.add_argument("--onnx", type=Path, required=True)
     parser.add_argument("--head", type=Path)
     parser.add_argument("--fixtures", type=Path)
@@ -354,7 +369,7 @@ def main() -> int:
     parser.add_argument("--gpu-index", default="1", help="nvidia-smi index of the card, for sampling only")
     parser.add_argument("--log-severity", type=int, default=1)
     args = parser.parse_args()
-    result = {"load": cmd_load, "placement": cmd_placement, "bench": cmd_bench}[args.command](args)
+    result = {"load": cmd_load, "placement": cmd_placement, "present": cmd_present, "bench": cmd_bench}[args.command](args)
     result["onnxruntime"] = ort.__version__
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8")
