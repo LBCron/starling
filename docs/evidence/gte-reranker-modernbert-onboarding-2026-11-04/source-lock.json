@@ -1,0 +1,88 @@
+{
+  "assets": [
+    {
+      "path": "README.md",
+      "sha256": "02b4dbe7c93b7962270fa44ea8b294986265556ff7dd69492dd708d4a69e606e",
+      "size": 14180,
+      "verification": "pinned-size-and-sha256"
+    },
+    {
+      "path": "config.json",
+      "sha256": "c9316ff715158502dad782f35454eee18de984160618dc30afe7508feb46b7ce",
+      "size": 1333,
+      "verification": "pinned-size-and-sha256"
+    },
+    {
+      "path": "model.safetensors",
+      "sha256": "13c533d902d6a48fa97375c6856c3e60854f9228ea760e3fc18ebde057e0cf31",
+      "size": 598436708,
+      "verification": "pinned-size-and-sha256"
+    },
+    {
+      "path": "onnx/model.onnx",
+      "sha256": "c6d3226502addbcd4d2cf273802957ebf8a2a6bf94037dcb9b1d95bfc01e5d93",
+      "size": 598803940,
+      "verification": "pinned-size-and-sha256"
+    },
+    {
+      "path": "special_tokens_map.json",
+      "sha256": "ea97ecdbcc73713039d8d64dbb05e3689495c96657fbd9a18f5bed381be81049",
+      "size": 694,
+      "verification": "pinned-size-and-sha256"
+    },
+    {
+      "path": "tokenizer.json",
+      "sha256": "2aea6ff4701d063e7e029b6be695a1659f2caaa2ae4fb0e8b18285818271becd",
+      "size": 3583499,
+      "verification": "pinned-size-and-sha256"
+    },
+    {
+      "path": "tokenizer_config.json",
+      "sha256": "626c86908d7c711f93b0feffd8657b782cc2727b391f9be190240e8cafb626d5",
+      "size": 21031,
+      "verification": "pinned-size-and-sha256"
+    }
+  ],
+  "origin": {
+    "files": [
+      {
+        "path": "README.md",
+        "sha256": "02b4dbe7c93b7962270fa44ea8b294986265556ff7dd69492dd708d4a69e606e",
+        "size": 14180
+      },
+      {
+        "path": "config.json",
+        "sha256": "c9316ff715158502dad782f35454eee18de984160618dc30afe7508feb46b7ce",
+        "size": 1333
+      },
+      {
+        "path": "model.safetensors",
+        "sha256": "13c533d902d6a48fa97375c6856c3e60854f9228ea760e3fc18ebde057e0cf31",
+        "size": 598436708
+      },
+      {
+        "path": "onnx/model.onnx",
+        "sha256": "c6d3226502addbcd4d2cf273802957ebf8a2a6bf94037dcb9b1d95bfc01e5d93",
+        "size": 598803940
+      },
+      {
+        "path": "special_tokens_map.json",
+        "sha256": "ea97ecdbcc73713039d8d64dbb05e3689495c96657fbd9a18f5bed381be81049",
+        "size": 694
+      },
+      {
+        "path": "tokenizer.json",
+        "sha256": "2aea6ff4701d063e7e029b6be695a1659f2caaa2ae4fb0e8b18285818271becd",
+        "size": 3583499
+      },
+      {
+        "path": "tokenizer_config.json",
+        "sha256": "626c86908d7c711f93b0feffd8657b782cc2727b391f9be190240e8cafb626d5",
+        "size": 21031
+      }
+    ],
+    "repo": "Alibaba-NLP/gte-reranker-modernbert-base",
+    "revision": "f7481e6055501a30fb19d090657df9ec1f79ab2c"
+  },
+  "profile": "gte-reranker-modernbert-base/onnx-fp32-cpu"
+}

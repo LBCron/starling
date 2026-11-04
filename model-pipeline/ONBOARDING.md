@@ -39,7 +39,7 @@ Inspection reads bounded local JSON files without importing upstream model code.
 | Route | Suggested when |
 | --- | --- |
 | `e5-onnx-cpu-v1` | The pinned e5 geometry: `BertModel`, 384 wide, 512 positions, Unigram tokenizer, mean pooling and a `Normalize` module. |
-| `bert-onnx-cpu-v1` | `model_type` `bert`, `xlm-roberta` or `nomic_bert` with a WordPiece or Unigram tokenizer, or `modernbert` with a BPE tokenizer, whose every component is supported, and either a sentence-transformers `Pooling` module with exactly one of mean or CLS pooling (task `embeddings`; `l2` normalization when a `Normalize` module follows) or, without one, a single-logit `BertForSequenceClassification` or `XLMRobertaForSequenceClassification` head (task `reranking`). `facts` carries the observed width, positions, pooling and normalization. |
+| `bert-onnx-cpu-v1` | `model_type` `bert`, `xlm-roberta` or `nomic_bert` with a WordPiece or Unigram tokenizer, or `modernbert` with a BPE tokenizer, whose every component is supported, and either a sentence-transformers `Pooling` module with exactly one of mean or CLS pooling (task `embeddings`; `l2` normalization when a `Normalize` module follows) or, without one, a single-logit `BertForSequenceClassification`, `XLMRobertaForSequenceClassification` or `ModernBertForSequenceClassification` head (task `reranking`). `facts` carries the observed width, positions, pooling and normalization. |
 | `qwen-genai-cpu-v1` | `model_type` `qwen2` or `qwen3` with the matching `Qwen2ForCausalLM` or `Qwen3ForCausalLM` architecture and a supported BPE tokenizer. |
 
 Each plugin still accepts only the repositories of its own contract table and refuses everything else, so a suggestion is where to start, not a result.

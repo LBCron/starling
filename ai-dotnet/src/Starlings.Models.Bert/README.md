@@ -99,8 +99,9 @@ replaces both at load with no padding and the profile's limit, as transformers d
 (`model_max_length`); the model card's transformers example passes `max_length=512`, and there is no per-call limit here,
 so shorten the text yourself to match it. Scores are raw logits; the sentence-transformers default applies a sigmoid.
 Onboarding evidence stops at the longest corpus row (1,468 tokens), and the .NET path is untested beyond it. Long pairs are
-also costly on CPU: one pair of 8,000 to 8,192 tokens took one to two minutes and about 11 GB at four threads, so use
-`maxBatchTokens` with long documents.
+also costly on CPU. In a Python probe at four threads with ONNX Runtime's default CPU arena, which this package also
+leaves on, one 8,192-token pair took about a minute and peaked at 10 GB on the first run and 19 GB from the second run on.
+This was not measured on .NET. Use `maxBatchTokens` with long documents, and do not plan on less memory than that.
 The upstream fp16 and quantized graphs, Flash Attention 2 and GPU providers are not implemented.
 
 ## Use

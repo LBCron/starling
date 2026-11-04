@@ -1,0 +1,11 @@
+onnxruntime 1.30.0 session load 1.3s peak 0.89G
+tokens 8192 run 1 logit 1.492696 time 52.0s peak 10.05G
+tokens 8192 run 2 logit 1.492696 time 52.9s peak 19.20G
+onnxruntime 1.30.0 arena session load 1.2s peak 0.90G
+tokens 8192 run 1 logit 1.492696 time 50.5s peak 10.06G
+tokens 8192 run 2 logit 1.492696 time 45.8s peak 19.21G
+tokens 8192 run 3 logit 1.492696 time 47.0s peak 19.21G
+tokens 8192 run 4 logit 1.492696 time 45.0s peak 19.21G
+onnxruntime 1.30.0 noarena session load 1.7s peak 0.86G
+tokens 8192 run 1 logit 1.492696 time 54.0s peak 9.32G
+tokens 8192 run 2 logit 1.492696 time 56.1s peak 10.00G

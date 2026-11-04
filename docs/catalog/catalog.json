@@ -3889,7 +3889,7 @@
       "known_issues": [
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
         "Scores are raw logits, not calibrated probabilities.",
-        "Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long pairs are costly on CPU: one to two minutes and about 11 GB for one pair of 8,000 to 8,192 tokens at four threads."
+        "Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long pairs are costly on CPU. In a Python probe at four threads with the default CPU arena, which the package also leaves on, ONNX Runtime took about a minute for one 8,192-token pair and peaked at 10 GB on the first run and 19 GB from the second run on. This was not measured on .NET (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04)."
       ],
       "execution": {
         "runtime": "onnxruntime",
