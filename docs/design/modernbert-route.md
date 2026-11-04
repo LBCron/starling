@@ -1,6 +1,6 @@
 # ModernBERT on the encoder route: design note
 
-Status: **proposed**, 2026-11-01 (#102, #101). Nothing in this note changes product code, a capability status, a manifest or a tolerance. It is input for a maintainer decision, not a support claim.
+Status: **accepted for `Alibaba-NLP/gte-reranker-modernbert-base`**, 2026-11-04 (#101, PR #291): option B on `bert-onnx-cpu-v1`, extended rather than forked, with the deviations recorded under [Accepted deviations](#accepted-deviations). **Open** for `answerdotai/ModernBERT-base` and `-large` (#102): this note admits neither. Proposed 2026-11-01. It is a design record, not a support claim: statuses are in the registry manifest and the catalog.
 
 ## Problem
 
@@ -46,6 +46,16 @@ What is missing:
 
 Option B on `bert-onnx-cpu-v1`, extended rather than forked. The tokenizer profile (working name `modernbert-bpe`) is the long pole and comes first. A ModernBERT embedding fine-tune (option C) follows on the same route as a table entry once B has landed; base ModernBERT stays unadmitted as a product.
 
+## Accepted deviations
+
+PR #291 implemented option B. The maintainer accepted these differences from the text above on 2026-11-04. The text above is kept as proposed.
+
+- **No Starling export.** Upstream `onnx/model.onnx` (PyTorch 2.5.1 exporter, opset 14, one 598 MB file) passed the comparison with the transformers reference, so the route pins it at the upstream commit. Nothing is hosted under `Starlinghq`, and checklist item 4 was not needed.
+- **Profile name.** The shipped tokenizer profile is `modernbert-bpe-gte-reranker`, not the working name `modernbert-bpe`, because it is bound to this model's `tokenizer.json`. Base and large have a different `tokenizer.json`, whose `model` block differs too, so they need a profile of their own.
+- **`max_tokens` is 8192, not 8000.** The reference applies `model_max_length`: transformers with `truncation=True` gives 8192, and the 8000 in `tokenizer.json` applies only through the raw file. The package replaces the file's truncation and padding at load.
+- **One PR for items 2 to 6.**
+- **Registry manifest in the candidate's PR.** Item 6 changed: see below, and `skills/starling-add-model` sections 3 and 7.
+
 ## Checklist (one PR each)
 
 1. starlinghq/tokenizers: issue, then PR adding the GPT-2 split pattern for `ByteLevel` with `use_regex: true` (class tables generated from the reference), and the `modernbert-bpe` profile pinned to the gte-reranker `tokenizer.json`, with single and pair fixtures and a randomized differential run. Release.
@@ -53,5 +63,5 @@ Option B on `bert-onnx-cpu-v1`, extended rather than forked. The tokenizer profi
 3. Route extension: `modernbert-bpe` as an allowed `tokenizer_profile` in the contract-table rules (`routes/README.md`, `onboarding_bert.py`, `BertModelProfile`), the `modernbert` model type and `ModernBertForSequenceClassification` head in inspection, with tests. No candidate yet.
 4. `model-pipeline`: reranker export for `ModernBertForSequenceClassification` (based on `export_reranker_onnx.py`), the transformers built-in reference path, and a check of any upstream ONNX against it.
 5. Candidate `gte-reranker-modernbert-base` via `model-pipeline scaffold` (contract entry, recipe, asset lock, README row), pinned by full commit SHA; corpus with long pairs.
-6. Onboarding run on CPU, evidence under `docs/evidence/`, profile Experimental. The maintainer adds per-model bounds and the registry manifest.
+6. Onboarding run on CPU, evidence under `docs/evidence/`, profile Experimental. A candidate that is built in brings its registry manifest in the same PR, Experimental with every gate `not-run`, because the tests require a manifest for each built-in profile. Per-model bounds, gate statuses and maturity changes stay with the maintainer.
 7. Later, separately: a ModernBERT embedding fine-tune as a table entry; ModernBERT-large; CUDA.

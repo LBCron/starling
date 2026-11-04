@@ -85,7 +85,8 @@ Use the existing MiniLM files as templates. To find every place they are registe
    `test_onboarding_bert.py` is parametrized over the contract table, so the new entry is tested without a new row. Review every generated piece; the scaffold changes no gate, tolerance, protected file or maturity.
 3. **Tests you still write:** a near-miss case for anything model-specific (for example a wrong pooling) in `test_onboarding_bert.py` and `ContractTests.cs`.
 4. **`ai-dotnet/src/Starlings.Models.Bert/README.md`**: besides the generated row, state the model's status and anything it doesn't support.
-5. **Optionally, `model-pipeline/workflows/*.json`**: add the model to a workflow only if it belongs to that group.
+5. **Built-in profile and registry manifest.** A candidate the route accepts is a built-in profile: add it to `BertModelProfile.BuiltIn` and `BuiltInIds`, and `BuiltInIdsAreEveryCandidateTheRouteAccepts` holds you to that. Then add `model-pipeline/registry/<family>/<profile>/manifest.yaml`, because `EveryBuiltInProfileHasAFamily` requires one, and the family to `CapabilityRecordTests.Families`. Copy a BERT manifest: `maturity: experimental` and every gate `status: not-run`. Run `model-pipeline catalog` to regenerate the catalog, the package README tables and `ProfileCapabilities.g.cs`.
+6. **Optionally, `model-pipeline/workflows/*.json`**: add the model to a workflow only if it belongs to that group.
 
 For the Qwen route, the pattern is the same with `onboarding_generation.py` and the generation reference environment.
 
@@ -153,12 +154,13 @@ Tests that need model weights are skipped when the weights are absent; that's ex
 
 The PR (template `.github/pull_request_template.md`) contains:
 - the candidate, the recipe, and the route code with its tests in Python and C#;
+- for a built-in profile, its Experimental registry manifest with every gate `not-run`, and the regenerated catalog;
 - the tokenizer asset line and README updates;
 - under **Evidence**: the run's exit status, the `summarize_report.py` table, the total number of checks, the pinned revision and the reference environment;
 - the licenses: code, weights and tokenizer terms;
 - every unsupported feature, listed explicitly.
 
-It must **not** contain weights, artifacts, protected files, tolerance changes, gate statuses or maturity changes. Mark it as a draft. The model lands as Experimental.
+It must **not** contain weights, artifacts, protected files, tolerance changes, a gate status other than `not-run`, or a maturity other than Experimental. Mark it as a draft. The model lands as Experimental.
 
 ## 6. A model that fits no route
 
@@ -177,7 +179,7 @@ A new task (generation, extraction, vision) needs its own evaluator checks; an e
 You don't need to do these, and your PR must not attempt them:
 - **References and tolerances:** the maintainer reviews the proposed references and moves them byte-identical into `model-pipeline/protected/` in a `protected-change` PR, and sets the tolerances.
 - **Hosted graphs:** Starling-built graphs are hosted under the `Starlinghq` Hugging Face organization, and the maintainer creates those repositories.
-- **Registry and maturity:** writing the registry manifest (`model-pipeline/registry/<family>/<profile>/manifest.yaml`), G3 task datasets and budgets, gate statuses, and maturity changes.
+- **Gates and maturity:** G3 task datasets and budgets, every gate status, and every maturity change. A built-in candidate's PR adds the registry manifest itself (section 3, step 5), Experimental with every gate `not-run`; everything that moves it after that is the maintainer's.
 - **Qualification CI:** wiring the profile into `.github/workflows/qualification.yml`.
 
 Preview needs G0, G1, G2 and G6 passed; Stable needs all of G0–G7, plus an owner and regression support (`docs/support-policy.md`).
