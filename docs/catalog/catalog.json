@@ -3885,7 +3885,7 @@
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-05",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "model.onnx.data is not byte-reproducible across builds: the fp32 LoRA merge differs in a few floats of the LoRA-merged projections between runs (reduction order). The lock pins the measured bundle; a rebuilt bundle needs its own digests and its own evidence (KevDecisionModel.Create with explicit paths).",
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
@@ -4159,7 +4159,7 @@
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-05",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "model.onnx.data is not byte-reproducible across builds: the fp32 LoRA merge differs in a few floats of the LoRA-merged projections between runs (reduction order). The lock pins the measured bundle; a rebuilt bundle needs its own digests and its own evidence (KevDecisionModel.Create with explicit paths).",
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
@@ -4436,7 +4436,7 @@
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": null,
+      "last_checked": "2026-11-03",
       "known_issues": [
         "No binding tolerance for Kev-4B: the protected file binds Kev-0.8B, and one transfer-v4 development question (2.05e-4) exceeds its 2e-4 probability bound by 2.5% (no flip, identical accuracy). The binding bound for 4B is the maintainer's decision.",
         "model.onnx.data is not byte-reproducible across builds (the fp32 LoRA merge; see execution.graph). The lock pins the measured bundle; a rebuilt bundle needs its own digests and its own evidence (KevDecisionModel.Create with explicit paths).",
@@ -4709,7 +4709,7 @@
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": null,
+      "last_checked": "2026-11-03",
       "known_issues": [
         "No binding tolerance for Kev-4B: the protected file binds Kev-0.8B, and on CPU one transfer-v4 development question (2.05e-4) exceeds its 2e-4 probability bound by 2.5% (no flip, identical accuracy). The binding bound for 4B is the maintainer's decision.",
         "Evidence is local: one RTX 3090 workstation. The per-release GPU regression and the gates have not run for this profile; other NVIDIA GPUs are untested.",
@@ -9464,7 +9464,7 @@
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
-      "last_checked": "2026-10-23",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "No reference fixtures are adopted into protected/ and no gate has run; every capability is at most experimental.",
         "The evidence covers English only (eight LibriSpeech clips, 1.6 s to 59.1 s, asr-corpus-v3); other languages are untested.",

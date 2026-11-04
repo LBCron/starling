@@ -238,7 +238,7 @@ maintenance:
   # changed, so the pin stays.
   latest_known_upstream_revision: "f2d0148f21bb07751a7e6e9a4377e1ae7146607f"
   latest_verified_upstream_revision: "76ba4fb597cca51a329a1820e49282e26248b36b"
-  last_checked: 2026-10-23
+  last_checked: 2026-11-03
   review_date: 2027-01-23
   known_issues:
     - >-
