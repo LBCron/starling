@@ -38,6 +38,7 @@ Gate cells link to the evidence the manifest records. The Stable readiness colum
 | [multilingual-e5-small/onnx-int8embed-wasm](../../model-pipeline/registry/multilingual-e5-small/onnx-int8embed-wasm/manifest.yaml) | embedding | experimental | Mark | 2027-01-23 | not-run | [passed](../evidence/browser-e5-package-2026-10-23/gates/README.md) | [passed](../evidence/browser-e5-package-2026-10-23/gates/README.md) | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G3, G4, G5, G6, G7; promotion also awaits a passing history of the qualification job 'browser' (WASM, headless Chromium) |
 | [multilingual-e5-small/onnx-int8embed-webgpu](../../model-pipeline/registry/multilingual-e5-small/onnx-int8embed-webgpu/manifest.yaml) | embedding | experimental | Mark | 2027-01-23 | not-run | [passed](../evidence/browser-e5-package-2026-10-23/gates/README.md) | [passed](../evidence/browser-e5-package-2026-10-23/gates/README.md) | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G3, G4, G5, G6, G7; untested: cache_storage, proxy_worker, single_thread_without_isolation, wasm_interpreter; promotion also awaits a passing history of the qualification job 'browser' (WASM, headless Chromium) |
 | [nomic-embed-text-v1.5/onnx-fp32-cpu](../../model-pipeline/registry/nomic-embed-text-v1.5/onnx-fp32-cpu/manifest.yaml) | embedding | experimental | Mark | 2027-01-23 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
+| [paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu](../../model-pipeline/registry/paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu/manifest.yaml) | embedding | experimental | Mark | 2027-01-23 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
 | [qwen2.5-0.5b-instruct/ortgenai-fp32-cpu](../../model-pipeline/registry/qwen2.5-0.5b-instruct/ortgenai-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-18 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_requests, long_context |
 | [qwen3-0.6b/ortgenai-fp32-cpu](../../model-pipeline/registry/qwen3-0.6b/ortgenai-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-18 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_requests, long_context |
 | [qwen3-embedding-0.6b/onnx-fp32-cpu](../../model-pipeline/registry/qwen3-embedding-0.6b/onnx-fp32-cpu/manifest.yaml) | embedding | experimental | Mark | 2027-02-02 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
@@ -77,6 +78,7 @@ Gate cells link to the evidence the manifest records. The Stable readiness colum
 | multilingual-e5-small/onnx-int8embed-wasm | onnxruntime-web 1.30.0 | Starlings.Runtime.OnnxWeb | mixed | quantized |
 | multilingual-e5-small/onnx-int8embed-webgpu | onnxruntime-web 1.30.0 | Starlings.Runtime.OnnxWeb.WebGpu | mixed | quantized |
 | nomic-embed-text-v1.5/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
+| paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
 | qwen2.5-0.5b-instruct/ortgenai-fp32-cpu | onnxruntime-genai 0.17.1 | Microsoft.ML.OnnxRuntimeGenAI 0.17.1 | fp32 | reference |
 | qwen3-0.6b/ortgenai-fp32-cpu | onnxruntime-genai 0.17.1 | Microsoft.ML.OnnxRuntimeGenAI 0.17.1 | fp32 | reference |
 | qwen3-embedding-0.6b/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
@@ -446,6 +448,25 @@ One table per family, one column per profile. Rows are every capability any prof
 | gpu | unsupported |
 | text | experimental |
 
+### paraphrase-multilingual-minilm-l12-v2
+
+| Capability | onnx-fp32-cpu |
+| --- | --- |
+| batch | experimental |
+| streaming | unsupported |
+| cancellation | experimental |
+| persistence | unsupported |
+| training | unsupported |
+| aot | untested |
+| extensions_ai | unsupported |
+| mlnet | unsupported |
+| asset_verification_offline | experimental |
+| batch_sort_by_length | experimental |
+| batch_token_budget | experimental |
+| built_in_profile | experimental |
+| gpu | unsupported |
+| text | experimental |
+
 ### qwen2.5-0.5b-instruct
 
 | Capability | ortgenai-fp32-cpu |
@@ -715,6 +736,8 @@ One table per family, one column per profile. Rows are every capability any prof
 - `multilingual-e5-small/onnx-int8embed-webgpu`: An interpreter publish that reuses an obj/ left by an AOT publish can ship IL-stripped assemblies, and the Mono interpreter then aborts (browser/conformance/README.md). Publish each build mode from a clean obj/.
 - `nomic-embed-text-v1.5/onnx-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
 - `nomic-embed-text-v1.5/onnx-fp32-cpu`: Vectors are not unit length (normalize: none); normalize them before cosine or dot-product comparison.
+- `paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
+- `paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu`: Vectors are not unit length (normalize: none); normalize them before cosine or dot-product comparison.
 - `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
 - `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: Bundle reproducibility was shown on one machine (two builds from two environments, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.
 - `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting.

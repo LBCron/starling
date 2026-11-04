@@ -1,0 +1,186 @@
+# BERT route (Starlings.Models.Bert): sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 on ONNX Runtime 1.30.0, fp32 on the CPU provider. Candidate
+# contract: model-pipeline/candidates/paraphrase-multilingual/profile.json (onboarding route bert-onnx-cpu-v1,
+# recipes/paraphrase-multilingual-cpu.yaml), admitted to the route in #182 once Starlings.Tokenizers 0.3.5 could load its
+# tokenizer; BertModelProfile.BuiltIn("paraphrase-multilingual") embeds the same file. Experimental, like the other BERT
+# profiles. No admission record exists for the BERT route; the references are proposed, not adopted into protected/, and
+# no gate has run.
+schema_version: 1
+id: paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu
+# Experimental: development parity on the onboarding route only (proposed references, predeclared candidate policy); no gate ran.
+maturity: experimental
+
+origin:
+  code:
+    # No separate inference code is pinned: the C# package reimplements the pipeline (tokenization, pooling,
+    # normalization) from this repository's configuration at the same commit.
+    url: https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+    revision: "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"
+  weights:
+    url: https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+    revision: "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"
+  files:
+    # sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 at the pinned commit (candidates/paraphrase-multilingual/profile.json, origin.files), verified on download.
+    - path: 1_Pooling/config.json
+      sha256: "4be450dde3b0273bb9787637cfbd28fe04a7ba6ab9d36ac48e92b11e350ffc23"
+      size: 190
+    - path: README.md
+      sha256: "1e98ea05b0de579fcaad3d625b62ea55647142ed674d5f5ebf1440e4bbbb6f23"
+      size: 3888
+    - path: config.json
+      sha256: "6300193cb75e01cf80c96decef7187dfb33094d97cc1490b7ead6ff134476e4e"
+      size: 645
+    - path: config_sentence_transformers.json
+      sha256: "b8c64b5cece00d8424b4896ea75b512b6008576088497609dfeb6bd63e6d36b8"
+      size: 122
+    - path: model.safetensors
+      sha256: "eaa086f0ffee582aeb45b36e34cdd1fe2d6de2bef61f8a559a1bbc9bd955917b"
+      size: 470641600
+    - path: modules.json
+      sha256: "8f4b264b80206c830bebbdcae377e137925650a433b689343a63bdc9b3145460"
+      size: 229
+    - path: onnx/model.onnx
+      sha256: "10f7a088420252b26caf819236ca2c9d2987afd0fc06fec7553b542a5655a05a"
+      size: 470301610
+    - path: sentence_bert_config.json
+      sha256: "70f4448f31320443fe3557cacea5abf2dcc4915dda8c80646bec9f3bb0aa5a1f"
+      size: 53
+    - path: sentencepiece.bpe.model
+      sha256: "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+      size: 5069051
+    - path: special_tokens_map.json
+      sha256: "378eb3bf733eb16e65792d7e3fda5b8a4631387ca04d2015199c4d4f22ae554d"
+      size: 239
+    - path: tokenizer.json
+      sha256: "2c3387be76557bd40970cec13153b3bbf80407865484b209e655e5e4729076b8"
+      size: 9081518
+    - path: tokenizer_config.json
+      sha256: "5036ea374ffedd706e3bef33e2e0d6953cb868ef8a490e76e32ba0faa37a6b9b"
+      size: 526
+  attribution: >-
+    paraphrase-multilingual-MiniLM-L12-v2 by the sentence-transformers team (sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2, Apache-2.0).
+
+rights:
+  code_license: MIT OR Apache-2.0
+  weights_license: Apache-2.0
+  tokenizer_terms: Apache-2.0
+  redistribution: download
+  notes: >-
+    Weights and tokenizer: Apache-2.0 (license: apache-2.0 in the model card front matter at the pinned commit). code_license is this repository's (the C# package
+    reimplements the pipeline; no upstream source is copied). Nothing is bundled in the package: the application
+    downloads the pinned files explicitly (ModelAssetStore.DownloadAsync(profile.RuntimeLock)) from the public upstream repository, verified by size and SHA-256.
+
+behavior:
+  tasks: [embedding]
+  # Including special tokens and the prompt (BertModelProfile.MaxTokens).
+  max_input_tokens: 128
+  offsets_unit: none
+  # Longest-first truncation by the pinned tokenizer (candidate behavior.truncation longest_first): a single text loses its
+  # right end.
+  truncation: truncate-right
+  defaults:
+    pooling: mean
+    normalize: none
+    dimension: 384
+    prompts: "none = ''; never applied implicitly"
+    truncation: right, special tokens and the prompt included
+    batching: right padding with mask 0, maxBatchSize rows per call (default 32); maxBatchTokens and sortByLength opt-in (experimental)
+    threads: two intra-op, one inter-op (Create threads argument)
+  unsupported:
+    - "GPU execution providers (CUDA, DirectML, CoreML)"
+    - "fp16, bf16 and quantized graphs"
+    - "streaming"
+    - "training and fine-tuning"
+    - "Microsoft.Extensions.AI and ML.NET adapters"
+
+processing:
+  tokenizer:
+    # The owned tokenizer pinned in ai-dotnet/Directory.Packages.props; ONNX Runtime receives ids only.
+    package: Starlings.Tokenizers
+    version: 0.3.5
+    # The experimental Starlings.Tokenizers profile of this exact asset (its conformance fixtures are proposed). The
+    # candidate's tokenizer_profile xlmr-unigram names the route's tokenizer family, not this profile.
+    profile_id: xlmr-unigram-paraphrase-multilingual
+    algorithm: unigram
+    assets:
+      - path: tokenizer.json
+        sha256: "2c3387be76557bd40970cec13153b3bbf80407865484b209e655e5e4729076b8"
+        size: 9081518
+    backend_tokenizer_dependency: false
+
+execution:
+  backend:
+    name: onnxruntime
+    version: 1.30.0
+    binding: Microsoft.ML.OnnxRuntime
+  precision: fp32
+  variant: reference
+  graph:
+    # BertModelProfile.RuntimeLock: these graph files and tokenizer.json at the pinned revision.
+    assets:
+      - path: onnx/model.onnx
+        sha256: "10f7a088420252b26caf819236ca2c9d2987afd0fc06fec7553b542a5655a05a"
+        size: 470301610
+    inputs:
+      - { name: input_ids, type: int64, shape: [batch, sequence] }
+      - { name: attention_mask, type: int64, shape: [batch, sequence] }
+      - { name: token_type_ids, type: int64, shape: [batch, sequence] }
+    outputs:
+      - { name: last_hidden_state, type: float32, shape: [batch, sequence, 384] }
+
+capabilities:
+  # Starlings.Models.Bert (BertCapabilities). Experimental where the onboarding route compared the C# package with the
+  # framework reference on the proposed corpus (no adopted reference, no gate); unsupported where the package does not
+  # offer it; untested where no evidence exists.
+  batch: experimental
+  streaming: unsupported
+  cancellation: experimental  # between batch chunks and at ONNX Runtime graph-node boundaries
+  persistence: unsupported
+  training: unsupported
+  aot: untested
+  extensions_ai: unsupported
+  mlnet: unsupported
+  text: experimental
+  batch_token_budget: experimental  # maxBatchTokens, off by default
+  batch_sort_by_length: experimental  # sortByLength, off by default
+  asset_verification_offline: experimental
+  built_in_profile: experimental  # BertModelProfile.BuiltIn("paraphrase-multilingual")
+  gpu: unsupported
+
+compatibility:
+  # Linux x64 CPU: development evidence from the onboarding route (#182). No gate.
+  - os: linux
+    arch: x64
+    provider: cpu
+    status: experimental
+  - os: windows
+    arch: x64
+    provider: cpu
+    status: untested
+
+qualification:
+  reference_runner: model-pipeline/reference/bert/run_bert.py
+  # No protected fixtures exist for this profile: the proposed corpus the recipe runs (recipes/paraphrase-multilingual-cpu.yaml).
+  fixtures: model-pipeline/corpora/five-models/embeddings.jsonl
+  # No protected tolerances: the predeclared candidate policy (evaluation.policy, status proposed). Adoption into
+  # protected/ is a separate change.
+  tolerances: model-pipeline/candidates/paraphrase-multilingual/profile.json
+  gates:
+    G0: { status: not-run }
+    G1: { status: not-run }
+    G2: { status: not-run }
+    G3: { status: not-run }
+    G4: { status: not-run }
+    G5: { status: not-run }
+    G6: { status: not-run }
+    G7: { status: not-run }
+
+maintenance:
+  owner: Mark
+  latest_verified_upstream_revision: "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"
+  review_date: 2027-01-23
+  known_issues:
+    - >-
+      The references are proposed, not adopted into protected/, and no gate has run; every capability is at most
+      experimental.
+    - >-
+      Vectors are not unit length (normalize: none); normalize them before cosine or dot-product comparison.
