@@ -476,6 +476,12 @@ def test_inspect_recommends_the_genai_chat_route_for_phi3(tmp_path: Path) -> Non
     )
     route = inspect_snapshot(_write_snapshot(tmp_path / "u", config, _WORDPIECE))["plugin_route"]
     assert (route["id"], route["status"]) == ("unknown", "unknown")
+    # Phi-4-mini's own split regex is one the inspector does not implement; the route is still suggested.
+    tokenizer = _qwen_tokenizer()
+    tokenizer["pre_tokenizer"]["pretokenizers"][0]["pattern"]["Regex"] = "another split"
+    report = inspect_snapshot(_write_snapshot(tmp_path / "v", config, tokenizer))
+    assert report["tokenizer"]["components"][1]["status"] == "unsupported"
+    assert report["plugin_route"]["id"] == "genai-chat-cpu-v1"
 
 
 def test_inspect_refuses_the_qwen_route_for_another_head_or_tokenizer(tmp_path: Path) -> None:

@@ -38,6 +38,8 @@ Two invocations of one run directory, each a transient user unit (`systemd-run -
 
 So `reference`, `bundle` and `backend` ran at commit `68ad57d`, and `dotnet`, `evaluate` and `review` at `7cc7d2c`, which differs only in that tool file. `review.json` records `7cc7d2c`. The later commit that adds this directory changes documentation only.
 
+A review follow-up after the run changes three things `run.json` hashed: `onboarding_genai_chat.py`, which declares more `dotnet` stage inputs, and the two Phi-4 library READMEs. No stage's behavior changed, and nothing was rerun. `run.json` keeps the hashes those files had at `7cc7d2c`, so they no longer match the branch tip, and the wider input list means a `--resume` of this run reruns its stages.
+
 | Stage | Seconds |
 | --- | ---: |
 | `assets` | 70 |

@@ -23,7 +23,7 @@ Text is inserted as given: a special token's text in a turn becomes that special
 
 ## Capabilities
 
-- **Experimental:** the text template, the checkpoint lock, and greedy CPU fp32 generation through `Starlings.Models.Phi4.OnnxGenAI`.
+- **Experimental:** the text template, the checkpoint lock, greedy CPU fp32 generation through `Starlings.Models.Phi4.OnnxGenAI`, streaming, cancellation, and stop tokens and sequences.
 - **Untested:** prompt plus completion at or past 4,096 tokens, where the long rope factors start; sampling, logprobs and guided decoding on this checkpoint; AOT.
 - **Unsupported (rejected or absent):** tools (the template's tool section, tool calls and tool turns), thinking, vision, CUDA, fp16, `Microsoft.Extensions.AI`.
 

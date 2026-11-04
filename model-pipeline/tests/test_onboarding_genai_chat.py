@@ -321,8 +321,14 @@ def test_dotnet_stage_runs_the_route_tool_and_declares_the_route_code(tmp_path, 
             recipe, repo_root=root, snapshot=snapshot, reference_python=Path(sys.executable), threads=2, timeout=11
         )
     }
-    for directory in ("Starlings.Models.Phi4", "Starlings.Models.Phi4.OnnxGenAI"):
+    for directory in (
+        "Starlings.Models.Phi4",
+        "Starlings.Models.Phi4.OnnxGenAI",
+        "Starlings.Acquisition",
+        "Shared/Threading",
+    ):
         assert f"ai-dotnet/src/{directory}" in declared["directories"]
+    assert "ai-dotnet/tools/Shared" in declared["directories"]
     assert "ai-dotnet/tools/Starlings.GenAIChat.Fidelity" in declared["directories"]
     out = tmp_path / "dotnet"
     result = graph["dotnet"].execute(out, {"bundle": tmp_path / "bundle"})

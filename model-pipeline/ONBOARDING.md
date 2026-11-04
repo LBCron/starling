@@ -275,7 +275,7 @@ The stages are those of the Qwen route: `assets`, `environment`, `reference`, `b
 - `dotnet` runs `ai-dotnet/tools/Starlings.GenAIChat.Fidelity`.
 - There is no `--distribution`: the .NET projects are source only.
 
-Run it inside a memory limit of at least 20 GB; the fp32 model takes about 15 GB in each model stage.
+Run it inside a memory limit of at least 20 GB, the limit the evidence run used. `model.onnx.data` is 15.3 GB, and the run's control group, file cache included, reached that limit without an out-of-memory kill. Process memory alone was not sampled, and no smaller limit was tried.
 
 ## Qwen3 Embedding route
 

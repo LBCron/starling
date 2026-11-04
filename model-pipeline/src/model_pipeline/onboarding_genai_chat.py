@@ -413,6 +413,9 @@ def build_stages(
             "ai-dotnet/src/Starlings.Models.Phi4.OnnxGenAI",
             "ai-dotnet/src/Starlings.Generation.Abstractions",
             "ai-dotnet/src/Starlings.Generation.OnnxGenAI",
+            "ai-dotnet/src/Starlings.Acquisition",
+            "ai-dotnet/src/Shared/Threading",
+            "ai-dotnet/tools/Shared",
             "ai-dotnet/tools/Starlings.GenAIChat.Fidelity",
         ),
     )

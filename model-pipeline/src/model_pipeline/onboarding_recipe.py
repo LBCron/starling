@@ -778,6 +778,8 @@ def _suggest_route(
         }
     if model_type in _GENAI_CHAT_ARCHITECTURES:
         expected = _GENAI_CHAT_ARCHITECTURES[model_type]
+        # No tokenizer_known check, unlike Qwen: the inspector implements only the Qwen split regexes, so it reports
+        # Phi-4-mini's o200k split as unsupported. Its tokenizer is phi4-bpe-chat in Starlings.Tokenizers.
         if architectures != [expected] or tokenizer_model != "BPE":
             return _unknown_route(
                 f"config.json declares {model_type}, but genai-chat-cpu-v1 needs architectures [{expected}] and a "

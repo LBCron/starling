@@ -67,7 +67,7 @@ GenAI masks a position whose id equals `pad_token_id`, and upstream's pad id is 
 
 ## Hardware and compute estimate
 
-Linux x64 CPU. The fp32 model takes about 16 GB of memory per process, so the full route ran inside a 20 GB limit with two threads. See the evidence for times. GPU runs stay under #210.
+Linux x64 CPU, two threads, inside a 20 GiB limit. `model.onnx.data` is 15.3 GB. Process memory was not sampled: the control group, which counts reclaimable file cache, held 15.0 GiB during `reference` and reached the limit with no out-of-memory kill. Whether a smaller limit would work is unknown. See the evidence for memory and times. GPU runs stay under #210.
 
 ## Evidence
 

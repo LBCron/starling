@@ -15,7 +15,7 @@ GenerationResult result = model.Generate([ChatTurn.User("What is a river?")], ne
 Console.WriteLine(result.Text);
 ```
 
-Sizes: `model.onnx.data` is 15.3 GB, so a loaded model takes more than 15 GB of memory. One or two native threads.
+Sizes: `model.onnx.data` is 15.3 GB. Process memory was not sampled; the evidence run used a 20 GiB limit. One or two native threads.
 
 Prompt plus completion should stay below 4,096 tokens: past that the long rope factors start, and no evidence covers them. The loader does not refuse a longer request; the status is untested, not unsupported. See `Phi4Capabilities` for every status.
 
