@@ -201,7 +201,16 @@ int ToolBody()
 
     if (model is not null)
     {
-        File.WriteAllText(Path.Combine(output, "environment.json"), JsonSerializer.Serialize(model.Info));
+        File.WriteAllText(Path.Combine(output, "environment.json"), JsonSerializer.Serialize(new
+        {
+            Profile = profile.Id,
+            Phi4Checkpoint.Repository,
+            Phi4Checkpoint.Revision,
+            Phi4Checkpoint.TokenizerSha256,
+            Phi4ChatTemplate.TemplateSha256,
+            GenAIVersion = GenAIRuntimeInfo.ManagedVersion ?? "unknown",
+            GenAIRuntimeInfo.NativePackage,
+        }));
     }
 
     return 0;
