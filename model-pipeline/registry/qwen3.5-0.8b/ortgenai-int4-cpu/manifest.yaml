@@ -114,7 +114,7 @@ behavior:
 processing:
   tokenizer:
     package: Starlings.Tokenizers
-    version: 0.3.4
+    version: 0.3.5
     profile_id: qwen35-bpe-chat
     algorithm: byte-level-bpe
     assets:
