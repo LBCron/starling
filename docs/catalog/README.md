@@ -8,7 +8,7 @@ Maturity and support are published separately (plan section 14). The compatibili
 
 ## Profiles
 
-Gate cells link to the evidence the manifest records. The Stable readiness column applies the validator's Stable rules (every gate G0 to G7 `passed`, no capability `untested`) and lists exactly what fails them. Stable also needs regression support: CPU regression runs weekly on the self-hosted qualification runner, and GPU regression runs for every release (and on demand) on a RunPod GPU pod, so a CUDA profile is not promoted until that per-release GPU run is green for it.
+Gate cells link to the evidence the manifest records. The Stable readiness column applies the validator's Stable rules (every gate G0 to G7 `passed`, no capability or generation field `untested`) and lists exactly what fails them, a generation field as `generation.<field>`. Stable also needs regression support: CPU regression runs weekly on the self-hosted qualification runner, and GPU regression runs for every release (and on demand) on a RunPod GPU pod, so a CUDA profile is not promoted until that per-release GPU run is green for it.
 
 | Profile | Task | Maturity | Owner | Review date | G0 | G1 | G2 | G3 | G4 | G5 | G6 | G7 | Stable readiness |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -29,7 +29,7 @@ Gate cells link to the evidence the manifest records. The Stable readiness colum
 | [kev-0.8b/onnx-fp32-cuda](../../model-pipeline/registry/kev-0.8b/onnx-fp32-cuda/manifest.yaml) | decision | experimental | Mark | 2027-01-05 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_calls_unserialized; promotion also awaits a green per-release GPU regression run |
 | [kev-4b/onnx-fp32-cpu](../../model-pipeline/registry/kev-4b/onnx-fp32-cpu/manifest.yaml) | decision | experimental | Mark | 2027-01-05 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
 | [kev-4b/onnx-fp32-cuda](../../model-pipeline/registry/kev-4b/onnx-fp32-cuda/manifest.yaml) | decision | experimental | Mark | 2027-01-05 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_calls_unserialized; promotion also awaits a green per-release GPU regression run |
-| [lfm3-1.7b/onnx-fp32-cpu](../../model-pipeline/registry/lfm3-1.7b/onnx-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-28 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_calls, generation_cuda, generation_fp16, long_context |
+| [lfm3-1.7b/onnx-fp32-cpu](../../model-pipeline/registry/lfm3-1.7b/onnx-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-28 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_calls, generation.max_output_tokens, generation_cuda, generation_fp16, long_context |
 | [ms-marco-minilm-l6-v2/onnx-fp32-cpu](../../model-pipeline/registry/ms-marco-minilm-l6-v2/onnx-fp32-cpu/manifest.yaml) | reranking | experimental | Mark | 2027-01-23 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
 | [multilingual-e5-small/onnx-fp32-cpu](../../model-pipeline/registry/multilingual-e5-small/onnx-fp32-cpu/manifest.yaml) | embedding | stable | Mark | 2027-01-05 | [passed](../releases/e5-0.1.0-preview.1.md) | [passed](../evidence/release-set-gates-2026-10-14/e5-onnx-fp32-cpu/README.md) | [passed](../evidence/release-set-gates-2026-10-14/e5-onnx-fp32-cpu/README.md) | [passed](../evidence/release-set-gates-2026-10-14/e5-onnx-fp32-cpu/README.md) | [passed](../evidence/g4-soak-1h-2026-10-14/README.md) | [passed](../evidence/qualification-2026-10-15/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
 | [multilingual-e5-small/onnx-fp32-cuda](../../model-pipeline/registry/multilingual-e5-small/onnx-fp32-cuda/manifest.yaml) | embedding | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/e5-onnx-fp32-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/e5-onnx-fp32-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/e5-onnx-fp32-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
@@ -38,13 +38,14 @@ Gate cells link to the evidence the manifest records. The Stable readiness colum
 | [multilingual-e5-small/onnx-int8embed-wasm](../../model-pipeline/registry/multilingual-e5-small/onnx-int8embed-wasm/manifest.yaml) | embedding | experimental | Mark | 2027-01-23 | not-run | [passed](../evidence/browser-e5-package-2026-10-23/gates/README.md) | [passed](../evidence/browser-e5-package-2026-10-23/gates/README.md) | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G3, G4, G5, G6, G7; promotion also awaits a passing history of the qualification job 'browser' (WASM, headless Chromium) |
 | [multilingual-e5-small/onnx-int8embed-webgpu](../../model-pipeline/registry/multilingual-e5-small/onnx-int8embed-webgpu/manifest.yaml) | embedding | experimental | Mark | 2027-01-23 | not-run | [passed](../evidence/browser-e5-package-2026-10-23/gates/README.md) | [passed](../evidence/browser-e5-package-2026-10-23/gates/README.md) | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G3, G4, G5, G6, G7; untested: cache_storage, proxy_worker, single_thread_without_isolation, wasm_interpreter; promotion also awaits a passing history of the qualification job 'browser' (WASM, headless Chromium) |
 | [nomic-embed-text-v1.5/onnx-fp32-cpu](../../model-pipeline/registry/nomic-embed-text-v1.5/onnx-fp32-cpu/manifest.yaml) | embedding | experimental | Mark | 2027-01-23 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
-| [qwen2.5-0.5b-instruct/ortgenai-fp32-cpu](../../model-pipeline/registry/qwen2.5-0.5b-instruct/ortgenai-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-18 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_requests, long_context |
-| [qwen3-0.6b/ortgenai-fp32-cpu](../../model-pipeline/registry/qwen3-0.6b/ortgenai-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-18 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_requests, long_context |
+| [paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu](../../model-pipeline/registry/paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu/manifest.yaml) | embedding | experimental | Mark | 2027-01-23 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
+| [qwen2.5-0.5b-instruct/ortgenai-fp32-cpu](../../model-pipeline/registry/qwen2.5-0.5b-instruct/ortgenai-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-18 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_requests, generation.structured_output, long_context |
+| [qwen3-0.6b/ortgenai-fp32-cpu](../../model-pipeline/registry/qwen3-0.6b/ortgenai-fp32-cpu/manifest.yaml) | generation | experimental | Mark | 2027-01-18 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_requests, generation.structured_output, long_context |
 | [qwen3-embedding-0.6b/onnx-fp32-cpu](../../model-pipeline/registry/qwen3-embedding-0.6b/onnx-fp32-cpu/manifest.yaml) | embedding | experimental | Mark | 2027-02-02 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot |
 | [qwen3.5-0.8b/ortgenai-fp16x-cuda](../../model-pipeline/registry/qwen3.5-0.8b/ortgenai-fp16x-cuda/manifest.yaml) | generation | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp16x-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp16x-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp16x-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
 | [qwen3.5-0.8b/ortgenai-fp32x-cpu](../../model-pipeline/registry/qwen3.5-0.8b/ortgenai-fp32x-cpu/manifest.yaml) | generation | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cpu/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cpu/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cpu/README.md) | [passed](../evidence/g4-soak-1h-2026-10-14/README.md) | [passed](../evidence/qualification-2026-10-15/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
 | [qwen3.5-0.8b/ortgenai-fp32x-cuda](../../model-pipeline/registry/qwen3.5-0.8b/ortgenai-fp32x-cuda/manifest.yaml) | generation | stable | Mark | 2027-01-05 | [passed](../evidence/g0-provenance-2026-10-14/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cuda/README.md) | [passed](../evidence/release-set-gates-2026-10-14/qwen35-ortgenai-fp32x-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/qualification-2026-10-16-cuda/README.md) | [passed](../evidence/g6-distribution-2026-10-14/README.md) | [passed](../evidence/g7-integration-2026-10-14/README.md) | stable: meets the validator's Stable rules |
-| [qwen3.5-0.8b/ortgenai-int4-cpu](../../model-pipeline/registry/qwen3.5-0.8b/ortgenai-int4-cpu/manifest.yaml) | generation | experimental | Mark | 2027-02-01 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, extensions_ai, long_context_1667_to_8192_tokens, structured_output, tool_calling |
+| [qwen3.5-0.8b/ortgenai-int4-cpu](../../model-pipeline/registry/qwen3.5-0.8b/ortgenai-int4-cpu/manifest.yaml) | generation | experimental | Mark | 2027-02-01 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, extensions_ai, generation.tool_call_mode, long_context_1667_to_8192_tokens, tool_calling |
 | [whisper-large-v3-turbo/onnx-fp16-cpu](../../model-pipeline/registry/whisper-large-v3-turbo/onnx-fp16-cpu/manifest.yaml) | transcription | experimental | Mark | 2027-01-23 | not-run | not-run | not-run | not-run | not-run | not-run | not-run | not-run | gates not passed: G0, G1, G2, G3, G4, G5, G6, G7; untested: aot, concurrent_calls, language_detection, transcription_cuda |
 
 ## Execution
@@ -77,6 +78,7 @@ Gate cells link to the evidence the manifest records. The Stable readiness colum
 | multilingual-e5-small/onnx-int8embed-wasm | onnxruntime-web 1.30.0 | Starlings.Runtime.OnnxWeb | mixed | quantized |
 | multilingual-e5-small/onnx-int8embed-webgpu | onnxruntime-web 1.30.0 | Starlings.Runtime.OnnxWeb.WebGpu | mixed | quantized |
 | nomic-embed-text-v1.5/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
+| paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
 | qwen2.5-0.5b-instruct/ortgenai-fp32-cpu | onnxruntime-genai 0.17.1 | Microsoft.ML.OnnxRuntimeGenAI 0.17.1 | fp32 | reference |
 | qwen3-0.6b/ortgenai-fp32-cpu | onnxruntime-genai 0.17.1 | Microsoft.ML.OnnxRuntimeGenAI 0.17.1 | fp32 | reference |
 | qwen3-embedding-0.6b/onnx-fp32-cpu | onnxruntime 1.30.0 | Microsoft.ML.OnnxRuntime | fp32 | reference |
@@ -446,6 +448,25 @@ One table per family, one column per profile. Rows are every capability any prof
 | gpu | unsupported |
 | text | experimental |
 
+### paraphrase-multilingual-minilm-l12-v2
+
+| Capability | onnx-fp32-cpu |
+| --- | --- |
+| batch | experimental |
+| streaming | unsupported |
+| cancellation | experimental |
+| persistence | unsupported |
+| training | unsupported |
+| aot | untested |
+| extensions_ai | unsupported |
+| mlnet | unsupported |
+| asset_verification_offline | experimental |
+| batch_sort_by_length | experimental |
+| batch_token_budget | experimental |
+| built_in_profile | experimental |
+| gpu | unsupported |
+| text | experimental |
+
 ### qwen2.5-0.5b-instruct
 
 | Capability | ortgenai-fp32-cpu |
@@ -556,7 +577,7 @@ One table per family, one column per profile. Rows are every capability any prof
 | step0_logits | supported | supported | supported | experimental |
 | stop_sequences | supported | supported | supported | experimental |
 | stop_tokens | supported | supported | supported | experimental |
-| structured_output | experimental | experimental | experimental | untested |
+| structured_output | experimental | experimental | experimental | experimental |
 | tokenizer_owned | supported | supported | supported | experimental |
 | tool_calling | experimental | experimental | experimental | untested |
 | usage | supported | supported | supported | experimental |
@@ -590,6 +611,20 @@ One table per family, one column per profile. Rows are every capability any prof
 | transcription_cuda | untested |
 | translation | unsupported |
 | word_timestamps | unsupported |
+
+## Generation
+
+Informational (docs/kickoff.md, "Capability record fields"). Each value follows a capability row, which keeps the status: `untested` when the row is untested or absent, `none` when it is unsupported. An `untested` value is a Stable blocker. Max output tokens is an upper bound shared with the prompt, not a completion budget, and has no `none`: it is `untested` when its row is unsupported too.
+
+| Profile | Tool calls | Structured output | State reuse | Caching | Max output tokens |
+| --- | --- | --- | --- | --- | --- |
+| lfm3-1.7b/onnx-fp32-cpu | none | none | none | none | untested |
+| qwen2.5-0.5b-instruct/ortgenai-fp32-cpu | template | untested | none | none | 32768 |
+| qwen3-0.6b/ortgenai-fp32-cpu | template | untested | none | none | 40960 |
+| qwen3.5-0.8b/ortgenai-fp16x-cuda | template | grammar | none | none | 8192 |
+| qwen3.5-0.8b/ortgenai-fp32x-cpu | template | grammar | none | none | 8192 |
+| qwen3.5-0.8b/ortgenai-fp32x-cuda | template | grammar | none | none | 8192 |
+| qwen3.5-0.8b/ortgenai-int4-cpu | untested | grammar | none | none | 8192 |
 
 ## Known issues
 
@@ -715,6 +750,8 @@ One table per family, one column per profile. Rows are every capability any prof
 - `multilingual-e5-small/onnx-int8embed-webgpu`: An interpreter publish that reuses an obj/ left by an AOT publish can ship IL-stripped assemblies, and the Mono interpreter then aborts (browser/conformance/README.md). Publish each build mode from a clean obj/.
 - `nomic-embed-text-v1.5/onnx-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
 - `nomic-embed-text-v1.5/onnx-fp32-cpu`: Vectors are not unit length (normalize: none); normalize them before cosine or dot-product comparison.
+- `paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
+- `paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu`: Vectors are not unit length (normalize: none); normalize them before cosine or dot-product comparison.
 - `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
 - `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: Bundle reproducibility was shown on one machine (two builds from two environments, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.
 - `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting.

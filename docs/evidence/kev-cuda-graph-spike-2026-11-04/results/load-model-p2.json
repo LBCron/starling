@@ -1,0 +1,19 @@
+{
+ "graph": "/home/mark/Projects/AI-models/kev/spike-2026-11-04/export-cuda-fp32/model-p2.onnx",
+ "steps": [
+  {
+   "step": "create session (CUDA EP, use_tf32=0)",
+   "ok": true
+  },
+  {
+   "step": "state pass, 600 tokens, empty cache",
+   "ok": true
+  },
+  {
+   "step": "row of 40 tokens from the cached state",
+   "ok": false,
+   "error": "[ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while running Transpose node. Name:'/model/layers.7/attn/k_proj/repeat_kv/Transpose_2' Status Message: /onnxruntime_src/onnxruntime/core/framework/op_kernel.cc:83 virtual OrtValue* onnxruntime::OpKernelContext::OutputMLValue(int, const onnxruntime::TensorShape&) [ONNXRuntimeError] : 1 : FAIL : Shape mismatch attempting to re-use buffer. {1,40,8,256} != {1,640,8,256}. Validate usage of dim_value (values should be > 0) and dim_param (all values with the same string should equate to the same size) in shapes in the model."
+  }
+ ],
+ "onnxruntime": "1.30.0"
+}

@@ -1,0 +1,11 @@
+# 2026-11-04T09:44:39Z STARLING_MODELS=~/.cache/starling-r3-qwen35-hosting/cache-r2 (files downloaded from Starlinghq/qwen3.5-0.8b-ortgenai@22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45); base commit b87c243bd4f32bf514a51472b1cfd4b8a570c4c1 plus this branch's test changes; CPU: Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz; CUDA_VISIBLE_DEVICES empty
+xUnit.net v3 In-Process Runner v4.0.1+8ed8aa354c (64-bit .NET 10.0.12)
+  Discovering: Starlings.Models.Qwen35.Extensions.AI.Tests
+  Discovered:  Starlings.Models.Qwen35.Extensions.AI.Tests
+  Starting:    Starlings.Models.Qwen35.Extensions.AI.Tests
+    Starlings.Models.Qwen35.Extensions.AI.Tests.GuidedRealModelTests.AJsonSchemaResponseFormatReturnsMatchingJson [OUTPUT] JSON schema ResponseFormat: finish=stop; text "{\n  \u0022answer\u0022: 42\n}"
+    Starlings.Models.Qwen35.Extensions.AI.Tests.GuidedRealModelTests.RequireSpecificReturnsACallOfTheNamedFunction [OUTPUT] RequireSpecific(get_weather): finish=tool_calls; call get_weather({"city":"Porto"})
+    Starlings.Models.Qwen35.Extensions.AI.Tests.GuidedRealModelTests.RequireAnyReturnsAFunctionCall [OUTPUT] RequireAny: finish=tool_calls; call get_weather({"city":"Porto"})
+  Finished:    Starlings.Models.Qwen35.Extensions.AI.Tests (ID = 'f475799b854f36a5956c4345d9453174ad254b3263b327d7c6184f8a39311794')
+=== TEST EXECUTION SUMMARY ===
+   Starlings.Models.Qwen35.Extensions.AI.Tests  Total: 3, Errors: 0, Failed: 0, Skipped: 0, Not Run: 0, Time: 21.524s

@@ -1,0 +1,14 @@
+# 2026-11-04T09:43:05Z STARLING_MODELS=~/.cache/starling-r3-qwen35-hosting/cache-r2 (files downloaded from Starlinghq/qwen3.5-0.8b-ortgenai@22477cdb8a2dc71f4c98d2e6af0a046ec0d74f45); base commit b87c243bd4f32bf514a51472b1cfd4b8a570c4c1 plus this branch's test changes; CPU: Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz; CUDA_VISIBLE_DEVICES empty
+xUnit.net v3 In-Process Runner v4.0.1+8ed8aa354c (64-bit .NET 10.0.12)
+  Discovering: Starlings.Models.Qwen35.Tests
+  Discovered:  Starlings.Models.Qwen35.Tests
+  Starting:    Starlings.Models.Qwen35.Tests
+    Starlings.Models.Qwen35.Tests.Int4GuidanceCpuModelTests.TheRequiredToolGrammarYieldsOneParsedCall(fastForward: False) [OUTPUT] tool grammar: 40 tokens, Stop, decode 1662 ms: <tool_call>\n<function=get_weather>\n<parameter=city>\nPorto\n</parameter>\n<parameter=units>\ncelsius\n</parameter>\n</function>\n</tool_call>
+    Starlings.Models.Qwen35.Tests.Int4GuidanceCpuModelTests.TheRequiredToolGrammarYieldsOneParsedCall(fastForward: True) [OUTPUT] tool grammar, fast-forward: 40 tokens, Stop, decode 928 ms: <tool_call>\n<function=get_weather>\n<parameter=city>\nPorto\n</parameter>\n<parameter=units>\ncelsius\n</parameter>\n</function>\n</tool_call>
+    Starlings.Models.Qwen35.Tests.Int4GuidanceCpuModelTests.AJsonSchemaIsFollowed [OUTPUT] json_schema: 12 tokens, Stop, decode 334 ms: \{"city":\ "Paris",\ "country":\ "France"}
+    Starlings.Models.Qwen35.Tests.Int4GuidanceCpuModelTests.FastForwardKeepsTheTextOfTheOneTokenPerStepRun [OUTPUT] timer: 27 tokens, Stop, decode 895 ms: <tool_call>\n<function=set_timer>\n<parameter=minutes>\n25\n</parameter>\n</function>\n</tool_call>
+    Starlings.Models.Qwen35.Tests.Int4GuidanceCpuModelTests.FastForwardKeepsTheTextOfTheOneTokenPerStepRun [OUTPUT] timer, fast-forward: 27 tokens, Stop, decode 399 ms: <tool_call>\n<function=set_timer>\n<parameter=minutes>\n25\n</parameter>\n</function>\n</tool_call>
+    Starlings.Models.Qwen35.Tests.Int4GuidanceCpuModelTests.ARegexIsFollowed [OUTPUT] regex: 6 tokens, Stop, decode 252 ms: FORCED-001
+  Finished:    Starlings.Models.Qwen35.Tests (ID = '3331239f23b49640c6fd1ff58f9587a202e5501a0d6fbc42e347de85b3e7ba30')
+=== TEST EXECUTION SUMMARY ===
+   Starlings.Models.Qwen35.Tests  Total: 7, Errors: 0, Failed: 0, Skipped: 0, Not Run: 0, Time: 26.819s

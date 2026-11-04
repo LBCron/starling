@@ -28,6 +28,7 @@ Key facts for writing code against it:
 - [E5BrowserSearch](https://github.com/starlinghq/starling/tree/main/ai-dotnet/samples/E5BrowserSearch): the same search entirely in the browser (Blazor WebAssembly), from the unpublished browser packages
 - [E5BrowserJs](https://github.com/starlinghq/starling/tree/main/ai-dotnet/samples/E5BrowserJs): the same search from a JavaScript (React) page through a .NET WebAssembly bundle in a Web Worker
 - [E5VectorStore](https://github.com/starlinghq/starling/tree/main/ai-dotnet/samples/E5VectorStore): e5 with an in-memory Microsoft.Extensions.VectorData collection
+- [E5RerankSearch](https://github.com/starlinghq/starling/tree/main/ai-dotnet/samples/E5RerankSearch): e5 top-k reranked by bge-reranker-v2-m3 (Experimental)
 - [EmbeddingGemma2Search](https://github.com/starlinghq/starling/tree/main/ai-dotnet/samples/EmbeddingGemma2Search): text, image and video search, Matryoshka dimensions, CUDA
 - [Gliner2Ner](https://github.com/starlinghq/starling/tree/main/ai-dotnet/samples/Gliner2Ner): zero-shot entity extraction
 - [LocalRag](https://github.com/starlinghq/starling/tree/main/ai-dotnet/samples/LocalRag): local paragraph retrieval with EmbeddingGemma 2 and answers from Qwen3.5

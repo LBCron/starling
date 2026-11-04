@@ -62,6 +62,12 @@ internal static class GeneratedProfileCapabilities
                     ["training"] = Status.Unsupported,
                     ["aot"] = Status.Untested,
                 },
+                Generation = new ProfileGeneration(
+                    ProfileToolCallMode.None,
+                    ProfileStructuredOutput.None,
+                    ProfileStateReuse.None,
+                    ProfileCachingStyle.None,
+                    MaxOutputTokens: null),
             },
         };
 }

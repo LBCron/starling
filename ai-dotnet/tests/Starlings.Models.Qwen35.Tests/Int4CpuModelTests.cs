@@ -5,7 +5,7 @@ using Starlings.TestSupport;
 
 namespace Starlings.Models.Qwen35.Tests;
 
-/// <summary>Loads the int4 variant on CPU once, or records why it cannot (the bundle is a local build, never hosted).</summary>
+/// <summary>Loads the int4 variant on CPU once, or records why it cannot (the hosted bundle is not in the model cache and no local build is set).</summary>
 public sealed class Qwen35Int4CpuFixture : IDisposable
 {
     public Qwen35Int4CpuFixture()

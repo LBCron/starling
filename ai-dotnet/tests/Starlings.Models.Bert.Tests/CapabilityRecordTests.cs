@@ -13,7 +13,7 @@ public sealed class CapabilityRecordTests
     private static readonly string[] Families =
     [
         "all-minilm-l6-v2", "bge-small-en-v1.5", "bge-base-en-v1.5", "bge-m3", "ms-marco-minilm-l6-v2", "bge-reranker-v2-m3",
-        "nomic-embed-text-v1.5",
+        "nomic-embed-text-v1.5", "paraphrase-multilingual-minilm-l12-v2",
     ];
 
     [Fact]

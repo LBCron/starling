@@ -1,0 +1,42 @@
+{
+ "graph": "/home/mark/.cache/starlings/models/jaredpalmer/kev-0.8b/9a45d25eb2ab761841196625383fa1dff0e56c1e/model.onnx",
+ "session_providers": [
+  "CUDAExecutionProvider",
+  "CPUExecutionProvider"
+ ],
+ "provider_options_use_tf32": "0",
+ "nodes_profiled": 657,
+ "nodes_by_provider": {
+  "CUDAExecutionProvider": 649,
+  "CPUExecutionProvider": 8
+ },
+ "cpu_nodes_by_op": {
+  "GroupQueryAttention": 6,
+  "Gather": 1,
+  "Cast": 1
+ },
+ "attention_ops": {
+  "LinearAttention on CUDAExecutionProvider": 18,
+  "GroupQueryAttention on CPUExecutionProvider": 6
+ },
+ "kernel_ms_per_provider_state_pass_plus_2_rows": {
+  "CUDAExecutionProvider": 271.592,
+  "CPUExecutionProvider": 115.683
+ },
+ "top_ops_ms": {
+  "GroupQueryAttention on CPUExecutionProvider": 115.594,
+  "MatMul on CUDAExecutionProvider": 107.669,
+  "Mul on CUDAExecutionProvider": 81.307,
+  "CausalConvWithState on CUDAExecutionProvider": 19.941,
+  "MemcpyToHost on CUDAExecutionProvider": 8.343,
+  "MRotaryEmbedding on CUDAExecutionProvider": 6.749,
+  "Cast on CUDAExecutionProvider": 5.811,
+  "SkipSimplifiedLayerNormalization on CUDAExecutionProvider": 5.7
+ },
+ "present_on_plain_run": "numpy (host)",
+ "present_bound_to_device": "cuda",
+ "cache_bytes_600_tokens": 34947072,
+ "state_tokens": 600,
+ "row_tokens": 82,
+ "onnxruntime": "1.30.0"
+}
