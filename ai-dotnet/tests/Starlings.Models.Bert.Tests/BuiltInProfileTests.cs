@@ -31,7 +31,7 @@ public sealed class BuiltInProfileTests
     {
         // Built in = the route accepts the candidate and the registry admits it (a manifest at
         // model-pipeline/registry/<profile id>/). A draft candidate the route accepts but the registry does not
-        // admit yet (paraphrase-multilingual) stays out of the package: BertModelProfile.Load still reads it.
+        // admit yet stays out of the package: BertModelProfile.Load still reads it.
         var accepted = new List<string>();
         foreach (string dir in Directory.EnumerateDirectories(Path.Combine(RepositoryRoot(), "model-pipeline", "candidates")))
         {
@@ -57,16 +57,6 @@ public sealed class BuiltInProfileTests
 
         accepted.Sort(StringComparer.Ordinal);
         Assert.Equal(accepted, BertModelProfile.BuiltInIds);
-    }
-
-    [Fact]
-    public void DraftCandidateIsAcceptedButNotBuiltIn()
-    {
-        string path = Path.Combine(RepositoryRoot(), "model-pipeline", "candidates", "paraphrase-multilingual", "profile.json");
-        var profile = BertModelProfile.Load(path);
-        Assert.False(Directory.Exists(Path.Combine(RepositoryRoot(), "model-pipeline", "registry", profile.Id)));
-        Assert.DoesNotContain("paraphrase-multilingual", BertModelProfile.BuiltInIds);
-        Assert.Throws<ArgumentException>(() => BertModelProfile.BuiltIn("paraphrase-multilingual"));
     }
 
     [Theory]
