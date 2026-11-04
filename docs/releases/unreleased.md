@@ -8,7 +8,7 @@ Every package that tokenizes now pins `Starlings.Tokenizers [0.3.5]` (0.3.4 in `
 
 ## Generation fields in the capability record
 
-`ModelProfileCapabilities.Generation` (`ProfileGeneration`, new and Experimental API) carries tool-call mode, structured output, state reuse, caching style and max output tokens for the seven generation profiles, generated from the new manifest section `behavior.generation` (#177). The fields are informational until a release note promotes them (`docs/kickoff.md`, "Capability record fields"). No capability status changes. The validator and the contract tests hold each value to its capability row, so `untested` appears where a row is untested or absent: tool calls and structured output on Qwen3.5 int4, structured output on the QwenChat profiles and max output tokens on LFM3.
+`ModelProfileCapabilities.Generation` (`ProfileGeneration`, new and Experimental API) carries tool-call mode, structured output, state reuse, caching style and max output tokens for the seven generation profiles, generated from the new manifest section `behavior.generation` (#177). The fields are informational until a release note promotes them (`docs/kickoff.md`, "Capability record fields"). No capability status changes. The validator and the contract tests hold each value to its capability row, so `untested` appears where a row is untested or absent: tool calls and structured output on Qwen3.5 int4, structured output on the QwenChat profiles and max output tokens on LFM3. An `untested` value also blocks Stable, so these appear as `generation.<field>` in the catalog's Stable readiness column; those profiles are all Experimental, and no Stable profile has one.
 
 ## Starlings.Models.QwenChat.OnnxGenAI: hosting revision r2 (#278)
 

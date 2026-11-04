@@ -60,11 +60,12 @@ def test_generation_section_is_required_exactly_for_generation_profiles(tmp_path
         del m["behavior"]["generation"]
 
     def extra(m):
-        section = {"tool_call_mode": "none"}
-        m["behavior"]["generation"] = section
+        tasks = m["behavior"]["tasks"]
+        generator(m)
+        m["behavior"]["tasks"] = tasks
 
     assert any("generation" in p.message for p in validate_file(write_variant(tmp_path, drop)))
-    assert validate_file(write_variant(tmp_path, extra))
+    assert [p.location for p in validate_file(write_variant(tmp_path, extra))] == ["behavior"]
 
 
 @pytest.mark.parametrize(

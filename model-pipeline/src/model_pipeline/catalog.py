@@ -228,7 +228,10 @@ def build(registry: Path = DEFAULT_REGISTRY, repo_root: Path = REPO_ROOT) -> dic
             "capability": ["supported", "unsupported", "experimental", "untested", UNRECORDED],
             "gate": ["passed", "failed", "checklist", "not-run", NO_GATE],
         },
-        "stable_rule": "every gate G0-G7 passed and no capability untested (model_pipeline.manifest.stable_blockers)",
+        "stable_rule": (
+            "every gate G0-G7 passed and no capability or generation field untested "
+            "(model_pipeline.manifest.stable_blockers)"
+        ),
         "gates": list(GATES),
         "capabilities": capability_names,
         "platforms": [p.label for p in platforms],
@@ -307,7 +310,8 @@ def _render_readme(catalog: dict[str, Any], out: Path, repo_root: Path) -> str:
         "## Profiles",
         "",
         "Gate cells link to the evidence the manifest records. The Stable readiness column applies the validator's "
-        "Stable rules (every gate G0 to G7 `passed`, no capability `untested`) and lists exactly what fails them. "
+        "Stable rules (every gate G0 to G7 `passed`, no capability or generation field `untested`) and lists exactly "
+        "what fails them, a generation field as `generation.<field>`. "
         "Stable also needs regression support: CPU regression runs weekly on the self-hosted qualification "
         "runner, and GPU regression runs for every release (and on demand) on a RunPod GPU pod, so a CUDA profile "
         "is not promoted until that per-release GPU run is green for it.",
@@ -370,8 +374,9 @@ def _render_readme(catalog: dict[str, Any], out: Path, repo_root: Path) -> str:
             "## Generation",
             "",
             'Informational (docs/kickoff.md, "Capability record fields"). Each value follows a capability row, which '
-            "keeps the status: `untested` when the row is untested or absent, `none` when it is unsupported. Max "
-            "output tokens is an upper bound shared with the prompt, not a completion budget.",
+            "keeps the status: `untested` when the row is untested or absent, `none` when it is unsupported. An "
+            "`untested` value is a Stable blocker. Max output tokens is an upper bound shared with the prompt, not a "
+            "completion budget, and has no `none`: it is `untested` when its row is unsupported too.",
             "",
         ]
         lines += _table(

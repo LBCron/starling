@@ -85,9 +85,11 @@ public sealed record ModelProfileCapabilities
 /// <param name="StateReuse">Follows the capability <c>conversation_state_reuse</c> or <c>prefix_reuse</c>.</param>
 /// <param name="CachingStyle">Follows the same capability as <paramref name="StateReuse"/>.</param>
 /// <param name="MaxOutputTokens">
-/// Upper bound on the completion tokens of one request, or null when the capability <c>max_new_tokens</c> is untested or
-/// not recorded. The bound is shared with the prompt: it equals <see cref="ModelProfileCapabilities.MaxInputTokens"/>, and
-/// a request whose prompt plus completion exceed that is refused. It is not a qualified completion length.
+/// Upper bound on the completion tokens of one request, or null when the capability <c>max_new_tokens</c> is untested,
+/// unsupported or not recorded. The bound is shared with the prompt: it equals
+/// <see cref="ModelProfileCapabilities.MaxInputTokens"/>, and a request whose prompt plus completion exceed that is
+/// refused, so passing it unchanged as a completion limit fails for any non-empty prompt. It is not a qualified
+/// completion length.
 /// </param>
 public sealed record ProfileGeneration(
     ProfileToolCallMode ToolCallMode,

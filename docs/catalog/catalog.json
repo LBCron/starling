@@ -17,7 +17,7 @@
       "none"
     ]
   },
-  "stable_rule": "every gate G0-G7 passed and no capability untested (model_pipeline.manifest.stable_blockers)",
+  "stable_rule": "every gate G0-G7 passed and no capability or generation field untested (model_pipeline.manifest.stable_blockers)",
   "gates": [
     "G0",
     "G1",
