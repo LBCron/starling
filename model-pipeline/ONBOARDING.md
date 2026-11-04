@@ -275,7 +275,7 @@ The stages are those of the Qwen route: `assets`, `environment`, `reference`, `b
 - `dotnet` runs `ai-dotnet/tools/Starlings.GenAIChat.Fidelity`, which goes through the generic `GenAIChatModel` with the family's `ChatModelDefinition`.
 - There is no `--distribution`: the family package `Starlings.Models.Phi4` is source only.
 
-Run it inside a memory limit of at least 20 GB, the limit the evidence run used. `model.onnx.data` is 15.3 GB, and the run's control group, file cache included, reached that limit without an out-of-memory kill. Process memory alone was not sampled, and no smaller limit was tried.
+Run it inside a memory limit of at least 20 GB, the limit the evidence run used. `model.onnx.data` is 15.3 GB. In that run anonymous memory peaked at 17.7 GiB in 15-second samples, and the control group, file cache included, reached the limit without an out-of-memory kill. No smaller limit was tried.
 
 ## Qwen3 Embedding route
 

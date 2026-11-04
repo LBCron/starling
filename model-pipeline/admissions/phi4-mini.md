@@ -67,11 +67,11 @@ GenAI masks a position whose id equals `pad_token_id`, and upstream's pad id is 
 
 ## Hardware and compute estimate
 
-Linux x64 CPU, two threads, inside a 20 GiB limit. `model.onnx.data` is 15.3 GB. Process memory was not sampled: the control group, which counts reclaimable file cache, held 15.0 GiB during `reference` and reached the limit with no out-of-memory kill. Whether a smaller limit would work is unknown. See the evidence for memory and times. GPU runs stay under #210.
+Linux x64 CPU, two threads, inside a 20 GiB limit. `model.onnx.data` is 15.3 GB. Anonymous memory, sampled every 15 s, peaked at 17.7 GiB in the Python GenAI stage and 17.4 GiB in .NET. The control group, which also counts reclaimable file cache, reached the limit with no out-of-memory kill. A smaller limit was not tried. See the evidence for memory and times. GPU runs stay under #210.
 
 ## Evidence
 
-`docs/evidence/phi4-mini-onboarding-2026-11-04/README.md`: the `genai-chat-cpu-v1` route passed development parity on 2026-11-04 on all 14 corpus rows, CPU only, two threads, inside a 20 GiB limit. Against transformers, both Python GenAI and .NET had exact prompt and greedy ids, and initial logits within 2.14e-4 max absolute (bound 5e-3) and 4.27e-5 mean absolute (bound 5e-4). All seven .NET runtime checks held on every row. The run took about 59 minutes. The longest row is 366 tokens. This is development evidence, not release qualification.
+`docs/evidence/phi4-mini-onboarding-2026-11-04/README.md`: the `genai-chat-cpu-v1` route passed development parity on 2026-11-04 on all 14 corpus rows, CPU only, two threads, inside a 20 GiB limit. Against transformers, both Python GenAI and .NET had exact prompt and greedy ids, and initial logits within 2.14e-4 max absolute (bound 5e-3) and 4.27e-5 mean absolute (bound 5e-4). All seven .NET runtime checks held on every row. The run was one invocation with exit 0 and took about 86 minutes on a busy machine. The longest row is 366 tokens. This is development evidence, not release qualification.
 
 ## Open risks
 
