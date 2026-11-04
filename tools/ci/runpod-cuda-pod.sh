@@ -285,8 +285,8 @@ prepare_ffmpeg() {
     ready "$CACHE/ffmpeg9-lgpl" || {
         local a=ffmpeg-n9.0.2-28-g669f5ab083-starling-linux64-lgpl-shared-9.0.tar.xz
         rm -rf "$CACHE/ffmpeg9-lgpl" && mkdir -p "$CACHE/ffmpeg9-lgpl" && cd "$CACHE/ffmpeg9-lgpl" &&
-            curl -fsSL -o "$a" "https://huggingface.co/datasets/Starlinghq/ffmpeg-lgpl-rebuilds/resolve/PIN_HF/$a" &&
-            echo "PIN_SHA9  $a" | sha256sum -c - &&
+            curl -fsSL -o "$a" "https://huggingface.co/datasets/Starlinghq/ffmpeg-lgpl-rebuilds/resolve/caf396f176296fc12620c18a344a31f628a4613a/$a" &&
+            echo "db79bc561add07fe48cbe013f714f4ceaf12e49553e56aff9775eff088f8b5ed  $a" | sha256sum -c - &&
             tar xf "$a" && rm -f "$a" && touch .complete
         cd "$REPO" || return 1
     }

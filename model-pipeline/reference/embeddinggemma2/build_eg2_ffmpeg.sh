@@ -4,7 +4,7 @@
 # FFmpeg at the two commits the adapters' bindings and the protected references name, with its own decoders, x86 assembly
 # on, and one external library: dav1d, because FFmpeg has no software AV1 decoder of its own and the fixtures and the
 # retrieval set hold AV1 videos. dav1d is linked statically into libavcodec, so lib/ holds FFmpeg's libraries only.
-# --disable-autodetect keeps everything else out, whatever the build machine has installed. The result is
+# Autodetection is off, which keeps everything else out, whatever the build machine has installed. The result is
 # "LGPL version 2.1 or later": no --enable-gpl, and no --enable-version3 because dav1d (BSD-2-Clause) does not need it.
 #
 #   build_eg2_ffmpeg.sh sources <source dir>                  source archives from upstream, needs git and network
@@ -27,7 +27,8 @@ dav1d_source_sha256=fd305559224bee4fa2d5c11a36fb88957bfec754f3b567d8f0548b96bb3e
 ffmpeg_url=https://github.com/FFmpeg/FFmpeg.git
 dav1d_url=https://code.videolan.org/videolan/dav1d.git
 
-# Every option but the prefix, which is /opt/ffmpeg. The rpath lets bin/ffmpeg find ../lib.
+# Every option but the prefix, which is /opt/ffmpeg. --disable-autodetect leaves glibc's iconv on, so it is off by name.
+# The rpath lets bin/ffmpeg find ../lib: configure, make and the shell each take a layer of its quoting.
 configure_options=(
     --arch=x86_64
     --target-os=linux
@@ -39,7 +40,7 @@ configure_options=(
     --disable-doc
     --enable-libdav1d
     --pkg-config-flags=--static
-    '--extra-ldexeflags=-Wl,--disable-new-dtags,-rpath,\$$ORIGIN/../lib'
+    '--extra-ldexeflags=-Wl,--disable-new-dtags,-rpath,\\\$\$ORIGIN/../lib'
 )
 
 check_sha256() { # <file> <expected>
@@ -126,6 +127,7 @@ inside_ffmpeg() { # <commit> <describe> <series>
         echo "Toolchain packages:"
         cat /toolchain-packages.txt
     } >"/work/$name/BUILD-INFO.txt"
+    "/work/$name/bin/ffmpeg" -hide_banner -buildconf >"/out/$name.buildconf.txt" 2>&1
     # Same bytes on every build: fixed order, times and owners.
     tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner -C /work -cf - "$name" | xz -9 -T1 >"/out/$name.tar.xz"
     {
@@ -141,7 +143,6 @@ inside_ffmpeg() { # <commit> <describe> <series>
         echo "a library needs something outside FFmpeg and glibc, see above" >&2
         exit 1
     fi
-    LD_LIBRARY_PATH=/work/$name/lib "/work/$name/bin/ffmpeg" -hide_banner -buildconf >"/out/$name.buildconf.txt" 2>&1
     rm -rf "/work/ffmpeg-$describe" "/work/$name" "/work/$name.root"
 }
 

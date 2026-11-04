@@ -20,7 +20,7 @@ fi
 dest="${1:?destination directory}"
 mkdir -p "$dest"
 cd "$dest"
-source=https://huggingface.co/datasets/Starlinghq/ffmpeg-lgpl-rebuilds/resolve/PIN_HF
+source=https://huggingface.co/datasets/Starlinghq/ffmpeg-lgpl-rebuilds/resolve/caf396f176296fc12620c18a344a31f628a4613a
 rev=n8.1.3-17-gc389840894
 for variant in $variants; do
   case "$variant" in
@@ -29,7 +29,7 @@ for variant in $variants; do
       archive="ffmpeg-$rev-linux64-gpl-shared-8.1.tar.xz"
       ;;
     lgpl)
-      want=PIN_SHA8
+      want=240d0c45e4a684776f2ed6f841345c9cd1b7937a4e3e121104157fcd04941d68
       archive="ffmpeg-$rev-starling-linux64-lgpl-shared-8.1.tar.xz"
       ;;
   esac

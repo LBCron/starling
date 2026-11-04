@@ -155,8 +155,8 @@ fetch_ffmpeg() {
     step ffmpeg8 sh model-pipeline/reference/embeddinggemma2/fetch_eg2_ffmpeg.sh "$1/ffmpeg8"
     # shellcheck disable=SC2016 # expanded by the inner sh
     step ffmpeg9 sh -c 'set -eu; mkdir -p "$1"; cd "$1"
-        curl -fsSL --retry 3 -o "$2" "https://huggingface.co/datasets/Starlinghq/ffmpeg-lgpl-rebuilds/resolve/PIN_HF/$2"
-        echo "PIN_SHA9  $2" | sha256sum -c -
+        curl -fsSL --retry 3 -o "$2" "https://huggingface.co/datasets/Starlinghq/ffmpeg-lgpl-rebuilds/resolve/caf396f176296fc12620c18a344a31f628a4613a/$2"
+        echo "db79bc561add07fe48cbe013f714f4ceaf12e49553e56aff9775eff088f8b5ed  $2" | sha256sum -c -
         tar xf "$2"' ffmpeg9 "$1/ffmpeg9" "$a"
 }
 
