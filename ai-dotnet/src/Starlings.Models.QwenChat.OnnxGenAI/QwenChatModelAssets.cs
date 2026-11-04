@@ -11,23 +11,25 @@ namespace Starlings.Models.QwenChat;
 /// The Hub repositories of the originals ship no ONNX Runtime GenAI build, so the bundle is Starling's
 /// build of the pinned original (<c>model-pipeline/reference/qwen-chat/build_bundle.py</c>, builder 0.17.1), under the
 /// license of the weights (Apache-2.0). Each profile's six files are hosted publicly, one Hugging Face repository per
-/// profile (<see cref="HostingRepository"/>) at a pinned commit (<see cref="HostingRevision"/>, tag <c>r1</c>), in the
+/// profile (<see cref="HostingRepository"/>) at a pinned commit (<see cref="HostingRevision"/>, tag <c>r2</c>), in the
 /// bundle layout; downloading needs no token. The digests in the profile, not the address, pin the bytes, so a bundle
-/// built locally with the script loads only when it has those digests, which it does not today (#278).
+/// built locally with the script and the hash-locked builder loads too, and a bundle with other digests is refused.
+/// Packages up to 0.5.0 pin revision <c>r1</c>, which stays hosted; it differs from <c>r2</c> only in the
+/// <c>producer_version</c> stamp of <c>model.onnx</c>.
 /// </remarks>
 public static class QwenChatModelAssets
 {
-    /// <summary>Hugging Face repository hosting the Qwen3-0.6B bundle (public, Starling build r1).</summary>
+    /// <summary>Hugging Face repository hosting the Qwen3-0.6B bundle (public, Starling build r2).</summary>
     public const string Qwen3HostingRepository = "Starlinghq/qwen3-0.6b-ortgenai";
 
-    /// <summary>Pinned commit of <see cref="Qwen3HostingRepository"/> (tag <c>r1</c>).</summary>
-    public const string Qwen3HostingRevision = "c24cd59cad1444863ddfdb372736da610a09c9c4";
+    /// <summary>Pinned commit of <see cref="Qwen3HostingRepository"/> (tag <c>r2</c>).</summary>
+    public const string Qwen3HostingRevision = "002782754045f2f8f15acf238d888455642181ab";
 
-    /// <summary>Hugging Face repository hosting the Qwen2.5-0.5B-Instruct bundle (public, Starling build r1).</summary>
+    /// <summary>Hugging Face repository hosting the Qwen2.5-0.5B-Instruct bundle (public, Starling build r2).</summary>
     public const string Qwen25HostingRepository = "Starlinghq/qwen2.5-0.5b-instruct-ortgenai";
 
-    /// <summary>Pinned commit of <see cref="Qwen25HostingRepository"/> (tag <c>r1</c>).</summary>
-    public const string Qwen25HostingRevision = "6b6957c8305ef950450da2c0c846bce6fac3e8a0";
+    /// <summary>Pinned commit of <see cref="Qwen25HostingRepository"/> (tag <c>r2</c>).</summary>
+    public const string Qwen25HostingRevision = "265459af18b9dac105d3c7a528d22cd926cfe8f7";
 
     /// <summary>False: both hosting repositories are public (2026-10-19), so downloads send no token.</summary>
     public const bool HostingIsPrivate = false;

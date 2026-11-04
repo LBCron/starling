@@ -3,7 +3,7 @@
 # model-pipeline/candidates/qwen25/profile.json (onboarding route qwen-genai-cpu-v1, recipes/qwen25-cpu.yaml). The Hub
 # repository ships no GenAI build: the graph is Starling's build of the pinned original
 # (model-pipeline/reference/qwen-chat/build_bundle.py, builder 0.17.1 at 83de55a1), rebuilt byte-identically twice on
-# 2026-10-18 and pinned by QwenChatProfile.BundleFiles. Hosted publicly at Starlinghq/qwen2.5-0.5b-instruct-ortgenai (r1); QwenChatModelAssets downloads it. The references are proposed, not
+# 2026-11-04 (docs/evidence/qwenchat-hosting-r2-2026-11-04/README.md) and pinned by QwenChatProfile.BundleFiles. Hosted publicly at Starlinghq/qwen2.5-0.5b-instruct-ortgenai (r2); QwenChatModelAssets downloads it. The references are proposed, not
 # adopted into protected/, and no gate has run.
 schema_version: 1
 id: qwen2.5-0.5b-instruct/ortgenai-fp32-cpu
@@ -49,13 +49,13 @@ origin:
       sha256: "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
       size: 2776833
     # Not in the Hub repository: Starling's build of the weights above (execution.graph) and the chat template the
-    # build extracts from tokenizer_config.json (processing.template), hosted at Starlinghq/qwen2.5-0.5b-instruct-ortgenai (r1).
+    # build extracts from tokenizer_config.json (processing.template), hosted at Starlinghq/qwen2.5-0.5b-instruct-ortgenai (r2).
     # The same digests are in QwenChatProfile.BundleFiles.
     - path: genai_config.json
       sha256: "a023918fb6dfdf680b0267bdb4ead00083a954194d8178d8fb1af7a0d9adbe63"
       size: 1581
     - path: model.onnx
-      sha256: "716a2db391784191cc1323417e1ff5bec682673b7105b8ddc4011e7a9f2c4a88"
+      sha256: "938a56f1c87fd63ca29dfcba0c45642dc93f7913f12ab70715e9db6e3ea410e7"
       size: 147574
     - path: model.onnx.data
       sha256: "4269c6a8f794c9db3f1304c18ead66ca8aa6eb67e57b8bbe1b815cdbdecd7f99"
@@ -77,8 +77,8 @@ rights:
     832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e). code_license names the builder (onnxruntime-genai, MIT) and this repository's code. The package's
     C# template renderer adapts the upstream chat_template (Apache-2.0; THIRD-PARTY-NOTICES.md and LICENSE.Qwen.txt in
     the package). Hosting decided by Mark on 2026-10-19 (admissions/qwen-chat.md): Starling redistributes the built
-    bundle, publicly, in Starlinghq/qwen2.5-0.5b-instruct-ortgenai (tag r1) with LICENSE, NOTICE and SHA256SUMS; QwenChatModelAssets pins it by commit
-    and QwenChatModel.Load accepts only the pinned digests. A locally built bundle (build_bundle.py) loads only with the same digests, which it does not give today (#278).
+    bundle, publicly, in Starlinghq/qwen2.5-0.5b-instruct-ortgenai (tag r2) with LICENSE, NOTICE and SHA256SUMS; QwenChatModelAssets pins it by commit
+    and QwenChatModel.Load accepts only the pinned digests. A locally built bundle (build_bundle.py) loads only with the same digests, which the hash-locked builder gives.
 
 behavior:
   tasks: [generation]
@@ -152,30 +152,32 @@ execution:
   variant: reference
   graph:
     # build_bundle.py: onnxruntime-genai 0.17.1 builder -p fp32 -e cpu on the verified original. Two builds on
-    # 2026-10-18 gave the same digests, stamped with that checkout's HEAD (1bada25). Hosted (graph.hosting).
-    # build_bundle.py now stamps the wheel's commit (83de55a), so model.onnx built locally differs from the pin (#278).
+    # 2026-11-04, from environments inside and outside a Git work tree, gave these digests, stamped with the wheel's
+    # commit (83de55a). Hosted (graph.hosting). Revision r1 had the same bytes except for the stamp in model.onnx
+    # (1bada25, the checkout's HEAD at the 2026-10-18 build; #278).
     assets:
       - path: genai_config.json
         sha256: "a023918fb6dfdf680b0267bdb4ead00083a954194d8178d8fb1af7a0d9adbe63"
         size: 1581
-        source: https://huggingface.co/Starlinghq/qwen2.5-0.5b-instruct-ortgenai/resolve/6b6957c8305ef950450da2c0c846bce6fac3e8a0/genai_config.json
+        source: https://huggingface.co/Starlinghq/qwen2.5-0.5b-instruct-ortgenai/resolve/265459af18b9dac105d3c7a528d22cd926cfe8f7/genai_config.json
         source_status: public
       - path: model.onnx
-        sha256: "716a2db391784191cc1323417e1ff5bec682673b7105b8ddc4011e7a9f2c4a88"
+        sha256: "938a56f1c87fd63ca29dfcba0c45642dc93f7913f12ab70715e9db6e3ea410e7"
         size: 147574
-        source: https://huggingface.co/Starlinghq/qwen2.5-0.5b-instruct-ortgenai/resolve/6b6957c8305ef950450da2c0c846bce6fac3e8a0/model.onnx
+        source: https://huggingface.co/Starlinghq/qwen2.5-0.5b-instruct-ortgenai/resolve/265459af18b9dac105d3c7a528d22cd926cfe8f7/model.onnx
         source_status: public
       - path: model.onnx.data
         sha256: "4269c6a8f794c9db3f1304c18ead66ca8aa6eb67e57b8bbe1b815cdbdecd7f99"
         size: 1984561152
-        source: https://huggingface.co/Starlinghq/qwen2.5-0.5b-instruct-ortgenai/resolve/6b6957c8305ef950450da2c0c846bce6fac3e8a0/model.onnx.data
+        source: https://huggingface.co/Starlinghq/qwen2.5-0.5b-instruct-ortgenai/resolve/265459af18b9dac105d3c7a528d22cd926cfe8f7/model.onnx.data
         source_status: public
     hosting:
       # Download location of every file in the lock (QwenChatModelAssets): <source_base><path>. Public repository since
-      # 2026-10-19 (tag r1); the digests, not the address, pin the bytes.
+      # 2026-10-19; tag r2 since 2026-11-04, and r1 (6b6957c8305ef950450da2c0c846bce6fac3e8a0) stays hosted for packages up to 0.5.0.
+      # The digests, not the address, pin the bytes.
       repository: https://huggingface.co/Starlinghq/qwen2.5-0.5b-instruct-ortgenai
-      revision: "6b6957c8305ef950450da2c0c846bce6fac3e8a0"
-      source_base: https://huggingface.co/Starlinghq/qwen2.5-0.5b-instruct-ortgenai/resolve/6b6957c8305ef950450da2c0c846bce6fac3e8a0/
+      revision: "265459af18b9dac105d3c7a528d22cd926cfe8f7"
+      source_base: https://huggingface.co/Starlinghq/qwen2.5-0.5b-instruct-ortgenai/resolve/265459af18b9dac105d3c7a528d22cd926cfe8f7/
       source_status: public
       produced_by:
         - model-pipeline/reference/qwen-chat/build_bundle.py (ONNX Runtime GenAI 0.17.1 builder, -p fp32 -e cpu)
@@ -258,7 +260,7 @@ maintenance:
       The references are proposed, not adopted into protected/, and no gate has run; every capability is at most
       experimental.
     - >-
-      Bundle reproducibility was shown on one machine (two builds, identical digests) with the hash-locked builder
-      wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.
+      Bundle reproducibility was shown on one machine (two builds from two environments, identical digests) with the
+      hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.
     - >-
       QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting.
