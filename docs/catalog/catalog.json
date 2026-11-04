@@ -1560,7 +1560,7 @@
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-11",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "The image release set's reference stage tensors regenerate byte-identical only on the reference CPU at 6 threads; the accepted soft-token and token-embedding arrays are hosted at Starlinghq/starling-release-references (commit and file digests in the protected hosted-reference.json, #71), and the evaluator checks every array against the protected tensors.json, so the scheduled G2 needs no regeneration.",
         "One accepted release image (79 MP) exceeds the default 50,000,000-pixel limit; G1 and G2 pass with the limit raised for it (image_over_default_pixel_limit_with_option, experimental); the default stays a memory bound.",
@@ -1848,7 +1848,7 @@
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-11",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "Contract hardware: an NVIDIA GeForce RTX 3090 (Ampere, sm_86), driver 580, CUDA 13 runtime. The CUDA gates G1 to G5 (G4 and G5 in the binding 2026-10-16 round) ran on RTX 3090s, and the per-release GPU regression is pinned to the RTX 3090 and refuses any other GPU (tools/ci/runpod.py). Its first run, 38857860186, landed on an RTX 4090 (Ada) before the pin: every check of this profile passed there, but embeddinggemma-2/video-fp32-cuda failed G2 (docs/evidence/gpu-regression-2026-10-16/README.md). Other NVIDIA GPUs, including the RTX 4090, are untested and outside the contract.",
         "Linux memory: MALLOC_MMAP_THRESHOLD_=65536 is recommended, not required (the Starlings.Models.EmbeddingGemma2 README, \"Memory on Linux\"); the G4 soak and the per-release soak smoke test ran without it.",
@@ -2140,7 +2140,7 @@
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-10",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "The text release set's reference embeddings.jsonl regenerates byte-identical only on the reference CPU (on two hosted runners it differed by up to 8e-7); it is committed under protected/ since #60, so the scheduled G2 reads that file. Linux memory: the hosted soak's earlier growth (about 160 MB/h) was glibc retention after unloading plus transparent huge pages `always` on the runner image, not a leak (docs/evidence/scheduled-regression-fix/); Starlings.Runtime.Onnx calls malloc_trim on session release (on by default; opt out per session or per process), and the qualification soak runs with THP `madvise`. On `always` hosts resident memory can look larger without any leak.",
         "Evaluator run 2026-10-11 (docs/evidence/embeddinggemma2-dotnet/, CPU): G1 passed; G2 failed only on export.token_embeddings (Python ORT vs PyTorch): the tolerance file's |d| <= 1e-4 * max(1, |ref|) judged per value gives 1.7e-2, while the per-case max |d| / max(1, max |ref|) the bound was set from is 6.2e-6. Which reading binds is a maintainer decision; every .NET check passed.",
@@ -2429,7 +2429,7 @@
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-10",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "Contract hardware: an NVIDIA GeForce RTX 3090 (Ampere, sm_86), driver 580, CUDA 13 runtime. The CUDA gates G1 to G5 (G4 and G5 in the binding 2026-10-16 round) ran on RTX 3090s, and the per-release GPU regression is pinned to the RTX 3090 and refuses any other GPU (tools/ci/runpod.py). Its first run, 38857860186, landed on an RTX 4090 (Ada) before the pin: every check of this profile passed there, but embeddinggemma-2/video-fp32-cuda failed G2 (docs/evidence/gpu-regression-2026-10-16/README.md). Other NVIDIA GPUs, including the RTX 4090, are untested and outside the contract.",
         "Linux memory: no MALLOC_* setting is required; the runtime calls malloc_trim on session release (on by default).",
@@ -2720,7 +2720,7 @@
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-11",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "The hosted one-hour soak failed the growth rule in every run from #68 to 2026-10-16 (about 280 MB/h). Fixed in the library: no ONNX Runtime CPU arena (#83), dedicated run threads (#86), native heap trims after load and after each run and reused request buffers on the image and video path (#93). It passed in three consecutive full qualification runs with every soak twice (#93) and in the runs since; no MALLOC_* setting is required on CPU.",
         "The video release set's reference stage tensors regenerate byte-identical only on the reference CPU; the accepted soft-token and token-embedding arrays are hosted at Starlinghq/starling-release-references (commit and file digests in the protected hosted-reference.json, #71), and the evaluator checks every array against the protected tensors.json, so the scheduled G2 needs no regeneration.",
@@ -3011,7 +3011,7 @@
       ],
       "owner": "Mark",
       "review_date": "2027-01-05",
-      "last_checked": "2026-10-11",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "Contract hardware: an NVIDIA GeForce RTX 3090 (Ampere, sm_86), driver 580, CUDA 13 runtime. The CUDA gates G1 to G5 (G4 and G5 in the binding 2026-10-16 round) ran on RTX 3090s, and the per-release GPU regression is pinned to the RTX 3090 and refuses any other GPU (tools/ci/runpod.py). The RTX 4090 (Ada) is outside the contract: in run 38857860186, before the pin, this profile's G2 failed there on the final embedding (max abs 1.009e-5 against the unchanged 1e-5, commons-video-04). Other NVIDIA GPUs are untested.",
         "Linux memory: MALLOC_MMAP_THRESHOLD_=65536 is a deployment requirement (the Starlings.Models.EmbeddingGemma2 README, \"Image and video on CUDA\"); the binding G4 soak and the per-release soak smoke test ran with it.",
@@ -4988,7 +4988,7 @@
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-28",
-      "last_checked": "2026-10-28",
+      "last_checked": "2026-11-03",
       "known_issues": [
         "The export's fidelity to the PyTorch checkpoint is unmeasured: run_lfm3.py reference executes the checkpoint's own modeling code and has not run. The evidence compares the .NET loop with Python ONNX Runtime on the same graph.",
         "No reference fixtures are adopted into protected/ and no gate has run; every capability is at most experimental.",
