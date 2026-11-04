@@ -45,15 +45,17 @@ async Task<int> RunAsync()
     {
         var e5Files = await E5ModelAssets.DownloadAsync(acquisition);
         Console.WriteLine($"Verified embedder: {e5Files.Snapshot.Directory}");
-        ModelSnapshot rerankerFiles = await store.DownloadAsync(rerankerProfile.RuntimeLock);
-        Console.WriteLine($"Verified reranker: {rerankerFiles.Directory}");
+        ModelSnapshot downloaded = await store.DownloadAsync(rerankerProfile.RuntimeLock);
+        Console.WriteLine($"Verified reranker: {downloaded.Directory}");
         return 0;
     }
 
     // No automatic prefix: the vector property supplies "passage: ", and SearchAsync supplies "query: ".
     using IEmbeddingGenerator<string, Embedding<float>> generator =
         E5EmbeddingGenerator.Create(E5ModelAssets.OpenLocal(acquisition));
-    using var reranker = BertReranker.Create(rerankerProfile, store.OpenLocal(rerankerProfile.RuntimeLock).Directory);
+    // Size only here: BertReranker.Create checks the same files by SHA-256, so the 2.3 GB is hashed once.
+    ModelSnapshot rerankerFiles = store.OpenLocal(rerankerProfile.RuntimeLock, CacheVerification.Size);
+    using var reranker = BertReranker.Create(rerankerProfile, rerankerFiles.Directory);
     using var collection = new InMemoryCollection<string, Passage>("passages", new()
     {
         EmbeddingGenerator = generator,

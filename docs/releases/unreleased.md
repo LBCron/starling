@@ -8,4 +8,4 @@ Every package that tokenizes now pins `Starlings.Tokenizers [0.3.5]` (0.3.4 in `
 
 ## Reranking sample
 
-New sample `ai-dotnet/samples/E5RerankSearch`: multilingual-e5-small retrieves the top 5 from an in-memory `Microsoft.Extensions.VectorData` collection and `bge-reranker-v2-m3` reorders them with `Reranking.RerankAsync`, on the published 0.5.0 packages, with its lock file and recorded output. The helpers and the reranker profile stay Experimental: gates G0 to G7 have not run for `bge-reranker-v2-m3/onnx-fp32-cpu`. No package changes.
+New sample `ai-dotnet/samples/E5RerankSearch`: multilingual-e5-small retrieves the top 5 from an in-memory `Microsoft.Extensions.VectorData` collection and `bge-reranker-v2-m3` reorders them with `Reranking.RerankAsync`, on the published 0.5.0 packages, with its lock file and recorded output. The helpers and the reranker profile stay Experimental: gates G0 to G7 have not run for `bge-reranker-v2-m3/onnx-fp32-cpu`. No code changes in any package; the `Starlings.Models.Abstractions` README links the sample, which ships with that package's next release.
