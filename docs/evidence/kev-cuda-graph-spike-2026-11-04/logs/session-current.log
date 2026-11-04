@@ -1,0 +1,27 @@
+2026-11-04 02:08:50.413314900 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyFromHost after /model/layers.11/attn/GroupQueryAttention/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413336279 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyFromHost after /model/layers.15/attn/GroupQueryAttention/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413355669 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyFromHost after /model/layers.19/attn/GroupQueryAttention/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413373138 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyFromHost after /model/layers.23/attn/GroupQueryAttention/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413384941 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyFromHost after /model/layers.3/attn/GroupQueryAttention/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413398469 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyFromHost after /model/layers.7/attn/GroupQueryAttention/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413413487 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/attn_mask_reformat/attn_mask_subgraph/Sub/Cast/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413434837 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.11/attn/k_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413447752 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.11/attn/q_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413458688 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.11/attn/v_proj/MatMul/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413481491 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.15/attn/k_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413495637 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.15/attn/q_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413507268 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.15/attn/v_proj/MatMul/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413528592 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.19/attn/k_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413542472 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.19/attn/q_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413554234 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.19/attn/v_proj/MatMul/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413578697 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.23/attn/k_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413591924 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.23/attn/q_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413603350 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.23/attn/v_proj/MatMul/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413616478 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.3/attn/k_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413629075 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.3/attn/q_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413640298 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.3/attn/v_proj/MatMul/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413661520 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.7/attn/k_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413679258 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.7/attn/q_rotary/MRotaryEmbedding/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413694615 [I:onnxruntime:, transformer_memcpy.cc:393 AddCopyNode] Add MemcpyToHost before /model/layers.7/attn/v_proj/MatMul/output_0 for CUDAExecutionProvider
+2026-11-04 02:08:50.413735595 [W:onnxruntime:, transformer_memcpy.cc:111 ApplyImpl] 25 Memcpy nodes are added to the graph main_graph for CUDAExecutionProvider. It might have negative impact on performance (including unable to run CUDA graph). Set session_options.log_severity_level=1 to see the detail logs before this message.
+[count] 'Force fallback to CPU execution' lines: 2
