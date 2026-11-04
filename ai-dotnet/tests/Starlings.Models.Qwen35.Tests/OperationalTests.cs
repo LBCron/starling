@@ -140,7 +140,7 @@ public sealed class OperationalTests(Qwen35CpuFixture fixture, ITestOutputHelper
     }
 }
 
-/// <summary>Runs alone, after the parallel classes have released their models: it loads its own 3.1 GB model to dispose it.</summary>
+/// <summary>Runs alone, after the parallel classes have released their models: each class loads its own model (fp32x 3.1 GB, int4 about 0.58 GB).</summary>
 [CollectionDefinition(Name, DisableParallelization = true)]
 public sealed class OwnModelTestGroup
 {

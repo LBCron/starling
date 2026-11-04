@@ -37,7 +37,7 @@ public sealed class Qwen35GuidedChatClientFixture() : Qwen35GuidedChatClientFixt
 /// <summary>The int4 model (profile qwen3.5-0.8b/ortgenai-int4-cpu, issue #163).</summary>
 public sealed class Qwen35Int4GuidedChatClientFixture() : Qwen35GuidedChatClientFixtureBase(Qwen35Variant.Int4);
 
-/// <summary>Runs alone, after the parallel classes have released their models: its fixture loads another 3.1 GB model.</summary>
+/// <summary>Runs alone, after the parallel classes have released their models: its fixture loads another model (fp32x 3.1 GB, int4 about 0.58 GB).</summary>
 [CollectionDefinition(Name, DisableParallelization = true)]
 public sealed class GuidedModelTestGroup
 {

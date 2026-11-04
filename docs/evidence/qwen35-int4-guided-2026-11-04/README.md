@@ -22,7 +22,7 @@ The checks are the ones fp32x and fp16x already pass. The fp32x classes were spl
 | `int4-guided-chat-client-tests.log` | `Int4GuidedRealModelTests`, IChatClient on int4: `ToolMode` RequireAny, RequireSpecific, JSON `ResponseFormat` | 3 passed, 0 skipped |
 | `fp32x-regression-tests.log` | `GuidanceCpuModelTests`, after the split: fp32x still passes | 7 passed, 0 skipped |
 | `fp32x-chat-client-regression-tests.log` | `GuidedRealModelTests`, after the split: fp32x still passes | 3 passed, 0 skipped |
-| `capability-tests.log` | `AssetAndCapabilityTests`, `StableContractTests`, after the status change: every generated capability record equals its manifest | 19 passed, 0 skipped |
+| `capability-tests.log` | `AssetAndCapabilityTests`, `StableContractTests`, after the status change: every generated capability record equals its manifest (the log's header names only the test changes; the PR review reran these classes at the branch head, status change included, and they passed) | 19 passed, 0 skipped |
 
 ## 3. Constrained outputs on int4
 
@@ -34,7 +34,7 @@ The checks are the ones fp32x and fp16x already pass. The fp32x classes were spl
 | "Set a timer for 25 minutes." | required tool grammar, both fast-forward settings | stop, 27 tokens | `set_timer` with `minutes` 25; the same text in both runs |
 | "What's the weather in Porto?" | IChatClient `RequireAny` over `get_weather`, `get_time` | `tool_calls` | `get_weather({"city":"Porto"})` |
 | "What time is it in Porto?" | IChatClient `RequireSpecific("get_weather")` | `tool_calls` | `get_weather({"city":"Porto"})` |
-| "What is 6 times 7? Reply as JSON." | IChatClient JSON schema `{"answer": integer}` | stop | `{"answer": 42}` |
+| "What is 6 times 7? Reply as JSON." | IChatClient JSON schema `{"answer": integer}` | stop | `{"answer": 42}`, on three lines in the log |
 
 The regex and JSON outputs differ from fp32x's (`FORCED-101`, and JSON with different whitespace), which is expected: int4 is a different graph, and it matches the transformers fp32 reference on 1 of 22 greedy sequences (M0). Correct values here are a handful of prompts, not a measure of int4's task quality.
 
