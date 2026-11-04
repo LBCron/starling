@@ -258,7 +258,7 @@ there is no registry manifest yet (the maintainer adds it with the adopted toler
 
 ## GenAI chat route
 
-The experimental `genai-chat-cpu-v1` plugin (`src/model_pipeline/onboarding_genai_chat.py`) is the data-driven route of `docs/design/generic-genai-chat-route.md` (option C; that note is still proposed). It sits beside `qwen-genai-cpu-v1`, whose code, stage keys and evidence it leaves alone, and reuses the generation evaluator and its bounds unchanged. Its allow-list is [`routes/genai-chat-cpu-v1/contracts.json`](routes/README.md). Its one entry is `microsoft/Phi-4-mini-instruct` (`recipes/phi4-mini-cpu.yaml`, `candidates/phi4-mini/`).
+The experimental `genai-chat-cpu-v1` plugin (`src/model_pipeline/onboarding_genai_chat.py`) is the data-driven route of `docs/design/generic-genai-chat-route.md` (option C, accepted on 2026-11-04). It sits beside `qwen-genai-cpu-v1`, whose code, stage keys and evidence it leaves alone, and reuses the generation evaluator and its bounds unchanged. Its allow-list is [`routes/genai-chat-cpu-v1/contracts.json`](routes/README.md). Its one entry is `microsoft/Phi-4-mini-instruct` (`recipes/phi4-mini-cpu.yaml`, `candidates/phi4-mini/`).
 
 ```sh
 TMPDIR=<a directory on disk> .venv/bin/model-pipeline run model-pipeline/recipes/phi4-mini-cpu.yaml \
