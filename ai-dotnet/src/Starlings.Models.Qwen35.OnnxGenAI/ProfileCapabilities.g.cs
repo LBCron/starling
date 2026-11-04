@@ -63,6 +63,12 @@ internal static class GeneratedProfileCapabilities
                     ["long_context_over_8192_tokens"] = Status.Unsupported,
                     ["quantized"] = Status.Unsupported,
                 },
+                Generation = new ProfileGeneration(
+                    ProfileToolCallMode.TemplateRendered,
+                    ProfileStructuredOutput.Grammar,
+                    ProfileStateReuse.None,
+                    ProfileCachingStyle.None,
+                    MaxOutputTokens: 8192),
             },
             ["qwen3.5-0.8b/ortgenai-fp32x-cpu"] = new ModelProfileCapabilities
             {
@@ -111,6 +117,12 @@ internal static class GeneratedProfileCapabilities
                     ["long_context_over_8192_tokens"] = Status.Unsupported,
                     ["quantized"] = Status.Unsupported,
                 },
+                Generation = new ProfileGeneration(
+                    ProfileToolCallMode.TemplateRendered,
+                    ProfileStructuredOutput.Grammar,
+                    ProfileStateReuse.None,
+                    ProfileCachingStyle.None,
+                    MaxOutputTokens: 8192),
             },
             ["qwen3.5-0.8b/ortgenai-fp32x-cuda"] = new ModelProfileCapabilities
             {
@@ -159,6 +171,12 @@ internal static class GeneratedProfileCapabilities
                     ["long_context_over_8192_tokens"] = Status.Unsupported,
                     ["quantized"] = Status.Unsupported,
                 },
+                Generation = new ProfileGeneration(
+                    ProfileToolCallMode.TemplateRendered,
+                    ProfileStructuredOutput.Grammar,
+                    ProfileStateReuse.None,
+                    ProfileCachingStyle.None,
+                    MaxOutputTokens: 8192),
             },
             ["qwen3.5-0.8b/ortgenai-int4-cpu"] = new ModelProfileCapabilities
             {
@@ -202,12 +220,18 @@ internal static class GeneratedProfileCapabilities
                     ["conversation_state_reuse"] = Status.Unsupported,
                     ["tool_calling"] = Status.Untested,
                     ["reasoning_split"] = Status.Unsupported,
-                    ["structured_output"] = Status.Untested,
+                    ["structured_output"] = Status.Experimental,
                     ["vision"] = Status.Unsupported,
                     ["long_context_1667_to_8192_tokens"] = Status.Untested,
                     ["long_context_over_8192_tokens"] = Status.Unsupported,
                     ["quantized"] = Status.Experimental,
                 },
+                Generation = new ProfileGeneration(
+                    ProfileToolCallMode.Untested,
+                    ProfileStructuredOutput.Grammar,
+                    ProfileStateReuse.None,
+                    ProfileCachingStyle.None,
+                    MaxOutputTokens: 8192),
             },
         };
 }

@@ -1,0 +1,41 @@
+{
+ "graph": "/home/mark/Projects/AI-models/kev/onnx-cuda-fp16/model.onnx",
+ "session_providers": [
+  "CUDAExecutionProvider",
+  "CPUExecutionProvider"
+ ],
+ "provider_options_use_tf32": "0",
+ "nodes_profiled": 656,
+ "nodes_by_provider": {
+  "CUDAExecutionProvider": 654,
+  "CPUExecutionProvider": 2
+ },
+ "cpu_nodes_by_op": {
+  "Gather": 1,
+  "Cast": 1
+ },
+ "attention_ops": {
+  "LinearAttention on CUDAExecutionProvider": 18,
+  "GroupQueryAttention on CUDAExecutionProvider": 6
+ },
+ "kernel_ms_per_provider_state_pass_plus_2_rows": {
+  "CUDAExecutionProvider": 341.329,
+  "CPUExecutionProvider": 0.058
+ },
+ "top_ops_ms": {
+  "MatMul on CUDAExecutionProvider": 210.056,
+  "Mul on CUDAExecutionProvider": 80.239,
+  "GroupQueryAttention on CUDAExecutionProvider": 11.797,
+  "Cast on CUDAExecutionProvider": 6.608,
+  "LinearAttention on CUDAExecutionProvider": 5.112,
+  "SkipSimplifiedLayerNormalization on CUDAExecutionProvider": 4.691,
+  "Reshape on CUDAExecutionProvider": 2.558,
+  "Transpose on CUDAExecutionProvider": 2.322
+ },
+ "present_on_plain_run": "numpy (host)",
+ "present_bound_to_device": "cuda",
+ "cache_bytes_600_tokens": 17473536,
+ "state_tokens": 600,
+ "row_tokens": 82,
+ "onnxruntime": "1.30.0"
+}

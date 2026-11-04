@@ -1,0 +1,19 @@
+{
+ "graph": "/home/mark/Projects/AI-models/kev/spike-2026-11-04/export-cuda-fp32/model-p1.onnx",
+ "steps": [
+  {
+   "step": "create session (CUDA EP, use_tf32=0)",
+   "ok": true
+  },
+  {
+   "step": "state pass, 600 tokens, empty cache",
+   "ok": true
+  },
+  {
+   "step": "row of 40 tokens from the cached state",
+   "ok": false,
+   "error": "[ONNXRuntimeError] : 1 : FAIL : Non-zero status code returned while running Expand node. Name:'/model/attn_mask_reformat/input_ids_subgraph/Expand' Status Message: /model/attn_mask_reformat/input_ids_subgraph/Expand: left operand cannot broadcast on dim 3 LeftShape: {1,1,40,40}, RightShape: {1,1,40,640}"
+  }
+ ],
+ "onnxruntime": "1.30.0"
+}

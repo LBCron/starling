@@ -134,8 +134,8 @@ public static class Qwen35Capabilities
         // Grammar builder and decode loop (fast-forward tokens included) tested with scripted sequences in CI; on the real
         // fp32x model on CPU loaded from the downloaded r2 files (local, one machine): a regex, a JSON schema and the
         // required tool-call grammar were followed, through the typed API and the IChatClient; the same checks passed on
-        // fp32x and fp16x on CUDA (an RTX 4060 Ti, not the RTX 3090 of the Stable CUDA record). No latency qualification,
-        // no int4 run (the int4 manifest says untested).
+        // fp32x and fp16x on CUDA (an RTX 4060 Ti, not the RTX 3090 of the Stable CUDA record), and on int4 on CPU through
+        // both APIs (docs/evidence/qwen35-int4-guided-2026-11-04). No latency qualification.
         ["structured_output"] = Qwen35CapabilityStatus.Experimental,
         ["structured_output.cuda"] = Qwen35CapabilityStatus.Experimental,
         ["extensions_ai.tool_mode.required"] = Qwen35CapabilityStatus.Experimental,

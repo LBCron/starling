@@ -26,7 +26,7 @@ The [`Starlings.Models.Abstractions` README](../../ai-dotnet/src/Starlings.Model
 
 Merged to `main` after 0.5.0; collected in [`unreleased.md`](unreleased.md). Nothing here is published yet.
 
-- Nothing yet.
+- **`Starlings.Models.QwenChat.OnnxGenAI`: hosting revision r2 (#278).** `QwenChatProfile.Qwen3` and `QwenChatProfile.Qwen25` pin new `model.onnx` digests of the same size. At the default SHA-256 verification, a cache acquired from r1 makes `QwenChatModelAssets.OpenLocal` throw `ModelAssetIntegrityException` on `model.onnx` until `DownloadAsync` runs again, which replaces that one file. With `CacheVerification` set to size only, `OpenLocal` passes and `QwenChatModel.Load` throws `InvalidDataException`. Earlier packages pin r1, which stays hosted, but both revisions share one cache path: see the upgrading note in `unreleased.md`.
 
 ## 0.5.0
 

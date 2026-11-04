@@ -76,6 +76,15 @@ behavior:
     enable_thinking: true              # the template's default; Lfm3ChatModel.Chat takes enableThinking
     template: "lfm3-text-v1: text system, user and assistant turns, enable_thinking and preserve_thinking"
     request_state: one Lfm3Sequence (convolution and attention caches) per request; requests share the weights only.
+  # Informational, Experimental API (docs/kickoff.md, "Capability record fields"). The validator compares each
+  # value with its capabilities row. max_output_tokens is a bound shared with the prompt, not a completion budget.
+  # max_output_tokens is untested because the capabilities map has no max_new_tokens row.
+  generation:
+    tool_call_mode: none
+    structured_output: none
+    state_reuse: none
+    caching_style: none
+    max_output_tokens: untested
   unsupported:
     - sampling, including the card's temperature 0.1, top_k 50, repetition_penalty 1.1
     - logprobs and guided decoding

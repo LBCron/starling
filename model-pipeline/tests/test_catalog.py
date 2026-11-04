@@ -304,6 +304,44 @@ def test_csharp_capability_records_are_generated_and_checked(repo):
     assert run(repo, "--check") == 2
 
 
+GENERATION = {
+    "tool_call_mode": "template",
+    "structured_output": "untested",
+    "state_reuse": "none",
+    "caching_style": "none",
+    "max_output_tokens": 512,
+}
+
+
+def _generator(m):
+    m["behavior"]["tasks"] = ["generation"]
+    m["behavior"]["generation"] = dict(GENERATION)
+    m["capabilities"].update(tool_calling="experimental", conversation_state_reuse="unsupported")
+    m["capabilities"]["max_new_tokens"] = "experimental"
+
+
+def test_generation_fields_reach_the_catalog_and_the_csharp_record(repo):
+    add_profile(repo / "registry", "fam/gen", _generator)
+    add_profile(repo / "registry", "fam/embed")
+    built = catalog.build(repo / "registry", repo)
+    assert profile(built, "fam/gen")["generation"] == GENERATION
+    assert profile(built, "fam/embed")["generation"] is None
+    assert "| fam/gen | template | untested | none | none | 512 |" in catalog.render(built)[catalog.README]
+
+    pkg = repo / "ai-dotnet" / "src" / "Starlings.Models.Fam"
+    pkg.mkdir(parents=True)
+    source = pkg / "ProfileCapabilities.g.cs"
+    source.write_text("// catalog:capabilities profiles=fam/*\n", encoding="utf-8")
+    assert run(repo) == 0
+    text = source.read_text(encoding="utf-8")
+    assert text.count("Generation = new ProfileGeneration(") == 1  # the embedder has none
+    assert "ProfileToolCallMode.TemplateRendered," in text
+    assert "ProfileStructuredOutput.Untested," in text
+    assert "ProfileStateReuse.None," in text
+    assert "ProfileCachingStyle.None," in text
+    assert "MaxOutputTokens: 512)," in text
+
+
 def test_csharp_capability_records_use_the_project_root_namespace(repo):
     add_profile(repo / "registry", "fam/a")
     pkg = repo / "ai-dotnet" / "src" / "Starlings.Models.Fam.Onnx"
