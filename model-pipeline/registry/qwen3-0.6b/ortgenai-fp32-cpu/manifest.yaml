@@ -2,7 +2,7 @@
 # provider. Admission: model-pipeline/admissions/qwen-chat.md (proposed at Experimental, #124). Candidate contract:
 # model-pipeline/candidates/qwen3/profile.json (onboarding route qwen-genai-cpu-v1, recipes/qwen3-cpu.yaml). The Hub
 # repository ships no GenAI build: the graph is Starling's build of the pinned original
-# (model-pipeline/reference/qwen-chat/build_bundle.py, builder 0.17.1 at 83de55a1), rebuilt byte-identically twice on
+# (model-pipeline/reference/qwen-chat/build_bundle.py, builder 0.17.1 at 83de55a1), rebuilt byte-identically twice on one machine on
 # 2026-11-04 (docs/evidence/qwenchat-hosting-r2-2026-11-04/README.md) and pinned by QwenChatProfile.BundleFiles. Hosted publicly at Starlinghq/qwen3-0.6b-ortgenai (r2); QwenChatModelAssets downloads it. The references are proposed, not
 # adopted into protected/, and no gate has run.
 schema_version: 1
@@ -78,7 +78,7 @@ rights:
     C# template renderer adapts the upstream chat_template (Apache-2.0; THIRD-PARTY-NOTICES.md and LICENSE.Qwen.txt in
     the package). Hosting decided by Mark on 2026-10-19 (admissions/qwen-chat.md): Starling redistributes the built
     bundle, publicly, in Starlinghq/qwen3-0.6b-ortgenai (tag r2) with LICENSE, NOTICE and SHA256SUMS; QwenChatModelAssets pins it by commit
-    and QwenChatModel.Load accepts only the pinned digests. A locally built bundle (build_bundle.py) loads only with the same digests, which the hash-locked builder gives.
+    and QwenChatModel.Load accepts only the pinned digests. A locally built bundle (build_bundle.py) loads only with the same digests, which the hash-locked builder gave on one machine; another wheel or platform was not tested.
 
 behavior:
   tasks: [generation]

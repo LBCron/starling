@@ -14,4 +14,6 @@ Every package that tokenizes now pins `Starlings.Tokenizers [0.3.5]` (0.3.4 in `
 
 **Upgrading:** r1 stays hosted at its commits (`c24cd59c`, `6b6957c8`), so packages up to 0.5.0 keep working unchanged. After upgrading the package, a cache acquired from r1 fails `QwenChatModelAssets.OpenLocal` with `ModelAssetIntegrityException` on `model.onnx`, at the default SHA-256 verification; call `DownloadAsync` once, which replaces that one 150 to 250 KB file. A cache opened with `CacheVerification` set to size only passes `OpenLocal`, because the size is unchanged, and `QwenChatModel.Load` then refuses the bundle, so run `DownloadAsync` with SHA-256 verification. An r1 bundle kept in a directory of its own is refused by `Load`.
 
+Both revisions use one cache path, because the path is keyed on the upstream revision. So an app on 0.5.0 and a newer app that share a cache directory invalidate each other, and rolling back hits the same thing: each `DownloadAsync` replaces `model.onnx` with its own revision, and the other package then fails as above until it downloads again. Give the two apps separate cache directories.
+
 The same stamp exposure in the Qwen3.5 int4 graph (`c98b9fc`) is not part of this change.

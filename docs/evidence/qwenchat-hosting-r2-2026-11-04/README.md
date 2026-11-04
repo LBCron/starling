@@ -26,7 +26,7 @@ Nothing here sets a tolerance, a gate or a golden. No `model-pipeline/protected/
 | First | inside a Git work tree (`.models/venv-generation` of the Starling checkout) | `build_bundle.py` directly |
 | Second | outside any work tree, new venv, as CI uses | the `bundle` stage of `model-pipeline run` |
 
-Both builds of each profile gave the same six digests (`qwen3/bundle-lock.json`, `qwen25/bundle-lock.json` are the second build), and `build_bundle.py` accepted the stamp `0.17.1+83de55a`. So the digest no longer depends on where the environment lives, on this machine. Another builder wheel or platform was not tested.
+Both builds of each profile gave the same six digests (`qwen3/bundle-lock.json`, `qwen25/bundle-lock.json` are the second build), and `build_bundle.py` accepted the stamp `0.17.1+83de55a`. The first build's output was not kept, so that build has no artifact of its own. `inside-work-tree-rebuild.log` is a later rerun of the same case, at commit `4919f57`: both profiles gave the same six digests, and their `bundle-lock.json` files equal the committed ones. So the digest no longer depends on where the environment lives, on this machine. Another builder wheel or platform was not tested.
 
 | File | Old SHA-256 (r1) | New SHA-256 (r2) | Bytes |
 | --- | --- | --- | ---: |
@@ -65,7 +65,7 @@ The runs were local. The qualification workflow itself has not run on this chang
 
 ## 5. r1 stays available
 
-Packages up to 0.5.0 pin r1 by commit, so they keep working.
+Packages up to 0.5.0 pin r1 by commit, so they keep working. The exception is a cache directory shared with a newer package, or a rollback: r1 and r2 use one cache path, keyed on the upstream revision, so each `DownloadAsync` replaces the other's `model.onnx`. That follows from section 6 and the store's path; no drill ran it in this direction.
 
 - Both r1 commits still resolve, and all six files of each downloaded anonymously with their r1 digests after the r2 commits existed (`fresh-download.log`, lines marked `r1`).
 - Tags `r1` and `r2` resolve to the commits in the table above. Each repository history is `initial commit`, `Starling build r1`, `Starling build r2`; nothing was rewritten or force-pushed, and `main` moved to r2 by a normal commit.
