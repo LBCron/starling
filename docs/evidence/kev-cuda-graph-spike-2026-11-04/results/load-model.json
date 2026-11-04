@@ -1,0 +1,11 @@
+{
+ "graph": "/home/mark/Projects/AI-models/kev/spike-2026-11-04/export-cuda-fp32/model.onnx",
+ "steps": [
+  {
+   "step": "create session (CUDA EP, use_tf32=0)",
+   "ok": false,
+   "error": "[ONNXRuntimeError] : 2 : INVALID_ARGUMENT : Load model from /home/mark/Projects/AI-models/kev/spike-2026-11-04/export-cuda-fp32/model.onnx failed:Invalid model. Node input 'past_key_values.0.key' is not a graph input, initializer, or output of a previous node."
+  }
+ ],
+ "onnxruntime": "1.30.0"
+}
