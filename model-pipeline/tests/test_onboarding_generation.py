@@ -4,6 +4,8 @@ import copy
 import hashlib
 import importlib.util
 import json
+import os
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -93,6 +95,31 @@ def test_flat_float32_overlay_changes_only_dtype_fields(monkeypatch):
     assert result == {**before, "dtype": "float32", "torch_dtype": "float32"}
     with pytest.raises(ValueError, match="flat"):
         module.float32_config({"model_type": "qwen3_5", "text_config": {}})
+
+
+def test_builder_cannot_see_the_git_work_tree_around_its_environment(tmp_path, monkeypatch):
+    module = builder(monkeypatch)
+    identity = ["-c", "user.name=t", "-c", "user.email=t@example.invalid"]
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    subprocess.run(["git", *identity, "-C", str(tmp_path), "commit", "-q", "--allow-empty", "-m", "x"], check=True)
+    probe = ["git", "rev-parse", "HEAD"]
+    assert subprocess.run(probe, cwd=tmp_path, check=False, capture_output=True).returncode == 0
+    hidden = module.builder_environment(dict(os.environ), tmp_path / "scratch")
+    assert subprocess.run(probe, cwd=tmp_path, env=hidden, check=False, capture_output=True).returncode != 0
+
+
+def test_graph_stamped_with_a_foreign_commit_is_refused(tmp_path, monkeypatch):
+    onnx = pytest.importorskip("onnx")
+    module = builder(monkeypatch)
+    graph = tmp_path / "model.onnx"
+    model = onnx.helper.make_model(onnx.helper.make_graph([], "g", [], []), producer_name="onnxruntime-genai")
+    model.producer_version = f"{module.BUILDER_VERSION}+{module.BUILDER_SOURCE[:7]}"
+    onnx.save(model, graph)
+    module.verify_producer_version(graph)
+    model.producer_version = f"{module.BUILDER_VERSION}+1bada25"
+    onnx.save(model, graph)
+    with pytest.raises(ValueError, match="1bada25"):
+        module.verify_producer_version(graph)
 
 
 def test_verified_copy_rejects_corruption_and_never_changes_source(tmp_path, monkeypatch):
