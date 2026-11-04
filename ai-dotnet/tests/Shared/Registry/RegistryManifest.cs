@@ -6,7 +6,7 @@ namespace Starlings.TestSupport;
 /// Reads the fields of a registry manifest (<c>model-pipeline/registry/&lt;family&gt;/&lt;profile&gt;/manifest.yaml</c>)
 /// that the packages' capability tables and generated capability records mirror: <c>maturity</c>, the
 /// <c>capabilities</c> map, the <c>compatibility</c> rows and the contract fields of <c>behavior</c>
-/// (<c>max_input_tokens</c>, <c>truncation</c>, <c>defaults.dimension</c>, <c>defaults.stop_token_ids</c>). Line based, for the manifests' own layout (two-space indentation, one key per line); the
+/// (<c>tasks</c>, <c>max_input_tokens</c>, <c>truncation</c>, <c>defaults.dimension</c>, <c>defaults.stop_token_ids</c>, <c>generation</c>). Line based, for the manifests' own layout (two-space indentation, one key per line); the
 /// schema validator (<c>model-pipeline validate</c>) checks the full document.
 /// </summary>
 internal sealed partial class RegistryManifest
@@ -38,8 +38,9 @@ internal sealed partial class RegistryManifest
     public IReadOnlyList<IReadOnlyDictionary<string, string>> CompatibilityRows { get; }
 
     /// <summary>
-    /// Scalar <c>behavior</c> fields: <c>max_input_tokens</c>, <c>truncation</c>, and from <c>defaults</c>,
-    /// <c>dimension</c> and <c>stop_token_ids</c> (the flow list as written, without brackets), when present.
+    /// Scalar <c>behavior</c> fields: <c>tasks</c> (the flow list as written, without brackets), <c>max_input_tokens</c>,
+    /// <c>truncation</c>, from <c>defaults</c>, <c>dimension</c> and <c>stop_token_ids</c> (likewise), and from
+    /// <c>generation</c>, each field as <c>generation.&lt;field&gt;</c>, when present.
     /// </summary>
     public IReadOnlyDictionary<string, string> Behavior { get; }
 
@@ -116,6 +117,14 @@ internal sealed partial class RegistryManifest
                         {
                             behavior[key] = value;
                         }
+                        else if (key == "tasks")
+                        {
+                            behavior[key] = value.Trim('[', ']').Trim();
+                        }
+                    }
+                    else if (indent.Length == 4 && subsection == "generation")
+                    {
+                        behavior["generation." + key] = value;
                     }
                     else if (indent.Length == 4 && subsection == "defaults" && key is "dimension" or "stop_token_ids")
                     {

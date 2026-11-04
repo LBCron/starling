@@ -18,6 +18,10 @@ namespace Starlings.Models;
 /// never means supported.
 /// </para>
 /// <para>
+/// <b>Generation fields.</b> <see cref="Generation"/> is informational and Experimental API: it can change in any release
+/// until a release note promotes a field to the contract (<c>docs/kickoff.md</c>, "Capability record fields").
+/// </para>
+/// <para>
 /// Collections are read-only and compared by reference in record equality.
 /// </para>
 /// </remarks>
@@ -62,6 +66,82 @@ public sealed record ModelProfileCapabilities
 
     /// <summary>The manifest's <c>capabilities</c> map, key for key. Informational.</summary>
     public IReadOnlyDictionary<string, CapabilityStatus> Capabilities { get; init; } = new Dictionary<string, CapabilityStatus>(StringComparer.Ordinal);
+
+    /// <summary>
+    /// How the profile serves generation features (manifest <c>behavior.generation</c>), or null for a profile whose
+    /// tasks do not include <c>generation</c>. Informational, Experimental API.
+    /// </summary>
+    public ProfileGeneration? Generation { get; init; }
+}
+
+/// <summary>
+/// How a generation profile serves each generation feature (manifest <c>behavior.generation</c>). Informational,
+/// Experimental API. Each value says how a feature works, not how far it is qualified: the status stays in
+/// <see cref="ModelProfileCapabilities.Capabilities"/>, and the validator and the contract tests hold each value to its
+/// row there. A value that is not <c>None</c> or <c>Untested</c> does not mean supported.
+/// </summary>
+/// <param name="ToolCallMode">Follows the capability <c>tool_calling</c>.</param>
+/// <param name="StructuredOutput">Follows the capability <c>structured_output</c> or <c>guided_decoding</c>.</param>
+/// <param name="StateReuse">Follows the capability <c>conversation_state_reuse</c> or <c>prefix_reuse</c>.</param>
+/// <param name="CachingStyle">Follows the same capability as <paramref name="StateReuse"/>.</param>
+/// <param name="MaxOutputTokens">
+/// Upper bound on the completion tokens of one request, or null when the capability <c>max_new_tokens</c> is untested,
+/// unsupported or not recorded. The bound is shared with the prompt: it equals
+/// <see cref="ModelProfileCapabilities.MaxInputTokens"/>, and a request whose prompt plus completion exceed that is
+/// refused, so passing it unchanged as a completion limit fails for any non-empty prompt. It is not a qualified
+/// completion length.
+/// </param>
+public sealed record ProfileGeneration(
+    ProfileToolCallMode ToolCallMode,
+    ProfileStructuredOutput StructuredOutput,
+    ProfileStateReuse StateReuse,
+    ProfileCachingStyle CachingStyle,
+    int? MaxOutputTokens);
+
+/// <summary>How a profile offers tool calls (manifest <c>behavior.generation.tool_call_mode</c>).</summary>
+public enum ProfileToolCallMode
+{
+    /// <summary>The profile has no tool calls (<c>none</c>; the capability is unsupported).</summary>
+    None,
+
+    /// <summary>Tools are rendered into the chat template and calls are parsed from the completion (<c>template</c>).</summary>
+    TemplateRendered,
+
+    /// <summary>No sufficient evidence: the capability is untested or not recorded (<c>untested</c>).</summary>
+    Untested,
+}
+
+/// <summary>How a profile constrains its output (manifest <c>behavior.generation.structured_output</c>).</summary>
+public enum ProfileStructuredOutput
+{
+    /// <summary>Nothing constrains decoding (<c>none</c>; the capability is unsupported).</summary>
+    None,
+
+    /// <summary>A grammar constrains decoding (<c>grammar</c>).</summary>
+    Grammar,
+
+    /// <summary>No sufficient evidence: the capability is untested or not recorded (<c>untested</c>).</summary>
+    Untested,
+}
+
+/// <summary>Reuse of prefix or conversation state across requests (manifest <c>behavior.generation.state_reuse</c>).</summary>
+public enum ProfileStateReuse
+{
+    /// <summary>Each request starts from fresh state (<c>none</c>; the capability is unsupported).</summary>
+    None,
+
+    /// <summary>No sufficient evidence: the capability is untested or not recorded (<c>untested</c>).</summary>
+    Untested,
+}
+
+/// <summary>Prompt caching across requests (manifest <c>behavior.generation.caching_style</c>).</summary>
+public enum ProfileCachingStyle
+{
+    /// <summary>No prompt is cached across requests (<c>none</c>; the capability is unsupported).</summary>
+    None,
+
+    /// <summary>No sufficient evidence: the capability is untested or not recorded (<c>untested</c>).</summary>
+    Untested,
 }
 
 /// <summary>Maturity of a model profile (manifest <c>maturity</c>; the levels of docs/support-policy.md).</summary>

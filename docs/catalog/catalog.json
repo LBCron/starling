@@ -17,7 +17,7 @@
       "none"
     ]
   },
-  "stable_rule": "every gate G0-G7 passed and no capability untested (model_pipeline.manifest.stable_blockers)",
+  "stable_rule": "every gate G0-G7 passed and no capability or generation field untested (model_pipeline.manifest.stable_blockers)",
   "gates": [
     "G0",
     "G1",
@@ -214,6 +214,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -482,6 +483,7 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -750,6 +752,7 @@
         "dimension": 1024,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -1018,6 +1021,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -1287,6 +1291,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -1555,6 +1560,7 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu"
       ],
@@ -1843,6 +1849,7 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
@@ -2135,6 +2142,7 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu"
       ],
@@ -2424,6 +2432,7 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
@@ -2715,6 +2724,7 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu"
       ],
@@ -3006,6 +3016,7 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
@@ -3300,6 +3311,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu",
         "cuda"
@@ -3590,6 +3602,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
@@ -3882,6 +3895,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
@@ -4156,6 +4170,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
@@ -4433,6 +4448,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
@@ -4706,6 +4722,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-05",
@@ -4985,6 +5002,13 @@
           124900
         ]
       },
+      "generation": {
+        "tool_call_mode": "none",
+        "structured_output": "none",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": "untested"
+      },
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-28",
@@ -5238,6 +5262,7 @@
         "untested_capabilities": [
           "aot",
           "concurrent_calls",
+          "generation.max_output_tokens",
           "generation_cuda",
           "generation_fp16",
           "long_context"
@@ -5260,6 +5285,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -5529,6 +5555,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cpu"
       ],
@@ -5817,6 +5844,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [
         "cuda"
       ],
@@ -6107,6 +6135,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -6384,6 +6413,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -6662,6 +6692,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -6936,6 +6967,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -7215,6 +7247,7 @@
         "dimension": 768,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -7484,6 +7517,7 @@
         "dimension": 384,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
@@ -7756,6 +7790,13 @@
           151643
         ]
       },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "untested",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 32768
+      },
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-18",
@@ -8009,6 +8050,7 @@
         "untested_capabilities": [
           "aot",
           "concurrent_requests",
+          "generation.structured_output",
           "long_context"
         ]
       },
@@ -8032,6 +8074,13 @@
           151643
         ]
       },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "untested",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 40960
+      },
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-18",
@@ -8285,6 +8334,7 @@
         "untested_capabilities": [
           "aot",
           "concurrent_requests",
+          "generation.structured_output",
           "long_context"
         ]
       },
@@ -8305,6 +8355,7 @@
         "dimension": 1024,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-02-02",
@@ -8578,6 +8629,13 @@
           248046,
           248044
         ]
+      },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "grammar",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 8192
       },
       "qualified_providers": [
         "cuda"
@@ -8872,6 +8930,13 @@
           248044
         ]
       },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "grammar",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 8192
+      },
       "qualified_providers": [
         "cpu"
       ],
@@ -9161,6 +9226,13 @@
           248046,
           248044
         ]
+      },
+      "generation": {
+        "tool_call_mode": "template",
+        "structured_output": "grammar",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 8192
       },
       "qualified_providers": [
         "cuda"
@@ -9455,6 +9527,13 @@
           248044
         ]
       },
+      "generation": {
+        "tool_call_mode": "untested",
+        "structured_output": "untested",
+        "state_reuse": "none",
+        "caching_style": "none",
+        "max_output_tokens": 8192
+      },
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-02-01",
@@ -9708,6 +9787,8 @@
         "untested_capabilities": [
           "aot",
           "extensions_ai",
+          "generation.structured_output",
+          "generation.tool_call_mode",
           "long_context_1667_to_8192_tokens",
           "structured_output",
           "tool_calling"
@@ -9730,6 +9811,7 @@
         "dimension": null,
         "stop_token_ids": []
       },
+      "generation": null,
       "qualified_providers": [],
       "owner": "Mark",
       "review_date": "2027-01-23",
