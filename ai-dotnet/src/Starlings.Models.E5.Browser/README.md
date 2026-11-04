@@ -2,6 +2,8 @@
 
 `intfloat/multilingual-e5-small` (revision `614241f6`) sentence embeddings **in the browser**: Blazor WebAssembly or any other .NET `browser-wasm` app, on [onnxruntime-web](https://onnxruntime.ai/docs/tutorials/web/) through `Starlings.Runtime.OnnxWeb`. Text is tokenized by the owned tokenizer (`Starlings.Tokenizers`), and padding, mean pooling and L2 normalization are the same code as `Starlings.Models.E5`. Only the graph runs on a different backend. The API is asynchronous, because onnxruntime-web is, and may still change.
 
+⭐ If this package is useful, [star Starling on GitHub](https://github.com/starlinghq/starling).
+
 ## Maturity
 
 <!-- catalog:maturity profiles=multilingual-e5-small/onnx-*-wasm,multilingual-e5-small/onnx-*-webgpu -->
@@ -59,7 +61,7 @@ using var generator = new E5BrowserEmbeddingGenerator(embedder, E5InputType.Pass
 var embeddings = await generator.GenerateAsync(["Trim the stems and stand basil in water.", "Le Rhin se jette dans la mer du Nord."]);
 ```
 
-The int8-embed graph (182 MB, about 109 MB brotli) has no public URL. Build it with `model-pipeline/reference/encoder/quantize_e5_browser.py`, which is deterministic and produces SHA-256 `374a3cc0…fb19`. Host it with the app, then load it:
+The int8-embed graph (182 MB, about 109 MB brotli) is on the Hugging Face Hub at [`Starlinghq/multilingual-e5-small-browser-onnx`](https://huggingface.co/Starlinghq/multilingual-e5-small-browser-onnx/resolve/51c02127009ddca6e3c7c187b2e406d1715f69a7/model-int8-embed.onnx), pinned by commit. Build it with `model-pipeline/reference/encoder/quantize_e5_browser.py`, which is deterministic and produces SHA-256 `374a3cc0…fb19`. Host it with the app, then load it:
 
 ```csharp
 await E5BrowserEmbedder.LoadAsync(new E5BrowserLoadOptions { Variant = E5BrowserVariant.Int8Embed, ModelUrl = "models/model-int8-embed.onnx" });
