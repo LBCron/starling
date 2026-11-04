@@ -1,6 +1,6 @@
 # Admission: Phi-4-mini-instruct (Microsoft)
 
-Model request #109. Plan section 7, pipeline stage 1. Facts were read on 2026-11-04 from the files at the pinned revision, which were downloaded and hashed (`candidates/phi4-mini/profile.json`), and from the Hub API. The route follows `docs/design/generic-genai-chat-route.md`, whose status is still proposed.
+Model request #109. Plan section 7, pipeline stage 1. Facts were read on 2026-11-04 from the files at the pinned revision, which were downloaded and hashed (`candidates/phi4-mini/profile.json`), and from the Hub API. The route follows `docs/design/generic-genai-chat-route.md`, accepted on 2026-11-04 for the route shape and the generic loader.
 
 | Field | Value |
 | --- | --- |
@@ -10,7 +10,7 @@ Model request #109. Plan section 7, pipeline stage 1. Facts were read on 2026-11
 | Requested by / demand evidence | #109. Hub on 2026-11-04: 340,545 downloads, 880 likes. Its triage calls it a natural step up from Qwen3.5-0.8B. No named consumer yet. |
 | Proposed owner | Unassigned |
 | Proposed maturity at first release | Experimental |
-| Decision | Proposed: admitted at maturity Experimental, `phi4-mini-instruct/ortgenai-fp32-cpu`, greedy text chat, CPU fp32 on Linux x64, prompt plus completion below 4,096 tokens. Source only: no package, no registry manifest and no hosted bundle. Development parity passed on all 14 corpus rows; protected G1/G2 did not run. This depends on two open items: the design note `docs/design/generic-genai-chat-route.md` is still proposed, and the choice between the thin loader and a generic loader is undecided. |
+| Decision | Proposed: admitted at maturity Experimental, `phi4-mini-instruct/ortgenai-fp32-cpu`, greedy text chat, CPU fp32 on Linux x64, prompt plus completion below 4,096 tokens. `Starlings.Models.Phi4` is source only: no Phi-4 package, no registry manifest and no hosted bundle. Development parity passed on all 14 corpus rows; protected G1/G2 did not run. The admission level and whether to host a bundle are open. |
 | Decided by and date | Pending maintainer decision. |
 
 ## Rights (hard blockers)
@@ -33,7 +33,7 @@ No rights blocker.
 | Reusable architecture coverage | 20% | 4 | First Phi family model, first o200k tokenizer profile, and the first entry of a data-driven chat route meant for #110. |
 | Access and licensing clarity | 15% | 5 | Ungated, MIT, files pinned by commit and SHA-256. |
 | Testability | 10% | 3 | Full reference route (transformers, Python GenAI, .NET) on 14 conversations. Long context needs a separate run. |
-| Maintenance burden (5 = low) | 10% | 4 | Stable upstream revision (last changed 2025-12-10) and a small template; one new route and two source-only projects. |
+| Maintenance burden (5 = low) | 10% | 4 | Stable upstream revision (last changed 2025-12-10) and a small template; one new route, one source-only project and a small generic loader. |
 | **Weighted total** | | **3.80** | |
 
 ## Execution route
@@ -44,7 +44,7 @@ The builder picks `Phi3MiniLongRoPEModel` because `max_position_embeddings` (131
 
 GenAI masks a position whose id equals `pad_token_id`, and upstream's pad id is `<|endoftext|>` (199999), so a literal one in a prompt would lose attention. The profile overlays 200063, an unused embedding row (the tokenizer's ids end at 200028), as the Qwen profiles do. The original files are never modified.
 
-`Starlings.Models.Phi4` holds the definition and `Starlings.Models.Phi4.OnnxGenAI` a thin loader. Both are source only. A generic GenAI loader that reads the route table is the design note's first open question; the thin loader was chosen because it can be removed without touching the route.
+`Starlings.Models.Phi4`, source only, holds the definition and embeds the route contract table. Generation goes through the generic `GenAIChatModel` in `Starlings.Generation.OnnxGenAI`, experimental API, which reads `Phi4Checkpoint.ChatDefinition`.
 
 ## Tokenizer profile
 
@@ -79,4 +79,4 @@ Linux x64 CPU, two threads, inside a 20 GiB limit. `model.onnx.data` is 15.3 GB.
 - Bounds are the route's existing development policy, proposed. No fixture is protected, no tolerance is set, no gate has run.
 - 15.3 GB of graph data is a heavy CPU profile. With no hosted bundle, a user must have the snapshot and build it.
 - The evaluated corpus is 14 short conversations; the parity check is about faithfulness to the reference, not model quality.
-- The design note is proposed; this record relies on its decisions without settling them.
+- The design note leaves the admission level and hosting a bundle open; this record proposes the first and does not settle the second.

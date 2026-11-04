@@ -7,7 +7,7 @@ file, so they cannot drift apart.
 | File | Route | Read by |
 | --- | --- | --- |
 | [`bert-onnx-cpu-v1/contracts.json`](bert-onnx-cpu-v1/contracts.json) | `bert-onnx-cpu-v1` | `src/model_pipeline/onboarding_bert.py` (`load_contracts`, `validate_contracts`) and `ai-dotnet/src/Starlings.Models.Bert` (embedded resource `Starlings.Models.Bert.Contracts.json`; `BertModelProfile.SupportedRepositories`) |
-| [`genai-chat-cpu-v1/contracts.json`](genai-chat-cpu-v1/contracts.json) | `genai-chat-cpu-v1` | `src/model_pipeline/onboarding_genai_chat.py` (`load_contracts`, `validate_contracts`); `Starlings.Models.Phi4.Tests` compares `Phi4Checkpoint` with it |
+| [`genai-chat-cpu-v1/contracts.json`](genai-chat-cpu-v1/contracts.json) | `genai-chat-cpu-v1` | `src/model_pipeline/onboarding_genai_chat.py` (`load_contracts`, `validate_contracts`) and `ai-dotnet/src/Starlings.Generation.Abstractions` (`ChatRouteContract.ParseTable`), through the family package that embeds it (`Starlings.Models.Phi4`, resource `Starlings.Models.Phi4.Contracts.json`), for the generic `GenAIChatModel`; `Starlings.Models.Phi4.Tests` compares `Phi4Checkpoint` with it |
 
 The other routes (e5, Qwen, Kev, Whisper) still keep their allow-lists in code.
 
@@ -51,7 +51,7 @@ evidence are unchanged.
 | `vocab_size` | Rows of the embedding and the logits | positive integer |
 | `eos_token_ids` | The ids that end a turn, from `generation_config.json` | non-empty, inside the vocabulary |
 | `add_bos_token` | Whether the tokenizer adds a BOS | boolean |
-| `pad_token_id_overlay`, `pad_overlay_reason` | The pad id overlaid on the GenAI configuration, and why | an embedding row outside the EOS ids; the backend stage refuses a row the tokenizer uses |
+| `pad_token_id_overlay`, `pad_overlay_reason` | The pad id overlaid on the GenAI configuration, and why | an embedding row outside the EOS ids and a string, or both `null` for no overlay; the backend stage and the loader refuse a row the tokenizer uses |
 | `tokenizer_profile` | Owned tokenizer pipeline | `phi4-bpe-chat` |
 | `template`, `template_sha256` | Template id and SHA-256 of the upstream `chat_template` string | lowercase hex digest; the bundle stage checks it |
 | `max_new_tokens` | Default completion limit of a corpus row | positive integer |
@@ -59,4 +59,4 @@ evidence are unchanged.
 | `cache` | Cache statement of the evidence | string |
 | `tools`, `thinking`, `multimodal`, `long_context` | Explicit capability status | `supported`, `unsupported`, `experimental` or `untested` |
 
-An entry is not a support claim: it lets the route run the candidate; gates, maturity and protected evidence are unchanged. Unlike the BERT table, no .NET package reads this one at run time: whether one generic loader should is an open maintainer question (`docs/design/generic-genai-chat-route.md`).
+An entry is not a support claim: it lets the route run the candidate; gates, maturity and protected evidence are unchanged. Both readers refuse what `validate_contracts` refuses, except that the tokenizer profile allow-list is Python's: the .NET parser takes the profile as data, and the family's `OpenTokenizer` pins the file. `GenAIChatModel` reads the table through a family's `ChatModelDefinition`, which adds what the table does not hold: the template port, the bundle lock and the tokenizer check. The generic loader itself holds no model data, so the published `Starlings.Generation.OnnxGenAI` package carries no entry of this table.

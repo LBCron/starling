@@ -17,7 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../src/Starlings.Models.Phi4.OnnxGenAI/Starlings.Models.Phi4.OnnxGenAI.csproj" />
+    <ProjectReference Include="../../src/Starlings.Generation.OnnxGenAI/Starlings.Generation.OnnxGenAI.csproj" />
+    <ProjectReference Include="../../src/Starlings.Models.Phi4/Starlings.Models.Phi4.csproj" />
   </ItemGroup>
 
 </Project>

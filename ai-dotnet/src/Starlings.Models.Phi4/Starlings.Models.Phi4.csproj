@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="" />
+    <!-- The route contract table, read by Phi4Checkpoint.ChatDefinition. -->
+    <EmbeddedResource Include="../../../model-pipeline/routes/genai-chat-cpu-v1/contracts.json" Link="Contracts/contracts.json" LogicalName="Starlings.Models.Phi4.Contracts.json" />
   </ItemGroup>
 
   <ItemGroup>

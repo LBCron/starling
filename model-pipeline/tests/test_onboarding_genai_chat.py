@@ -148,6 +148,14 @@ def _pad_outside(document: dict) -> None:
     _entry(document)["behavior"]["pad_token_id_overlay"] = 200064
 
 
+def _pad_without_reason(document: dict) -> None:
+    _entry(document)["behavior"]["pad_overlay_reason"] = None
+
+
+def _reason_without_pad(document: dict) -> None:
+    _entry(document)["behavior"]["pad_token_id_overlay"] = None
+
+
 def _long_context(document: dict) -> None:
     _entry(document)["behavior"]["max_context_tokens"] = 8192
 
@@ -167,6 +175,8 @@ def _other_route(document: dict) -> None:
         _unknown_field,
         _other_tokenizer,
         _pad_outside,
+        _pad_without_reason,
+        _reason_without_pad,
         _long_context,
         _other_route,
     ],
@@ -176,6 +186,12 @@ def test_table_validation_refuses(change):
     change(document)
     with pytest.raises(PipelineError):
         validate_contracts(document)
+
+
+def test_table_admits_an_entry_without_a_pad_overlay():
+    document = table()
+    _entry(document)["behavior"].update(pad_token_id_overlay=None, pad_overlay_reason=None)
+    assert validate_contracts(document)
 
 
 def test_table_refuses_duplicate_keys(tmp_path):
@@ -323,7 +339,8 @@ def test_dotnet_stage_runs_the_route_tool_and_declares_the_route_code(tmp_path, 
     }
     for directory in (
         "Starlings.Models.Phi4",
-        "Starlings.Models.Phi4.OnnxGenAI",
+        "Starlings.Generation.Abstractions",
+        "Starlings.Generation.OnnxGenAI",
         "Starlings.Acquisition",
         "Shared/Threading",
     ):

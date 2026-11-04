@@ -272,8 +272,8 @@ The stages are those of the Qwen route: `assets`, `environment`, `reference`, `b
 - `reference` (`reference/genai-chat/run_reference.py`) runs with `trust_remote_code` off and refuses a model or tokenizer class that is not built into the pinned transformers. The candidate pins no Python file of the checkpoint.
 - `bundle` (`reference/genai-chat/build_bundle.py`) checks `config.json` against the contract's geometry, including the rope settings, and removes `auto_map` from its scratch copy. It works in `TMPDIR`: about 15 GB of graph data, so set `TMPDIR` to a disk where `/tmp` is a memory file system.
 - A corpus row that reaches the contract's `max_context_tokens` (4,096, where the long rope factors start) is refused, so long context stays out of the evidence.
-- `dotnet` runs `ai-dotnet/tools/Starlings.GenAIChat.Fidelity`.
-- There is no `--distribution`: the .NET projects are source only.
+- `dotnet` runs `ai-dotnet/tools/Starlings.GenAIChat.Fidelity`, which goes through the generic `GenAIChatModel` with the family's `ChatModelDefinition`.
+- There is no `--distribution`: the family package `Starlings.Models.Phi4` is source only.
 
 Run it inside a memory limit of at least 20 GB, the limit the evidence run used. `model.onnx.data` is 15.3 GB, and the run's control group, file cache included, reached that limit without an out-of-memory kill. Process memory alone was not sampled, and no smaller limit was tried.
 

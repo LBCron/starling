@@ -99,7 +99,7 @@ The .NET stage of the `qwen-genai-cpu-v1` onboarding route (`model-pipeline/src/
 Starlings.GenAIChat.Fidelity --candidate <candidate.json> --bundle <dir> --corpus <jsonl> --out <dir> [--threads 2] [--templates-only true]
 ```
 
-The .NET stage of the `genai-chat-cpu-v1` onboarding route (`model-pipeline/src/model_pipeline/onboarding_genai_chat.py`) for `Starlings.Models.Phi4` (Phi-4-mini-instruct). It has the same checks and output as `Starlings.Generation.Fidelity`, through `Phi4Profile` and `Phi4Model`. Recipe: `model-pipeline/recipes/phi4-mini-cpu.yaml`.
+The .NET stage of the `genai-chat-cpu-v1` onboarding route (`model-pipeline/src/model_pipeline/onboarding_genai_chat.py`) (today Phi-4-mini-instruct, through `Phi4Checkpoint.ChatDefinition`). It has the same checks and output as `Starlings.Generation.Fidelity`, through the generic `GenAIChatModel`: the route's contract table and a family's `ChatModelDefinition` supply everything specific to a model, and a new family adds one line to the tool's definition lookup. Recipe: `model-pipeline/recipes/phi4-mini-cpu.yaml`.
 
 ## Starlings.Whisper.Fidelity.Tool
 

@@ -20,14 +20,15 @@ from model_pipeline.onboarding_candidate import guard_output, repository_input, 
 from model_pipeline.onboarding_runner import PipelineError, Stage, run_command
 
 PLUGIN = "genai-chat-cpu-v1"
-# The route's .NET projects are source only, so there is no package to take to a clean consumer.
+# The route's family package is source only, so there is no package set to take to a clean consumer.
 SHARED_DISTRIBUTION = False
 REFERENCE = "model-pipeline/reference/genai-chat/run_reference.py"
 BUILDER = "model-pipeline/reference/genai-chat/build_bundle.py"
 BACKEND = "model-pipeline/reference/genai-chat/run_genai.py"
 FIDELITY = "ai-dotnet/tools/Starlings.GenAIChat.Fidelity/Starlings.GenAIChat.Fidelity.csproj"
 # The route's allow-list as data (docs/design/generic-genai-chat-route.md, option C). Adding a repository means adding
-# its entry there, a template port and a loader. A candidate's behavior must equal its entry field for field.
+# its entry there and a definition with a template port (Starlings.Generation.ChatModelDefinition); the .NET stage's
+# loader, GenAIChatModel, is generic. A candidate's behavior must equal its entry field for field.
 CONTRACTS_PATH = Path(__file__).resolve().parents[2] / "routes" / PLUGIN / "contracts.json"
 CONTRACTS_FORMAT = "starlings.genai-chat-route-contracts"
 TOKENIZER_PROFILES = {"phi4-bpe-chat"}
@@ -38,8 +39,6 @@ _BEHAVIOR_FIELDS = {
     "vocab_size": int,
     "eos_token_ids": list,
     "add_bos_token": bool,
-    "pad_token_id_overlay": int,
-    "pad_overlay_reason": str,
     "tokenizer_profile": str,
     "template": str,
     "template_sha256": str,
@@ -51,6 +50,8 @@ _BEHAVIOR_FIELDS = {
     "multimodal": str,
     "long_context": str,
 }
+# Both null for a checkpoint that needs no pad overlay.
+_NULLABLE_BEHAVIOR_FIELDS = {"pad_token_id_overlay", "pad_overlay_reason"}
 _CONFIG_FIELDS = {
     "hidden_size": int,
     "num_hidden_layers": int,
@@ -112,8 +113,9 @@ def validate_contracts(document: object) -> dict[str, dict]:
         behavior = spec["behavior"]
         for section, fields in (("behavior", _BEHAVIOR_FIELDS), ("config", _CONFIG_FIELDS)):
             value = behavior if section == "behavior" else behavior.get("config")
-            if not isinstance(value, dict) or set(value) != set(fields):
-                raise PipelineError(f"{where}: {section} fields must be {sorted(fields)}")
+            expected = set(fields) | (_NULLABLE_BEHAVIOR_FIELDS if section == "behavior" else set())
+            if not isinstance(value, dict) or set(value) != expected:
+                raise PipelineError(f"{where}: {section} fields must be {sorted(expected)}")
             for key, kind in fields.items():
                 # bool is an int subclass: an integer field must not accept true or false.
                 if type(value[key]) is not kind:
@@ -121,9 +123,14 @@ def validate_contracts(document: object) -> dict[str, dict]:
         vocabulary, eos = behavior["vocab_size"], behavior["eos_token_ids"]
         if not eos or any(type(token) is not int or not 0 <= token < vocabulary for token in eos):
             raise PipelineError(f"{where}: eos_token_ids must be ids inside the vocabulary")
-        pad = behavior["pad_token_id_overlay"]
-        if not 0 <= pad < vocabulary or pad in eos:
-            raise PipelineError(f"{where}: the pad overlay must be a row inside the vocabulary, outside the EOS ids")
+        pad, reason = behavior["pad_token_id_overlay"], behavior["pad_overlay_reason"]
+        if pad is None:
+            if reason is not None:
+                raise PipelineError(f"{where}: pad_overlay_reason must be null without a pad overlay")
+        elif type(pad) is not int or not 0 <= pad < vocabulary or pad in eos or type(reason) is not str:
+            raise PipelineError(
+                f"{where}: the pad overlay must be a row inside the vocabulary, outside the EOS ids, with a reason"
+            )
         if behavior["tokenizer_profile"] not in TOKENIZER_PROFILES:
             raise PipelineError(f"{where}: tokenizer_profile must be one of {sorted(TOKENIZER_PROFILES)}")
         digest = behavior["template_sha256"]
@@ -214,7 +221,7 @@ def build_stages(
     from model_pipeline.onboarding_candidate import candidate_stages, code_inputs, source_reader
 
     if distribution:
-        raise PipelineError("this route has no distribution stage: its .NET projects are source only")
+        raise PipelineError("this route has no distribution stage: its family package is source only")
     if type(threads) is not int or not 1 <= threads <= 2:
         raise PipelineError("GenAI chat CPU profiles permit one or two threads")
     if type(timeout) not in {int, float} or not math.isfinite(timeout) or not 0 < timeout <= 86400:
@@ -410,7 +417,6 @@ def build_stages(
         ),
         directories=(
             "ai-dotnet/src/Starlings.Models.Phi4",
-            "ai-dotnet/src/Starlings.Models.Phi4.OnnxGenAI",
             "ai-dotnet/src/Starlings.Generation.Abstractions",
             "ai-dotnet/src/Starlings.Generation.OnnxGenAI",
             "ai-dotnet/src/Starlings.Acquisition",

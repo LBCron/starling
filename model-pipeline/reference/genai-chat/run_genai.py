@@ -53,13 +53,12 @@ def main() -> int:
     config.clear_providers()
     raw_tokenizer = json.loads((args.snapshot / "tokenizer.json").read_text(encoding="utf-8"))
     known = set(raw_tokenizer["model"]["vocab"].values()) | {token["id"] for token in raw_tokenizer["added_tokens"]}
-    if pad in known or not 0 <= pad < vocabulary:
+    if pad is not None and (pad in known or not 0 <= pad < vocabulary):
         raise ValueError("pad overlay must be an unused embedding row")
-    config.overlay(
-        json.dumps(
-            {"model": {"pad_token_id": pad, "decoder": {"session_options": {"intra_op_num_threads": args.threads}}}}
-        )
-    )
+    overlay: dict = {"decoder": {"session_options": {"intra_op_num_threads": args.threads}}}
+    if pad is not None:
+        overlay["pad_token_id"] = pad
+    config.overlay(json.dumps({"model": overlay}))
     model = og.Model(config)
     args.out.mkdir(parents=True, exist_ok=True)
     with (args.out / "results.jsonl").open("w", encoding="utf-8") as stream:

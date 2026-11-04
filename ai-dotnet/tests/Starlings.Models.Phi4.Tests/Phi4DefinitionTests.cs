@@ -1,4 +1,6 @@
 using System.Text.Json;
+using Starlings.Generation;
+using Starlings.Generation.OnnxGenAI;
 
 namespace Starlings.Models.Phi4.Tests;
 
@@ -13,7 +15,7 @@ public sealed class Phi4DefinitionTests
         JsonElement behavior = entry.GetProperty("behavior");
         JsonElement config = behavior.GetProperty("config");
 
-        Assert.Equal(Phi4Profile.Mini.Id, entry.GetProperty("id").GetString());
+        Assert.Equal(Phi4Checkpoint.ChatDefinition.Contract.Id, entry.GetProperty("id").GetString());
         Assert.Equal(Phi4Checkpoint.Revision, entry.GetProperty("revision").GetString());
         Assert.Equal(Phi4Checkpoint.ModelType, behavior.GetProperty("model_type").GetString());
         Assert.Equal(Phi4Checkpoint.VocabularySize, behavior.GetProperty("vocab_size").GetInt32());
@@ -32,29 +34,44 @@ public sealed class Phi4DefinitionTests
     }
 
     [Fact]
+    public void ChatDefinitionReadsTheEmbeddedTable()
+    {
+        ChatRouteContract contract = Phi4Checkpoint.ChatDefinition.Contract;
+        Assert.Equal(Phi4Checkpoint.Repository, contract.Repository);
+        Assert.Equal(Phi4Checkpoint.Revision, contract.Revision);
+        Assert.Equal(Phi4Checkpoint.ModelType, contract.ModelType);
+        Assert.Equal(Phi4Checkpoint.VocabularySize, contract.VocabularySize);
+        Assert.Equal(Phi4Checkpoint.PadTokenIdOverlay, contract.PadTokenIdOverlay);
+        Assert.Equal(Phi4Checkpoint.ContextLength, contract.ContextLength);
+        Assert.Equal(Phi4ChatTemplate.TemplateSha256, contract.TemplateSha256);
+        Assert.Same(Phi4ChatTemplate.Instance, Phi4Checkpoint.ChatDefinition.Template);
+        Assert.Equal("unsupported", contract.Tools);
+        Assert.Equal("unsupported", contract.Thinking);
+        Assert.Equal("unsupported", contract.Multimodal);
+        Assert.Equal("untested", contract.LongContext);
+    }
+
+    [Fact]
     public void BundleLockHasTheSixFiles()
     {
         Assert.Equal(
             (string[])["chat_template.jinja", "genai_config.json", "model.onnx", "model.onnx.data", "tokenizer.json", "tokenizer_config.json"],
-            Phi4Profile.Mini.BundleFiles.Select(f => f.Path).Order(StringComparer.Ordinal));
-        Assert.Equal(Phi4Checkpoint.TokenizerSha256, Phi4Profile.Mini.BundleFiles.Single(f => f.Path == "tokenizer.json").Sha256);
+            Phi4Checkpoint.BundleFiles.Select(f => f.Path).Order(StringComparer.Ordinal));
+        Assert.Equal(Phi4Checkpoint.TokenizerSha256, Phi4Checkpoint.BundleFiles.Single(f => f.Path == "tokenizer.json").Sha256);
     }
 
     [Fact]
-    public void RefusesAnotherProfileAndAnIncompleteBundle()
+    public void LoaderRefusesAnIncompleteBundle()
     {
-        Assert.Throws<NotSupportedException>(() => Phi4Profile.FromId("qwen3-0.6b/ortgenai-fp32-cpu"));
         string empty = Directory.CreateTempSubdirectory("phi4-bundle-").FullName;
         try
         {
-            Assert.Throws<InvalidDataException>(() => Phi4Model.Load(Phi4Profile.Mini, empty));
+            Assert.Throws<InvalidDataException>(() => GenAIChatModel.Load(Phi4Checkpoint.ChatDefinition, empty));
         }
         finally
         {
             Directory.Delete(empty);
         }
-
-        Assert.Throws<ArgumentOutOfRangeException>(() => Phi4Model.Load(Phi4Profile.Mini, "x", new Phi4ModelOptions { IntraOpThreads = 3 }));
     }
 
     [Fact]

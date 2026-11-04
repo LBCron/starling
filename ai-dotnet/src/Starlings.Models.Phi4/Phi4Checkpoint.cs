@@ -8,11 +8,15 @@ namespace Starlings.Models.Phi4;
 /// <summary>
 /// The pinned <c>microsoft/Phi-4-mini-instruct</c> checkpoint, independent of a runtime: repository and commit, the
 /// special token ids the template and the owned tokenizer use, the decoder shape from <c>config.json</c>, its
-/// <see cref="ModelProfile"/> and the asset lock. <c>model-pipeline/routes/genai-chat-cpu-v1/contracts.json</c> holds the
-/// same values; a test compares them.
+/// <see cref="ModelProfile"/>, the asset lock and <see cref="ChatDefinition"/> for a generic chat loader.
+/// <c>model-pipeline/routes/genai-chat-cpu-v1/contracts.json</c> holds the same values; a test compares them.
 /// </summary>
 public static class Phi4Checkpoint
 {
+    private const string ContractsResource = "Starlings.Models.Phi4.Contracts.json";
+
+    private static readonly Lazy<ChatModelDefinition> _chatDefinition = new(LoadChatDefinition);
+
     /// <summary>Hub repository.</summary>
     public const string Repository = "microsoft/Phi-4-mini-instruct";
 
@@ -115,6 +119,28 @@ public static class Phi4Checkpoint
         new ModelAssetFile("vocab.json", 3_910_310, "6cb65a857824fa6615bb1782d95d882617a8bbce1da0317118586b36f39e98bd"),
     ]);
 
+    /// <summary>
+    /// The ONNX Runtime GenAI bundle lock: the six files the pinned builder produces from the checkpoint
+    /// (<c>model-pipeline/reference/genai-chat/build_bundle.py</c>). No hosted copy exists: a user builds the bundle, and
+    /// the loader verifies it against this lock.
+    /// </summary>
+    public static IReadOnlyList<ChatBundleFile> BundleFiles { get; } = Array.AsReadOnly(new ChatBundleFile[]
+    {
+        new("genai_config.json", "9187e9d71430a2ae23bdeb04a4042920f4e8fcfbe49c3fe9ae046eff6a1b329b", 1821),
+        new("model.onnx", "b6b05c0d65000207940950184db3d29d8e84052470dac52f0f1d89df5555efb3", 52088021),
+        new("model.onnx.data", "19aae69a1272c1bbf3a13935b371476700d5b12eb8290ee282631a39d8f67430", 15344140288),
+        new("tokenizer.json", TokenizerSha256, 15524095),
+        new("tokenizer_config.json", "9c9b6bc0c94d95f69f826c41069a3e8b387ac3ced89601d201886e99240ac9db", 2932),
+        new("chat_template.jinja", "febf589225c9728ab791f52e8897d7607a823d45368f0a4c92fa68997b40cce9", 423),
+    });
+
+    /// <summary>
+    /// What a generic chat loader needs: this checkpoint's entry of the route contract table (embedded in the assembly),
+    /// the template port, the bundle lock and the tokenizer check. Read on first use: a malformed table is a packaging
+    /// defect and throws <see cref="InvalidDataException"/>.
+    /// </summary>
+    public static ChatModelDefinition ChatDefinition => _chatDefinition.Value;
+
     /// <summary>Verify and open the pinned <c>tokenizer.json</c> without loading model weights.</summary>
     /// <exception cref="InvalidDataException">The file's bytes or token identities differ from the pin.</exception>
     public static Tokenizer OpenTokenizer(string path)
@@ -137,5 +163,13 @@ public static class Phi4Checkpoint
         }
 
         return tokenizer;
+    }
+
+    private static ChatModelDefinition LoadChatDefinition()
+    {
+        using Stream stream = typeof(Phi4Checkpoint).Assembly.GetManifestResourceStream(ContractsResource)
+            ?? throw new InvalidDataException($"The route contract table '{ContractsResource}' is missing from the assembly.");
+        using var reader = new StreamReader(stream);
+        return new ChatModelDefinition(ChatRouteContract.ParseTable(reader.ReadToEnd())[Repository], Phi4ChatTemplate.Instance, BundleFiles, OpenTokenizer);
     }
 }
