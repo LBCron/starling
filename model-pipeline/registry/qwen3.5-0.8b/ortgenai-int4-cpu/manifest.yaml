@@ -8,7 +8,8 @@
 # (model-pipeline/reference/generation/run_genai_reference.py); the fixture is proposed, no tolerance is set.
 # Hosted since hosting revision r2 (execution.graph.hosting): Qwen35ModelAssets.DownloadAsync fetches the variant; a
 # local build into the snapshot layout (same digests) opens with Qwen35ModelAssets.OpenDirectory. Evidence:
-# docs/evidence/qwen35-int4-cpu-2026-11-01/README.md and docs/evidence/qwen35-hosting-r2-2026-11-02/README.md.
+# docs/evidence/qwen35-int4-cpu-2026-11-01/README.md, docs/evidence/qwen35-hosting-r2-2026-11-02/README.md and
+# docs/evidence/qwen35-int4-guided-2026-11-04/README.md.
 schema_version: 1
 id: qwen3.5-0.8b/ortgenai-int4-cpu
 # Experimental: .NET equal to the Python binding on the proposed int4 fixture (22/22 greedy sequences, step-0
@@ -102,7 +103,7 @@ behavior:
       with the upstream Python binding on the same int4 graph. Task quality (GSM8K) is not measured for this profile.
   unsupported:
     - the CUDA provider (the graph is built for CPU; Qwen35ChatModel.Load rejects it)
-    - tool definitions on this variant are untested (the template path is shared with fp32x)
+    - tool calling on this variant is untested beyond the required tool grammar (the template path is shared with fp32x)
     - image and video content (the checkpoint's vision tower is not built)
     - batching several prompts in one generator
     - conversation state reuse and partial rewind (recurrent state)
@@ -179,7 +180,7 @@ capabilities:
   persistence: unsupported
   training: unsupported
   aot: untested
-  extensions_ai: untested
+  extensions_ai: untested  # only its three guided requests ran on int4
   mlnet: unsupported
   greedy_generation: experimental
   sampling_seeded: experimental
@@ -195,9 +196,11 @@ capabilities:
   cancellation_inside_a_step: unsupported
   chunked_prefill: experimental
   conversation_state_reuse: unsupported
-  tool_calling: untested
+  tool_calling: untested  # only the required tool grammar ran on int4
   reasoning_split: unsupported
-  structured_output: untested  # guidance files hosted since r2; guided decoding was run on fp32x only
+  # Regex, JSON schema and the required tool grammar followed on int4, through the typed API and the IChatClient:
+  # docs/evidence/qwen35-int4-guided-2026-11-04/README.md. A handful of prompts, no tolerance or quality floor.
+  structured_output: experimental
   vision: unsupported
   long_context_1667_to_8192_tokens: untested
   long_context_over_8192_tokens: unsupported

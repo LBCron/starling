@@ -31,11 +31,10 @@ public sealed class Qwen35GuidedCpuFixture : IDisposable
 }
 
 /// <summary>
-/// Guided decoding on the real fp32x model on CPU (greedy; outputs are checked against the constraint, not a reference).
-/// Runs alone: its fixture loads another 3.1 GB model.
+/// Guided decoding on a real model on CPU (greedy; outputs are checked against the constraint, not a reference). The
+/// variants below run the same checks.
 /// </summary>
-[Collection(OwnModelTestGroup.Name)]
-public sealed class GuidanceCpuModelTests(Qwen35GuidedCpuFixture fixture) : IClassFixture<Qwen35GuidedCpuFixture>
+public abstract class GuidanceCpuChecks
 {
     private static readonly Qwen35Tool Weather = Qwen35Tool.Function(
         "get_weather",
@@ -52,12 +51,19 @@ public sealed class GuidanceCpuModelTests(Qwen35GuidedCpuFixture fixture) : ICla
         "Starts a countdown timer.",
         JsonDocument.Parse("""{"type": "object", "properties": {"minutes": {"type": "integer"}}, "required": ["minutes"]}""").RootElement.Clone());
 
+    protected abstract Qwen35ChatModel? LoadedModel { get; }
+
+    protected abstract string SkipReason { get; }
+
+    /// <summary>The variant's own reference for one prompt, to show an unguided request is not changed by the guidance files.</summary>
+    private protected abstract GenerationCase UnguidedCase { get; }
+
     private Qwen35ChatModel Model
     {
         get
         {
-            Assert.SkipWhen(fixture.Model is null, fixture.Reason);
-            return fixture.Model!;
+            Assert.SkipWhen(LoadedModel is null, SkipReason);
+            return LoadedModel!;
         }
     }
 
@@ -67,8 +73,7 @@ public sealed class GuidanceCpuModelTests(Qwen35GuidedCpuFixture fixture) : ICla
     public void TheDirectoryHasTheGuidanceFiles() => Assert.Empty(Model.Info.GuidanceMissingFiles);
 
     [Fact]
-    public void UnguidedGreedyIdsAreUnchanged() =>
-        Qwen35ModelChecks.GreedyFromReferenceIds(Model, Qwen35TestAssets.LoadCases().Single(c => c.Id == "en-short"));
+    public void UnguidedGreedyIdsAreUnchanged() => Qwen35ModelChecks.GreedyFromReferenceIds(Model, UnguidedCase);
 
     [Fact]
     public void ARegexIsFollowed()
@@ -141,4 +146,30 @@ public sealed class GuidanceCpuModelTests(Qwen35GuidedCpuFixture fixture) : ICla
     private static void Report(string name, GenerationResult r) =>
         TestContext.Current.TestOutputHelper?.WriteLine(
             $"{name}: {r.Usage.CompletionTokens} tokens, {r.FinishReason}, decode {r.Timings.Decode.TotalMilliseconds:F0} ms: {Regex.Escape(r.Text)}");
+}
+
+/// <summary>The fp32x model. Runs alone: its fixture loads another 3.1 GB model.</summary>
+[Collection(OwnModelTestGroup.Name)]
+public sealed class GuidanceCpuModelTests(Qwen35GuidedCpuFixture fixture) : GuidanceCpuChecks, IClassFixture<Qwen35GuidedCpuFixture>
+{
+    protected override Qwen35ChatModel? LoadedModel => fixture.Model;
+
+    protected override string SkipReason => fixture.Reason;
+
+    private protected override GenerationCase UnguidedCase => Qwen35TestAssets.LoadCases().Single(c => c.Id == "en-short");
+}
+
+/// <summary>
+/// The int4 model (profile qwen3.5-0.8b/ortgenai-int4-cpu, issue #163). Its unguided reference is the proposed int4
+/// fixture; the constraints are the same as fp32x's, and no tolerance or quality floor applies. Runs alone with the
+/// other guided classes.
+/// </summary>
+[Collection(OwnModelTestGroup.Name)]
+public sealed class Int4GuidanceCpuModelTests(Qwen35Int4CpuFixture fixture) : GuidanceCpuChecks, IClassFixture<Qwen35Int4CpuFixture>
+{
+    protected override Qwen35ChatModel? LoadedModel => fixture.Model;
+
+    protected override string SkipReason => fixture.Reason;
+
+    private protected override GenerationCase UnguidedCase => Qwen35TestAssets.LoadInt4Cases().Single(c => c.Id == "en-short");
 }

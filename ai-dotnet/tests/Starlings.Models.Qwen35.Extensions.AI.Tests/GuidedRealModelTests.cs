@@ -5,14 +5,14 @@ using Microsoft.Extensions.AI;
 namespace Starlings.Models.Qwen35.Extensions.AI.Tests;
 
 /// <summary>
-/// The IChatClient on the fp32x model on CPU, from the variant directory as the lock lays it out (with ONNX Runtime
-/// GenAI's guidance files since hosting revision r2). Skips without the model.
+/// The IChatClient on a model on CPU, from the variant directory as the lock lays it out (with ONNX Runtime GenAI's
+/// guidance files since hosting revision r2). Skips without the model.
 /// </summary>
-public sealed class Qwen35GuidedChatClientFixture : IDisposable
+public abstract class Qwen35GuidedChatClientFixtureBase : IDisposable
 {
-    public Qwen35GuidedChatClientFixture()
+    protected Qwen35GuidedChatClientFixtureBase(Qwen35Variant variant)
     {
-        var (files, reason) = Qwen35TestAssets.FindModel(Qwen35Variant.Fp32x);
+        var (files, reason) = Qwen35TestAssets.FindModel(variant);
         Reason = reason;
         if (files is not null)
         {
@@ -24,8 +24,18 @@ public sealed class Qwen35GuidedChatClientFixture : IDisposable
 
     public string Reason { get; }
 
-    public void Dispose() => Client?.Dispose();
+    public void Dispose()
+    {
+        Client?.Dispose();
+        GC.SuppressFinalize(this);
+    }
 }
+
+/// <summary>The fp32x model.</summary>
+public sealed class Qwen35GuidedChatClientFixture() : Qwen35GuidedChatClientFixtureBase(Qwen35Variant.Fp32x);
+
+/// <summary>The int4 model (profile qwen3.5-0.8b/ortgenai-int4-cpu, issue #163).</summary>
+public sealed class Qwen35Int4GuidedChatClientFixture() : Qwen35GuidedChatClientFixtureBase(Qwen35Variant.Int4);
 
 /// <summary>Runs alone, after the parallel classes have released their models: its fixture loads another 3.1 GB model.</summary>
 [CollectionDefinition(Name, DisableParallelization = true)]
@@ -35,8 +45,7 @@ public sealed class GuidedModelTestGroup
 }
 
 /// <summary>Guided IChatClient requests on the real model (greedy; outputs are checked against the constraint).</summary>
-[Collection(GuidedModelTestGroup.Name)]
-public sealed class GuidedRealModelTests(Qwen35GuidedChatClientFixture fixture) : IClassFixture<Qwen35GuidedChatClientFixture>
+public abstract class GuidedRealModelChecks(Qwen35GuidedChatClientFixtureBase fixture)
 {
     private Qwen35ChatClient Client
     {
@@ -105,3 +114,13 @@ public sealed class GuidedRealModelTests(Qwen35GuidedChatClientFixture fixture) 
         Assert.Equal(ChatFinishReason.Stop, response.FinishReason);
     }
 }
+
+/// <summary>The fp32x model.</summary>
+[Collection(GuidedModelTestGroup.Name)]
+public sealed class GuidedRealModelTests(Qwen35GuidedChatClientFixture fixture)
+    : GuidedRealModelChecks(fixture), IClassFixture<Qwen35GuidedChatClientFixture>;
+
+/// <summary>The int4 model: the same constraints as fp32x, with no tolerance or quality floor.</summary>
+[Collection(GuidedModelTestGroup.Name)]
+public sealed class Int4GuidedRealModelTests(Qwen35Int4GuidedChatClientFixture fixture)
+    : GuidedRealModelChecks(fixture), IClassFixture<Qwen35Int4GuidedChatClientFixture>;
