@@ -15,24 +15,32 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
     private readonly EncoderCore _core;
     private int _disposed;
 
-    public BertSession(BertModelProfile profile, string snapshot, int threads, int maxBatchSize, int? maxBatchTokens = null, bool sortByLength = false)
+    public BertSession(BertModelProfile profile, string snapshot, int threads, int maxBatchSize, int? maxBatchTokens = null, bool sortByLength = false, int? maxTokens = null)
     {
         ArgumentNullException.ThrowIfNull(profile);
         ArgumentOutOfRangeException.ThrowIfLessThan(threads, 1);
         ArgumentOutOfRangeException.ThrowIfGreaterThan(threads, 64);
         ValidateBatching(maxBatchSize, maxBatchTokens);
+        ValidateTokenLimit(maxTokens, profile.MaxTokens);
         Profile = profile;
+        MaxTokens = maxTokens ?? profile.MaxTokens;
         _maxBatchSize = maxBatchSize;
         _maxBatchTokens = maxBatchTokens;
         _sortByLength = sortByLength;
         var files = ModelAssetStore.VerifyDirectory(profile.RuntimeLock, snapshot, CacheVerification.Sha256);
-        _tokenizer = ForProfile(Tokenizer.FromFile(files.GetFilePath(BertModelProfile.TokenizerFile)), profile.MaxTokens);
+        _tokenizer = ForProfile(Tokenizer.FromFile(files.GetFilePath(BertModelProfile.TokenizerFile)), MaxTokens);
         _untruncated = _tokenizer.WithTruncation(null);
         SpecialTokenCount = _untruncated.Encode(string.Empty).Count;
+        if (maxTokens is { } limit)
+        {
+            ValidateTokenFloor(limit, _untruncated.Encode(string.Empty, string.Empty).Count);
+        }
+
         Session = OnnxModelSession.Create(files.GetFilePath(BertModelProfile.GraphFile), new OnnxSessionOptions
         {
             IntraOpNumThreads = threads,
             InterOpNumThreads = 1,
+            CpuMemoryArena = CpuMemoryArena(),
             ExpectedModelSha256 = profile.RuntimeLock.GetFile(BertModelProfile.GraphFile).Sha256,
 
             // VerifyDirectory just hashed the graph against the lock; the session does not read it again.
@@ -63,6 +71,9 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
 
     public BertModelProfile Profile { get; }
     public OnnxModelSession Session { get; }
+
+    /// <summary>Tokens per row at most, special tokens included: the caller's limit, or the profile's.</summary>
+    public int MaxTokens { get; }
 
     /// <summary>Tokens the profile's post-processor adds around one sequence.</summary>
     public int SpecialTokenCount { get; }
@@ -106,7 +117,7 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
         ArgumentNullException.ThrowIfNull(inputs);
         foreach (var input in inputs)
         {
-            ValidateInput(input, Profile.MaxTokens, Profile.VocabularySize, Profile.PadTokenId,
+            ValidateInput(input, MaxTokens, Profile.VocabularySize, Profile.PadTokenId,
                 Profile.ClsTokenId, Profile.SepTokenId);
         }
 
@@ -165,6 +176,25 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
             ArgumentOutOfRangeException.ThrowIfLessThan(tokens, 1, nameof(maxBatchTokens));
         }
     }
+
+    /// <summary>The process-wide <see cref="AppContext"/> switch for ONNX Runtime's CPU arena on this route.</summary>
+    internal const string CpuMemoryArenaSwitch = "Starlings.Models.Bert.CpuMemoryArena";
+
+    internal static bool? CpuMemoryArena() => AppContext.TryGetSwitch(CpuMemoryArenaSwitch, out bool enabled) ? enabled : null;
+
+    /// <summary>The caller's token limit, when set, is positive and within the profile's limit; it never raises it.</summary>
+    internal static void ValidateTokenLimit(int? maxTokens, int profileMaxTokens)
+    {
+        if (maxTokens is { } tokens)
+        {
+            ArgumentOutOfRangeException.ThrowIfLessThan(tokens, 1, nameof(maxTokens));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(tokens, profileMaxTokens, nameof(maxTokens));
+        }
+    }
+
+    /// <summary>A token limit leaves room for one token of each text beside the pair's special tokens.</summary>
+    internal static void ValidateTokenFloor(int maxTokens, int pairSpecialTokens) =>
+        ArgumentOutOfRangeException.ThrowIfLessThan(maxTokens, pairSpecialTokens + 2, nameof(maxTokens));
 
     /// <summary>
     /// Runs one chunk (its inputs in call order, right-padded to <paramref name="width"/>) and returns one result per

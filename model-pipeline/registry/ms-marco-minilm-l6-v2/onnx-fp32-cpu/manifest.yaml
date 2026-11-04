@@ -127,6 +127,7 @@ capabilities:
   text: experimental
   batch_token_budget: experimental  # maxBatchTokens, off by default
   batch_sort_by_length: experimental  # sortByLength, off by default
+  token_limit: experimental  # BertReranker.Create maxTokens, off by default; truncates text, refuses longer pre-tokenized rows
   asset_verification_offline: experimental
   built_in_profile: experimental  # BertModelProfile.BuiltIn("ms-marco")
   gpu: unsupported

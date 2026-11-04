@@ -170,6 +170,7 @@ One table per family, one column per profile. Rows are every capability any prof
 | built_in_profile | experimental |
 | gpu | unsupported |
 | text | experimental |
+| token_limit | experimental |
 
 ### bge-small-en-v1.5
 
@@ -295,6 +296,7 @@ One table per family, one column per profile. Rows are every capability any prof
 | built_in_profile | experimental |
 | gpu | unsupported |
 | text | experimental |
+| token_limit | experimental |
 
 ### kev-0.8b
 
@@ -426,6 +428,7 @@ One table per family, one column per profile. Rows are every capability any prof
 | built_in_profile | experimental |
 | gpu | unsupported |
 | text | experimental |
+| token_limit | experimental |
 
 ### multilingual-e5-small
 

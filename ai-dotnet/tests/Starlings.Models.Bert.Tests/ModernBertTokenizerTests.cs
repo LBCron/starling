@@ -47,6 +47,39 @@ public sealed class ModernBertTokenizerTests
     }
 
     [Fact]
+    public void ACallerLimitTruncatesLikeTransformersMaxLength()
+    {
+        // transformers 5.18.0: tokenizer(query, document, truncation=True, max_length=16). Longest first: the document
+        // and then each side in turn lose tokens from the right.
+        var tokenizer = BertSession.ForProfile(Tokenizer.FromFile(AssetPath()), 16);
+        string document = string.Concat(Enumerable.Repeat("the quick brown fox jumps over the lazy dog ", 1000));
+
+        var encoding = tokenizer.Encode("how to implement quick sort in python?", document);
+
+        Assert.Equal([50281, 5430, 281, 3359, 3158, 3686, 275, Sep, 783, 3158, 8516, 30013, 27287, 689, 253, Sep], encoding.Ids);
+    }
+
+    [Fact]
+    public void ACallerLimitCutsALongQueryToo()
+    {
+        var tokenizer = BertSession.ForProfile(Tokenizer.FromFile(AssetPath()), 16);
+
+        var encoding = tokenizer.Encode(string.Concat(Enumerable.Repeat("q ", 40)), "d");
+
+        Assert.Equal([50281, 82, 2805, 2805, 2805, 2805, 2805, 2805, 2805, 2805, 2805, 2805, 2805, Sep, 69, Sep], encoding.Ids);
+    }
+
+    [Fact]
+    public void ACallerLimitLeavesAShortPairAlone()
+    {
+        var tokenizer = BertSession.ForProfile(Tokenizer.FromFile(AssetPath()), 16);
+
+        var encoding = tokenizer.Encode("what is the capital of China?", "Beijing");
+
+        Assert.Equal([50281, 5371, 310, 253, 5347, 273, 4135, 32, Sep, 4678, 16741, Sep], encoding.Ids);
+    }
+
+    [Fact]
     public void ALongPairIsTruncatedToTheProfileLimitNotTheFiles()
     {
         var tokenizer = BertSession.ForProfile(Tokenizer.FromFile(AssetPath()), Profile.MaxTokens);

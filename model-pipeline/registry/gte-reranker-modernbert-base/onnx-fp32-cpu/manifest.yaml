@@ -73,6 +73,7 @@ behavior:
     truncation: longest-first over the pair, special tokens included; the tokenizer.json truncation and Fixed padding of 8000 are not applied
     ranking: BertReranker.Rank orders by descending score, ties in input order
     batching: right padding with mask 0, maxBatchSize rows per call (default 32); maxBatchTokens and sortByLength opt-in (experimental)
+    token_limit: the profile's 8192; BertReranker.Create maxTokens lowers it (experimental), so the model card's max_length=512 is maxTokens 512. Longer text is truncated, longer pre-tokenized rows are refused
     threads: two intra-op, one inter-op (Create threads argument)
   unsupported:
     - "GPU execution providers (CUDA, DirectML, CoreML)"
@@ -81,7 +82,6 @@ behavior:
     - "streaming"
     - "training and fine-tuning"
     - "Microsoft.Extensions.AI and ML.NET adapters"
-    - "per-call max_length; the model card's transformers example passes 512, the profile's limit is 8192"
     - "sigmoid-normalized scores (apply a sigmoid yourself; sentence-transformers applies one by default)"
 
 processing:
@@ -139,6 +139,7 @@ capabilities:
   text: experimental
   batch_token_budget: experimental  # maxBatchTokens, off by default
   batch_sort_by_length: experimental  # sortByLength, off by default
+  token_limit: experimental  # BertReranker.Create maxTokens, off by default; truncates text, refuses longer pre-tokenized rows
   asset_verification_offline: experimental
   built_in_profile: experimental  # BertModelProfile.BuiltIn("gte-reranker-modernbert-base")
   gpu: unsupported

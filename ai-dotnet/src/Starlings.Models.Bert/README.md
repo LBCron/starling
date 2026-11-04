@@ -101,13 +101,31 @@ repository, after comparison with the transformers built-in `ModernBertForSequen
 Pairs are encoded `[CLS] query [SEP] document [SEP]` without segment ids, with the BPE profile
 `modernbert-bpe-gte-reranker`. The pinned `tokenizer.json` declares truncation to 8000 and Fixed 8000 padding; the package
 replaces both at load with no padding and the profile's limit, as transformers does per call. The limit is 8192
-(`model_max_length`); the model card's transformers example passes `max_length=512`, and there is no per-call limit here,
-so shorten the text yourself to match it. Scores are raw logits; the sentence-transformers default applies a sigmoid.
+(`model_max_length`); the model card's transformers example passes `max_length=512`, which is `maxTokens: 512` on
+`BertReranker.Create` here (see "Token limit"). Scores are raw logits; the sentence-transformers default applies a sigmoid.
 Onboarding evidence stops at the longest corpus row (1,468 tokens), and the .NET path is untested beyond it. Long pairs are
 also costly on CPU. In a Python probe at four threads with ONNX Runtime's default CPU arena, which this package also
 leaves on, one 8,192-token pair took about a minute and peaked at 10 GB on the first run and 19 GB from the second run on.
 This was not measured on .NET. Use `maxBatchTokens` with long documents, and do not plan on less memory than that.
 The upstream fp16 and quantized graphs, Flash Attention 2 and GPU providers are not implemented.
+
+## Token limit
+
+`BertReranker.Create(..., maxTokens: 512)` caps every pair on every call of that reranker below the profile's limit, special
+tokens included, so one long document cannot cost what the profile's maximum costs. It is Experimental
+(`BertCapabilities.TokenLimit`, capability `token_limit` on the three reranker profiles) and off by default.
+`BertReranker.MaxTokens` reports the limit in effect. It is set when the reranker is created and is the same for every
+call of that instance, including calls through `IReranker`.
+
+- **Text longer than the limit is truncated, not refused**, as at the profile's limit: longest side first, from the right,
+  with `[SEP]` kept. `transformers` gives the same ids with `truncation=True, max_length=<limit>` (tested on the gte-reranker
+  tokenizer). Truncation is silent: a truncated document is scored on what is left.
+- **Pre-tokenized rows are refused, not truncated**, as at the profile's limit: `ScoreTokens` throws `ArgumentException` for a
+  row longer than the limit.
+- `Create` throws `ArgumentOutOfRangeException` for a limit below 1 or above the profile's, which it never raises, and for a
+  limit that leaves no room for one token of each text beside the pair's special tokens.
+
+`maxTokens` bounds one row. `maxBatchTokens` bounds the rows of one ONNX Runtime call together. Long documents need both.
 
 ## Use
 
