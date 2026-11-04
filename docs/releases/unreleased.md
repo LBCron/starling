@@ -8,7 +8,7 @@ Every package that tokenizes now pins `Starlings.Tokenizers [0.3.5]` (0.3.4 in `
 
 ## Generation fields in the capability record
 
-`ModelProfileCapabilities.Generation` (`ProfileGeneration`, new and Experimental API) carries tool-call mode, structured output, state reuse, caching style and max output tokens for the seven generation profiles, generated from the new manifest section `behavior.generation` (#177). The fields are informational until a release note promotes them (`docs/kickoff.md`, "Capability record fields"). No capability status changes. The validator and the contract tests hold each value to its capability row, so `untested` appears where a row is untested or absent: tool calls and structured output on Qwen3.5 int4, structured output on the QwenChat profiles and max output tokens on LFM3. An `untested` value also blocks Stable, so these appear as `generation.<field>` in the catalog's Stable readiness column; those profiles are all Experimental, and no Stable profile has one.
+`ModelProfileCapabilities.Generation` (`ProfileGeneration`, new and Experimental API) carries tool-call mode, structured output, state reuse, caching style and max output tokens for the seven generation profiles, generated from the new manifest section `behavior.generation` (#177). The fields are informational until a release note promotes them (`docs/kickoff.md`, "Capability record fields"). No capability status changes. The validator and the contract tests hold each value to its capability row, so `untested` appears where a row is untested or absent: tool calls on Qwen3.5 int4, structured output on the QwenChat profiles and max output tokens on LFM3. An `untested` value also blocks Stable, so these appear as `generation.<field>` in the catalog's Stable readiness column; those profiles are all Experimental, and no Stable profile has one.
 
 ## Starlings.Models.QwenChat.OnnxGenAI: hosting revision r2 (#278)
 
@@ -21,6 +21,10 @@ Every package that tokenizes now pins `Starlings.Tokenizers [0.3.5]` (0.3.4 in `
 Both revisions use one cache path, because the path is keyed on the upstream revision. So an app on 0.5.0 and a newer app that share a cache directory invalidate each other, and rolling back hits the same thing: each `DownloadAsync` replaces `model.onnx` with its own revision, and the other package then fails as above until it downloads again. Give the two apps separate cache directories.
 
 The same stamp exposure in the Qwen3.5 int4 graph (`c98b9fc`) is not part of this change.
+
+## Qwen3.5 int4 guided decoding
+
+`structured_output` on the Experimental profile `qwen3.5-0.8b/ortgenai-int4-cpu` moves from untested to experimental. A regex, a JSON schema and the required tool grammar were followed on int4 on CPU, through the typed API and the `IChatClient`, on the hosted r2 files ([evidence](../evidence/qwen35-int4-guided-2026-11-04/README.md)). No code path changed. `tool_calling` and `extensions_ai` stay untested on int4, and the profile still has no tolerances or task-quality floor.
 
 ## Reranking sample
 

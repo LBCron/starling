@@ -9529,7 +9529,7 @@
       },
       "generation": {
         "tool_call_mode": "untested",
-        "structured_output": "untested",
+        "structured_output": "grammar",
         "state_reuse": "none",
         "caching_style": "none",
         "max_output_tokens": 8192
@@ -9694,7 +9694,7 @@
         "stop_sequences": "experimental",
         "stop_tokens": "experimental",
         "structured_extraction": "unrecorded",
-        "structured_output": "untested",
+        "structured_output": "experimental",
         "temperature_fallback": "unrecorded",
         "text": "unrecorded",
         "text_only_inputs": "unrecorded",
@@ -9787,10 +9787,8 @@
         "untested_capabilities": [
           "aot",
           "extensions_ai",
-          "generation.structured_output",
           "generation.tool_call_mode",
           "long_context_1667_to_8192_tokens",
-          "structured_output",
           "tool_calling"
         ]
       },

@@ -220,7 +220,7 @@ internal static class GeneratedProfileCapabilities
                     ["conversation_state_reuse"] = Status.Unsupported,
                     ["tool_calling"] = Status.Untested,
                     ["reasoning_split"] = Status.Unsupported,
-                    ["structured_output"] = Status.Untested,
+                    ["structured_output"] = Status.Experimental,
                     ["vision"] = Status.Unsupported,
                     ["long_context_1667_to_8192_tokens"] = Status.Untested,
                     ["long_context_over_8192_tokens"] = Status.Unsupported,
@@ -228,7 +228,7 @@ internal static class GeneratedProfileCapabilities
                 },
                 Generation = new ProfileGeneration(
                     ProfileToolCallMode.Untested,
-                    ProfileStructuredOutput.Untested,
+                    ProfileStructuredOutput.Grammar,
                     ProfileStateReuse.None,
                     ProfileCachingStyle.None,
                     MaxOutputTokens: 8192),
