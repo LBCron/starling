@@ -184,6 +184,6 @@ maintenance:
       Scores are raw logits, not calibrated probabilities.
     - >-
       Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long
-      pairs are costly on CPU. In a Python probe at four threads with the default CPU arena, which the package also leaves
-      on, ONNX Runtime took about a minute for one 8,192-token pair and peaked at 10 GB on the first run and 19 GB from the
-      second run on. This was not measured on .NET (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04).
+      pairs are costly on CPU. On .NET through BertReranker at four threads, one 8,192-token pair took about a minute and
+      peaked at 10 GB with the CPU arena off, as the package now runs it; with the arena on it kept 19 GB resident from the
+      second run on (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04).

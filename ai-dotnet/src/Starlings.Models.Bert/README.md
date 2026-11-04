@@ -103,11 +103,26 @@ Pairs are encoded `[CLS] query [SEP] document [SEP]` without segment ids, with t
 replaces both at load with no padding and the profile's limit, as transformers does per call. The limit is 8192
 (`model_max_length`); the model card's transformers example passes `max_length=512`, which is `maxTokens: 512` on
 `BertReranker.Create` here (see "Token limit"). Scores are raw logits; the sentence-transformers default applies a sigmoid.
-Onboarding evidence stops at the longest corpus row (1,468 tokens), and the .NET path is untested beyond it. Long pairs are
-also costly on CPU. In a Python probe at four threads with ONNX Runtime's default CPU arena, which this package also
-leaves on, one 8,192-token pair took about a minute and peaked at 10 GB on the first run and 19 GB from the second run on.
-This was not measured on .NET. Use `maxBatchTokens` with long documents, and do not plan on less memory than that.
+Onboarding evidence stops at the longest corpus row (1,468 tokens). Past it, the .NET path has only one repetitive pair
+behind it, which matched Python ONNX Runtime at 2,048 and 8,192 tokens. Long pairs are also costly on CPU: at four
+threads, one 8,192-token pair took about a minute on .NET and peaked at 10 GB. Use `maxTokens` and `maxBatchTokens` with long documents, and do not
+plan on less memory than that. See "CPU memory arena".
 The upstream fp16 and quantized graphs, Flash Attention 2 and GPU providers are not implemented.
+
+## CPU memory arena
+
+ONNX Runtime's CPU arena is off on every profile of this package since the release after `0.5.0`, where it was on. With
+it on, the arena keeps every buffer a run needed until the session is disposed. Measured on .NET through
+`BertReranker`, with gte-reranker-modernbert-base, four threads and one 8,192-token pair run repeatedly on one session:
+
+| CPU arena | Peak RSS, run 1 | Peak RSS, runs 2 to 4 | RSS after each run | Time per run |
+| --- | ---: | ---: | ---: | ---: |
+| on (before) | 10.1 GB | 19.3 GB | 10.1 GB, then 19.3 GB | 44 to 56 s |
+| off | 9.4 GB | 10.1 GB | 1.0 GB | 52 s at best (86 to 125 s while other jobs shared the machine) |
+
+The cost is latency on long pairs, about 10 to 20 percent at 8,192 tokens: 52 s against 44 s for the fastest .NET run, and 54 to 56 s against 45 to 53 s in a Python probe. This is an estimate, because the machine was shared and the .NET settings did not run under the same load. On short inputs no consistent cost showed. Scores are unchanged. A process that wants the arena back sets the `AppContext` switch
+`Starlings.Models.Bert.CpuMemoryArena` to `true`, for every session of this package. Evidence:
+`docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04/`.
 
 ## Token limit
 

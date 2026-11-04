@@ -1,0 +1,1038 @@
+# 2026-11-04T21:22:55Z unit=b291-short-1 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 30 arena 64 8 level: TIGHT: heavy 0 light 8, free 10.3 GB, 1 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 19.8 on 12 cores)
+Running as unit: b291-short-1.service; invocation ID: 9709757043e0418baf613b853af4422c
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 64 load 4.0s peak 0.93G rss 0.93G
+tokens 64 rows 8 run 1 logit 0.807708 time 1.881s peak 1.00G rss 1.00G
+tokens 64 rows 8 run 2 logit 0.807708 time 1.819s peak 1.04G rss 1.04G
+tokens 64 rows 8 run 3 logit 0.807708 time 1.883s peak 1.04G rss 1.04G
+tokens 64 rows 8 run 4 logit 0.807708 time 1.477s peak 1.05G rss 1.05G
+tokens 64 rows 8 run 5 logit 0.807708 time 1.550s peak 1.05G rss 1.04G
+tokens 64 rows 8 run 6 logit 0.807708 time 1.712s peak 1.05G rss 1.04G
+tokens 64 rows 8 run 7 logit 0.807708 time 1.738s peak 1.05G rss 1.05G
+tokens 64 rows 8 run 8 logit 0.807708 time 1.657s peak 1.05G rss 1.05G
+tokens 64 rows 8 run 9 logit 0.807708 time 1.772s peak 1.05G rss 1.05G
+tokens 64 rows 8 run 10 logit 0.807708 time 1.634s peak 1.05G rss 1.05G
+tokens 64 rows 8 run 11 logit 0.807708 time 1.727s peak 1.05G rss 1.05G
+tokens 64 rows 8 run 12 logit 0.807708 time 1.754s peak 1.05G rss 1.05G
+tokens 64 rows 8 run 13 logit 0.807708 time 1.661s peak 1.05G rss 1.05G
+tokens 64 rows 8 run 14 logit 0.807708 time 1.670s peak 1.05G rss 1.05G
+tokens 64 rows 8 run 15 logit 0.807708 time 1.736s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 16 logit 0.807708 time 1.586s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 17 logit 0.807708 time 1.695s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 18 logit 0.807708 time 1.830s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 19 logit 0.807708 time 1.676s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 20 logit 0.807708 time 1.685s peak 1.06G rss 1.04G
+tokens 64 rows 8 run 21 logit 0.807708 time 1.794s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 22 logit 0.807708 time 1.794s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 23 logit 0.807708 time 1.567s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 24 logit 0.807708 time 1.685s peak 1.06G rss 1.04G
+tokens 64 rows 8 run 25 logit 0.807708 time 1.764s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 26 logit 0.807708 time 1.787s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 27 logit 0.807708 time 1.538s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 28 logit 0.807708 time 1.723s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 29 logit 0.807708 time 1.614s peak 1.06G rss 1.05G
+tokens 64 rows 8 run 30 logit 0.807708 time 1.592s peak 1.06G rss 1.05G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 56.068s
+             CPU time consumed: 1min 37.664s
+                   Memory peak: 977.6M (swap: 0B)
+# exit 0
+# 2026-11-04T21:23:51Z unit=b291-short-2 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 20 arena 512 1 level: TIGHT: heavy 0 light 8, free 16.7 GB, 1 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 14.6 on 12 cores)
+Running as unit: b291-short-2.service
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 512 load 4.6s peak 0.94G rss 0.94G
+tokens 512 rows 1 run 1 logit 0.985387 time 1.877s peak 1.03G rss 1.03G
+tokens 512 rows 1 run 2 logit 0.985387 time 1.775s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 3 logit 0.985387 time 1.774s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 4 logit 0.985387 time 1.755s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 5 logit 0.985387 time 1.732s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 6 logit 0.985387 time 1.818s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 7 logit 0.985387 time 1.744s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 8 logit 0.985387 time 1.652s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 9 logit 0.985387 time 1.698s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 10 logit 0.985387 time 1.615s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 11 logit 0.985387 time 1.765s peak 1.11G rss 1.11G
+tokens 512 rows 1 run 12 logit 0.985387 time 1.689s peak 1.11G rss 1.11G
+tokens 512 rows 1 run 13 logit 0.985387 time 1.630s peak 1.11G rss 1.11G
+tokens 512 rows 1 run 14 logit 0.985387 time 1.779s peak 1.11G rss 1.11G
+tokens 512 rows 1 run 15 logit 0.985387 time 1.656s peak 1.11G rss 1.11G
+tokens 512 rows 1 run 16 logit 0.985387 time 1.787s peak 1.11G rss 1.11G
+tokens 512 rows 1 run 17 logit 0.985387 time 1.846s peak 1.11G rss 1.11G
+tokens 512 rows 1 run 18 logit 0.985387 time 1.725s peak 1.11G rss 1.11G
+tokens 512 rows 1 run 19 logit 0.985387 time 1.856s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 20 logit 0.985387 time 1.774s peak 1.11G rss 1.10G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 39.991s
+             CPU time consumed: 1min 13.012s
+                   Memory peak: 1G (swap: 0B)
+# exit 0
+# 2026-11-04T21:24:31Z unit=b291-short-3 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 8 arena 2048 1 level: TIGHT: heavy 0 light 8, free 17.6 GB, 1 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 12.8 on 12 cores)
+Running as unit: b291-short-3.service; invocation ID: b8f6b641b91f4fa99d13d271e849e266
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 2048 load 4.7s peak 0.94G rss 0.94G
+tokens 2048 rows 1 run 1 logit 1.230980 time 10.853s peak 1.63G rss 1.63G
+tokens 2048 rows 1 run 2 logit 1.230980 time 10.651s peak 2.32G rss 2.32G
+tokens 2048 rows 1 run 3 logit 1.230980 time 10.948s peak 2.32G rss 2.32G
+tokens 2048 rows 1 run 4 logit 1.230980 time 9.814s peak 2.32G rss 2.32G
+tokens 2048 rows 1 run 5 logit 1.230980 time 10.555s peak 2.32G rss 2.32G
+tokens 2048 rows 1 run 6 logit 1.230980 time 12.033s peak 2.32G rss 2.32G
+tokens 2048 rows 1 run 7 logit 1.230980 time 10.965s peak 2.32G rss 2.32G
+tokens 2048 rows 1 run 8 logit 1.230980 time 11.048s peak 2.32G rss 2.32G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 32.142s
+             CPU time consumed: 2min 52.133s
+                   Memory peak: 2.1G (swap: 0B)
+# exit 0
+# 2026-11-04T21:26:04Z unit=b291-short-4 MemoryMax=20G args=<snapshots>/paraphrase-multilingual paraphrase-multilingual 2 40 arena 60 32 level: TIGHT: heavy 0 light 8, free 15.3 GB, 1 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 11.9 on 12 cores)
+Running as unit: b291-short-4.service; invocation ID: 5907049f907e413cb0c2c8bf61ed8e24
+paraphrase-multilingual arena threads 2 session arena True load 3.8s peak 0.96G rss 0.64G
+rows 32 run 1 first 0.294363 time 1.835s peak 0.96G rss 0.71G
+rows 32 run 2 first 0.294363 time 1.766s peak 0.96G rss 0.76G
+rows 32 run 3 first 0.294363 time 1.701s peak 0.96G rss 0.76G
+rows 32 run 4 first 0.294363 time 1.912s peak 0.96G rss 0.76G
+rows 32 run 5 first 0.294363 time 1.731s peak 0.96G rss 0.76G
+rows 32 run 6 first 0.294363 time 1.645s peak 0.96G rss 0.76G
+rows 32 run 7 first 0.294363 time 1.727s peak 0.96G rss 0.76G
+rows 32 run 8 first 0.294363 time 1.874s peak 0.96G rss 0.76G
+rows 32 run 9 first 0.294363 time 1.829s peak 0.96G rss 0.76G
+rows 32 run 10 first 0.294363 time 1.642s peak 0.96G rss 0.76G
+rows 32 run 11 first 0.294363 time 1.727s peak 0.96G rss 0.76G
+rows 32 run 12 first 0.294363 time 1.761s peak 0.96G rss 0.76G
+rows 32 run 13 first 0.294363 time 1.775s peak 0.96G rss 0.76G
+rows 32 run 14 first 0.294363 time 1.753s peak 0.96G rss 0.76G
+rows 32 run 15 first 0.294363 time 1.654s peak 0.96G rss 0.76G
+rows 32 run 16 first 0.294363 time 1.814s peak 0.96G rss 0.76G
+rows 32 run 17 first 0.294363 time 1.736s peak 0.96G rss 0.76G
+rows 32 run 18 first 0.294363 time 1.673s peak 0.96G rss 0.76G
+rows 32 run 19 first 0.294363 time 1.746s peak 0.96G rss 0.76G
+rows 32 run 20 first 0.294363 time 1.528s peak 0.96G rss 0.76G
+rows 32 run 21 first 0.294363 time 1.746s peak 0.96G rss 0.76G
+rows 32 run 22 first 0.294363 time 1.527s peak 0.96G rss 0.76G
+rows 32 run 23 first 0.294363 time 1.654s peak 0.96G rss 0.76G
+rows 32 run 24 first 0.294363 time 1.727s peak 0.96G rss 0.76G
+rows 32 run 25 first 0.294363 time 1.680s peak 0.96G rss 0.76G
+rows 32 run 26 first 0.294363 time 1.520s peak 0.96G rss 0.76G
+rows 32 run 27 first 0.294363 time 1.608s peak 0.96G rss 0.76G
+rows 32 run 28 first 0.294363 time 1.641s peak 0.96G rss 0.76G
+rows 32 run 29 first 0.294363 time 1.660s peak 0.96G rss 0.76G
+rows 32 run 30 first 0.294363 time 1.710s peak 0.96G rss 0.76G
+rows 32 run 31 first 0.294363 time 1.641s peak 0.96G rss 0.76G
+rows 32 run 32 first 0.294363 time 1.658s peak 0.96G rss 0.76G
+rows 32 run 33 first 0.294363 time 1.674s peak 0.96G rss 0.76G
+rows 32 run 34 first 0.294363 time 1.629s peak 0.96G rss 0.76G
+rows 32 run 35 first 0.294363 time 1.524s peak 0.96G rss 0.76G
+rows 32 run 36 first 0.294363 time 1.690s peak 0.96G rss 0.76G
+rows 32 run 37 first 0.294363 time 1.699s peak 0.96G rss 0.76G
+rows 32 run 38 first 0.294363 time 1.579s peak 0.96G rss 0.76G
+rows 32 run 39 first 0.294363 time 1.695s peak 0.96G rss 0.76G
+rows 32 run 40 first 0.294363 time 1.600s peak 0.96G rss 0.76G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 11.697s
+             CPU time consumed: 2min 13.821s
+                   Memory peak: 1.3G (swap: 0B)
+# exit 0
+# 2026-11-04T21:27:16Z unit=b291-short-5 MemoryMax=20G args=<snapshots>/bge-base bge-base 2 30 arena 60 8 level: TIGHT: heavy 0 light 8, free 18.0 GB, 1 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 12.1 on 12 cores)
+Running as unit: b291-short-5.service; invocation ID: fd46d33ac59c4d00be65f9daacdd2473
+bge-base arena threads 2 session arena True load 3.6s peak 0.71G rss 0.71G
+rows 8 run 1 first -0.026069 time 1.163s peak 0.73G rss 0.73G
+rows 8 run 2 first -0.026069 time 1.120s peak 0.75G rss 0.75G
+rows 8 run 3 first -0.026069 time 1.009s peak 0.75G rss 0.75G
+rows 8 run 4 first -0.026069 time 1.030s peak 0.75G rss 0.75G
+rows 8 run 5 first -0.026069 time 1.043s peak 0.75G rss 0.75G
+rows 8 run 6 first -0.026069 time 1.013s peak 0.75G rss 0.75G
+rows 8 run 7 first -0.026069 time 1.039s peak 0.75G rss 0.75G
+rows 8 run 8 first -0.026069 time 0.961s peak 0.75G rss 0.75G
+rows 8 run 9 first -0.026069 time 1.010s peak 0.75G rss 0.75G
+rows 8 run 10 first -0.026069 time 0.771s peak 0.75G rss 0.75G
+rows 8 run 11 first -0.026069 time 0.871s peak 0.75G rss 0.75G
+rows 8 run 12 first -0.026069 time 1.061s peak 0.75G rss 0.75G
+rows 8 run 13 first -0.026069 time 0.989s peak 0.75G rss 0.75G
+rows 8 run 14 first -0.026069 time 1.076s peak 0.75G rss 0.75G
+rows 8 run 15 first -0.026069 time 1.011s peak 0.75G rss 0.75G
+rows 8 run 16 first -0.026069 time 0.862s peak 0.75G rss 0.75G
+rows 8 run 17 first -0.026069 time 0.791s peak 0.75G rss 0.75G
+rows 8 run 18 first -0.026069 time 0.990s peak 0.75G rss 0.75G
+rows 8 run 19 first -0.026069 time 0.888s peak 0.75G rss 0.75G
+rows 8 run 20 first -0.026069 time 0.594s peak 0.75G rss 0.75G
+rows 8 run 21 first -0.026069 time 0.976s peak 0.75G rss 0.75G
+rows 8 run 22 first -0.026069 time 1.064s peak 0.75G rss 0.75G
+rows 8 run 23 first -0.026069 time 1.046s peak 0.75G rss 0.75G
+rows 8 run 24 first -0.026069 time 1.021s peak 0.75G rss 0.75G
+rows 8 run 25 first -0.026069 time 1.154s peak 0.75G rss 0.75G
+rows 8 run 26 first -0.026069 time 1.027s peak 0.75G rss 0.75G
+rows 8 run 27 first -0.026069 time 0.892s peak 0.75G rss 0.75G
+rows 8 run 28 first -0.026069 time 1.060s peak 0.75G rss 0.75G
+rows 8 run 29 first -0.026069 time 1.049s peak 0.75G rss 0.75G
+rows 8 run 30 first -0.026069 time 0.892s peak 0.75G rss 0.75G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 33.275s
+             CPU time consumed: 1min 1.500s
+                   Memory peak: 1G (swap: 0B)
+# exit 0
+# 2026-11-04T21:27:49Z unit=b291-short-6 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 30 noarena 64 8 level: TIGHT: heavy 0 light 8, free 18.2 GB, 1 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 11.7 on 12 cores)
+Running as unit: b291-short-6.service
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 64 load 4.2s peak 0.96G rss 0.96G
+tokens 64 rows 8 run 1 logit 0.807708 time 1.832s peak 0.99G rss 0.99G
+tokens 64 rows 8 run 2 logit 0.807708 time 1.719s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 3 logit 0.807708 time 1.782s peak 1.04G rss 0.99G
+tokens 64 rows 8 run 4 logit 0.807708 time 1.835s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 5 logit 0.807708 time 1.727s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 6 logit 0.807708 time 1.748s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 7 logit 0.807708 time 1.740s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 8 logit 0.807708 time 1.549s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 9 logit 0.807708 time 1.859s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 10 logit 0.807708 time 1.834s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 11 logit 0.807708 time 1.762s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 12 logit 0.807708 time 1.528s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 13 logit 0.807708 time 1.579s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 14 logit 0.807708 time 1.630s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 15 logit 0.807708 time 1.834s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 16 logit 0.807708 time 1.721s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 17 logit 0.807708 time 1.738s peak 1.04G rss 0.99G
+tokens 64 rows 8 run 18 logit 0.807708 time 1.672s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 19 logit 0.807708 time 1.761s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 20 logit 0.807708 time 1.610s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 21 logit 0.807708 time 1.751s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 22 logit 0.807708 time 1.477s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 23 logit 0.807708 time 1.487s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 24 logit 0.807708 time 1.511s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 25 logit 0.807708 time 1.502s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 26 logit 0.807708 time 1.747s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 27 logit 0.807708 time 1.779s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 28 logit 0.807708 time 1.790s peak 1.04G rss 1.00G
+tokens 64 rows 8 run 29 logit 0.807708 time 1.594s peak 1.04G rss 0.99G
+tokens 64 rows 8 run 30 logit 0.807708 time 1.994s peak 1.04G rss 0.99G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 55.649s
+             CPU time consumed: 1min 37.191s
+                   Memory peak: 967.1M (swap: 0B)
+# exit 0
+# 2026-11-04T21:28:45Z unit=b291-short-7 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 20 noarena 512 1 level: TIGHT: heavy 0 light 8, free 15.6 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 12.3 on 12 cores)
+Running as unit: b291-short-7.service; invocation ID: 725d02f8357446d7b137f256d27cc915
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 512 load 6.4s peak 0.95G rss 0.95G
+tokens 512 rows 1 run 1 logit 0.985387 time 2.190s peak 1.00G rss 0.98G
+tokens 512 rows 1 run 2 logit 0.985387 time 3.667s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 3 logit 0.985387 time 2.575s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 4 logit 0.985387 time 2.582s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 5 logit 0.985387 time 3.424s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 6 logit 0.985387 time 4.126s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 7 logit 0.985387 time 5.391s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 8 logit 0.985387 time 3.855s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 9 logit 0.985387 time 3.040s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 10 logit 0.985387 time 4.330s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 11 logit 0.985387 time 3.443s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 12 logit 0.985387 time 3.625s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 13 logit 0.985387 time 3.006s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 14 logit 0.985387 time 3.399s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 15 logit 0.985387 time 2.580s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 16 logit 0.985387 time 2.042s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 17 logit 0.985387 time 2.471s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 18 logit 0.985387 time 3.110s peak 1.06G rss 0.98G
+tokens 512 rows 1 run 19 logit 0.985387 time 3.644s peak 1.06G rss 0.98G
+tokens 512 rows 1 run 20 logit 0.985387 time 4.178s peak 1.06G rss 0.98G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 13.920s
+             CPU time consumed: 1min 27.155s
+                   Memory peak: 981.6M (swap: 0B)
+# exit 0
+# 2026-11-04T21:29:59Z unit=b291-short-8 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 8 noarena 2048 1 level: TIGHT: heavy 0 light 8, free 15.0 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 32.3 on 12 cores)
+Running as unit: b291-short-8.service; invocation ID: bb3e3871e1f24b15b18df5d20c3b8789
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 2048 load 7.6s peak 0.95G rss 0.95G
+tokens 2048 rows 1 run 1 logit 1.230980 time 16.845s peak 1.51G rss 1.01G
+tokens 2048 rows 1 run 2 logit 1.230980 time 17.852s peak 1.68G rss 0.98G
+tokens 2048 rows 1 run 3 logit 1.230980 time 11.616s peak 1.68G rss 1.02G
+tokens 2048 rows 1 run 4 logit 1.230980 time 16.903s peak 1.68G rss 1.02G
+tokens 2048 rows 1 run 5 logit 1.230980 time 18.440s peak 1.68G rss 1.02G
+tokens 2048 rows 1 run 6 logit 1.230980 time 13.551s peak 1.68G rss 1.01G
+tokens 2048 rows 1 run 7 logit 1.230980 time 12.251s peak 1.68G rss 1.01G
+tokens 2048 rows 1 run 8 logit 1.230980 time 18.175s peak 1.68G rss 1.01G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 14.238s
+             CPU time consumed: 3min 9.130s
+                   Memory peak: 1.5G (swap: 0B)
+# exit 0
+# 2026-11-04T21:32:14Z unit=b291-short-9 MemoryMax=20G args=<snapshots>/paraphrase-multilingual paraphrase-multilingual 2 40 noarena 60 32 level: TIGHT: heavy 0 light 8, free 17.6 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 36.9 on 12 cores)
+Running as unit: b291-short-9.service; invocation ID: 9412a4b52d804550a5c41a9478c0310c
+paraphrase-multilingual noarena threads 2 session arena False load 4.7s peak 0.96G rss 0.63G
+rows 32 run 1 first 0.294363 time 3.483s peak 0.96G rss 0.85G
+rows 32 run 2 first 0.294363 time 3.219s peak 0.96G rss 0.86G
+rows 32 run 3 first 0.294363 time 2.999s peak 0.96G rss 0.86G
+rows 32 run 4 first 0.294363 time 2.198s peak 0.96G rss 0.86G
+rows 32 run 5 first 0.294363 time 2.635s peak 0.96G rss 0.86G
+rows 32 run 6 first 0.294363 time 3.097s peak 0.96G rss 0.86G
+rows 32 run 7 first 0.294363 time 3.124s peak 0.96G rss 0.86G
+rows 32 run 8 first 0.294363 time 2.833s peak 0.96G rss 0.86G
+rows 32 run 9 first 0.294363 time 2.105s peak 0.96G rss 0.86G
+rows 32 run 10 first 0.294363 time 3.125s peak 0.96G rss 0.86G
+rows 32 run 11 first 0.294363 time 2.840s peak 0.96G rss 0.86G
+rows 32 run 12 first 0.294363 time 3.117s peak 0.96G rss 0.86G
+rows 32 run 13 first 0.294363 time 2.286s peak 0.96G rss 0.86G
+rows 32 run 14 first 0.294363 time 1.968s peak 0.96G rss 0.86G
+rows 32 run 15 first 0.294363 time 2.556s peak 0.96G rss 0.86G
+rows 32 run 16 first 0.294363 time 3.039s peak 0.96G rss 0.86G
+rows 32 run 17 first 0.294363 time 2.992s peak 0.96G rss 0.86G
+rows 32 run 18 first 0.294363 time 2.128s peak 0.96G rss 0.86G
+rows 32 run 19 first 0.294363 time 1.774s peak 0.96G rss 0.86G
+rows 32 run 20 first 0.294363 time 2.088s peak 0.96G rss 0.86G
+rows 32 run 21 first 0.294363 time 1.987s peak 0.96G rss 0.86G
+rows 32 run 22 first 0.294363 time 1.795s peak 0.96G rss 0.86G
+rows 32 run 23 first 0.294363 time 1.801s peak 0.96G rss 0.86G
+rows 32 run 24 first 0.294363 time 1.976s peak 0.96G rss 0.86G
+rows 32 run 25 first 0.294363 time 1.896s peak 0.96G rss 0.86G
+rows 32 run 26 first 0.294363 time 1.837s peak 0.96G rss 0.86G
+rows 32 run 27 first 0.294363 time 1.721s peak 0.96G rss 0.86G
+rows 32 run 28 first 0.294363 time 1.710s peak 0.96G rss 0.86G
+rows 32 run 29 first 0.294363 time 1.526s peak 0.96G rss 0.86G
+rows 32 run 30 first 0.294363 time 1.752s peak 0.96G rss 0.86G
+rows 32 run 31 first 0.294363 time 1.684s peak 0.96G rss 0.86G
+rows 32 run 32 first 0.294363 time 1.667s peak 0.96G rss 0.86G
+rows 32 run 33 first 0.294363 time 1.513s peak 0.96G rss 0.86G
+rows 32 run 34 first 0.294363 time 1.606s peak 0.96G rss 0.86G
+rows 32 run 35 first 0.294363 time 1.604s peak 0.96G rss 0.86G
+rows 32 run 36 first 0.294363 time 1.584s peak 0.96G rss 0.86G
+rows 32 run 37 first 0.294363 time 1.564s peak 0.96G rss 0.86G
+rows 32 run 38 first 0.294363 time 1.438s peak 0.96G rss 0.86G
+rows 32 run 39 first 0.294363 time 1.607s peak 0.96G rss 0.86G
+rows 32 run 40 first 0.294363 time 1.607s peak 0.96G rss 0.86G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 32.538s
+             CPU time consumed: 2min 19.689s
+                   Memory peak: 882.4M (swap: 0B)
+# exit 0
+# 2026-11-04T21:33:47Z unit=b291-short-10 MemoryMax=20G args=<snapshots>/bge-base bge-base 2 30 noarena 60 8 level: TIGHT: heavy 0 light 8, free 18.2 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 24.3 on 12 cores)
+Running as unit: b291-short-10.service
+bge-base noarena threads 2 session arena False load 3.3s peak 0.68G rss 0.68G
+rows 8 run 1 first -0.026069 time 1.257s peak 0.69G rss 0.69G
+rows 8 run 2 first -0.026069 time 1.195s peak 0.70G rss 0.69G
+rows 8 run 3 first -0.026069 time 1.023s peak 0.71G rss 0.71G
+rows 8 run 4 first -0.026069 time 1.062s peak 0.71G rss 0.71G
+rows 8 run 5 first -0.026069 time 0.888s peak 0.71G rss 0.71G
+rows 8 run 6 first -0.026069 time 0.917s peak 0.71G rss 0.71G
+rows 8 run 7 first -0.026069 time 1.168s peak 0.71G rss 0.71G
+rows 8 run 8 first -0.026069 time 0.989s peak 0.71G rss 0.71G
+rows 8 run 9 first -0.026069 time 1.124s peak 0.71G rss 0.71G
+rows 8 run 10 first -0.026069 time 1.094s peak 0.71G rss 0.71G
+rows 8 run 11 first -0.026069 time 0.961s peak 0.71G rss 0.71G
+rows 8 run 12 first -0.026069 time 1.059s peak 0.71G rss 0.71G
+rows 8 run 13 first -0.026069 time 1.181s peak 0.71G rss 0.71G
+rows 8 run 14 first -0.026069 time 1.312s peak 0.71G rss 0.71G
+rows 8 run 15 first -0.026069 time 1.221s peak 0.71G rss 0.71G
+rows 8 run 16 first -0.026069 time 1.028s peak 0.71G rss 0.71G
+rows 8 run 17 first -0.026069 time 1.023s peak 0.71G rss 0.71G
+rows 8 run 18 first -0.026069 time 1.031s peak 0.71G rss 0.71G
+rows 8 run 19 first -0.026069 time 1.045s peak 0.71G rss 0.71G
+rows 8 run 20 first -0.026069 time 1.058s peak 0.71G rss 0.71G
+rows 8 run 21 first -0.026069 time 0.960s peak 0.71G rss 0.71G
+rows 8 run 22 first -0.026069 time 1.157s peak 0.71G rss 0.71G
+rows 8 run 23 first -0.026069 time 1.052s peak 0.71G rss 0.71G
+rows 8 run 24 first -0.026069 time 0.802s peak 0.71G rss 0.71G
+rows 8 run 25 first -0.026069 time 0.939s peak 0.71G rss 0.71G
+rows 8 run 26 first -0.026069 time 1.007s peak 0.71G rss 0.71G
+rows 8 run 27 first -0.026069 time 1.012s peak 0.71G rss 0.71G
+rows 8 run 28 first -0.026069 time 1.063s peak 0.71G rss 0.71G
+rows 8 run 29 first -0.026069 time 1.049s peak 0.71G rss 0.71G
+rows 8 run 30 first -0.026069 time 1.095s peak 0.71G rss 0.71G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 35.335s
+             CPU time consumed: 1min 3.386s
+                   Memory peak: 643.6M (swap: 0B)
+# exit 0
+# 2026-11-04T21:34:22Z unit=b291-short-11 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 30 arena 64 8 level: TIGHT: heavy 0 light 8, free 17.5 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 20.3 on 12 cores)
+Running as unit: b291-short-11.service; invocation ID: 9402515897154236997b92d3d396361b
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 64 load 4.9s peak 0.95G rss 0.95G
+tokens 64 rows 8 run 1 logit 0.807708 time 2.228s peak 1.02G rss 1.02G
+tokens 64 rows 8 run 2 logit 0.807708 time 2.026s peak 1.07G rss 1.07G
+tokens 64 rows 8 run 3 logit 0.807708 time 2.046s peak 1.07G rss 1.06G
+tokens 64 rows 8 run 4 logit 0.807708 time 1.688s peak 1.07G rss 1.07G
+tokens 64 rows 8 run 5 logit 0.807708 time 1.924s peak 1.07G rss 1.07G
+tokens 64 rows 8 run 6 logit 0.807708 time 1.881s peak 1.07G rss 1.07G
+tokens 64 rows 8 run 7 logit 0.807708 time 1.805s peak 1.07G rss 1.07G
+tokens 64 rows 8 run 8 logit 0.807708 time 2.312s peak 1.07G rss 1.07G
+tokens 64 rows 8 run 9 logit 0.807708 time 2.731s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 10 logit 0.807708 time 2.341s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 11 logit 0.807708 time 2.394s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 12 logit 0.807708 time 2.636s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 13 logit 0.807708 time 2.181s peak 1.08G rss 1.06G
+tokens 64 rows 8 run 14 logit 0.807708 time 2.519s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 15 logit 0.807708 time 3.041s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 16 logit 0.807708 time 2.516s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 17 logit 0.807708 time 3.048s peak 1.08G rss 1.06G
+tokens 64 rows 8 run 18 logit 0.807708 time 2.686s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 19 logit 0.807708 time 3.033s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 20 logit 0.807708 time 2.784s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 21 logit 0.807708 time 3.055s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 22 logit 0.807708 time 2.321s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 23 logit 0.807708 time 3.266s peak 1.08G rss 1.06G
+tokens 64 rows 8 run 24 logit 0.807708 time 2.546s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 25 logit 0.807708 time 3.148s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 26 logit 0.807708 time 3.446s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 27 logit 0.807708 time 3.266s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 28 logit 0.807708 time 2.450s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 29 logit 0.807708 time 2.879s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 30 logit 0.807708 time 2.265s peak 1.08G rss 1.07G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 21.858s
+             CPU time consumed: 1min 50.813s
+                   Memory peak: 998.4M (swap: 0B)
+# exit 0
+# 2026-11-04T21:35:45Z unit=b291-short-12 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 20 arena 512 1 level: TIGHT: heavy 0 light 8, free 17.3 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 36.8 on 12 cores)
+Running as unit: b291-short-12.service
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 512 load 6.1s peak 0.93G rss 0.93G
+tokens 512 rows 1 run 1 logit 0.985387 time 2.873s peak 1.02G rss 1.02G
+tokens 512 rows 1 run 2 logit 0.985387 time 4.183s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 3 logit 0.985387 time 2.153s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 4 logit 0.985387 time 3.111s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 5 logit 0.985387 time 3.357s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 6 logit 0.985387 time 1.990s peak 1.10G rss 1.09G
+tokens 512 rows 1 run 7 logit 0.985387 time 2.213s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 8 logit 0.985387 time 2.126s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 9 logit 0.985387 time 2.778s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 10 logit 0.985387 time 2.470s peak 1.10G rss 1.09G
+tokens 512 rows 1 run 11 logit 0.985387 time 2.753s peak 1.10G rss 1.10G
+tokens 512 rows 1 run 12 logit 0.985387 time 2.327s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 13 logit 0.985387 time 1.947s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 14 logit 0.985387 time 2.708s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 15 logit 0.985387 time 2.266s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 16 logit 0.985387 time 1.938s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 17 logit 0.985387 time 2.833s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 18 logit 0.985387 time 2.179s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 19 logit 0.985387 time 1.781s peak 1.11G rss 1.10G
+tokens 512 rows 1 run 20 logit 0.985387 time 2.051s peak 1.11G rss 1.10G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 56.599s
+             CPU time consumed: 1min 20.421s
+                   Memory peak: 1G (swap: 0B)
+# exit 0
+# 2026-11-04T21:36:42Z unit=b291-short-13 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 8 arena 2048 1 level: TIGHT: heavy 0 light 8, free 20.0 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 35.7 on 12 cores)
+Running as unit: b291-short-13.service
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 2048 load 5.0s peak 0.95G rss 0.95G
+tokens 2048 rows 1 run 1 logit 1.230980 time 13.848s peak 1.65G rss 1.65G
+tokens 2048 rows 1 run 2 logit 1.230980 time 12.121s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 3 logit 1.230980 time 11.179s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 4 logit 1.230980 time 18.333s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 5 logit 1.230980 time 18.827s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 6 logit 1.230980 time 16.512s peak 2.34G rss 2.33G
+tokens 2048 rows 1 run 7 logit 1.230980 time 16.756s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 8 logit 1.230980 time 17.756s peak 2.34G rss 2.34G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 11.082s
+             CPU time consumed: 3min 4.653s
+                   Memory peak: 2.1G (swap: 0B)
+# exit 0
+# 2026-11-04T21:38:53Z unit=b291-short-14 MemoryMax=20G args=<snapshots>/paraphrase-multilingual paraphrase-multilingual 2 40 arena 60 32 level: TIGHT: heavy 0 light 8, free 21.5 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 38.4 on 12 cores)
+Running as unit: b291-short-14.service
+paraphrase-multilingual arena threads 2 session arena True load 4.5s peak 0.96G rss 0.64G
+rows 32 run 1 first 0.294363 time 2.836s peak 0.96G rss 0.71G
+rows 32 run 2 first 0.294363 time 3.283s peak 0.96G rss 0.76G
+rows 32 run 3 first 0.294363 time 4.561s peak 0.96G rss 0.76G
+rows 32 run 4 first 0.294363 time 3.007s peak 0.96G rss 0.76G
+rows 32 run 5 first 0.294363 time 2.086s peak 0.96G rss 0.76G
+rows 32 run 6 first 0.294363 time 2.714s peak 0.96G rss 0.76G
+rows 32 run 7 first 0.294363 time 2.554s peak 0.96G rss 0.77G
+rows 32 run 8 first 0.294363 time 2.849s peak 0.96G rss 0.77G
+rows 32 run 9 first 0.294363 time 2.602s peak 0.96G rss 0.77G
+rows 32 run 10 first 0.294363 time 3.204s peak 0.96G rss 0.77G
+rows 32 run 11 first 0.294363 time 4.171s peak 0.96G rss 0.77G
+rows 32 run 12 first 0.294363 time 2.582s peak 0.96G rss 0.77G
+rows 32 run 13 first 0.294363 time 2.386s peak 0.96G rss 0.77G
+rows 32 run 14 first 0.294363 time 2.515s peak 0.96G rss 0.77G
+rows 32 run 15 first 0.294363 time 2.367s peak 0.96G rss 0.77G
+rows 32 run 16 first 0.294363 time 3.520s peak 0.96G rss 0.77G
+rows 32 run 17 first 0.294363 time 2.967s peak 0.96G rss 0.77G
+rows 32 run 18 first 0.294363 time 1.940s peak 0.96G rss 0.76G
+rows 32 run 19 first 0.294363 time 4.662s peak 0.96G rss 0.76G
+rows 32 run 20 first 0.294363 time 2.424s peak 0.96G rss 0.76G
+rows 32 run 21 first 0.294363 time 3.214s peak 0.96G rss 0.76G
+rows 32 run 22 first 0.294363 time 3.668s peak 0.96G rss 0.76G
+rows 32 run 23 first 0.294363 time 3.398s peak 0.96G rss 0.76G
+rows 32 run 24 first 0.294363 time 3.432s peak 0.96G rss 0.76G
+rows 32 run 25 first 0.294363 time 2.919s peak 0.96G rss 0.76G
+rows 32 run 26 first 0.294363 time 2.821s peak 0.96G rss 0.76G
+rows 32 run 27 first 0.294363 time 3.033s peak 0.96G rss 0.76G
+rows 32 run 28 first 0.294363 time 2.555s peak 0.96G rss 0.76G
+rows 32 run 29 first 0.294363 time 3.617s peak 0.96G rss 0.76G
+rows 32 run 30 first 0.294363 time 3.910s peak 0.96G rss 0.76G
+rows 32 run 31 first 0.294363 time 2.890s peak 0.96G rss 0.77G
+rows 32 run 32 first 0.294363 time 5.286s peak 0.96G rss 0.77G
+rows 32 run 33 first 0.294363 time 5.634s peak 0.96G rss 0.77G
+rows 32 run 34 first 0.294363 time 5.672s peak 0.96G rss 0.77G
+rows 32 run 35 first 0.294363 time 4.061s peak 0.96G rss 0.77G
+rows 32 run 36 first 0.294363 time 3.101s peak 0.96G rss 0.77G
+rows 32 run 37 first 0.294363 time 4.066s peak 0.96G rss 0.77G
+rows 32 run 38 first 0.294363 time 4.169s peak 0.96G rss 0.77G
+rows 32 run 39 first 0.294363 time 4.409s peak 0.96G rss 0.77G
+rows 32 run 40 first 0.294363 time 5.343s peak 0.96G rss 0.77G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 21.302s
+             CPU time consumed: 2min 37.099s
+                   Memory peak: 882.1M (swap: 0B)
+# exit 0
+# 2026-11-04T21:41:15Z unit=b291-short-15 MemoryMax=20G args=<snapshots>/bge-base bge-base 2 30 arena 60 8 level: TIGHT: heavy 0 light 8, free 21.9 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 43.7 on 12 cores)
+Running as unit: b291-short-15.service; invocation ID: 6708e370e776415997bb3369dbb3bf7a
+bge-base arena threads 2 session arena True load 7.2s peak 0.70G rss 0.70G
+rows 8 run 1 first -0.026069 time 2.931s peak 0.72G rss 0.72G
+rows 8 run 2 first -0.026069 time 8.895s peak 0.74G rss 0.74G
+rows 8 run 3 first -0.026069 time 9.121s peak 0.74G rss 0.74G
+rows 8 run 4 first -0.026069 time 2.766s peak 0.74G rss 0.74G
+rows 8 run 5 first -0.026069 time 3.426s peak 0.75G rss 0.75G
+rows 8 run 6 first -0.026069 time 2.857s peak 0.75G rss 0.75G
+rows 8 run 7 first -0.026069 time 1.863s peak 0.75G rss 0.75G
+rows 8 run 8 first -0.026069 time 1.638s peak 0.75G rss 0.75G
+rows 8 run 9 first -0.026069 time 2.265s peak 0.75G rss 0.75G
+rows 8 run 10 first -0.026069 time 3.105s peak 0.75G rss 0.75G
+rows 8 run 11 first -0.026069 time 2.509s peak 0.75G rss 0.75G
+rows 8 run 12 first -0.026069 time 2.133s peak 0.75G rss 0.75G
+rows 8 run 13 first -0.026069 time 2.187s peak 0.75G rss 0.75G
+rows 8 run 14 first -0.026069 time 2.273s peak 0.75G rss 0.75G
+rows 8 run 15 first -0.026069 time 3.082s peak 0.75G rss 0.75G
+rows 8 run 16 first -0.026069 time 1.953s peak 0.75G rss 0.75G
+rows 8 run 17 first -0.026069 time 2.614s peak 0.75G rss 0.75G
+rows 8 run 18 first -0.026069 time 2.120s peak 0.75G rss 0.75G
+rows 8 run 19 first -0.026069 time 1.657s peak 0.75G rss 0.75G
+rows 8 run 20 first -0.026069 time 2.238s peak 0.75G rss 0.75G
+rows 8 run 21 first -0.026069 time 1.372s peak 0.75G rss 0.75G
+rows 8 run 22 first -0.026069 time 1.756s peak 0.75G rss 0.75G
+rows 8 run 23 first -0.026069 time 2.289s peak 0.75G rss 0.75G
+rows 8 run 24 first -0.026069 time 3.192s peak 0.75G rss 0.75G
+rows 8 run 25 first -0.026069 time 2.279s peak 0.75G rss 0.75G
+rows 8 run 26 first -0.026069 time 3.278s peak 0.75G rss 0.75G
+rows 8 run 27 first -0.026069 time 5.414s peak 0.75G rss 0.75G
+rows 8 run 28 first -0.026069 time 4.656s peak 0.75G rss 0.75G
+rows 8 run 29 first -0.026069 time 1.893s peak 0.75G rss 0.75G
+rows 8 run 30 first -0.026069 time 2.458s peak 0.75G rss 0.75G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 37.831s
+             CPU time consumed: 1min 20.858s
+                   Memory peak: 676M (swap: 0B)
+# exit 0
+# 2026-11-04T21:42:53Z unit=b291-short-16 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 30 noarena 64 8 level: TIGHT: heavy 0 light 8, free 18.8 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 81.7 on 12 cores)
+Running as unit: b291-short-16.service
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 64 load 7.2s peak 0.94G rss 0.94G
+tokens 64 rows 8 run 1 logit 0.807708 time 2.999s peak 0.98G rss 0.97G
+tokens 64 rows 8 run 2 logit 0.807708 time 2.654s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 3 logit 0.807708 time 2.890s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 4 logit 0.807708 time 2.979s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 5 logit 0.807708 time 5.088s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 6 logit 0.807708 time 2.560s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 7 logit 0.807708 time 2.329s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 8 logit 0.807708 time 1.944s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 9 logit 0.807708 time 2.214s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 10 logit 0.807708 time 2.422s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 11 logit 0.807708 time 2.065s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 12 logit 0.807708 time 2.054s peak 1.03G rss 0.97G
+tokens 64 rows 8 run 13 logit 0.807708 time 1.861s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 14 logit 0.807708 time 1.955s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 15 logit 0.807708 time 2.076s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 16 logit 0.807708 time 2.099s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 17 logit 0.807708 time 2.025s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 18 logit 0.807708 time 2.099s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 19 logit 0.807708 time 1.920s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 20 logit 0.807708 time 1.887s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 21 logit 0.807708 time 1.486s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 22 logit 0.807708 time 1.715s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 23 logit 0.807708 time 1.871s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 24 logit 0.807708 time 1.837s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 25 logit 0.807708 time 1.836s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 26 logit 0.807708 time 1.802s peak 1.03G rss 0.99G
+tokens 64 rows 8 run 27 logit 0.807708 time 1.496s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 28 logit 0.807708 time 1.912s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 29 logit 0.807708 time 1.865s peak 1.03G rss 0.98G
+tokens 64 rows 8 run 30 logit 0.807708 time 1.942s peak 1.03G rss 0.98G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 13.857s
+             CPU time consumed: 1min 47.263s
+                   Memory peak: 953.7M (swap: 0B)
+# exit 0
+# 2026-11-04T21:44:07Z unit=b291-short-17 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 20 noarena 512 1 level: TIGHT: heavy 0 light 8, free 12.1 GB, 2 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 49.1 on 12 cores)
+Running as unit: b291-short-17.service
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 512 load 4.8s peak 0.95G rss 0.95G
+tokens 512 rows 1 run 1 logit 0.985387 time 1.886s peak 1.00G rss 0.98G
+tokens 512 rows 1 run 2 logit 0.985387 time 2.041s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 3 logit 0.985387 time 1.821s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 4 logit 0.985387 time 1.832s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 5 logit 0.985387 time 2.159s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 6 logit 0.985387 time 2.242s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 7 logit 0.985387 time 2.009s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 8 logit 0.985387 time 2.397s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 9 logit 0.985387 time 2.075s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 10 logit 0.985387 time 2.078s peak 1.05G rss 0.98G
+tokens 512 rows 1 run 11 logit 0.985387 time 1.926s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 12 logit 0.985387 time 2.031s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 13 logit 0.985387 time 1.983s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 14 logit 0.985387 time 2.002s peak 1.06G rss 0.98G
+tokens 512 rows 1 run 15 logit 0.985387 time 1.892s peak 1.06G rss 0.98G
+tokens 512 rows 1 run 16 logit 0.985387 time 2.337s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 17 logit 0.985387 time 2.339s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 18 logit 0.985387 time 2.080s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 19 logit 0.985387 time 1.867s peak 1.06G rss 0.98G
+tokens 512 rows 1 run 20 logit 0.985387 time 2.170s peak 1.06G rss 0.98G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 46.420s
+             CPU time consumed: 1min 19.138s
+                   Memory peak: 980M (swap: 0B)
+# exit 0
+# 2026-11-04T21:44:54Z unit=b291-short-18 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 8 noarena 2048 1 level: TIGHT: heavy 0 light 8, free 11.7 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 29.0 on 12 cores)
+Running as unit: b291-short-18.service; invocation ID: c9cec130c1ad4be0a2e1498842b828fc
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 2048 load 5.6s peak 0.94G rss 0.94G
+tokens 2048 rows 1 run 1 logit 1.230980 time 14.018s peak 1.50G rss 0.97G
+tokens 2048 rows 1 run 2 logit 1.230980 time 11.336s peak 1.65G rss 1.01G
+tokens 2048 rows 1 run 3 logit 1.230980 time 10.942s peak 1.67G rss 0.98G
+tokens 2048 rows 1 run 4 logit 1.230980 time 12.464s peak 1.67G rss 0.98G
+tokens 2048 rows 1 run 5 logit 1.230980 time 15.803s peak 1.67G rss 1.01G
+tokens 2048 rows 1 run 6 logit 1.230980 time 29.227s peak 1.67G rss 1.00G
+tokens 2048 rows 1 run 7 logit 1.230980 time 36.370s peak 1.67G rss 1.00G
+tokens 2048 rows 1 run 8 logit 1.230980 time 32.553s peak 1.67G rss 0.97G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 48.771s
+             CPU time consumed: 3min 7.476s
+                   Memory peak: 1.5G (swap: 0B)
+# exit 0
+# 2026-11-04T21:47:43Z unit=b291-short-19 MemoryMax=20G args=<snapshots>/paraphrase-multilingual paraphrase-multilingual 2 40 noarena 60 32 level: TIGHT: heavy 0 light 8, free 17.5 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 45.5 on 12 cores)
+Running as unit: b291-short-19.service
+paraphrase-multilingual noarena threads 2 session arena False load 6.8s peak 0.96G rss 0.65G
+rows 32 run 1 first 0.294363 time 3.211s peak 0.96G rss 0.88G
+rows 32 run 2 first 0.294363 time 3.268s peak 0.96G rss 0.88G
+rows 32 run 3 first 0.294363 time 3.084s peak 0.96G rss 0.89G
+rows 32 run 4 first 0.294363 time 3.621s peak 0.96G rss 0.89G
+rows 32 run 5 first 0.294363 time 3.146s peak 0.96G rss 0.89G
+rows 32 run 6 first 0.294363 time 5.897s peak 0.96G rss 0.89G
+rows 32 run 7 first 0.294363 time 4.446s peak 0.96G rss 0.89G
+rows 32 run 8 first 0.294363 time 5.187s peak 0.96G rss 0.89G
+rows 32 run 9 first 0.294363 time 6.755s peak 0.96G rss 0.89G
+rows 32 run 10 first 0.294363 time 5.211s peak 0.96G rss 0.89G
+rows 32 run 11 first 0.294363 time 4.906s peak 0.96G rss 0.89G
+rows 32 run 12 first 0.294363 time 3.686s peak 0.96G rss 0.89G
+rows 32 run 13 first 0.294363 time 4.842s peak 0.96G rss 0.89G
+rows 32 run 14 first 0.294363 time 5.098s peak 0.96G rss 0.89G
+rows 32 run 15 first 0.294363 time 3.990s peak 0.96G rss 0.89G
+rows 32 run 16 first 0.294363 time 5.220s peak 0.96G rss 0.89G
+rows 32 run 17 first 0.294363 time 6.797s peak 0.96G rss 0.89G
+rows 32 run 18 first 0.294363 time 2.991s peak 0.96G rss 0.89G
+rows 32 run 19 first 0.294363 time 3.956s peak 0.96G rss 0.89G
+rows 32 run 20 first 0.294363 time 4.664s peak 0.96G rss 0.89G
+rows 32 run 21 first 0.294363 time 4.846s peak 0.96G rss 0.89G
+rows 32 run 22 first 0.294363 time 4.815s peak 0.96G rss 0.89G
+rows 32 run 23 first 0.294363 time 3.270s peak 0.96G rss 0.89G
+rows 32 run 24 first 0.294363 time 4.240s peak 0.96G rss 0.89G
+rows 32 run 25 first 0.294363 time 4.326s peak 0.96G rss 0.89G
+rows 32 run 26 first 0.294363 time 4.105s peak 0.96G rss 0.89G
+rows 32 run 27 first 0.294363 time 3.051s peak 0.96G rss 0.89G
+rows 32 run 28 first 0.294363 time 3.199s peak 0.96G rss 0.89G
+rows 32 run 29 first 0.294363 time 2.998s peak 0.96G rss 0.89G
+rows 32 run 30 first 0.294363 time 3.505s peak 0.96G rss 0.89G
+rows 32 run 31 first 0.294363 time 3.888s peak 0.96G rss 0.89G
+rows 32 run 32 first 0.294363 time 2.931s peak 0.96G rss 0.89G
+rows 32 run 33 first 0.294363 time 3.415s peak 0.96G rss 0.89G
+rows 32 run 34 first 0.294363 time 4.521s peak 0.96G rss 0.89G
+rows 32 run 35 first 0.294363 time 3.069s peak 0.96G rss 0.89G
+rows 32 run 36 first 0.294363 time 3.323s peak 0.96G rss 0.89G
+rows 32 run 37 first 0.294363 time 2.316s peak 0.96G rss 0.89G
+rows 32 run 38 first 0.294363 time 3.553s peak 0.96G rss 0.89G
+rows 32 run 39 first 0.294363 time 2.822s peak 0.96G rss 0.89G
+rows 32 run 40 first 0.294363 time 3.616s peak 0.96G rss 0.89G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 48.913s
+             CPU time consumed: 2min 42.138s
+                   Memory peak: 881.8M (swap: 0B)
+# exit 0
+# 2026-11-04T21:50:32Z unit=b291-short-20 MemoryMax=20G args=<snapshots>/bge-base bge-base 2 30 noarena 60 8 level: TIGHT: heavy 0 light 8, free 20.1 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 61.3 on 12 cores)
+Running as unit: b291-short-20.service
+bge-base noarena threads 2 session arena False load 4.7s peak 0.70G rss 0.70G
+rows 8 run 1 first -0.026069 time 1.285s peak 0.70G rss 0.70G
+rows 8 run 2 first -0.026069 time 2.461s peak 0.72G rss 0.71G
+rows 8 run 3 first -0.026069 time 2.153s peak 0.73G rss 0.73G
+rows 8 run 4 first -0.026069 time 2.134s peak 0.73G rss 0.73G
+rows 8 run 5 first -0.026069 time 2.013s peak 0.73G rss 0.73G
+rows 8 run 6 first -0.026069 time 1.807s peak 0.73G rss 0.73G
+rows 8 run 7 first -0.026069 time 2.687s peak 0.73G rss 0.73G
+rows 8 run 8 first -0.026069 time 1.949s peak 0.73G rss 0.73G
+rows 8 run 9 first -0.026069 time 2.385s peak 0.73G rss 0.73G
+rows 8 run 10 first -0.026069 time 1.895s peak 0.73G rss 0.73G
+rows 8 run 11 first -0.026069 time 1.955s peak 0.73G rss 0.73G
+rows 8 run 12 first -0.026069 time 1.607s peak 0.73G rss 0.73G
+rows 8 run 13 first -0.026069 time 2.247s peak 0.73G rss 0.73G
+rows 8 run 14 first -0.026069 time 4.263s peak 0.73G rss 0.73G
+rows 8 run 15 first -0.026069 time 2.875s peak 0.73G rss 0.73G
+rows 8 run 16 first -0.026069 time 4.003s peak 0.73G rss 0.73G
+rows 8 run 17 first -0.026069 time 4.940s peak 0.73G rss 0.73G
+rows 8 run 18 first -0.026069 time 2.837s peak 0.73G rss 0.73G
+rows 8 run 19 first -0.026069 time 2.845s peak 0.73G rss 0.73G
+rows 8 run 20 first -0.026069 time 3.409s peak 0.73G rss 0.73G
+rows 8 run 21 first -0.026069 time 2.245s peak 0.73G rss 0.73G
+rows 8 run 22 first -0.026069 time 3.171s peak 0.73G rss 0.73G
+rows 8 run 23 first -0.026069 time 3.715s peak 0.73G rss 0.73G
+rows 8 run 24 first -0.026069 time 3.523s peak 0.73G rss 0.73G
+rows 8 run 25 first -0.026069 time 7.295s peak 0.73G rss 0.73G
+rows 8 run 26 first -0.026069 time 3.911s peak 0.73G rss 0.73G
+rows 8 run 27 first -0.026069 time 1.768s peak 0.73G rss 0.73G
+rows 8 run 28 first -0.026069 time 2.493s peak 0.73G rss 0.73G
+rows 8 run 29 first -0.026069 time 1.446s peak 0.73G rss 0.73G
+rows 8 run 30 first -0.026069 time 2.206s peak 0.73G rss 0.73G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 28.591s
+             CPU time consumed: 1min 21.458s
+                   Memory peak: 662.3M (swap: 0B)
+# exit 0
+# 2026-11-04T21:52:02Z unit=b291-short-21 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 30 arena 64 8 level: TIGHT: heavy 0 light 8, free 17.9 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 49.8 on 12 cores)
+Running as unit: b291-short-21.service; invocation ID: 2164bf8fe667449aa80b1e9e26dd21d5
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 64 load 7.6s peak 0.96G rss 0.96G
+tokens 64 rows 8 run 1 logit 0.807708 time 3.351s peak 1.03G rss 1.03G
+tokens 64 rows 8 run 2 logit 0.807708 time 3.304s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 3 logit 0.807708 time 2.492s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 4 logit 0.807708 time 2.130s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 5 logit 0.807708 time 2.815s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 6 logit 0.807708 time 3.143s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 7 logit 0.807708 time 2.487s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 8 logit 0.807708 time 3.270s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 9 logit 0.807708 time 2.875s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 10 logit 0.807708 time 2.819s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 11 logit 0.807708 time 4.001s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 12 logit 0.807708 time 2.766s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 13 logit 0.807708 time 3.001s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 14 logit 0.807708 time 2.880s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 15 logit 0.807708 time 3.194s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 16 logit 0.807708 time 4.804s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 17 logit 0.807708 time 3.830s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 18 logit 0.807708 time 4.517s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 19 logit 0.807708 time 5.719s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 20 logit 0.807708 time 3.697s peak 1.08G rss 1.06G
+tokens 64 rows 8 run 21 logit 0.807708 time 6.199s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 22 logit 0.807708 time 6.004s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 23 logit 0.807708 time 5.141s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 24 logit 0.807708 time 5.703s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 25 logit 0.807708 time 5.135s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 26 logit 0.807708 time 6.279s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 27 logit 0.807708 time 5.758s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 28 logit 0.807708 time 5.592s peak 1.08G rss 1.08G
+tokens 64 rows 8 run 29 logit 0.807708 time 5.471s peak 1.08G rss 1.07G
+tokens 64 rows 8 run 30 logit 0.807708 time 7.229s peak 1.08G rss 1.08G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 13.929s
+             CPU time consumed: 2min 1.069s
+                   Memory peak: 1004.5M (swap: 0B)
+# exit 0
+# 2026-11-04T21:54:16Z unit=b291-short-22 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 20 arena 512 1 level: TIGHT: heavy 0 light 8, free 16.7 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 74.3 on 12 cores)
+Running as unit: b291-short-22.service; invocation ID: 8bd58124568a4aa2ad14d5e0f3323fe4
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 512 load 16.0s peak 0.95G rss 0.95G
+tokens 512 rows 1 run 1 logit 0.985387 time 5.924s peak 1.04G rss 1.04G
+tokens 512 rows 1 run 2 logit 0.985387 time 7.167s peak 1.12G rss 1.12G
+tokens 512 rows 1 run 3 logit 0.985387 time 4.326s peak 1.12G rss 1.12G
+tokens 512 rows 1 run 4 logit 0.985387 time 5.657s peak 1.12G rss 1.12G
+tokens 512 rows 1 run 5 logit 0.985387 time 5.552s peak 1.12G rss 1.12G
+tokens 512 rows 1 run 6 logit 0.985387 time 6.528s peak 1.12G rss 1.11G
+tokens 512 rows 1 run 7 logit 0.985387 time 5.438s peak 1.12G rss 1.12G
+tokens 512 rows 1 run 8 logit 0.985387 time 6.769s peak 1.12G rss 1.12G
+tokens 512 rows 1 run 9 logit 0.985387 time 6.603s peak 1.12G rss 1.12G
+tokens 512 rows 1 run 10 logit 0.985387 time 2.854s peak 1.12G rss 1.11G
+tokens 512 rows 1 run 11 logit 0.985387 time 6.401s peak 1.12G rss 1.12G
+tokens 512 rows 1 run 12 logit 0.985387 time 6.966s peak 1.12G rss 1.12G
+tokens 512 rows 1 run 13 logit 0.985387 time 5.533s peak 1.13G rss 1.11G
+tokens 512 rows 1 run 14 logit 0.985387 time 5.016s peak 1.13G rss 1.12G
+tokens 512 rows 1 run 15 logit 0.985387 time 3.083s peak 1.13G rss 1.12G
+tokens 512 rows 1 run 16 logit 0.985387 time 7.585s peak 1.13G rss 1.12G
+tokens 512 rows 1 run 17 logit 0.985387 time 3.540s peak 1.13G rss 1.12G
+tokens 512 rows 1 run 18 logit 0.985387 time 5.840s peak 1.13G rss 1.12G
+tokens 512 rows 1 run 19 logit 0.985387 time 3.551s peak 1.13G rss 1.12G
+tokens 512 rows 1 run 20 logit 0.985387 time 4.127s peak 1.13G rss 1.12G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 5.298s
+             CPU time consumed: 1min 32.959s
+                   Memory peak: 1G (swap: 0B)
+# exit 0
+# 2026-11-04T21:56:22Z unit=b291-short-23 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 8 arena 2048 1 level: TIGHT: heavy 0 light 8, free 18.5 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 101.6 on 12 cores)
+Running as unit: b291-short-23.service; invocation ID: 8421d48395bd4a4e968e000f4c9b5e94
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 2048 load 7.2s peak 0.96G rss 0.96G
+tokens 2048 rows 1 run 1 logit 1.230980 time 24.581s peak 1.66G rss 1.66G
+tokens 2048 rows 1 run 2 logit 1.230980 time 20.277s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 3 logit 1.230980 time 15.944s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 4 logit 1.230980 time 13.753s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 5 logit 1.230980 time 23.468s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 6 logit 1.230980 time 26.681s peak 2.35G rss 2.34G
+tokens 2048 rows 1 run 7 logit 1.230980 time 36.276s peak 2.35G rss 2.34G
+tokens 2048 rows 1 run 8 logit 1.230980 time 25.230s peak 2.35G rss 2.35G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 3min 14.399s
+             CPU time consumed: 3min 16.194s
+                   Memory peak: 2.1G (swap: 0B)
+# exit 0
+# 2026-11-04T21:59:37Z unit=b291-short-24 MemoryMax=20G args=<snapshots>/paraphrase-multilingual paraphrase-multilingual 2 40 arena 60 32 level: TIGHT: heavy 0 light 8, free 12.7 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 39.6 on 12 cores)
+Running as unit: b291-short-24.service; invocation ID: 26dce8a2b6954347b0aee3dd0e9a7d34
+paraphrase-multilingual arena threads 2 session arena True load 4.9s peak 0.96G rss 0.63G
+rows 32 run 1 first 0.294363 time 1.972s peak 0.96G rss 0.70G
+rows 32 run 2 first 0.294363 time 3.359s peak 0.96G rss 0.75G
+rows 32 run 3 first 0.294363 time 2.578s peak 0.96G rss 0.76G
+rows 32 run 4 first 0.294363 time 2.268s peak 0.96G rss 0.76G
+rows 32 run 5 first 0.294363 time 2.577s peak 0.96G rss 0.76G
+rows 32 run 6 first 0.294363 time 2.207s peak 0.96G rss 0.76G
+rows 32 run 7 first 0.294363 time 3.187s peak 0.96G rss 0.76G
+rows 32 run 8 first 0.294363 time 2.380s peak 0.96G rss 0.76G
+rows 32 run 9 first 0.294363 time 1.982s peak 0.96G rss 0.76G
+rows 32 run 10 first 0.294363 time 3.603s peak 0.96G rss 0.76G
+rows 32 run 11 first 0.294363 time 3.570s peak 0.96G rss 0.76G
+rows 32 run 12 first 0.294363 time 3.607s peak 0.96G rss 0.76G
+rows 32 run 13 first 0.294363 time 2.358s peak 0.96G rss 0.76G
+rows 32 run 14 first 0.294363 time 5.723s peak 0.96G rss 0.76G
+rows 32 run 15 first 0.294363 time 3.574s peak 0.96G rss 0.76G
+rows 32 run 16 first 0.294363 time 4.655s peak 0.96G rss 0.76G
+rows 32 run 17 first 0.294363 time 3.239s peak 0.96G rss 0.76G
+rows 32 run 18 first 0.294363 time 3.843s peak 0.96G rss 0.76G
+rows 32 run 19 first 0.294363 time 3.462s peak 0.96G rss 0.76G
+rows 32 run 20 first 0.294363 time 3.339s peak 0.96G rss 0.76G
+rows 32 run 21 first 0.294363 time 4.516s peak 0.96G rss 0.76G
+rows 32 run 22 first 0.294363 time 4.218s peak 0.96G rss 0.76G
+rows 32 run 23 first 0.294363 time 3.018s peak 0.96G rss 0.76G
+rows 32 run 24 first 0.294363 time 4.073s peak 0.96G rss 0.76G
+rows 32 run 25 first 0.294363 time 3.057s peak 0.96G rss 0.76G
+rows 32 run 26 first 0.294363 time 4.393s peak 0.96G rss 0.76G
+rows 32 run 27 first 0.294363 time 4.176s peak 0.96G rss 0.76G
+rows 32 run 28 first 0.294363 time 2.723s peak 0.96G rss 0.76G
+rows 32 run 29 first 0.294363 time 2.189s peak 0.96G rss 0.76G
+rows 32 run 30 first 0.294363 time 3.671s peak 0.96G rss 0.76G
+rows 32 run 31 first 0.294363 time 3.123s peak 0.96G rss 0.76G
+rows 32 run 32 first 0.294363 time 4.033s peak 0.96G rss 0.76G
+rows 32 run 33 first 0.294363 time 3.384s peak 0.96G rss 0.76G
+rows 32 run 34 first 0.294363 time 4.688s peak 0.96G rss 0.76G
+rows 32 run 35 first 0.294363 time 4.253s peak 0.96G rss 0.76G
+rows 32 run 36 first 0.294363 time 4.276s peak 0.96G rss 0.76G
+rows 32 run 37 first 0.294363 time 2.905s peak 0.96G rss 0.76G
+rows 32 run 38 first 0.294363 time 2.280s peak 0.96G rss 0.76G
+rows 32 run 39 first 0.294363 time 3.442s peak 0.96G rss 0.76G
+rows 32 run 40 first 0.294363 time 3.152s peak 0.96G rss 0.76G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 20.332s
+             CPU time consumed: 2min 39.783s
+                   Memory peak: 882.2M (swap: 0B)
+# exit 0
+# 2026-11-04T22:01:58Z unit=b291-short-25 MemoryMax=20G args=<snapshots>/bge-base bge-base 2 30 arena 60 8 level: TIGHT: heavy 0 light 8, free 16.2 GB, 2 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 25.0 on 12 cores)
+Running as unit: b291-short-25.service; invocation ID: bae15337fa1e49ea8a251242f10a7eab
+bge-base arena threads 2 session arena True load 6.7s peak 0.73G rss 0.73G
+rows 8 run 1 first -0.026069 time 3.208s peak 0.74G rss 0.74G
+rows 8 run 2 first -0.026069 time 3.262s peak 0.77G rss 0.77G
+rows 8 run 3 first -0.026069 time 1.983s peak 0.77G rss 0.77G
+rows 8 run 4 first -0.026069 time 1.832s peak 0.77G rss 0.77G
+rows 8 run 5 first -0.026069 time 3.456s peak 0.77G rss 0.77G
+rows 8 run 6 first -0.026069 time 2.763s peak 0.77G rss 0.77G
+rows 8 run 7 first -0.026069 time 2.033s peak 0.77G rss 0.77G
+rows 8 run 8 first -0.026069 time 2.529s peak 0.77G rss 0.77G
+rows 8 run 9 first -0.026069 time 2.484s peak 0.77G rss 0.77G
+rows 8 run 10 first -0.026069 time 2.519s peak 0.77G rss 0.77G
+rows 8 run 11 first -0.026069 time 1.290s peak 0.77G rss 0.77G
+rows 8 run 12 first -0.026069 time 1.381s peak 0.77G rss 0.77G
+rows 8 run 13 first -0.026069 time 1.131s peak 0.77G rss 0.77G
+rows 8 run 14 first -0.026069 time 2.421s peak 0.77G rss 0.77G
+rows 8 run 15 first -0.026069 time 2.200s peak 0.77G rss 0.77G
+rows 8 run 16 first -0.026069 time 1.825s peak 0.77G rss 0.77G
+rows 8 run 17 first -0.026069 time 1.646s peak 0.77G rss 0.77G
+rows 8 run 18 first -0.026069 time 2.441s peak 0.77G rss 0.77G
+rows 8 run 19 first -0.026069 time 2.403s peak 0.77G rss 0.77G
+rows 8 run 20 first -0.026069 time 2.103s peak 0.77G rss 0.77G
+rows 8 run 21 first -0.026069 time 3.007s peak 0.77G rss 0.77G
+rows 8 run 22 first -0.026069 time 2.545s peak 0.77G rss 0.77G
+rows 8 run 23 first -0.026069 time 2.228s peak 0.77G rss 0.77G
+rows 8 run 24 first -0.026069 time 3.393s peak 0.77G rss 0.77G
+rows 8 run 25 first -0.026069 time 2.356s peak 0.77G rss 0.77G
+rows 8 run 26 first -0.026069 time 1.771s peak 0.77G rss 0.77G
+rows 8 run 27 first -0.026069 time 2.136s peak 0.77G rss 0.77G
+rows 8 run 28 first -0.026069 time 1.867s peak 0.77G rss 0.77G
+rows 8 run 29 first -0.026069 time 2.366s peak 0.77G rss 0.77G
+rows 8 run 30 first -0.026069 time 2.681s peak 0.77G rss 0.77G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 16.435s
+             CPU time consumed: 1min 23.049s
+                   Memory peak: 701.2M (swap: 0B)
+# exit 0
+# 2026-11-04T22:03:15Z unit=b291-short-26 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 30 noarena 64 8 level: TIGHT: heavy 0 light 8, free 12.6 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 22.2 on 12 cores)
+Running as unit: b291-short-26.service
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 64 load 9.2s peak 0.94G rss 0.94G
+tokens 64 rows 8 run 1 logit 0.807708 time 11.207s peak 0.97G rss 0.97G
+tokens 64 rows 8 run 2 logit 0.807708 time 8.313s peak 1.01G rss 0.97G
+tokens 64 rows 8 run 3 logit 0.807708 time 5.261s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 4 logit 0.807708 time 5.605s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 5 logit 0.807708 time 5.725s peak 1.02G rss 0.97G
+tokens 64 rows 8 run 6 logit 0.807708 time 5.729s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 7 logit 0.807708 time 4.467s peak 1.02G rss 0.97G
+tokens 64 rows 8 run 8 logit 0.807708 time 4.496s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 9 logit 0.807708 time 4.983s peak 1.02G rss 0.97G
+tokens 64 rows 8 run 10 logit 0.807708 time 3.951s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 11 logit 0.807708 time 3.074s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 12 logit 0.807708 time 5.511s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 13 logit 0.807708 time 6.489s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 14 logit 0.807708 time 5.089s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 15 logit 0.807708 time 4.057s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 16 logit 0.807708 time 4.108s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 17 logit 0.807708 time 4.552s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 18 logit 0.807708 time 4.759s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 19 logit 0.807708 time 4.742s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 20 logit 0.807708 time 5.042s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 21 logit 0.807708 time 3.922s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 22 logit 0.807708 time 3.833s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 23 logit 0.807708 time 3.712s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 24 logit 0.807708 time 4.341s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 25 logit 0.807708 time 3.407s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 26 logit 0.807708 time 3.961s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 27 logit 0.807708 time 2.663s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 28 logit 0.807708 time 2.274s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 29 logit 0.807708 time 1.829s peak 1.02G rss 0.98G
+tokens 64 rows 8 run 30 logit 0.807708 time 1.746s peak 1.02G rss 0.98G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 28.495s
+             CPU time consumed: 2min 4.019s
+                   Memory peak: 947.1M (swap: 0B)
+# exit 0
+# 2026-11-04T22:05:44Z unit=b291-short-27 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 20 noarena 512 1 level: TIGHT: heavy 0 light 8, free 16.7 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 47.5 on 12 cores)
+Running as unit: b291-short-27.service; invocation ID: 04307cf9391e4e85a36fe211481ddd52
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 512 load 5.4s peak 0.96G rss 0.96G
+tokens 512 rows 1 run 1 logit 0.985387 time 3.913s peak 1.01G rss 0.98G
+tokens 512 rows 1 run 2 logit 0.985387 time 5.067s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 3 logit 0.985387 time 2.713s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 4 logit 0.985387 time 3.021s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 5 logit 0.985387 time 4.009s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 6 logit 0.985387 time 3.665s peak 1.06G rss 0.98G
+tokens 512 rows 1 run 7 logit 0.985387 time 2.195s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 8 logit 0.985387 time 1.925s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 9 logit 0.985387 time 3.475s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 10 logit 0.985387 time 3.112s peak 1.06G rss 0.98G
+tokens 512 rows 1 run 11 logit 0.985387 time 4.779s peak 1.06G rss 1.00G
+tokens 512 rows 1 run 12 logit 0.985387 time 5.188s peak 1.06G rss 1.00G
+tokens 512 rows 1 run 13 logit 0.985387 time 2.093s peak 1.06G rss 1.00G
+tokens 512 rows 1 run 14 logit 0.985387 time 1.832s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 15 logit 0.985387 time 1.912s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 16 logit 0.985387 time 2.376s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 17 logit 0.985387 time 2.489s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 18 logit 0.985387 time 1.949s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 19 logit 0.985387 time 1.971s peak 1.06G rss 0.99G
+tokens 512 rows 1 run 20 logit 0.985387 time 2.066s peak 1.06G rss 0.99G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 5.580s
+             CPU time consumed: 1min 25.651s
+                   Memory peak: 987M (swap: 0B)
+# exit 0
+# 2026-11-04T22:06:50Z unit=b291-short-28 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 2 8 noarena 2048 1 level: TIGHT: heavy 0 light 8, free 16.0 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 39.5 on 12 cores)
+Running as unit: b291-short-28.service
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 2048 load 5.1s peak 0.94G rss 0.94G
+tokens 2048 rows 1 run 1 logit 1.230980 time 16.288s peak 1.50G rss 0.99G
+tokens 2048 rows 1 run 2 logit 1.230980 time 12.350s peak 1.65G rss 1.00G
+tokens 2048 rows 1 run 3 logit 1.230980 time 11.927s peak 1.65G rss 1.00G
+tokens 2048 rows 1 run 4 logit 1.230980 time 13.193s peak 1.65G rss 1.00G
+tokens 2048 rows 1 run 5 logit 1.230980 time 14.919s peak 1.65G rss 1.00G
+tokens 2048 rows 1 run 6 logit 1.230980 time 17.608s peak 1.65G rss 1.00G
+tokens 2048 rows 1 run 7 logit 1.230980 time 16.189s peak 1.66G rss 0.97G
+tokens 2048 rows 1 run 8 logit 1.230980 time 13.904s peak 1.66G rss 1.00G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 1.938s
+             CPU time consumed: 3min 8.564s
+                   Memory peak: 1.5G (swap: 0B)
+# exit 0
+# 2026-11-04T22:08:52Z unit=b291-short-29 MemoryMax=20G args=<snapshots>/paraphrase-multilingual paraphrase-multilingual 2 40 noarena 60 32 level: TIGHT: heavy 0 light 8, free 15.0 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 18.9 on 12 cores)
+Running as unit: b291-short-29.service; invocation ID: e0301fa7b3ed4b6aae49de41b4049ff0
+paraphrase-multilingual noarena threads 2 session arena False load 4.8s peak 0.96G rss 0.64G
+rows 32 run 1 first 0.294363 time 2.375s peak 0.96G rss 0.87G
+rows 32 run 2 first 0.294363 time 2.257s peak 0.96G rss 0.69G
+rows 32 run 3 first 0.294363 time 2.656s peak 0.96G rss 0.69G
+rows 32 run 4 first 0.294363 time 2.257s peak 0.96G rss 0.69G
+rows 32 run 5 first 0.294363 time 2.727s peak 0.96G rss 0.69G
+rows 32 run 6 first 0.294363 time 2.313s peak 0.96G rss 0.69G
+rows 32 run 7 first 0.294363 time 1.825s peak 0.96G rss 0.69G
+rows 32 run 8 first 0.294363 time 2.016s peak 0.96G rss 0.69G
+rows 32 run 9 first 0.294363 time 1.956s peak 0.96G rss 0.69G
+rows 32 run 10 first 0.294363 time 1.762s peak 0.96G rss 0.69G
+rows 32 run 11 first 0.294363 time 1.822s peak 0.96G rss 0.69G
+rows 32 run 12 first 0.294363 time 1.869s peak 0.96G rss 0.69G
+rows 32 run 13 first 0.294363 time 1.959s peak 0.96G rss 0.69G
+rows 32 run 14 first 0.294363 time 1.876s peak 0.96G rss 0.69G
+rows 32 run 15 first 0.294363 time 2.050s peak 0.96G rss 0.69G
+rows 32 run 16 first 0.294363 time 1.826s peak 0.96G rss 0.69G
+rows 32 run 17 first 0.294363 time 1.860s peak 0.96G rss 0.69G
+rows 32 run 18 first 0.294363 time 1.832s peak 0.96G rss 0.69G
+rows 32 run 19 first 0.294363 time 1.974s peak 0.96G rss 0.69G
+rows 32 run 20 first 0.294363 time 1.738s peak 0.96G rss 0.69G
+rows 32 run 21 first 0.294363 time 1.732s peak 0.96G rss 0.69G
+rows 32 run 22 first 0.294363 time 1.909s peak 0.96G rss 0.69G
+rows 32 run 23 first 0.294363 time 1.768s peak 0.96G rss 0.69G
+rows 32 run 24 first 0.294363 time 2.198s peak 0.96G rss 0.69G
+rows 32 run 25 first 0.294363 time 1.866s peak 0.96G rss 0.69G
+rows 32 run 26 first 0.294363 time 2.037s peak 0.96G rss 0.69G
+rows 32 run 27 first 0.294363 time 1.952s peak 0.96G rss 0.69G
+rows 32 run 28 first 0.294363 time 3.636s peak 0.96G rss 0.69G
+rows 32 run 29 first 0.294363 time 3.625s peak 0.96G rss 0.69G
+rows 32 run 30 first 0.294363 time 3.172s peak 0.96G rss 0.69G
+rows 32 run 31 first 0.294363 time 1.814s peak 0.96G rss 0.69G
+rows 32 run 32 first 0.294363 time 2.223s peak 0.96G rss 0.69G
+rows 32 run 33 first 0.294363 time 3.333s peak 0.96G rss 0.69G
+rows 32 run 34 first 0.294363 time 2.594s peak 0.96G rss 0.69G
+rows 32 run 35 first 0.294363 time 2.732s peak 0.96G rss 0.69G
+rows 32 run 36 first 0.294363 time 2.481s peak 0.96G rss 0.69G
+rows 32 run 37 first 0.294363 time 1.945s peak 0.96G rss 0.69G
+rows 32 run 38 first 0.294363 time 1.941s peak 0.96G rss 0.69G
+rows 32 run 39 first 0.294363 time 2.520s peak 0.96G rss 0.69G
+rows 32 run 40 first 0.294363 time 2.139s peak 0.96G rss 0.69G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 1min 33.705s
+             CPU time consumed: 2min 25.520s
+                   Memory peak: 882.1M (swap: 0B)
+# exit 0
+# 2026-11-04T22:10:26Z unit=b291-short-30 MemoryMax=20G args=<snapshots>/bge-base bge-base 2 30 noarena 60 8 level: TIGHT: heavy 0 light 8, free 16.9 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 19.9 on 12 cores)
+Running as unit: b291-short-30.service
+bge-base noarena threads 2 session arena False load 3.9s peak 0.69G rss 0.69G
+rows 8 run 1 first -0.026069 time 1.315s peak 0.70G rss 0.70G
+rows 8 run 2 first -0.026069 time 1.415s peak 0.71G rss 0.70G
+rows 8 run 3 first -0.026069 time 1.929s peak 0.72G rss 0.72G
+rows 8 run 4 first -0.026069 time 1.457s peak 0.72G rss 0.72G
+rows 8 run 5 first -0.026069 time 2.191s peak 0.72G rss 0.72G
+rows 8 run 6 first -0.026069 time 1.444s peak 0.72G rss 0.72G
+rows 8 run 7 first -0.026069 time 1.941s peak 0.72G rss 0.72G
+rows 8 run 8 first -0.026069 time 1.949s peak 0.72G rss 0.72G
+rows 8 run 9 first -0.026069 time 1.691s peak 0.72G rss 0.72G
+rows 8 run 10 first -0.026069 time 1.244s peak 0.72G rss 0.72G
+rows 8 run 11 first -0.026069 time 1.279s peak 0.72G rss 0.72G
+rows 8 run 12 first -0.026069 time 1.267s peak 0.72G rss 0.72G
+rows 8 run 13 first -0.026069 time 1.748s peak 0.72G rss 0.72G
+rows 8 run 14 first -0.026069 time 1.457s peak 0.72G rss 0.72G
+rows 8 run 15 first -0.026069 time 1.576s peak 0.72G rss 0.72G
+rows 8 run 16 first -0.026069 time 1.437s peak 0.72G rss 0.72G
+rows 8 run 17 first -0.026069 time 1.153s peak 0.72G rss 0.72G
+rows 8 run 18 first -0.026069 time 1.122s peak 0.72G rss 0.72G
+rows 8 run 19 first -0.026069 time 1.385s peak 0.72G rss 0.72G
+rows 8 run 20 first -0.026069 time 1.348s peak 0.72G rss 0.72G
+rows 8 run 21 first -0.026069 time 1.398s peak 0.72G rss 0.72G
+rows 8 run 22 first -0.026069 time 1.317s peak 0.72G rss 0.72G
+rows 8 run 23 first -0.026069 time 1.051s peak 0.72G rss 0.72G
+rows 8 run 24 first -0.026069 time 1.168s peak 0.72G rss 0.72G
+rows 8 run 25 first -0.026069 time 1.250s peak 0.72G rss 0.72G
+rows 8 run 26 first -0.026069 time 1.080s peak 0.72G rss 0.72G
+rows 8 run 27 first -0.026069 time 1.151s peak 0.72G rss 0.72G
+rows 8 run 28 first -0.026069 time 1.281s peak 0.72G rss 0.72G
+rows 8 run 29 first -0.026069 time 1.219s peak 0.72G rss 0.72G
+rows 8 run 30 first -0.026069 time 1.214s peak 0.72G rss 0.72G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 46.701s
+             CPU time consumed: 1min 10.667s
+                   Memory peak: 651.8M (swap: 0B)
+# exit 0

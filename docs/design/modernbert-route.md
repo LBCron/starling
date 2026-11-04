@@ -54,6 +54,7 @@ PR #291 implemented option B. The maintainer accepted these differences from the
 - **Profile name.** The shipped tokenizer profile is `modernbert-bpe-gte-reranker`, not the working name `modernbert-bpe`, because it is bound to this model's `tokenizer.json`. Base and large have a different `tokenizer.json`, whose `model` block differs too, so they need a profile of their own.
 - **`max_tokens` is 8192, not 8000.** The reference applies `model_max_length`: transformers with `truncation=True` gives 8192, and the 8000 in `tokenizer.json` applies only through the raw file. The package replaces the file's truncation and padding at load.
 - **One PR for items 2 to 6.**
+- **Long-pair cost.** The constraint above asked for the CPU cost to be measured before claiming the limit. On .NET, an 8,192-token pair kept 19 GB resident with ONNX Runtime's CPU arena, so the route runs with it off, and `BertReranker.Create` takes `maxTokens` so that a caller can stay below the limit. Evidence past the corpus's 1,468 tokens is still one repetitive pair, so long pairs stay untested as a claim.
 - **Registry manifest in the candidate's PR.** Item 6 changed: see below, and `skills/starling-add-model` sections 3 and 7.
 
 ## Checklist (one PR each)
