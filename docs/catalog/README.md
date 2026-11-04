@@ -716,10 +716,10 @@ One table per family, one column per profile. Rows are every capability any prof
 - `nomic-embed-text-v1.5/onnx-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
 - `nomic-embed-text-v1.5/onnx-fp32-cpu`: Vectors are not unit length (normalize: none); normalize them before cosine or dot-product comparison.
 - `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
-- `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: Bundle reproducibility was shown on one machine (two builds, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.
+- `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: Bundle reproducibility was shown on one machine (two builds from two environments, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.
 - `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`: QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting.
 - `qwen3-0.6b/ortgenai-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
-- `qwen3-0.6b/ortgenai-fp32-cpu`: Bundle reproducibility was shown on one machine (two builds, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.
+- `qwen3-0.6b/ortgenai-fp32-cpu`: Bundle reproducibility was shown on one machine (two builds from two environments, identical digests) with the hash-locked builder wheel; another builder wheel or platform was not tested. A bundle with other digests is refused.
 - `qwen3-0.6b/ortgenai-fp32-cpu`: QwenChatOptions.MaxNewTokens defaults to 16, the corpus setting.
 - `qwen3-embedding-0.6b/onnx-fp32-cpu`: The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.
 - `qwen3-embedding-0.6b/onnx-fp32-cpu`: The graph uses eager attention: memory grows with the square of the input length (about 4.3 GB of attention scores per layer for one 8,192-token row). The longest evaluated input has 6,572 tokens.

@@ -1,0 +1,10 @@
+passed Starlings.Models.QwenChat.Tests.BundleLockTests.PinsEqualTheRegistryManifest(id: "qwen3-0.6b/ortgenai-fp32-cpu") (64ms)
+passed Starlings.Models.QwenChat.Tests.BundleLockTests.PinsEqualTheRegistryManifest(id: "qwen2.5-0.5b-instruct/ortgenai-fp32-cpu") (0ms)
+passed Starlings.Models.QwenChat.Tests.HostingDownloadTests.Qwen25DownloadsFromTheHostingRepositoryAndVerifies (1m 11s 227ms)
+passed Starlings.Models.QwenChat.Tests.HostingDownloadTests.EveryPinnedFileIsHostedAtThePinnedCommit(id: "qwen3-0.6b/ortgenai-fp32-cpu", repository: "Starlinghq/qwen3-0.6b-ortgenai") (7ms)
+passed Starlings.Models.QwenChat.Tests.HostingDownloadTests.EveryPinnedFileIsHostedAtThePinnedCommit(id: "qwen2.5-0.5b-instruct/ortgenai-fp32-cpu", repository: "Starlinghq/qwen2.5-0.5b-instruct-ortgenai") (0ms)
+Test run summary: Passed!
+  total: 336
+  failed: 0
+  succeeded: 335
+  skipped: 1

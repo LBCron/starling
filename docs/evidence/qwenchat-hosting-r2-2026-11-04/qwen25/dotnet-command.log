@@ -1,0 +1,15 @@
+Command: ["dotnet","<scratch>/run-qwen25/stages/dotnet/cf3bb8e2ce1d476f9c6f964a98c91537/output/dotnet-build-1evo77sg/published/Starlings.Generation.Fidelity.dll","--candidate","<repo>/model-pipeline/candidates/qwen25/profile.json","--bundle","<scratch>/run-qwen25/stages/bundle/d402a58770dd427f83fdc7f0aee37638/output","--corpus","<repo>/model-pipeline/corpora/five-models/chat.jsonl","--out","<scratch>/run-qwen25/stages/dotnet/cf3bb8e2ce1d476f9c6f964a98c91537/output","--threads","2"]
+greeting: prompt=31 completion=9 stop=151645
+arithmetic: prompt=40 completion=8 stop=151645
+system: prompt=24 completion=16 stop=
+multi-turn: prompt=48 completion=2 stop=151645
+assistant-thinking: prompt=63 completion=12 stop=151645
+reasoning-content: prompt=52 completion=1 stop=151645
+whitespace: prompt=22 completion=9 stop=151645
+empty-content: prompt=29 completion=9 stop=151645
+chinese: prompt=35 completion=16 stop=
+unicode: prompt=39 completion=16 stop=
+endoftext-literal: prompt=44 completion=16 stop=
+role-lookalikes: prompt=40 completion=16 stop=
+long-prefill: prompt=387 completion=8 stop=151645
+one-token-limit: prompt=33 completion=1 stop=
