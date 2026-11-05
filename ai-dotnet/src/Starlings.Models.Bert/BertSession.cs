@@ -188,7 +188,7 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
 
     /// <summary>
     /// ONNX Runtime's CPU arena is off on this route unless <see cref="CpuMemoryArenaSwitch"/> is set: with it on, one
-    /// 8,192-token gte-reranker-modernbert-base pair at four threads kept 9.6 GiB resident after its first run and 18.4 GiB
+    /// 8,192-token gte-reranker-modernbert-base pair at four threads kept 9.7 GiB resident after its first run and 18.4 GiB
     /// from its second run on, for the life of the session; with it off, resident memory falls back after each run
     /// (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04/). Outputs are unchanged.
     /// </summary>

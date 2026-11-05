@@ -1,6 +1,6 @@
 # gte-reranker-modernbert-base on ONNX Runtime, CPU fp32: onboarding evidence (2026-11-04)
 
-Development evidence for `Alibaba-NLP/gte-reranker-modernbert-base` on the `bert-onnx-cpu-v1` route (issues #101 and #102, PR #291), from the onboarding recipe run on 2026-11-04 on Linux x64 (Intel Core i7-5820K, 12 logical CPUs, 94 GB RAM shared with other work), CPU only, inside a 20 GB memory limit (`systemd-run --user --scope -p MemoryMax=20G -p MemorySwapMax=0`). It is not release qualification: no gate ran, no fixture is protected, and nothing here is binding.
+Development evidence for `Alibaba-NLP/gte-reranker-modernbert-base` on the `bert-onnx-cpu-v1` route (issues #101 and #102, PR #291), from the onboarding recipe run on 2026-11-04 on Linux x64 (Intel Core i7-5820K, 12 logical CPUs, 94 GB RAM shared with other work), CPU only, inside a 20 GiB memory limit (`systemd-run --user --scope -p MemoryMax=20G -p MemorySwapMax=0`). It is not release qualification: no gate ran, no fixture is protected, and nothing here is binding.
 
 ## Inputs
 
@@ -36,16 +36,18 @@ The padded-batch bound for PyTorch is fixed policy; its value here is 65% of the
 
 Outside the recipe and not gate evidence. These are Python, one row, four threads, on a shared machine, so the timings are development timings. The .NET measurements follow under [.NET: CPU arena](#net-cpu-arena).
 
-`probe.py` (`probe.log`) compared PyTorch and ONNX Runtime at 8 to 8,000 tokens, within 4.3e-06 at each length, and showed that padding with id 0 or 50283 gives the same result. Its peak RSS of 2.1 to 11.4 GB is for a process that also held two PyTorch models, so it is not an ONNX Runtime figure.
+**Memory units.** The probes print KiB divided by 1e6 and label the result `G`, which is neither GB nor GiB. This README gives every memory figure in GiB (the printed value times 0.9537), so its figures differ from the raw logs: the logs' 19.28G is 18.39 GiB, or 19.7 GB. The logs and the probes that wrote them are kept as they ran.
 
-`probe8192.py` (`probe8192.log`, rerun to retain its output) tokenized one pair to 8,192 tokens, the same ids as transformers with `truncation=True`, and PyTorch and ONNX Runtime differed by 2.9e-06. Its 10.5 GB peak also includes PyTorch.
+`probe.py` (`probe.log`) compared PyTorch and ONNX Runtime at 8 to 8,000 tokens, within 4.3e-06 at each length, and showed that padding with id 0 or 50283 gives the same result. Its peak RSS of 2.0 to 10.9 GiB is for a process that also held two PyTorch models, so it is not an ONNX Runtime figure.
+
+`probe8192.py` (`probe8192.log`, rerun to retain its output) tokenized one pair to 8,192 tokens, the same ids as transformers with `truncation=True`, and PyTorch and ONNX Runtime differed by 2.9e-06. Its 10.0 GiB peak also includes PyTorch.
 
 `ort_peak.py` (`ort-peak.log`) has ONNX Runtime alone in the process, on one 8,192-token pair run repeatedly on one session:
 
 | CPU arena | Runs | Time per run | Peak RSS after load | After run 1 | After run 2 | After runs 3 and 4 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| on (default, two processes) | 2, 4 | 45 to 53 s | 0.9 GB | 10.1 GB | 19.2 GB | 19.2 GB |
-| off | 2 | 54 to 56 s | 0.9 GB | 9.3 GB | 10.0 GB | not run |
+| on (default, two processes) | 2, 4 | 45 to 53 s | 0.9 GiB | 9.6 GiB | 18.3 GiB | 18.3 GiB |
+| off | 2 | 54 to 56 s | 0.8 GiB | 8.9 GiB | 9.5 GiB | not run |
 
 The first three lines of `ort-peak.log` come from an earlier version of the script, which always ran twice with the arena on.
 
@@ -59,12 +61,12 @@ One pair of 8,192 tokens, four threads, repeated on one session (`dotnet-long.lo
 
 | CPU arena | Runs | Peak RSS after load | After run 1 | After run 2 | After runs 3, 4 | RSS after the last run | Unit memory peak |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| on | 4 | 0.94 GB | 10.12 GB | 19.27 GB | 19.28 GB | 19.28 GB | 18.3 GB |
-| off | 4 | 0.94 GB | 9.43 GB | 10.11 GB | 10.11 GB | 0.98 GB | 9.6 GB |
+| on | 4 | 0.90 GiB | 9.65 GiB | 18.38 GiB | 18.39 GiB | 18.39 GiB | 18.3 GiB |
+| off | 4 | 0.90 GiB | 8.99 GiB | 9.64 GiB | 9.64 GiB | 0.93 GiB | 9.6 GiB |
 
-The growth on .NET matches the Python probe. The unit's memory peak is about 1 GB below `VmHWM` in the arena-on run and 0.5 GB below in the arena-off run; the reason was not investigated.
+The growth on .NET matches the Python probe. `systemd` reports the unit's peak in GiB, and it agrees with `VmHWM` once both are in that unit.
 
-Scores: the logit was 1.492696 on every run of both settings, the value Python ONNX Runtime gives (`ort-peak.log`). Through `BertReranker` at `maxTokens` 64, 512 and 2,048 the logits were 0.807708, 0.985387 and 1.230980, each equal to `ort_peak.py` at that length to the six printed decimals. In `dotnet-short.log` both settings gave the same printed value on each input, including the first vector element of `paraphrase-multilingual` (0.294363) and `bge-base` (-0.026069). This is one repetitive pair per length, not parity evidence over a corpus, so pairs past 1,468 tokens stay untested on .NET.
+Scores: the logit was 1.492696 on every run of both settings, the value Python ONNX Runtime gives (`ort-peak.log`). Through `BertReranker` at `maxTokens` 64, 512 and 2,048 the logits were 0.807708, 0.985387 and 1.230980, each equal to `ort_peak.py` at that length to the six printed decimals (`ort-peak-short.log`, both settings). In `dotnet-short.log` both settings gave the same printed value on each input, including the first vector element of `paraphrase-multilingual` (0.294363) and `bge-base` (-0.026069). This is one repetitive pair per length, not parity evidence over a corpus, so pairs past 1,468 tokens stay untested on .NET.
 
 Latency is the weaker part of this evidence: the machine was shared, and a quiet window for a paired rerun did not come in about two hours of waiting, so no clean paired .NET latency exists. At 8,192 tokens, arena on took 56.5, 52.5, 47.1 and 43.6 s with the machine quiet at the start. Arena off took 52.2 s for the first run, then 101.0, 125.3 and 85.8 s while other jobs started on the machine (the level was `tight` when it ended). The .NET comparison at this length is therefore inconclusive. The only like-for-like pair is run 1 against run 1, 56.5 s on and 52.2 s off, which points the other way; the later arena-off runs say nothing about the arena. Process CPU time over the four runs, 12 min 9 s with the arena and 14 min 44 s without, is contaminated in the same way. The estimate of roughly 10 to 20 percent slower without the arena comes only from the Python probe, 54 to 56 s against 45 to 53 s, and is not measured on .NET.
 
@@ -72,11 +74,11 @@ Short and medium inputs, alternating settings, three processes each, two threads
 
 | Profile | Input | Fastest, arena on | Fastest, arena off | Difference | Peak RSS on, off | RSS after on, off |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
-| gte-reranker-modernbert-base | 64 tokens, 8 rows | 1.477 s | 1.477 s | 0% | 1.08, 1.04 GB | 1.08, 0.99 GB |
-| gte-reranker-modernbert-base | 512 tokens, 1 row | 1.615 s | 1.821 s | +13% | 1.13, 1.06 GB | 1.12, 0.99 GB |
-| gte-reranker-modernbert-base | 2,048 tokens, 1 row | 9.814 s | 10.942 s | +11% | 2.35, 1.68 GB | 2.35, 1.01 GB |
-| paraphrase-multilingual | about 60 tokens, 32 rows | 1.520 s | 1.438 s | -5% | 0.96, 0.96 GB | 0.77, 0.89 GB |
-| bge-base | about 60 tokens, 8 rows | 0.594 s | 0.802 s | +35% | 0.77, 0.73 GB | 0.77, 0.73 GB |
+| gte-reranker-modernbert-base | 64 tokens, 8 rows | 1.477 s | 1.477 s | 0% | 1.03, 0.99 GiB | 1.03, 0.94 GiB |
+| gte-reranker-modernbert-base | 512 tokens, 1 row | 1.615 s | 1.821 s | +13% | 1.08, 1.01 GiB | 1.07, 0.94 GiB |
+| gte-reranker-modernbert-base | 2,048 tokens, 1 row | 9.814 s | 10.942 s | +11% | 2.24, 1.60 GiB | 2.24, 0.96 GiB |
+| paraphrase-multilingual | about 60 tokens, 32 rows | 1.520 s | 1.438 s | -5% | 0.92, 0.92 GiB | 0.73, 0.85 GiB |
+| bge-base | about 60 tokens, 8 rows | 0.594 s | 0.802 s | +35% | 0.73, 0.70 GiB | 0.73, 0.70 GiB |
 
 The medians overlap heavily between settings, and the bge-base difference rests on single fastest runs, so it should be remeasured on a quiet machine before anyone relies on it.
 
@@ -100,7 +102,7 @@ Not measured: `bge-m3` and `bge-reranker-v2-m3`, the other 8,192-token profiles,
 | `source-lock.json` | The upstream files verified by the `assets` stage |
 | `environment.json` | Host, SDK and package versions (local paths replaced by `<repo>`, `<models>`, `<dotnet>`) |
 | `run.json` | The pipeline run record of the `--resume` (stage inputs, digests, timings; local paths replaced the same way) |
-| `probe.py`, `probe.log`, `probe8192.py`, `probe8192.log`, `ort_peak.py`, `ort-peak.log` | The exploratory probes and their output |
+| `probe.py`, `probe.log`, `probe8192.py`, `probe8192.log`, `ort_peak.py`, `ort-peak.log`, `ort-peak-short.log` | The exploratory probes and their output |
 | `arena-probe/` | The .NET probe (`Program.cs`, `ArenaProbe.csproj`) |
 | `dotnet-long.log`, `dotnet-short.log`, `dotnet-long-aborted-parser-bug.log`, `summarize_short.py` | Its output (local paths replaced) and the summary of `dotnet-short.log` |
 

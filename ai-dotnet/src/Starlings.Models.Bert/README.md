@@ -107,7 +107,7 @@ replaces both at load with no padding and the profile's limit, as transformers d
 `BertReranker.Create` here (see "Token limit"). Scores are raw logits; the sentence-transformers default applies a sigmoid.
 Onboarding evidence stops at the longest corpus row (1,468 tokens). Past it, the .NET path has only one repetitive pair
 behind it, which matched Python ONNX Runtime at 2,048 and 8,192 tokens. Long pairs are also costly on CPU: at four
-threads, one 8,192-token pair took about a minute on .NET and peaked at 10 GB. Use `maxTokens` and `maxBatchTokens` with long documents, and do not
+threads, one 8,192-token pair took about a minute on .NET and peaked at 9.6 GiB. Use `maxTokens` and `maxBatchTokens` with long documents, and do not
 plan on less memory than that. See "CPU memory arena".
 The upstream fp16 and quantized graphs, Flash Attention 2 and GPU providers are not implemented.
 
@@ -135,8 +135,8 @@ tokens included, so one long document cannot cost what the profile's maximum cos
 call of that instance, including calls through `IReranker`.
 
 - **Text longer than the limit is truncated, not refused**, as at the profile's limit: longest side first, from the right,
-  with `[SEP]` kept. `transformers` gives the same ids with `truncation=True, max_length=<limit>` (tested on the gte-reranker
-  tokenizer). Truncation is silent: a truncated document is scored on what is left.
+  with `[SEP]` kept. `transformers` gives the same ids with `truncation=True, max_length=<limit>` (tested on the tokenizer of each of the
+  three profiles, at a limit of 16). Truncation is silent: a truncated document is scored on what is left.
 - **Pre-tokenized rows are refused, not truncated**, as at the profile's limit: `ScoreTokens` throws `ArgumentException` for a
   row longer than the limit.
 - `Create` throws `ArgumentOutOfRangeException` for a limit below 1 or above the profile's, which it never raises, and for a

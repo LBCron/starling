@@ -1,6 +1,6 @@
 # ModernBERT on the encoder route: design note
 
-Status: **accepted for `Alibaba-NLP/gte-reranker-modernbert-base`**, 2026-11-04 (#101, PR #291): option B on `bert-onnx-cpu-v1`, extended rather than forked, with the deviations recorded under [Accepted deviations](#accepted-deviations). **Open** for `answerdotai/ModernBERT-base` and `-large` (#102): this note admits neither. Proposed 2026-11-01. It is a design record, not a support claim: statuses are in the registry manifest and the catalog.
+Status: **accepted for `Alibaba-NLP/gte-reranker-modernbert-base`**, 2026-11-04 (#101, PR #291): option B on `bert-onnx-cpu-v1`, extended rather than forked, with the differences listed under [Accepted deviations](#accepted-deviations) and [Recorded differences](#recorded-differences). **Open** for `answerdotai/ModernBERT-base` and `-large` (#102): this note admits neither. Proposed 2026-11-01. It is a design record, not a support claim: statuses are in the registry manifest and the catalog.
 
 ## Problem
 
@@ -52,10 +52,15 @@ PR #291 implemented option B. The maintainer accepted these differences from the
 
 - **No Starling export.** Upstream `onnx/model.onnx` (PyTorch 2.5.1 exporter, opset 14, one 598 MB file) passed the comparison with the transformers reference, so the route pins it at the upstream commit. Nothing is hosted under `Starlinghq`, and checklist item 4 was not needed.
 - **Profile name.** The shipped tokenizer profile is `modernbert-bpe-gte-reranker`, not the working name `modernbert-bpe`, because it is bound to this model's `tokenizer.json`. Base and large have a different `tokenizer.json`, whose `model` block differs too, so they need a profile of their own.
-- **`max_tokens` is 8192, not 8000.** The reference applies `model_max_length`: transformers with `truncation=True` gives 8192, and the 8000 in `tokenizer.json` applies only through the raw file. The package replaces the file's truncation and padding at load.
-- **One PR for items 2 to 6.**
-- **Long-pair cost.** The constraint above asked for the CPU cost to be measured before claiming the limit. On .NET, an 8,192-token pair kept 19 GB resident with ONNX Runtime's CPU arena, so the route runs with it off, and `BertReranker.Create` takes `maxTokens` so that a caller can stay below the limit. Evidence past the corpus's 1,468 tokens is still one repetitive pair, so long pairs stay untested as a claim.
+- **Long-pair cost.** The constraint above asked for the CPU cost to be measured before claiming the limit. On .NET, an 8,192-token pair kept 18.4 GiB resident with ONNX Runtime's CPU arena, so the route runs with it off, and `BertReranker.Create` takes `maxTokens` so that a caller can stay below the limit. Evidence past the corpus's 1,468 tokens is still one repetitive pair, so long pairs stay untested as a claim.
 - **Registry manifest in the candidate's PR.** Item 6 changed: see below, and `skills/starling-add-model` sections 3 and 7.
+
+## Recorded differences
+
+PR #291 also differs from the text above in these two ways. They are recorded here, and the maintainer's decision of 2026-11-04 does not name them.
+
+- **`max_tokens` is 8192, not 8000.** The reference applies `model_max_length`: transformers with `truncation=True` gives 8192, and the 8000 in `tokenizer.json` applies only through the raw file. The package replaces the file's truncation and padding at load.
+- **One PR for items 2 to 6.** The checklist below asks for one PR each.
 
 ## Checklist (one PR each)
 
