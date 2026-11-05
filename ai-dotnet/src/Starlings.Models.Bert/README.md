@@ -5,7 +5,7 @@ package at the same version. The API may still change.
 
 ⭐ If this package is useful, [star Starling on GitHub](https://github.com/starlinghq/starling).
 
-<!-- catalog:maturity profiles=all-minilm-l6-v2/*,bge-small-en-v1.5/*,bge-base-en-v1.5/*,bge-m3/*,ms-marco-minilm-l6-v2/*,bge-reranker-v2-m3/*,nomic-embed-text-v1.5/*,paraphrase-multilingual-minilm-l12-v2/* -->
+<!-- catalog:maturity profiles=all-minilm-l6-v2/*,bge-small-en-v1.5/*,bge-base-en-v1.5/*,bge-m3/*,ms-marco-minilm-l6-v2/*,bge-reranker-v2-m3/*,nomic-embed-text-v1.5/*,paraphrase-multilingual-minilm-l12-v2/*,gte-reranker-modernbert-base/* -->
 Maturity is per profile, generated from the registry manifests by `model-pipeline catalog` (do not edit this table by hand). Gates, evidence and capabilities per profile: the [model catalog](https://github.com/starlinghq/starling/blob/main/docs/catalog/README.md).
 
 | Profile | Maturity | Platforms |
@@ -15,6 +15,7 @@ Maturity is per profile, generated from the registry manifests by `model-pipelin
 | `bge-m3/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `bge-reranker-v2-m3/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `bge-small-en-v1.5/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
+| `gte-reranker-modernbert-base/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `ms-marco-minilm-l6-v2/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `nomic-embed-text-v1.5/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
 | `paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu` | experimental | linux-x64 cpu: experimental; windows-x64 cpu: untested |
@@ -29,14 +30,15 @@ dotnet add package Microsoft.ML.OnnxRuntime --version 1.30.0     # CPU natives
 
 ## Overview
 
-Experimental CPU fp32 implementations for eight explicitly pinned candidate contracts:
+Experimental CPU fp32 implementations for nine explicitly pinned candidate contracts:
 `sentence-transformers/all-MiniLM-L6-v2` (mean/L2, 256 tokens), `BAAI/bge-small-en-v1.5`
 (CLS/L2, 512 tokens), `BAAI/bge-base-en-v1.5` (CLS/L2, 512 tokens, 768-wide),
 `BAAI/bge-m3` (CLS/L2, 8192 tokens, 1024-wide, XLM-R), `cross-encoder/ms-marco-MiniLM-L6-v2`
 (paired inputs, raw scalar logits, 512 tokens), `BAAI/bge-reranker-v2-m3` (XLM-R cross-encoder, raw scalar
-logits, 8192 tokens, from the Starling-built graph `Starlinghq/bge-reranker-v2-m3-onnx`), and `nomic-ai/nomic-embed-text-v1.5`
-(mean, no L2, 8192 tokens, 768-wide), and `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
-(mean, no L2, 128 tokens, 384-wide, XLM-R Unigram with segment ids). Candidate parity is
+logits, 8192 tokens, from the Starling-built graph `Starlinghq/bge-reranker-v2-m3-onnx`), `nomic-ai/nomic-embed-text-v1.5`
+(mean, no L2, 8192 tokens, 768-wide), `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`
+(mean, no L2, 128 tokens, 384-wide, XLM-R Unigram with segment ids), and `Alibaba-NLP/gte-reranker-modernbert-base`
+(ModernBERT cross-encoder, BPE, raw scalar logits, 8192 tokens). Candidate parity is
 development evidence; protected release qualification requires independent fixture adoption.
 
 Pick a built-in profile with `BertModelProfile.BuiltIn` (or load a candidate file with `BertModelProfile.Load`). `BertTextEmbedder.Create`
@@ -61,10 +63,10 @@ persistence, AOT, GPU providers, and unlisted model contracts are unsupported or
 
 ## Profiles
 
-The package carries the eight admitted candidate contracts as built-in profiles: `BertModelProfile.BuiltIn(name)` parses the
+The package carries the nine admitted candidate contracts as built-in profiles: `BertModelProfile.BuiltIn(name)` parses the
 embedded copy of `model-pipeline/candidates/<name>/profile.json` at the packed commit (linked at build time, so the
 package cannot drift from the repository), and `BertModelProfile.BuiltInIds` lists the names. `BertModelProfile.Load(path)`
-and `Parse(json)` still read a contract file or string. Every path accepts only the eight repositories below, ONNX Runtime
+and `Parse(json)` still read a contract file or string. Every path accepts only the nine repositories below, ONNX Runtime
 1.30.0 on `CPUExecutionProvider` in fp32, and the exact values below; anything else throws `NotSupportedException`.
 The per-repository values come from the route contract table `model-pipeline/routes/bert-onnx-cpu-v1/contracts.json`,
 which the package embeds and validates on first use and the Python allow-list of the onboarding route reads too;
@@ -81,6 +83,7 @@ Experimental; registry manifests under `model-pipeline/registry/`).
 | `bge-reranker-v2-m3` | `bge-reranker-v2-m3/onnx-fp32-cpu` | reranking | 8192 | none | 1024 (one logit out) | none | `none` |
 | `nomic-embed` | `nomic-embed-text-v1.5/onnx-fp32-cpu` | embeddings | 8192 | mean | 768 | none | `none` |
 | `paraphrase-multilingual` | `paraphrase-multilingual-minilm-l12-v2/onnx-fp32-cpu` | embeddings | 128 | mean | 384 | none | `none` |
+| `gte-reranker-modernbert-base` | `gte-reranker-modernbert-base/onnx-fp32-cpu` | reranking | 8192 | none | 768 (one logit out) | none | `none` |
 
 paraphrase-multilingual (`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`) pairs the XLM-R Unigram tokenizer with BERT segment ids (all zero), mean pooling without L2 (normalize the vectors before cosine or dot-product comparison) and a 128-token limit, the `max_seq_length` sentence-transformers enforces. It needs `Starlings.Tokenizers` 0.3.5, so it is not in the `0.5.0` package, which pins 0.3.4.
 
@@ -94,6 +97,56 @@ fp32 export (`model-pipeline/reference/bert/export_reranker_onnx.py`). Pairs are
 without segment ids. Scores are raw logits (the model card's `normalize=False` default); apply a sigmoid for its 0-1
 mapping. FlagEmbedding's fp16 inference, its LLM-based and layerwise rerankers, and query/passage length splits
 (`max_length` per side) are not implemented; truncation is longest-first over the pair.
+
+gte-reranker-modernbert-base is the first ModernBERT profile. It runs the fp32 `onnx/model.onnx` of the upstream
+repository, after comparison with the transformers built-in `ModernBertForSequenceClassification` on the route's corpus.
+Pairs are encoded `[CLS] query [SEP] document [SEP]` without segment ids, with the BPE profile
+`modernbert-bpe-gte-reranker`. The pinned `tokenizer.json` declares truncation to 8000 and Fixed 8000 padding; the package
+replaces both at load with no padding and the profile's limit, as transformers does per call. The limit is 8192
+(`model_max_length`); the model card's transformers example passes `max_length=512`, which is `maxTokens: 512` on
+`BertReranker.Create` here (see "Token limit"). Scores are raw logits; the sentence-transformers default applies a sigmoid.
+Onboarding evidence stops at the longest corpus row (1,468 tokens). Past it, the .NET path has only one repetitive pair
+behind it, which matched Python ONNX Runtime at 2,048 and 8,192 tokens. Long pairs are also costly on CPU: at four
+threads, one 8,192-token pair took about a minute on .NET and peaked at 9.6 GiB. Use `maxTokens` and `maxBatchTokens` with long documents, and do not
+plan on less memory than that. See "CPU memory arena".
+The upstream fp16 and quantized graphs, Flash Attention 2 and GPU providers are not implemented.
+
+## CPU memory arena
+
+ONNX Runtime's CPU arena is off on every profile of this package since the release after `0.5.0`, where it was on. With
+it on, the arena keeps every buffer a run needed until the session is disposed. Measured on .NET through
+`BertReranker`, with gte-reranker-modernbert-base, four threads and one 8,192-token pair run repeatedly on one session:
+
+| CPU arena | Peak RSS, run 1 | Peak RSS, later runs | RSS after each run | Median time per run |
+| --- | ---: | ---: | ---: | ---: |
+| on (before) | 9.7 GiB | 18.4 GiB | 9.7 GiB, then 18.4 GiB | 38 s |
+| off | 9.0 GiB | 9.6 GiB | 0.9 GiB | 40 s |
+
+The cost is latency, and on .NET it is small. With processes alternating the setting and no CI jobs on the machine, one 8,192-token pair took about 6 percent longer without the arena, a 2,048-token pair at two threads about 3 percent, and 8 rows of about 60 tokens on bge-base showed no difference. That is two processes of each setting on one CPU, for gte-reranker-modernbert-base and bge-base. A Python probe on a busier machine showed more: 54 to 56 s against 45 to 53 s at 8,192 tokens, and 5.2 s against 4.0 s at 2,048. Scores are unchanged.
+
+This package does not use `DedicatedRunThreads`, unlike EmbeddingGemma 2. Without the arena, each run's buffers are freed into the calling thread's glibc heap, which can keep up to 64 MiB resident per heap, so a host calling from a rotating thread pool can spread that memory over more heaps. That effect was measured on EmbeddingGemma 2, not here.
+
+A process that wants the arena back sets the `AppContext` switch `Starlings.Models.Bert.CpuMemoryArena` to `true`, for
+every session of this package. The switch is Experimental. Evidence:
+`docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04/`.
+
+## Token limit
+
+`BertReranker.Create(..., maxTokens: 512)` caps every pair on every call of that reranker below the profile's limit, special
+tokens included, so one long document cannot cost what the profile's maximum costs. It is Experimental
+(`BertCapabilities.TokenLimit`, capability `token_limit` on the three reranker profiles) and off by default.
+`BertReranker.MaxTokens` reports the limit in effect. It is set when the reranker is created and is the same for every
+call of that instance, including calls through `IReranker`.
+
+- **Text longer than the limit is truncated, not refused**, as at the profile's limit: longest side first, from the right,
+  with `[SEP]` kept. `transformers` gives the same ids with `truncation=True, max_length=<limit>` (tested on the tokenizer of each of the
+  three profiles, at a limit of 16). Truncation is silent: a truncated document is scored on what is left.
+- **Pre-tokenized rows are refused, not truncated**, as at the profile's limit: `ScoreTokens` throws `ArgumentException` for a
+  row longer than the limit.
+- `Create` throws `ArgumentOutOfRangeException` for a limit below 1 or above the profile's, which it never raises, and for a
+  limit that leaves no room for one token of each text beside the pair's special tokens.
+
+`maxTokens` bounds one row. `maxBatchTokens` bounds the rows of one ONNX Runtime call together. Long documents need both.
 
 ## Use
 

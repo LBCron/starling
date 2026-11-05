@@ -25,7 +25,7 @@ each Hugging Face repository (`<owner>/<name>`) to an object with exactly these 
 | `vocabulary_size` | Exclusive upper bound of token ids | positive integer |
 | `cls_token_id`, `sep_token_id`, `pad_token_id` | First, separator and right-padding ids | inside the vocabulary |
 | `output_name` | Graph output to pool | non-empty string |
-| `tokenizer_profile` | Owned tokenizer pipeline | `bert-wordpiece-uncased` or `xlmr-unigram` |
+| `tokenizer_profile` | Owned tokenizer pipeline | `bert-wordpiece-uncased`, `xlmr-unigram` or `modernbert-bpe-gte-reranker` |
 | `token_type_ids` | Whether the graph takes segment ids | boolean |
 | `prompts` | Named prefixes | object of strings that includes `"none": ""` |
 | `score_activation_source` (optional, reranking only) | Where the reference reads the score activation | `config` (default) or `explicit` |

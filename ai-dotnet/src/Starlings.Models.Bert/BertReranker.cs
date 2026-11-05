@@ -14,6 +14,12 @@ public sealed class BertReranker : IReranker, IDisposable
     /// <summary>Advanced backend API for intermediate diagnostics. Owned by this reranker.</summary>
     public OnnxModelSession Session => _model.Session;
 
+    /// <summary>
+    /// Tokens per pair at most, special tokens included: the <c>maxTokens</c> given to <see cref="Create"/>, or the
+    /// profile's <see cref="BertModelProfile.MaxTokens"/>.
+    /// </summary>
+    public int MaxTokens => _model.MaxTokens;
+
     /// <summary>Verifies local assets and creates a CPU scoring session; never downloads.</summary>
     /// <param name="profile">The candidate profile.</param>
     /// <param name="snapshot">The local snapshot directory holding the locked files.</param>
@@ -28,7 +34,15 @@ public sealed class BertReranker : IReranker, IDisposable
     /// then depend on which rows share a call (within padded-batch tolerance, not bit for bit). Default false: chunks
     /// are consecutive rows in input order. Experimental (<see cref="BertCapabilities.BatchSortByLength"/>).
     /// </param>
-    public static BertReranker Create(BertModelProfile profile, string snapshot, int threads = 2, int maxBatchSize = 32, int? maxBatchTokens = null, bool sortByLength = false)
+    /// <param name="maxTokens">
+    /// Tokens per pair at most on every call of this reranker, special tokens included, or null (default) for the
+    /// profile's <see cref="BertModelProfile.MaxTokens"/>. It must be within the profile's limit and leave one token for
+    /// each text. Text longer than this is truncated, longest side first from the right, as at the profile's limit and
+    /// as transformers does with <c>max_length</c>; it is never refused. Rows given to <see cref="ScoreTokens"/> are
+    /// not truncated: one longer than this is refused with <see cref="ArgumentException"/>, as at the profile's limit.
+    /// Experimental (<see cref="BertCapabilities.TokenLimit"/>).
+    /// </param>
+    public static BertReranker Create(BertModelProfile profile, string snapshot, int threads = 2, int maxBatchSize = 32, int? maxBatchTokens = null, bool sortByLength = false, int? maxTokens = null)
     {
         ArgumentNullException.ThrowIfNull(profile);
         if (profile.Task != BertTask.Reranking)
@@ -36,10 +50,10 @@ public sealed class BertReranker : IReranker, IDisposable
             throw new ArgumentException("Use BertTextEmbedder for vector embedding profiles.", nameof(profile));
         }
 
-        return new BertReranker(new BertSession(profile, snapshot, threads, maxBatchSize, maxBatchTokens, sortByLength));
+        return new BertReranker(new BertSession(profile, snapshot, threads, maxBatchSize, maxBatchTokens, sortByLength, maxTokens));
     }
 
-    /// <summary>Tokenizes a pair with segment ids and longest-first right truncation.</summary>
+    /// <summary>Tokenizes a pair with segment ids and longest-first right truncation to <see cref="MaxTokens"/>.</summary>
     public BertInput Tokenize(BertPair pair)
     {
         ArgumentNullException.ThrowIfNull(pair);

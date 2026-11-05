@@ -21,6 +21,7 @@ Paths are repository-relative. Absolute paths, backslashes, `.` or `..` segments
 | `minilm-cpu.yaml` | `bert-onnx-cpu-v1` | `candidates/minilm/profile.json` | `corpora/five-models/embeddings.jsonl` | `reference/encoder/requirements.txt` |
 | `bge-small-cpu.yaml` | `bert-onnx-cpu-v1` | `candidates/bge-small/profile.json` | `corpora/five-models/bge.jsonl` | `reference/encoder/requirements.txt` |
 | `bge-base-cpu.yaml` | `bert-onnx-cpu-v1` | `candidates/bge-base/profile.json` | `corpora/five-models/embeddings.jsonl` | `reference/encoder/requirements.txt` |
+| `gte-reranker-modernbert-base-cpu.yaml` | `bert-onnx-cpu-v1` | `candidates/gte-reranker-modernbert-base/profile.json` | `corpora/gte-reranker-modernbert-base/reranking.jsonl` | `reference/encoder/requirements.txt` |
 | `ms-marco-cpu.yaml` | `bert-onnx-cpu-v1` | `candidates/ms-marco/profile.json` | `corpora/five-models/reranking.jsonl` | `reference/encoder/requirements.txt` |
 | `nomic-embed-cpu.yaml` | `bert-onnx-cpu-v1` | `candidates/nomic-embed/profile.json` | `corpora/five-models/embeddings.jsonl` | `reference/encoder/requirements.txt` |
 | `paraphrase-multilingual-cpu.yaml` | `bert-onnx-cpu-v1` | `candidates/paraphrase-multilingual/profile.json` | `corpora/five-models/embeddings.jsonl` | `reference/encoder/requirements.txt` |

@@ -1,0 +1,6 @@
+recipe_version: 1
+id: gte-reranker-modernbert-base-cpu
+plugin: bert-onnx-cpu-v1
+manifest: model-pipeline/candidates/gte-reranker-modernbert-base/profile.json
+reference_corpus: model-pipeline/corpora/gte-reranker-modernbert-base/reranking.jsonl
+reference_environment: model-pipeline/reference/encoder/requirements.txt

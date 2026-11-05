@@ -329,8 +329,10 @@ def _component(path: str, value: Any, kind: str) -> dict[str, Any]:
                 unsupported.append("add_prefix_space/trim_offsets (required booleans)")
             if "use_regex" in value and type(value["use_regex"]) is not bool:
                 unsupported.append("use_regex (must be a boolean)")
-            elif kind == "pre_tokenizer" and value.get("use_regex", True) is not False:
-                unsupported.append("use_regex=true (the GPT-2 split is not implemented)")
+            elif kind == "pre_tokenizer" and path != "pre_tokenizer" and value.get("use_regex", True) is not False:
+                # Starlings.Tokenizers 0.3.2 adds the GPT-2 split. Inspection admits it only as the sole pre-tokenizer,
+                # the one placement a pinned asset has been checked with.
+                unsupported.append("use_regex=true (inspection admits the GPT-2 split only as the sole pre-tokenizer)")
             elif kind == "post_processor" and "use_regex" in value:
                 ignored.append("use_regex (accepted but not used by the post-processor)")
             elif kind == "decoder":
@@ -622,7 +624,8 @@ def _tokenizer_components(tokenizer: dict[str, Any]) -> list[dict[str, Any]]:
                 for missing in sorted(required - set(token)):
                     unsupported.append(f"{i}.{missing}=missing")
                 for param in ("single_word", "lstrip", "rstrip"):
-                    if token.get(param) is True:
+                    # lstrip is implemented since Starlings.Tokenizers 0.3.1 (bge-m3, ModernBERT [MASK]).
+                    if token.get(param) is True and param != "lstrip":
                         unsupported.append(f"{i}.{param}=true")
                     elif param in token and not isinstance(token[param], bool):
                         unsupported.append(f"{i}.{param}=invalid")
@@ -730,9 +733,19 @@ _POOLING_MODES = (
     "pooling_mode_max_tokens",
     "pooling_mode_mean_sqrt_len_tokens",
 )
-# Encoder families the bert-onnx-cpu-v1 route runs (WordPiece BERT, XLM-R Unigram, nomic-bert through its ONNX graph).
-_BERT_MODEL_TYPES = {"bert", "xlm-roberta", "nomic_bert"}
-_BERT_RERANKER_ARCHITECTURES = {"BertForSequenceClassification", "XLMRobertaForSequenceClassification"}
+# Encoder families the bert-onnx-cpu-v1 route runs (WordPiece BERT, XLM-R Unigram, nomic-bert through its ONNX graph,
+# ModernBERT with its BPE tokenizer) and the tokenizer models each one takes.
+_BERT_MODEL_TYPES = {
+    "bert": {"WordPiece", "Unigram"},
+    "xlm-roberta": {"WordPiece", "Unigram"},
+    "nomic_bert": {"WordPiece", "Unigram"},
+    "modernbert": {"BPE"},
+}
+_BERT_RERANKER_ARCHITECTURES = {
+    "BertForSequenceClassification",
+    "XLMRobertaForSequenceClassification",
+    "ModernBertForSequenceClassification",
+}
 # Decoder families the qwen-genai-cpu-v1 route builds GenAI bundles for (onboarding_generation.CONFIG_CONTRACT).
 _QWEN_ARCHITECTURES = {"qwen2": "Qwen2ForCausalLM", "qwen3": "Qwen3ForCausalLM"}
 _NO_ROUTE = "No plugin route can be inferred from these observed facts."
@@ -776,9 +789,10 @@ def _suggest_route(
         }
     if model_type not in _BERT_MODEL_TYPES:
         return _unknown_route()
-    if tokenizer_model not in {"WordPiece", "Unigram"} or not tokenizer_known:
+    if tokenizer_model not in _BERT_MODEL_TYPES[model_type] or not tokenizer_known:
+        expected = " or ".join(sorted(_BERT_MODEL_TYPES[model_type]))
         return _unknown_route(
-            f"config.json declares {model_type}, but bert-onnx-cpu-v1 needs a WordPiece or Unigram tokenizer.json "
+            f"config.json declares {model_type}, but bert-onnx-cpu-v1 needs a {expected} tokenizer.json "
             "whose every component this checkout implements."
         )
     facts = {

@@ -1,0 +1,29 @@
+[transformers] Token indices sequence length is longer than the specified maximum sequence length for this model (26999 > 8192). Running this sequence through the model will result in indexing errors
+declared trunc {'max_length': 8000, 'stride': 0, 'strategy': 'longest_first', 'direction': 'right'} pad {'length': 8000, 'pad_to_multiple_of': None, 'pad_id': 50283, 'pad_token': '[PAD]', 'pad_type_id': 0, 'direction': 'right'}
+raw file encode len 8000 mask sum 8000
+raw file short pair len 8000 mask sum 5
+<class 'transformers.tokenization_utils_tokenizers.TokenizersBackend'> model_max_length 8192
+auto truncation=True 8192
+auto no truncation 26999
+auto max_length=512 512
+type ids key ['input_ids', 'attention_mask']
+[50281, 5371, 310, 253, 5347, 273, 4135, 32, 50282, 4678, 16741, 50282]
+[50281, 5371, 310, 253, 5347, 273, 4135, 32, 50282, 4678, 16741, 50282]
+Loading weights:   0%|          | 0/138 [00:00<?, ?it/s]Loading weights: 100%|██████████| 138/138 [00:00<00:00, 3224.90it/s]
+attn sdpa
+Loading weights:   0%|          | 0/138 [00:00<?, ?it/s]Loading weights: 100%|██████████| 138/138 [00:00<00:00, 2043.71it/s]
+len 20005
+8 pt [1.8490441] ort [1.8490453] shape (1, 1) d 1.1920929e-06 eager d 7.1525574e-07 pt 0.3s ort 0.1s rss 2.1G
+64 pt [3.2825358] ort [3.2825358] shape (1, 1) d 0.0 eager d 2.3841858e-06 pt 0.5s ort 0.2s rss 2.1G
+127 pt [3.636032] ort [3.6360333] shape (1, 1) d 1.1920929e-06 eager d 1.4305115e-06 pt 0.6s ort 0.5s rss 2.1G
+129 pt [3.4732344] ort [3.4732313] shape (1, 1) d 3.0994415e-06 eager d 1.66893e-06 pt 1.1s ort 0.5s rss 2.1G
+130 pt [3.584995] ort [3.5849943] shape (1, 1) d 7.1525574e-07 eager d 9.536743e-07 pt 0.8s ort 0.4s rss 2.1G
+200 pt [3.6201146] ort [3.620118] shape (1, 1) d 3.33786e-06 eager d 7.1525574e-07 pt 0.9s ort 1.5s rss 2.1G
+257 pt [3.4486036] ort [3.4485993] shape (1, 1) d 4.2915344e-06 eager d 9.536743e-07 pt 1.4s ort 1.7s rss 2.1G
+512 pt [2.3806608] ort [2.3806593] shape (1, 1) d 1.4305115e-06 eager d 2.861023e-06 pt 2.0s ort 2.9s rss 2.2G
+1024 pt [1.9011319] ort [1.9011321] shape (1, 1) d 2.3841858e-07 eager d 1.1920929e-06 pt 5.2s ort 12.0s rss 2.4G
+2048 pt [1.9193822] ort [1.9193811] shape (1, 1) d 1.0728836e-06 eager d 3.5762787e-07 pt 13.5s ort 12.4s rss 3.3G
+4096 pt [1.7980711] ort [1.7980702] shape (1, 1) d 9.536743e-07 eager d 0.0 pt 24.1s ort 35.6s rss 4.8G
+8000 pt [1.9299085] ort [1.92991] shape (1, 1) d 1.4305115e-06 eager d 0.0 pt 120.6s ort 120.4s rss 11.4G
+pad 0 pt batch [1.8490444 3.282536  3.6201158 2.2765622] eager batch [1.8490435 3.282536  3.6201148 2.2765622] ort batch [1.8490455 3.2825356 3.620118  2.2765627] pt single [1.8490440845489502, 3.2825357913970947, 3.62011456489563, 2.276562213897705] ort single [1.8490452766418457, 3.2825357913970947, 3.6201179027557373, 2.2765631675720215]
+pad 50283 pt batch [1.8490444 3.282536  3.6201158 2.2765622] eager batch [1.8490435 3.282536  3.6201148 2.2765622] ort batch [1.8490455 3.2825356 3.620118  2.2765627] pt single [1.8490440845489502, 3.2825357913970947, 3.62011456489563, 2.276562213897705] ort single [1.8490452766418457, 3.2825357913970947, 3.6201179027557373, 2.2765631675720215]
