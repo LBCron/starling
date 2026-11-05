@@ -117,12 +117,12 @@ ONNX Runtime's CPU arena is off on every profile of this package since the relea
 it on, the arena keeps every buffer a run needed until the session is disposed. Measured on .NET through
 `BertReranker`, with gte-reranker-modernbert-base, four threads and one 8,192-token pair run repeatedly on one session:
 
-| CPU arena | Peak RSS, run 1 | Peak RSS, runs 2 to 4 | RSS after each run | Time per run |
+| CPU arena | Peak RSS, run 1 | Peak RSS, later runs | RSS after each run | Median time per run |
 | --- | ---: | ---: | ---: | ---: |
-| on (before) | 9.7 GiB | 18.4 GiB | 9.7 GiB, then 18.4 GiB | 38 to 55 s |
-| off | 9.0 GiB | 9.6 GiB | 0.9 GiB | 42 to 61 s |
+| on (before) | 9.7 GiB | 18.4 GiB | 9.7 GiB, then 18.4 GiB | 38 s |
+| off | 9.0 GiB | 9.6 GiB | 0.9 GiB | 40 s |
 
-The cost is latency, and on .NET it was small. With processes alternating the setting on a shared machine, one 8,192-token pair took about 8 percent longer without the arena in each of two pairs of processes, a 2,048-token pair about 5 percent (fastest runs; the medians overlap), and 8 rows of about 60 tokens on bge-base 1 to 2 percent. The machine was not idle, so these are estimates. A Python probe showed more at the same lengths: 54 to 56 s against 45 to 53 s at 8,192 tokens, and 5.2 s against 4.0 s at 2,048. Scores are unchanged.
+The cost is latency, and on .NET it is small. With processes alternating the setting and no CI jobs on the machine, one 8,192-token pair took about 6 percent longer without the arena, a 2,048-token pair at two threads about 3 percent, and 8 rows of about 60 tokens on bge-base showed no difference. That is two processes of each setting on one CPU, for gte-reranker-modernbert-base and bge-base. A Python probe on a busier machine showed more: 54 to 56 s against 45 to 53 s at 8,192 tokens, and 5.2 s against 4.0 s at 2,048. Scores are unchanged.
 
 This package does not use `DedicatedRunThreads`, unlike EmbeddingGemma 2. Without the arena, each run's buffers are freed into the calling thread's glibc heap, which can keep up to 64 MiB resident per heap, so a host calling from a rotating thread pool can spread that memory over more heaps. That effect was measured on EmbeddingGemma 2, not here.
 
