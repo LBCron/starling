@@ -119,11 +119,15 @@ it on, the arena keeps every buffer a run needed until the session is disposed. 
 
 | CPU arena | Peak RSS, run 1 | Peak RSS, runs 2 to 4 | RSS after each run | Time per run |
 | --- | ---: | ---: | ---: | ---: |
-| on (before) | 10.1 GB | 19.3 GB | 10.1 GB, then 19.3 GB | 44 to 56 s |
-| off | 9.4 GB | 10.1 GB | 1.0 GB | 52 s on run 1; 86 to 125 s on runs 2 to 4, while other jobs shared the machine |
+| on (before) | 9.7 GiB | 18.4 GiB | 9.7 GiB, then 18.4 GiB | 38 to 55 s |
+| off | 9.0 GiB | 9.6 GiB | 0.9 GiB | 42 to 61 s |
 
-The expected cost is latency on long pairs, roughly 10 to 20 percent at 8,192 tokens, from a Python probe (54 to 56 s without the arena, 45 to 53 s with it). It is not measured on .NET: the .NET comparison was inconclusive, because the arena-off runs overlapped other jobs. On short and medium inputs on .NET, any difference was within the noise of a loaded machine. Scores are unchanged. A process that wants the arena back sets the `AppContext` switch
-`Starlings.Models.Bert.CpuMemoryArena` to `true`, for every session of this package. Evidence:
+The cost is latency, and on .NET it was small. With processes alternating the setting on a shared machine, one 8,192-token pair took about 8 percent longer without the arena in each of two pairs of processes, a 2,048-token pair about 5 percent (fastest runs; the medians overlap), and 8 rows of about 60 tokens on bge-base 1 to 2 percent. The machine was not idle, so these are estimates. A Python probe showed more at the same lengths: 54 to 56 s against 45 to 53 s at 8,192 tokens, and 5.2 s against 4.0 s at 2,048. Scores are unchanged.
+
+This package does not use `DedicatedRunThreads`, unlike EmbeddingGemma 2. Without the arena, each run's buffers are freed into the calling thread's glibc heap, which can keep up to 64 MiB resident per heap, so a host calling from a rotating thread pool can spread that memory over more heaps. That effect was measured on EmbeddingGemma 2, not here.
+
+A process that wants the arena back sets the `AppContext` switch `Starlings.Models.Bert.CpuMemoryArena` to `true`, for
+every session of this package. The switch is Experimental. Evidence:
 `docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04/`.
 
 ## Token limit

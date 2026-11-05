@@ -1,0 +1,390 @@
+# 2026-11-05T00:40:47Z unit=pr291-p1 MemoryMax=8G args=<snapshots>/bge-base bge-base 2 20 arena 60 8 level: OK: heavy 2 light 8, free 29.5 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 7.24 7.70 11.83
+bge-base arena threads 2 session arena True load 2.8s peak 0.72G rss 0.72G
+rows 8 run 1 first -0.026069 time 0.791s peak 0.74G rss 0.74G
+rows 8 run 2 first -0.026069 time 0.590s peak 0.76G rss 0.76G
+rows 8 run 3 first -0.026069 time 0.542s peak 0.76G rss 0.76G
+rows 8 run 4 first -0.026069 time 0.540s peak 0.76G rss 0.76G
+rows 8 run 5 first -0.026069 time 0.519s peak 0.76G rss 0.76G
+rows 8 run 6 first -0.026069 time 0.666s peak 0.76G rss 0.76G
+rows 8 run 7 first -0.026069 time 0.871s peak 0.76G rss 0.76G
+rows 8 run 8 first -0.026069 time 0.852s peak 0.76G rss 0.76G
+rows 8 run 9 first -0.026069 time 0.749s peak 0.76G rss 0.76G
+rows 8 run 10 first -0.026069 time 0.519s peak 0.76G rss 0.76G
+rows 8 run 11 first -0.026069 time 0.507s peak 0.76G rss 0.76G
+rows 8 run 12 first -0.026069 time 0.557s peak 0.76G rss 0.76G
+rows 8 run 13 first -0.026069 time 0.501s peak 0.76G rss 0.76G
+rows 8 run 14 first -0.026069 time 0.493s peak 0.76G rss 0.76G
+rows 8 run 15 first -0.026069 time 0.507s peak 0.76G rss 0.76G
+rows 8 run 16 first -0.026069 time 0.493s peak 0.76G rss 0.76G
+rows 8 run 17 first -0.026069 time 0.520s peak 0.76G rss 0.76G
+rows 8 run 18 first -0.026069 time 0.532s peak 0.76G rss 0.76G
+rows 8 run 19 first -0.026069 time 0.574s peak 0.76G rss 0.76G
+rows 8 run 20 first -0.026069 time 0.526s peak 0.76G rss 0.76G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 14.863s
+             CPU time consumed: 27.468s
+                   Memory peak: 690.8M (swap: 0B)
+# exit 0 load: 7.17 7.67 11.75
+# 2026-11-05T00:41:02Z unit=pr291-p2 MemoryMax=8G args=<snapshots>/bge-base bge-base 2 20 noarena 60 8 level: OK: heavy 2 light 8, free 28.9 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 7.17 7.67 11.75
+Running as unit: pr291-p2.service
+bge-base noarena threads 2 session arena False load 2.1s peak 0.70G rss 0.70G
+rows 8 run 1 first -0.026069 time 0.646s peak 0.71G rss 0.71G
+rows 8 run 2 first -0.026069 time 0.596s peak 0.72G rss 0.71G
+rows 8 run 3 first -0.026069 time 0.539s peak 0.73G rss 0.73G
+rows 8 run 4 first -0.026069 time 0.557s peak 0.73G rss 0.73G
+rows 8 run 5 first -0.026069 time 0.530s peak 0.73G rss 0.73G
+rows 8 run 6 first -0.026069 time 0.497s peak 0.73G rss 0.73G
+rows 8 run 7 first -0.026069 time 0.537s peak 0.73G rss 0.73G
+rows 8 run 8 first -0.026069 time 0.526s peak 0.73G rss 0.73G
+rows 8 run 9 first -0.026069 time 0.555s peak 0.73G rss 0.73G
+rows 8 run 10 first -0.026069 time 0.530s peak 0.73G rss 0.73G
+rows 8 run 11 first -0.026069 time 0.502s peak 0.73G rss 0.73G
+rows 8 run 12 first -0.026069 time 0.501s peak 0.73G rss 0.73G
+rows 8 run 13 first -0.026069 time 0.709s peak 0.73G rss 0.73G
+rows 8 run 14 first -0.026069 time 0.506s peak 0.73G rss 0.73G
+rows 8 run 15 first -0.026069 time 0.502s peak 0.73G rss 0.73G
+rows 8 run 16 first -0.026069 time 0.553s peak 0.73G rss 0.73G
+rows 8 run 17 first -0.026069 time 0.493s peak 0.73G rss 0.73G
+rows 8 run 18 first -0.026069 time 0.612s peak 0.73G rss 0.73G
+rows 8 run 19 first -0.026069 time 0.491s peak 0.73G rss 0.73G
+rows 8 run 20 first -0.026069 time 0.503s peak 0.73G rss 0.73G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 13.197s
+             CPU time consumed: 24.847s
+                   Memory peak: 660.9M (swap: 0B)
+# exit 0 load: 7.07 7.63 11.69
+# 2026-11-05T00:41:16Z unit=pr291-p3 MemoryMax=8G args=<snapshots>/bge-base bge-base 2 20 noarena 60 8 level: OK: heavy 2 light 8, free 28.9 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 7.07 7.63 11.69
+Running as unit: pr291-p3.service
+bge-base noarena threads 2 session arena False load 2.2s peak 0.70G rss 0.70G
+rows 8 run 1 first -0.026069 time 0.611s peak 0.71G rss 0.71G
+rows 8 run 2 first -0.026069 time 0.546s peak 0.71G rss 0.71G
+rows 8 run 3 first -0.026069 time 0.565s peak 0.71G rss 0.71G
+rows 8 run 4 first -0.026069 time 0.525s peak 0.71G rss 0.71G
+rows 8 run 5 first -0.026069 time 0.551s peak 0.71G rss 0.71G
+rows 8 run 6 first -0.026069 time 0.493s peak 0.71G rss 0.71G
+rows 8 run 7 first -0.026069 time 0.526s peak 0.71G rss 0.71G
+rows 8 run 8 first -0.026069 time 0.526s peak 0.71G rss 0.71G
+rows 8 run 9 first -0.026069 time 0.557s peak 0.71G rss 0.71G
+rows 8 run 10 first -0.026069 time 0.518s peak 0.71G rss 0.71G
+rows 8 run 11 first -0.026069 time 0.507s peak 0.71G rss 0.71G
+rows 8 run 12 first -0.026069 time 0.591s peak 0.71G rss 0.71G
+rows 8 run 13 first -0.026069 time 0.524s peak 0.71G rss 0.71G
+rows 8 run 14 first -0.026069 time 0.497s peak 0.71G rss 0.71G
+rows 8 run 15 first -0.026069 time 0.501s peak 0.71G rss 0.71G
+rows 8 run 16 first -0.026069 time 0.516s peak 0.71G rss 0.71G
+rows 8 run 17 first -0.026069 time 0.510s peak 0.71G rss 0.71G
+rows 8 run 18 first -0.026069 time 0.500s peak 0.71G rss 0.71G
+rows 8 run 19 first -0.026069 time 0.518s peak 0.71G rss 0.71G
+rows 8 run 20 first -0.026069 time 0.925s peak 0.71G rss 0.71G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 13.400s
+             CPU time consumed: 25.023s
+                   Memory peak: 643.5M (swap: 0B)
+# exit 0 load: 6.84 7.55 11.60
+# 2026-11-05T00:41:29Z unit=pr291-p4 MemoryMax=8G args=<snapshots>/bge-base bge-base 2 20 arena 60 8 level: OK: heavy 2 light 8, free 28.9 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 6.84 7.55 11.60
+Running as unit: pr291-p4.service
+bge-base arena threads 2 session arena True load 2.4s peak 0.69G rss 0.69G
+rows 8 run 1 first -0.026069 time 1.014s peak 0.71G rss 0.71G
+rows 8 run 2 first -0.026069 time 0.660s peak 0.73G rss 0.73G
+rows 8 run 3 first -0.026069 time 0.621s peak 0.73G rss 0.73G
+rows 8 run 4 first -0.026069 time 0.594s peak 0.73G rss 0.73G
+rows 8 run 5 first -0.026069 time 0.513s peak 0.73G rss 0.73G
+rows 8 run 6 first -0.026069 time 0.538s peak 0.73G rss 0.73G
+rows 8 run 7 first -0.026069 time 0.528s peak 0.73G rss 0.73G
+rows 8 run 8 first -0.026069 time 0.494s peak 0.73G rss 0.73G
+rows 8 run 9 first -0.026069 time 0.533s peak 0.73G rss 0.73G
+rows 8 run 10 first -0.026069 time 0.512s peak 0.73G rss 0.73G
+rows 8 run 11 first -0.026069 time 0.542s peak 0.73G rss 0.73G
+rows 8 run 12 first -0.026069 time 0.500s peak 0.73G rss 0.73G
+rows 8 run 13 first -0.026069 time 0.563s peak 0.73G rss 0.73G
+rows 8 run 14 first -0.026069 time 0.626s peak 0.73G rss 0.73G
+rows 8 run 15 first -0.026069 time 0.552s peak 0.73G rss 0.73G
+rows 8 run 16 first -0.026069 time 0.529s peak 0.74G rss 0.74G
+rows 8 run 17 first -0.026069 time 0.503s peak 0.74G rss 0.74G
+rows 8 run 18 first -0.026069 time 0.508s peak 0.74G rss 0.74G
+rows 8 run 19 first -0.026069 time 0.518s peak 0.74G rss 0.74G
+rows 8 run 20 first -0.026069 time 0.494s peak 0.74G rss 0.74G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 13.991s
+             CPU time consumed: 26.008s
+                   Memory peak: 664M (swap: 0B)
+# exit 0 load: 6.64 7.47 11.51
+# 2026-11-05T00:41:44Z unit=pr291-p5 MemoryMax=8G args=<snapshots>/bge-base bge-base 2 20 arena 60 8 level: OK: heavy 2 light 8, free 28.9 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 6.64 7.47 11.51
+Running as unit: pr291-p5.service
+bge-base arena threads 2 session arena True load 2.2s peak 0.72G rss 0.72G
+rows 8 run 1 first -0.026069 time 0.596s peak 0.74G rss 0.74G
+rows 8 run 2 first -0.026069 time 0.544s peak 0.76G rss 0.76G
+rows 8 run 3 first -0.026069 time 0.527s peak 0.76G rss 0.76G
+rows 8 run 4 first -0.026069 time 0.519s peak 0.76G rss 0.76G
+rows 8 run 5 first -0.026069 time 0.538s peak 0.76G rss 0.76G
+rows 8 run 6 first -0.026069 time 0.581s peak 0.76G rss 0.76G
+rows 8 run 7 first -0.026069 time 0.559s peak 0.76G rss 0.76G
+rows 8 run 8 first -0.026069 time 0.542s peak 0.76G rss 0.76G
+rows 8 run 9 first -0.026069 time 0.570s peak 0.76G rss 0.76G
+rows 8 run 10 first -0.026069 time 0.528s peak 0.76G rss 0.76G
+rows 8 run 11 first -0.026069 time 0.576s peak 0.76G rss 0.76G
+rows 8 run 12 first -0.026069 time 0.505s peak 0.76G rss 0.76G
+rows 8 run 13 first -0.026069 time 0.500s peak 0.76G rss 0.76G
+rows 8 run 14 first -0.026069 time 0.499s peak 0.76G rss 0.76G
+rows 8 run 15 first -0.026069 time 0.488s peak 0.76G rss 0.76G
+rows 8 run 16 first -0.026069 time 0.537s peak 0.76G rss 0.76G
+rows 8 run 17 first -0.026069 time 0.504s peak 0.76G rss 0.76G
+rows 8 run 18 first -0.026069 time 0.528s peak 0.76G rss 0.76G
+rows 8 run 19 first -0.026069 time 0.490s peak 0.76G rss 0.76G
+rows 8 run 20 first -0.026069 time 0.495s peak 0.76G rss 0.76G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 12.964s
+             CPU time consumed: 24.333s
+                   Memory peak: 690.9M (swap: 0B)
+# exit 0 load: 6.20 7.33 11.40
+# 2026-11-05T00:41:57Z unit=pr291-p6 MemoryMax=8G args=<snapshots>/bge-base bge-base 2 20 noarena 60 8 level: OK: heavy 2 light 8, free 28.4 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 6.20 7.33 11.40
+Running as unit: pr291-p6.service
+bge-base noarena threads 2 session arena False load 2.1s peak 0.72G rss 0.72G
+rows 8 run 1 first -0.026069 time 0.614s peak 0.72G rss 0.72G
+rows 8 run 2 first -0.026069 time 0.555s peak 0.74G rss 0.73G
+rows 8 run 3 first -0.026069 time 0.616s peak 0.75G rss 0.75G
+rows 8 run 4 first -0.026069 time 0.631s peak 0.75G rss 0.75G
+rows 8 run 5 first -0.026069 time 0.606s peak 0.75G rss 0.75G
+rows 8 run 6 first -0.026069 time 0.616s peak 0.75G rss 0.75G
+rows 8 run 7 first -0.026069 time 0.540s peak 0.75G rss 0.75G
+rows 8 run 8 first -0.026069 time 0.565s peak 0.75G rss 0.75G
+rows 8 run 9 first -0.026069 time 0.559s peak 0.75G rss 0.75G
+rows 8 run 10 first -0.026069 time 0.564s peak 0.75G rss 0.75G
+rows 8 run 11 first -0.026069 time 0.499s peak 0.75G rss 0.75G
+rows 8 run 12 first -0.026069 time 0.523s peak 0.75G rss 0.75G
+rows 8 run 13 first -0.026069 time 0.563s peak 0.75G rss 0.75G
+rows 8 run 14 first -0.026069 time 0.505s peak 0.75G rss 0.75G
+rows 8 run 15 first -0.026069 time 0.530s peak 0.75G rss 0.75G
+rows 8 run 16 first -0.026069 time 0.525s peak 0.75G rss 0.75G
+rows 8 run 17 first -0.026069 time 0.516s peak 0.75G rss 0.75G
+rows 8 run 18 first -0.026069 time 0.559s peak 0.75G rss 0.75G
+rows 8 run 19 first -0.026069 time 0.537s peak 0.75G rss 0.75G
+rows 8 run 20 first -0.026069 time 0.514s peak 0.75G rss 0.75G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 13.445s
+             CPU time consumed: 25.158s
+                   Memory peak: 679.2M (swap: 0B)
+# exit 0 load: 6.08 7.27 11.34
+# 2026-11-05T00:42:10Z unit=pr291-p7 MemoryMax=8G args=<snapshots>/bge-base bge-base 2 20 noarena 60 8 level: OK: heavy 2 light 8, free 23.2 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 6.08 7.27 11.34
+Running as unit: pr291-p7.service
+bge-base noarena threads 2 session arena False load 2.3s peak 0.71G rss 0.71G
+rows 8 run 1 first -0.026069 time 0.613s peak 0.71G rss 0.71G
+rows 8 run 2 first -0.026069 time 0.529s peak 0.73G rss 0.72G
+rows 8 run 3 first -0.026069 time 0.549s peak 0.74G rss 0.74G
+rows 8 run 4 first -0.026069 time 0.600s peak 0.74G rss 0.74G
+rows 8 run 5 first -0.026069 time 0.604s peak 0.74G rss 0.74G
+rows 8 run 6 first -0.026069 time 0.527s peak 0.74G rss 0.74G
+rows 8 run 7 first -0.026069 time 0.504s peak 0.74G rss 0.74G
+rows 8 run 8 first -0.026069 time 0.536s peak 0.74G rss 0.74G
+rows 8 run 9 first -0.026069 time 0.573s peak 0.74G rss 0.74G
+rows 8 run 10 first -0.026069 time 0.516s peak 0.74G rss 0.74G
+rows 8 run 11 first -0.026069 time 0.590s peak 0.74G rss 0.74G
+rows 8 run 12 first -0.026069 time 0.744s peak 0.74G rss 0.74G
+rows 8 run 13 first -0.026069 time 0.810s peak 0.74G rss 0.74G
+rows 8 run 14 first -0.026069 time 0.573s peak 0.74G rss 0.74G
+rows 8 run 15 first -0.026069 time 0.567s peak 0.74G rss 0.74G
+rows 8 run 16 first -0.026069 time 0.503s peak 0.74G rss 0.74G
+rows 8 run 17 first -0.026069 time 0.595s peak 0.74G rss 0.74G
+rows 8 run 18 first -0.026069 time 0.588s peak 0.74G rss 0.74G
+rows 8 run 19 first -0.026069 time 0.620s peak 0.74G rss 0.74G
+rows 8 run 20 first -0.026069 time 0.547s peak 0.74G rss 0.74G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 14.175s
+             CPU time consumed: 26.541s
+                   Memory peak: 670.3M (swap: 0B)
+# exit 0 load: 6.72 7.37 11.30
+# 2026-11-05T00:42:25Z unit=pr291-p8 MemoryMax=8G args=<snapshots>/bge-base bge-base 2 20 arena 60 8 level: OK: heavy 2 light 8, free 23.7 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 6.72 7.37 11.30
+Running as unit: pr291-p8.service
+bge-base arena threads 2 session arena True load 2.4s peak 0.71G rss 0.71G
+rows 8 run 1 first -0.026069 time 0.639s peak 0.72G rss 0.72G
+rows 8 run 2 first -0.026069 time 0.567s peak 0.74G rss 0.74G
+rows 8 run 3 first -0.026069 time 0.655s peak 0.75G rss 0.75G
+rows 8 run 4 first -0.026069 time 0.785s peak 0.75G rss 0.75G
+rows 8 run 5 first -0.026069 time 0.736s peak 0.75G rss 0.75G
+rows 8 run 6 first -0.026069 time 0.836s peak 0.75G rss 0.75G
+rows 8 run 7 first -0.026069 time 0.912s peak 0.75G rss 0.75G
+rows 8 run 8 first -0.026069 time 0.923s peak 0.75G rss 0.75G
+rows 8 run 9 first -0.026069 time 0.858s peak 0.75G rss 0.75G
+rows 8 run 10 first -0.026069 time 0.860s peak 0.75G rss 0.75G
+rows 8 run 11 first -0.026069 time 0.935s peak 0.75G rss 0.75G
+rows 8 run 12 first -0.026069 time 0.887s peak 0.75G rss 0.75G
+rows 8 run 13 first -0.026069 time 0.852s peak 0.75G rss 0.75G
+rows 8 run 14 first -0.026069 time 0.839s peak 0.75G rss 0.75G
+rows 8 run 15 first -0.026069 time 0.829s peak 0.75G rss 0.75G
+rows 8 run 16 first -0.026069 time 0.763s peak 0.75G rss 0.75G
+rows 8 run 17 first -0.026069 time 0.833s peak 0.75G rss 0.75G
+rows 8 run 18 first -0.026069 time 0.837s peak 0.75G rss 0.75G
+rows 8 run 19 first -0.026069 time 0.873s peak 0.75G rss 0.75G
+rows 8 run 20 first -0.026069 time 0.924s peak 0.75G rss 0.75G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 18.964s
+             CPU time consumed: 35.032s
+                   Memory peak: 678.8M (swap: 0B)
+# exit 0 load: 13.99 8.86 11.71
+# 2026-11-05T00:42:44Z unit=pr291-p9 MemoryMax=8G args=<snapshot> gte-reranker-modernbert-base 2 5 arena 2048 1 level: OK: heavy 2 light 8, free 24.1 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 13.99 8.86 11.71
+Running as unit: pr291-p9.service
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 2048 load 5.1s peak 0.96G rss 0.96G
+tokens 2048 rows 1 run 1 logit 1.230980 time 10.431s peak 1.66G rss 1.66G
+tokens 2048 rows 1 run 2 logit 1.230980 time 9.887s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 3 logit 1.230980 time 9.717s peak 2.35G rss 2.35G
+tokens 2048 rows 1 run 4 logit 1.230980 time 9.531s peak 2.35G rss 2.35G
+tokens 2048 rows 1 run 5 logit 1.230980 time 7.182s peak 2.35G rss 2.35G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 52.348s
+             CPU time consumed: 1min 34.881s
+                   Memory peak: 2.1G (swap: 0B)
+# exit 0 load: 22.49 12.49 12.80
+# 2026-11-05T00:43:37Z unit=pr291-p10 MemoryMax=8G args=<snapshot> gte-reranker-modernbert-base 2 5 noarena 2048 1 level: TIGHT: heavy 0 light 8, free 22.9 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 25.7 on 12 cores) load: 22.49 12.49 12.80
+Running as unit: pr291-p10.service
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 2048 load 3.6s peak 0.92G rss 0.92G
+tokens 2048 rows 1 run 1 logit 1.230980 time 10.491s peak 1.47G rss 0.96G
+tokens 2048 rows 1 run 2 logit 1.230980 time 9.871s peak 1.63G rss 0.98G
+tokens 2048 rows 1 run 3 logit 1.230980 time 8.505s peak 1.63G rss 0.98G
+tokens 2048 rows 1 run 4 logit 1.230980 time 6.993s peak 1.63G rss 0.98G
+tokens 2048 rows 1 run 5 logit 1.230980 time 7.455s peak 1.63G rss 0.98G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 47.323s
+             CPU time consumed: 1min 28.215s
+                   Memory peak: 1.5G (swap: 0B)
+# exit 0 load: 19.88 13.53 13.16
+# 2026-11-05T00:44:24Z unit=pr291-p11 MemoryMax=8G args=<snapshot> gte-reranker-modernbert-base 2 5 noarena 2048 1 level: TIGHT: heavy 0 light 8, free 23.9 GB, 2 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 21.3 on 12 cores) load: 19.88 13.53 13.16
+Running as unit: pr291-p11.service
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 2048 load 3.5s peak 0.93G rss 0.93G
+tokens 2048 rows 1 run 1 logit 1.230980 time 7.757s peak 1.49G rss 0.99G
+tokens 2048 rows 1 run 2 logit 1.230980 time 7.083s peak 1.64G rss 0.99G
+tokens 2048 rows 1 run 3 logit 1.230980 time 6.736s peak 1.64G rss 1.00G
+tokens 2048 rows 1 run 4 logit 1.230980 time 6.589s peak 1.66G rss 0.96G
+tokens 2048 rows 1 run 5 logit 1.230980 time 6.848s peak 1.66G rss 1.00G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 38.781s
+             CPU time consumed: 1min 13.068s
+                   Memory peak: 1.5G (swap: 0B)
+# exit 0 load: 12.32 12.39 12.79
+# 2026-11-05T00:45:03Z unit=pr291-p12 MemoryMax=8G args=<snapshot> gte-reranker-modernbert-base 2 5 arena 2048 1 level: TIGHT: heavy 0 light 8, free 25.9 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 13.1 on 12 cores) load: 12.32 12.39 12.79
+Running as unit: pr291-p12.service
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 2048 load 3.3s peak 0.97G rss 0.97G
+tokens 2048 rows 1 run 1 logit 1.230980 time 10.360s peak 1.67G rss 1.67G
+tokens 2048 rows 1 run 2 logit 1.230980 time 10.282s peak 2.36G rss 2.36G
+tokens 2048 rows 1 run 3 logit 1.230980 time 9.530s peak 2.36G rss 2.36G
+tokens 2048 rows 1 run 4 logit 1.230980 time 8.273s peak 2.36G rss 2.36G
+tokens 2048 rows 1 run 5 logit 1.230980 time 6.930s peak 2.36G rss 2.36G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 49.080s
+             CPU time consumed: 1min 29.367s
+                   Memory peak: 2.2G (swap: 0B)
+# exit 0 load: 13.93 12.90 12.95
+# 2026-11-05T00:45:52Z unit=pr291-p13 MemoryMax=8G args=<snapshot> gte-reranker-modernbert-base 2 5 arena 2048 1 level: TIGHT: heavy 0 light 8, free 25.8 GB, 2 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 14.6 on 12 cores) load: 13.93 12.90 12.95
+Running as unit: pr291-p13.service
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 2048 load 3.0s peak 0.96G rss 0.96G
+tokens 2048 rows 1 run 1 logit 1.230980 time 8.010s peak 1.65G rss 1.65G
+tokens 2048 rows 1 run 2 logit 1.230980 time 7.242s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 3 logit 1.230980 time 7.018s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 4 logit 1.230980 time 6.960s peak 2.34G rss 2.34G
+tokens 2048 rows 1 run 5 logit 1.230980 time 7.420s peak 2.34G rss 2.34G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 40.011s
+             CPU time consumed: 1min 16.098s
+                   Memory peak: 2.1G (swap: 0B)
+# exit 0 load: 11.99 12.48 12.80
+# 2026-11-05T00:46:33Z unit=pr291-p14 MemoryMax=8G args=<snapshot> gte-reranker-modernbert-base 2 5 noarena 2048 1 level: TIGHT: heavy 0 light 8, free 28.0 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 12.3 on 12 cores) load: 11.99 12.48 12.80
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 2048 load 3.3s peak 0.95G rss 0.95G
+tokens 2048 rows 1 run 1 logit 1.230980 time 6.665s peak 1.51G rss 1.00G
+tokens 2048 rows 1 run 2 logit 1.230980 time 7.169s peak 1.68G rss 0.98G
+tokens 2048 rows 1 run 3 logit 1.230980 time 7.648s peak 1.68G rss 1.02G
+tokens 2048 rows 1 run 4 logit 1.230980 time 7.028s peak 1.68G rss 0.99G
+tokens 2048 rows 1 run 5 logit 1.230980 time 7.130s peak 1.68G rss 1.02G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 39.222s
+             CPU time consumed: 1min 14.528s
+                   Memory peak: 1.5G (swap: 0B)
+# exit 0 load: 9.96 11.88 12.58
+# 2026-11-05T00:47:12Z unit=pr291-p15 MemoryMax=8G args=<snapshot> gte-reranker-modernbert-base 2 5 noarena 2048 1 level: TIGHT: heavy 0 light 8, free 28.6 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 10.3 on 12 cores) load: 9.96 11.88 12.58
+Running as unit: pr291-p15.service
+gte-reranker-modernbert-base noarena threads 2 session arena False maxTokens 2048 load 3.2s peak 0.94G rss 0.94G
+tokens 2048 rows 1 run 1 logit 1.230980 time 6.483s peak 1.51G rss 1.00G
+tokens 2048 rows 1 run 2 logit 1.230980 time 6.946s peak 1.65G rss 1.01G
+tokens 2048 rows 1 run 3 logit 1.230980 time 6.616s peak 1.67G rss 0.98G
+tokens 2048 rows 1 run 4 logit 1.230980 time 6.873s peak 1.67G rss 1.01G
+tokens 2048 rows 1 run 5 logit 1.230980 time 8.432s peak 1.67G rss 1.01G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 38.852s
+             CPU time consumed: 1min 13.107s
+                   Memory peak: 1.5G (swap: 0B)
+# exit 0 load: 8.62 11.31 12.37
+# 2026-11-05T00:47:51Z unit=pr291-p16 MemoryMax=8G args=<snapshot> gte-reranker-modernbert-base 2 5 arena 2048 1 level: OK: heavy 1 light 8, free 28.2 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 8.62 11.31 12.37
+Running as unit: pr291-p16.service
+gte-reranker-modernbert-base arena threads 2 session arena True maxTokens 2048 load 3.2s peak 0.97G rss 0.97G
+tokens 2048 rows 1 run 1 logit 1.230980 time 6.593s peak 1.66G rss 1.66G
+tokens 2048 rows 1 run 2 logit 1.230980 time 6.578s peak 2.35G rss 2.35G
+tokens 2048 rows 1 run 3 logit 1.230980 time 6.249s peak 2.35G rss 2.35G
+tokens 2048 rows 1 run 4 logit 1.230980 time 6.461s peak 2.35G rss 2.35G
+tokens 2048 rows 1 run 5 logit 1.230980 time 7.135s peak 2.35G rss 2.35G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 36.646s
+             CPU time consumed: 1min 9.478s
+                   Memory peak: 2.1G (swap: 0B)
+# exit 0 load: 7.25 10.61 12.09
+# 2026-11-05T00:48:28Z unit=pr291-p17 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 4 3 arena 8192 level: OK: heavy 2 light 8, free 29.3 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 7.25 10.61 12.09
+Running as unit: pr291-p17.service
+gte-reranker-modernbert-base arena threads 4 session arena True maxTokens 8192 load 3.7s peak 0.94G rss 0.94G
+tokens 8192 rows 1 run 1 logit 1.492696 time 55.322s peak 10.13G rss 10.13G
+tokens 8192 rows 1 run 2 logit 1.492696 time 50.104s peak 19.28G rss 19.28G
+tokens 8192 rows 1 run 3 logit 1.492696 time 47.832s peak 19.28G rss 19.28G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 38.470s
+             CPU time consumed: 9min 34.996s
+                   Memory peak: 18.3G (swap: 0B)
+# exit 0 load: 8.49 10.25 11.75
+# 2026-11-05T00:51:06Z unit=pr291-p18 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 4 3 noarena 8192 level: OK: heavy 1 light 8, free 10.0 GB, 3 runner job(s) busy, app.slice pressure 0.0% load: 8.05 10.13 11.71
+Running as unit: pr291-p18.service
+gte-reranker-modernbert-base noarena threads 4 session arena False maxTokens 8192 load 3.1s peak 0.96G rss 0.96G
+tokens 8192 rows 1 run 1 logit 1.492696 time 60.963s peak 9.46G rss 0.99G
+tokens 8192 rows 1 run 2 logit 1.492696 time 59.133s peak 10.13G rss 1.00G
+tokens 8192 rows 1 run 3 logit 1.492696 time 46.899s peak 10.13G rss 1.00G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 50.385s
+             CPU time consumed: 9min 41.717s
+                   Memory peak: 9.6G (swap: 0B)
+# exit 0 load: 17.51 16.09 13.89
+# 2026-11-05T00:53:57Z unit=pr291-p19 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 4 3 noarena 8192 level: TIGHT: heavy 0 light 8, free 20.6 GB, 2 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 18.7 on 12 cores) load: 17.51 16.09 13.89
+Running as unit: pr291-p19.service
+gte-reranker-modernbert-base noarena threads 4 session arena False maxTokens 8192 load 3.1s peak 0.94G rss 0.94G
+tokens 8192 rows 1 run 1 logit 1.492696 time 49.559s peak 9.44G rss 0.97G
+tokens 8192 rows 1 run 2 logit 1.492696 time 41.941s peak 10.11G rss 0.98G
+tokens 8192 rows 1 run 3 logit 1.492696 time 41.887s peak 10.11G rss 0.98G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 16.757s
+             CPU time consumed: 8min 22.906s
+                   Memory peak: 9.6G (swap: 0B)
+# exit 0 load: 7.31 12.53 12.87
+# 2026-11-05T00:56:14Z unit=pr291-p20 MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 4 3 arena 8192 level: OK: heavy 2 light 8, free 19.4 GB, 0 runner job(s) busy, app.slice pressure 0.0% load: 7.31 12.53 12.87
+Running as unit: pr291-p20.service
+gte-reranker-modernbert-base arena threads 4 session arena True maxTokens 8192 load 3.0s peak 0.92G rss 0.92G
+tokens 8192 rows 1 run 1 logit 1.492696 time 40.324s peak 10.11G rss 10.11G
+tokens 8192 rows 1 run 2 logit 1.492696 time 39.112s peak 19.26G rss 19.26G
+tokens 8192 rows 1 run 3 logit 1.492696 time 38.389s peak 19.26G rss 19.26G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 2min 2.217s
+             CPU time consumed: 7min 40.465s
+                   Memory peak: 18.3G (swap: 0B)
+# exit 0 load: 6.52 10.51 12.08

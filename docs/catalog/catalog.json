@@ -3917,7 +3917,7 @@
       "known_issues": [
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
         "Scores are raw logits, not calibrated probabilities.",
-        "Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long pairs are costly on CPU. On .NET through BertReranker at four threads, one 8,192-token pair took about a minute and peaked at 10 GB with the CPU arena off, as the package now runs it; with the arena on it kept 19 GB resident from the second run on (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04)."
+        "Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long pairs are costly on CPU. On .NET through BertReranker at four threads, one 8,192-token pair took about a minute and peaked at 9.6 GiB with the CPU arena off, as the package now runs it; with the arena on it kept 18.4 GiB resident from the second run on (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04)."
       ],
       "execution": {
         "runtime": "onnxruntime",

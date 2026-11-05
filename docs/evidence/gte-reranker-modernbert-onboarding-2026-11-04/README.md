@@ -68,7 +68,7 @@ The growth on .NET matches the Python probe. `systemd` reports the unit's peak i
 
 Scores: the logit was 1.492696 on every run of both settings, the value Python ONNX Runtime gives (`ort-peak.log`). Through `BertReranker` at `maxTokens` 64, 512 and 2,048 the logits were 0.807708, 0.985387 and 1.230980, each equal to `ort_peak.py` at that length to the six printed decimals (`ort-peak-short.log`, both settings). In `dotnet-short.log` both settings gave the same printed value on each input, including the first vector element of `paraphrase-multilingual` (0.294363) and `bge-base` (-0.026069). This is one repetitive pair per length, not parity evidence over a corpus, so pairs past 1,468 tokens stay untested on .NET.
 
-Latency is the weaker part of this evidence: the machine was shared, and a quiet window for a paired rerun did not come in about two hours of waiting, so no clean paired .NET latency exists. At 8,192 tokens, arena on took 56.5, 52.5, 47.1 and 43.6 s with the machine quiet at the start. Arena off took 52.2 s for the first run, then 101.0, 125.3 and 85.8 s while other jobs started on the machine (the level was `tight` when it ended). The .NET comparison at this length is therefore inconclusive. The only like-for-like pair is run 1 against run 1, 56.5 s on and 52.2 s off, which points the other way; the later arena-off runs say nothing about the arena. Process CPU time over the four runs, 12 min 9 s with the arena and 14 min 44 s without, is contaminated in the same way. The estimate of roughly 10 to 20 percent slower without the arena comes only from the Python probe, 54 to 56 s against 45 to 53 s, and is not measured on .NET.
+Latency is the weaker part of this evidence, because the machine was shared throughout. The first round, in `dotnet-long.log`, was not paired. At 8,192 tokens, arena on took 56.5, 52.5, 47.1 and 43.6 s with the machine quiet at the start. Arena off took 52.2 s for the first run, then 101.0, 125.3 and 85.8 s while other jobs started on the machine (the level was `tight` when it ended). That comparison is inconclusive: the later arena-off runs say nothing about the arena, and process CPU time over the four runs, 12 min 9 s with the arena and 14 min 44 s without, is contaminated in the same way.
 
 Short and medium inputs, alternating settings, three processes each, two threads (`dotnet-short.log`, summarized by `summarize_short.py`). These ran under heavy load, with the load average reaching 101 on 12 cores. Load only slows a run, so the table gives the fastest run after the first in each process, and it is only good for spotting a large cost:
 
@@ -80,11 +80,26 @@ Short and medium inputs, alternating settings, three processes each, two threads
 | paraphrase-multilingual | about 60 tokens, 32 rows | 1.520 s | 1.438 s | -5% | 0.92, 0.92 GiB | 0.73, 0.85 GiB |
 | bge-base | about 60 tokens, 8 rows | 0.594 s | 0.802 s | +35% | 0.73, 0.70 GiB | 0.73, 0.70 GiB |
 
-The medians overlap heavily between settings, and the bge-base difference rests on single fastest runs, so it should be remeasured on a quiet machine before anyone relies on it.
+The medians overlap heavily between settings, and the bge-base difference rests on single fastest runs.
 
-Not measured: `bge-m3` and `bge-reranker-v2-m3`, the other 8,192-token profiles, which this change also affects. `DedicatedRunThreads` stays off on this route, unlike EmbeddingGemma 2, so run buffers are freed into the calling thread's glibc heap; a host calling from a rotating thread pool was not measured. No soak ran.
+A paired round followed (`dotnet-paired.log`, summarized by `summarize_paired.py`), on the final library code. Settings alternate process by process in on, off, off, on order, so slow drift in the load falls on both. No quiet window came here either: the load average at process start was 6 to 23 on 12 cores, and up to three runner jobs were busy. Each process logged its level and load. Times are the median and the fastest of the runs after the first:
 
-`dotnet-long-aborted-parser-bug.log` is the first attempt, which stopped at a parsing bug in the probe's `/proc` reader once RSS reached 10 GB. It is kept for completeness; no figure comes from it.
+| Input | Threads, processes, runs | Median of process medians, on | Same, off | Difference | Fastest on | Fastest off | Difference |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| bge-base, about 60 tokens, 8 rows | 2, 4 + 4, 20 | 0.530 s | 0.542 s | +2% | 0.488 s | 0.491 s | +1% |
+| gte-reranker, 2,048 tokens, 1 row | 2, 4 + 4, 5 | 8.016 s | 7.029 s | -12% | 6.249 s | 6.589 s | +5% |
+| gte-reranker, 8,192 tokens, 1 row | 4, 2 + 2, 3 | 43.859 s | 47.465 s | +8% | 38.389 s | 41.887 s | +9% |
+
+- **8,192 tokens:** the +8 percent holds in each pair by position: 49.0 s on and 53.0 s off, then 38.8 s on and 41.9 s off. That is two pairs, and the second off process started with the load at 17.5.
+- **2,048 tokens:** the -12 percent median comes from the first two arena-on processes, which ran slower than every other process of either setting. Load is the likely reason, and it was not separated out. The fastest runs are the better guide, and they are one run each.
+- **bge-base:** the earlier +35 percent did not repeat, so it was noise.
+- **Python:** `ort-peak-short.log`, four threads, also under load, gave 4.0 s on and 5.2 s off at 2,048 tokens, and the same 0.1 s and 0.6 s at 64 and 512. So Python shows a larger cost than .NET at both 2,048 and 8,192 tokens (54 to 56 s against 45 to 53 s). Neither figure is a quiet-machine number.
+
+Memory in this round matched the first, and every score matched the earlier values.
+
+Not measured: `bge-m3` and `bge-reranker-v2-m3`, the other 8,192-token profiles, which this change also affects. `DedicatedRunThreads` stays off on this route, unlike EmbeddingGemma 2, so run buffers are freed into the calling thread's glibc heap; a host calling from a rotating thread pool was not measured. No soak ran. No run took place on a quiet machine.
+
+`dotnet-long-aborted-parser-bug.log` is the first attempt, which stopped at a parsing bug in the probe's `/proc` reader once RSS reached 10,000,000 kB. It is kept for completeness; no figure comes from it.
 
 ## Not done
 
@@ -104,7 +119,7 @@ Not measured: `bge-m3` and `bge-reranker-v2-m3`, the other 8,192-token profiles,
 | `run.json` | The pipeline run record of the `--resume` (stage inputs, digests, timings; local paths replaced the same way) |
 | `probe.py`, `probe.log`, `probe8192.py`, `probe8192.log`, `ort_peak.py`, `ort-peak.log`, `ort-peak-short.log` | The exploratory probes and their output |
 | `arena-probe/` | The .NET probe (`Program.cs`, `ArenaProbe.csproj`) |
-| `dotnet-long.log`, `dotnet-short.log`, `dotnet-long-aborted-parser-bug.log`, `summarize_short.py` | Its output (local paths replaced) and the summary of `dotnet-short.log` |
+| `dotnet-long.log`, `dotnet-short.log`, `dotnet-paired.log`, `dotnet-long-aborted-parser-bug.log`, `summarize_short.py`, `summarize_paired.py` | Its output (local paths replaced) and the summaries of `dotnet-short.log` and `dotnet-paired.log` |
 
 Commands (from the repository root; paths shortened):
 
