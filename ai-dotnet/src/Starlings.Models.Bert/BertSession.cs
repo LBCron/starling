@@ -36,16 +36,9 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
             ValidateTokenFloor(limit, _untruncated.Encode(string.Empty, string.Empty).Count);
         }
 
-        Session = OnnxModelSession.Create(files.GetFilePath(BertModelProfile.GraphFile), new OnnxSessionOptions
-        {
-            IntraOpNumThreads = threads,
-            InterOpNumThreads = 1,
-            CpuMemoryArena = CpuMemoryArena(),
-            ExpectedModelSha256 = profile.RuntimeLock.GetFile(BertModelProfile.GraphFile).Sha256,
-
-            // VerifyDirectory just hashed the graph against the lock; the session does not read it again.
-            KnownModelSha256 = files.GetVerifiedSha256(BertModelProfile.GraphFile),
-        });
+        Session = OnnxModelSession.Create(
+            files.GetFilePath(BertModelProfile.GraphFile),
+            SessionOptions(threads, profile.RuntimeLock.GetFile(BertModelProfile.GraphFile).Sha256, files.GetVerifiedSha256(BertModelProfile.GraphFile)));
         try
         {
             ValidateSignature(Session.Inputs, Session.Outputs, profile.Task, profile.HiddenSize,
@@ -177,12 +170,25 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
         }
     }
 
+    /// <summary>
+    /// The route's session options. VerifyDirectory has just hashed the graph against the lock, so
+    /// <paramref name="verifiedSha256"/> saves the session from reading the graph again.
+    /// </summary>
+    internal static OnnxSessionOptions SessionOptions(int threads, string expectedSha256, string? verifiedSha256) => new()
+    {
+        IntraOpNumThreads = threads,
+        InterOpNumThreads = 1,
+        CpuMemoryArena = CpuMemoryArena(),
+        ExpectedModelSha256 = expectedSha256,
+        KnownModelSha256 = verifiedSha256,
+    };
+
     /// <summary>The process-wide <see cref="AppContext"/> switch that turns ONNX Runtime's CPU arena back on for this route.</summary>
     internal const string CpuMemoryArenaSwitch = "Starlings.Models.Bert.CpuMemoryArena";
 
     /// <summary>
     /// ONNX Runtime's CPU arena is off on this route unless <see cref="CpuMemoryArenaSwitch"/> is set: with it on, one
-    /// 8,192-token gte-reranker-modernbert-base pair at four threads kept 10 GB resident after its first run and 19 GB
+    /// 8,192-token gte-reranker-modernbert-base pair at four threads kept 9.6 GiB resident after its first run and 18.4 GiB
     /// from its second run on, for the life of the session; with it off, resident memory falls back after each run
     /// (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04/). Outputs are unchanged.
     /// </summary>
