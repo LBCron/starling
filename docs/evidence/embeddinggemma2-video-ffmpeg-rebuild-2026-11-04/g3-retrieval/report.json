@@ -7,7 +7,7 @@
   "evaluator": {
     "name": "model-pipeline evaluate --g3",
     "version": "0.1.0",
-    "repository_commit": "493765b8a6d58e4ac909a76dd6d754254fef1f0a"
+    "repository_commit": "9f6b202c6c5ab3dbf7044058cb79c3c17982ad93-dirty"
   },
   "dataset": {
     "sha256": "fe9b83c107c717d55d78e464f0c47ff8b53f05d380423b79c28a8b893c2fac08",
@@ -899,7 +899,7 @@
   },
   "protected_evidence": {
     "status": "verified",
-    "base": "ce5225854fa7c007fc1cfb9adb50e665e6c1f611",
+    "base": "1f569b7fa851b5d4e608e3922e09cfd0a0065b56",
     "detail": "merge base of HEAD and origin/main",
     "changed": [],
     "sha256": {
@@ -912,13 +912,13 @@
     "recall@5": 0.9,
     "recall@10": 0.94,
     "recall@100": 1.0,
-    "mrr@10": 0.771388888888889
+    "mrr@10": 0.7713888888888889
   },
   "budget_checks": [
     {
       "metric": "mrr@10",
       "minimum": 0.751,
-      "value": 0.771388888888889,
+      "value": 0.7713888888888889,
       "status": "passed",
       "detail": ""
     },

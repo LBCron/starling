@@ -56,7 +56,7 @@ As the FFmpeg 8 package (its README has the full table): torchcodec 0.17.0's pac
 | Decoded RGB of every frame, 22 videos (5,367 frames; H.264 High and High 10, HEVC, VP9, AV1; BT.601, BT.709, full range, untagged; rotation 90; odd 321x179) | exact against torchcodec 0.17.0 on FFmpeg 9.0.1 | supported (Stable `video-fp32-*` contracts) |
 | Seekable stream and in-memory input vs file | identical metadata and frames | experimental |
 | Loader: missing directory, other major, license classification, GPL build refused without `AllowNonLgplBuild` | typed errors | supported (Stable `video-fp32-*` contracts) |
-| LGPL FFmpeg 9 build | the BtbN LGPL shared build n9.0.2-28-g669f5ab083 (2026-10-15): every frame of the 22 fixture videos equal to torchcodec's digests (adapter tests: 26 passed, the edge-case and FFmpeg-8-only release tests skipped), and the sampled frames of the 4 release videos (G1, on AVX2 and AVX-512 hosts) | supported (Stable `video-fp32-*` contracts) |
+| LGPL FFmpeg 9 build | the BtbN LGPL shared build n9.0.2-28-g669f5ab083 (2026-10-15): every frame of the 22 fixture videos equal to torchcodec's digests (adapter tests: 26 passed, the edge-case and FFmpeg-8-only release tests skipped), and the sampled frames of the 4 release videos (G1, on AVX2 and AVX-512 hosts); the rebuild of that commit in `Starlinghq/ffmpeg-lgpl-rebuilds` (2026-11-04): the same G1 check, 27 adapter tests passed and the FFmpeg-8-only release test skipped | supported (Stable `video-fp32-*` contracts) |
 | Rotation -90 and 180, variable frame rate, interlaced, HDR | every frame of the generated edge-case videos equal to torchcodec's digests on FFmpeg 9.0.1 | experimental |
 | Other CPUs | as for FFmpeg 8 | untested |
 

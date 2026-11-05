@@ -1,6 +1,6 @@
 # Fidelity report: embeddinggemma-2/video-fp32-cpu (video-embedding)
 
-Date 2026-11-04. Evaluator model-pipeline evaluate 0.1.0 at `493765b8a6d58e4ac909a76dd6d754254fef1f0a`. Exit code 0.
+Date 2026-11-04. Evaluator model-pipeline evaluate 0.1.0 at `9f6b202c6c5ab3dbf7044058cb79c3c17982ad93-dirty`. Exit code 0.
 
 Fixtures: `model-pipeline/protected/embeddinggemma-2/release/video-fp32-release` (from the --fixtures option).
 
@@ -57,7 +57,7 @@ Details:
 
 ## Protected evidence
 
-Status **verified** (merge base of HEAD and origin/main; base `ce5225854fa7c007fc1cfb9adb50e665e6c1f611`).
+Status **verified** (merge base of HEAD and origin/main; base `1f569b7fa851b5d4e608e3922e09cfd0a0065b56`).
 
 | File | SHA-256 |
 | --- | --- |
@@ -70,8 +70,8 @@ Status **verified** (merge base of HEAD and origin/main; base `ce5225854fa7c007f
 
 | Stage | Candidate | Producer | Machine | Results SHA-256 |
 | --- | --- | --- | --- | --- |
-| tokenizer | FFmpeg adapter on FFmpeg n8.1.3-17-gc389840894-20261011; EmbeddingGemma2VideoSampling; EmbeddingGemma2ImageProcessor at 140 soft tokens; EmbeddingGemma2MultimodalEmbedder rendering with EmbeddingGemma2Tokenizer | ai-dotnet/tools/Starlings.Fidelity.Tool `493765b8a6d58e4ac909a76dd6d754254fef1f0a` | omarchy | `34152ea7adab9414` |
-| dotnet | C# EmbeddingGemma2MultimodalEmbedder, ONNX Runtime 1.30.0 CPU (managed binding 1.30.0), frames from the FFmpeg adapter | ai-dotnet/tools/Starlings.Fidelity.Tool `493765b8a6d58e4ac909a76dd6d754254fef1f0a` | omarchy | `b8f9c53cd0b14a2c` |
+| tokenizer | FFmpeg adapter on FFmpeg n8.1.3-17-gc389840894; EmbeddingGemma2VideoSampling; EmbeddingGemma2ImageProcessor at 140 soft tokens; EmbeddingGemma2MultimodalEmbedder rendering with EmbeddingGemma2Tokenizer | ai-dotnet/tools/Starlings.Fidelity.Tool `9f6b202c6c5ab3dbf7044058cb79c3c17982ad93-dirty` | omarchy | `0493e33211dc581c` |
+| dotnet | C# EmbeddingGemma2MultimodalEmbedder, ONNX Runtime 1.30.0 CPU (managed binding 1.30.0), frames from the FFmpeg adapter | ai-dotnet/tools/Starlings.Fidelity.Tool `9f6b202c6c5ab3dbf7044058cb79c3c17982ad93-dirty` | omarchy | `57cb0d0afb7492cb` |
 
 Reference tensors: `<work>/refs/video` (each array checked against the protected tensors.json).
 

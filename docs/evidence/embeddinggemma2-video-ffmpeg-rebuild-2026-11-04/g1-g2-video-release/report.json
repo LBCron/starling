@@ -7,12 +7,12 @@
   "evaluator": {
     "name": "model-pipeline evaluate",
     "version": "0.1.0",
-    "repository_commit": "493765b8a6d58e4ac909a76dd6d754254fef1f0a"
+    "repository_commit": "9f6b202c6c5ab3dbf7044058cb79c3c17982ad93-dirty"
   },
   "inputs": {
     "manifest": {
       "path": "model-pipeline/registry/embeddinggemma-2/video-fp32-cpu/manifest.yaml",
-      "sha256": "93b76d6ae950c900c44cca2ed20cfcdd2b5fea03f18253daf599da2079ccd668"
+      "sha256": "bda0e8095c40b6d11d8ab973b8fea30c634137d8d8e626b05729f7fce352bb16"
     },
     "tolerances": {
       "path": "model-pipeline/protected/embeddinggemma-2/video-fp32-cpu/tolerances.yaml",
@@ -39,17 +39,17 @@
     "results": {
       "tokenizer": {
         "path": "<work>/stages/tokenizer.results.json",
-        "sha256": "34152ea7adab9414d64d29255e47a1870f3d5f58e59f37dc8082a5f41a5ffd7d",
-        "candidate": "FFmpeg adapter on FFmpeg n8.1.3-17-gc389840894-20261011; EmbeddingGemma2VideoSampling; EmbeddingGemma2ImageProcessor at 140 soft tokens; EmbeddingGemma2MultimodalEmbedder rendering with EmbeddingGemma2Tokenizer",
+        "sha256": "0493e33211dc581c55575ad7a6b0601f79a1d777f6d4cd4e9662e8672d086695",
+        "candidate": "FFmpeg adapter on FFmpeg n8.1.3-17-gc389840894; EmbeddingGemma2VideoSampling; EmbeddingGemma2ImageProcessor at 140 soft tokens; EmbeddingGemma2MultimodalEmbedder rendering with EmbeddingGemma2Tokenizer",
         "producer": {
           "name": "ai-dotnet/tools/Starlings.Fidelity.Tool",
-          "repository_commit": "493765b8a6d58e4ac909a76dd6d754254fef1f0a"
+          "repository_commit": "9f6b202c6c5ab3dbf7044058cb79c3c17982ad93-dirty"
         },
         "environment": {
           "machine": "omarchy",
           "provider": "cpu",
           "provider_options": {},
-          "dotnet": ".NET 10.0.12",
+          "dotnet": ".NET 10.0.14",
           "os": "Omarchy",
           "cpu_count": 12,
           "cpu": "Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz",
@@ -60,7 +60,7 @@
           ],
           "intra_op_threads": 4,
           "video_decoder": "Starlings.Models.EmbeddingGemma2.Video.FFmpeg (generated FFmpeg 8.1 bindings)",
-          "ffmpeg_version": "n8.1.3-17-gc389840894-20261011",
+          "ffmpeg_version": "n8.1.3-17-gc389840894",
           "ffmpeg_major": 8,
           "ffmpeg_libraries": {
             "avutil": "60.26.103",
@@ -69,12 +69,12 @@
             "swscale": "9.5.103",
             "avfilter": "11.14.103"
           },
-          "ffmpeg_license": "LGPL version 3 or later",
+          "ffmpeg_license": "LGPL version 2.1 or later",
           "max_video_frames_per_vision_call": 8,
           "decoders": [
             {
               "video_decoder": "Starlings.Models.EmbeddingGemma2.Video.FFmpeg9 (generated FFmpeg 9.0.1 bindings)",
-              "ffmpeg_version": "n9.0.2-28-g669f5ab083-20261015",
+              "ffmpeg_version": "n9.0.2-28-g669f5ab083",
               "ffmpeg_major": 9,
               "ffmpeg_libraries": {
                 "avutil": "61.1.102",
@@ -83,7 +83,7 @@
                 "swscale": "10.1.102",
                 "avfilter": "12.1.102"
               },
-              "ffmpeg_license": "LGPL version 3 or later"
+              "ffmpeg_license": "LGPL version 2.1 or later"
             }
           ]
         },
@@ -96,17 +96,17 @@
       },
       "dotnet": {
         "path": "<work>/stages/dotnet.results.json",
-        "sha256": "b8f9c53cd0b14a2c7bc26f094fee04bc70d2c8ff651826a9287edaf377101e6f",
+        "sha256": "57cb0d0afb7492cb3c23f14e89730a0668c0f8f659d330cac40101575df61a3f",
         "candidate": "C# EmbeddingGemma2MultimodalEmbedder, ONNX Runtime 1.30.0 CPU (managed binding 1.30.0), frames from the FFmpeg adapter",
         "producer": {
           "name": "ai-dotnet/tools/Starlings.Fidelity.Tool",
-          "repository_commit": "493765b8a6d58e4ac909a76dd6d754254fef1f0a"
+          "repository_commit": "9f6b202c6c5ab3dbf7044058cb79c3c17982ad93-dirty"
         },
         "environment": {
           "machine": "omarchy",
           "provider": "cpu",
           "provider_options": {},
-          "dotnet": ".NET 10.0.12",
+          "dotnet": ".NET 10.0.14",
           "os": "Omarchy",
           "cpu_count": 12,
           "cpu": "Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz",
@@ -117,7 +117,7 @@
           ],
           "intra_op_threads": 4,
           "video_decoder": "Starlings.Models.EmbeddingGemma2.Video.FFmpeg (generated FFmpeg 8.1 bindings)",
-          "ffmpeg_version": "n8.1.3-17-gc389840894-20261011",
+          "ffmpeg_version": "n8.1.3-17-gc389840894",
           "ffmpeg_major": 8,
           "ffmpeg_libraries": {
             "avutil": "60.26.103",
@@ -126,12 +126,12 @@
             "swscale": "9.5.103",
             "avfilter": "11.14.103"
           },
-          "ffmpeg_license": "LGPL version 3 or later",
+          "ffmpeg_license": "LGPL version 2.1 or later",
           "max_video_frames_per_vision_call": 8,
           "decoders": [
             {
               "video_decoder": "Starlings.Models.EmbeddingGemma2.Video.FFmpeg9 (generated FFmpeg 9.0.1 bindings)",
-              "ffmpeg_version": "n9.0.2-28-g669f5ab083-20261015",
+              "ffmpeg_version": "n9.0.2-28-g669f5ab083",
               "ffmpeg_major": 9,
               "ffmpeg_libraries": {
                 "avutil": "61.1.102",
@@ -140,7 +140,7 @@
                 "swscale": "10.1.102",
                 "avfilter": "12.1.102"
               },
-              "ffmpeg_license": "LGPL version 3 or later"
+              "ffmpeg_license": "LGPL version 2.1 or later"
             }
           ]
         },
@@ -167,7 +167,7 @@
   },
   "protected_evidence": {
     "status": "verified",
-    "base": "ce5225854fa7c007fc1cfb9adb50e665e6c1f611",
+    "base": "1f569b7fa851b5d4e608e3922e09cfd0a0065b56",
     "detail": "merge base of HEAD and origin/main",
     "changed": [],
     "sha256": {
@@ -369,7 +369,7 @@
       "status": "passed",
       "metrics": {
         "ffmpeg_major": 8,
-        "ffmpeg_version": "n8.1.3-17-gc389840894-20261011",
+        "ffmpeg_version": "n8.1.3-17-gc389840894",
         "videos": 12,
         "cases": 12,
         "mismatched": 0
@@ -387,7 +387,7 @@
       "status": "passed",
       "metrics": {
         "ffmpeg_major": 9,
-        "ffmpeg_version": "n9.0.2-28-g669f5ab083-20261015",
+        "ffmpeg_version": "n9.0.2-28-g669f5ab083",
         "videos": 12,
         "cases": 12,
         "mismatched": 0
@@ -427,7 +427,7 @@
       "bound": 0.9999995,
       "status": "passed",
       "metrics": {
-        "min_cosine": 0.999999999958868,
+        "min_cosine": 0.9999999999588687,
         "cases": 11
       },
       "detail": ""

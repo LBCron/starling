@@ -1,6 +1,6 @@
 # Task quality (G3): embeddinggemma-2/video-fp32-cpu (retrieval)
 
-Date 2026-11-04. Evaluator model-pipeline evaluate --g3 0.1.0 at `493765b8a6d58e4ac909a76dd6d754254fef1f0a`. Exit code 0.
+Date 2026-11-04. Evaluator model-pipeline evaluate --g3 0.1.0 at `9f6b202c6c5ab3dbf7044058cb79c3c17982ad93-dirty`. Exit code 0.
 
 **G3: passed**: every budgeted metric meets its minimum.
 
