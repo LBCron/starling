@@ -41,6 +41,7 @@ Inspection reads bounded local JSON files without importing upstream model code.
 | `e5-onnx-cpu-v1` | The pinned e5 geometry: `BertModel`, 384 wide, 512 positions, Unigram tokenizer, mean pooling and a `Normalize` module. |
 | `bert-onnx-cpu-v1` | `model_type` `bert`, `xlm-roberta` or `nomic_bert` with a WordPiece or Unigram tokenizer, or `modernbert` with a BPE tokenizer, whose every component is supported, and either a sentence-transformers `Pooling` module with exactly one of mean or CLS pooling (task `embeddings`; `l2` normalization when a `Normalize` module follows) or, without one, a single-logit `BertForSequenceClassification`, `XLMRobertaForSequenceClassification` or `ModernBertForSequenceClassification` head (task `reranking`). `facts` carries the observed width, positions, pooling and normalization. |
 | `qwen-genai-cpu-v1` | `model_type` `qwen2` or `qwen3` with the matching `Qwen2ForCausalLM` or `Qwen3ForCausalLM` architecture and a supported BPE tokenizer. |
+| `genai-chat-cpu-v1` | `model_type` `phi3` with the `Phi3ForCausalLM` architecture and a BPE tokenizer. |
 
 Each plugin still accepts only the repositories of its own contract table and refuses everything else, so a suggestion is where to start, not a result.
 
@@ -254,6 +255,27 @@ accepts only the pinned official ONNX exports `PaddlePaddle/PP-OCRv5_mobile_det_
 
 References and the comparison policy are proposals; no protected tolerances or fixtures exist for this profile, and
 there is no registry manifest yet (the maintainer adds it with the adopted tolerances).
+
+## GenAI chat route
+
+The experimental `genai-chat-cpu-v1` plugin (`src/model_pipeline/onboarding_genai_chat.py`) is the data-driven route of `docs/design/generic-genai-chat-route.md` (option C, accepted on 2026-11-04). It sits beside `qwen-genai-cpu-v1`, whose code, stage keys and evidence it leaves alone, and reuses the generation evaluator and its bounds unchanged. Its allow-list is [`routes/genai-chat-cpu-v1/contracts.json`](routes/README.md). Its one entry is `microsoft/Phi-4-mini-instruct` (`recipes/phi4-mini-cpu.yaml`, `candidates/phi4-mini/`).
+
+```sh
+TMPDIR=<a directory on disk> .venv/bin/model-pipeline run model-pipeline/recipes/phi4-mini-cpu.yaml \
+  --snapshot "$PWD/.models/snapshots/phi4-mini-instruct" \
+  --reference-python "$PWD/.models/venv-generation/bin/python" \
+  --out "$PWD/artifacts/onboarding/phi4-mini" --threads 2 --timeout 7200
+```
+
+The stages are those of the Qwen route: `assets`, `environment`, `reference`, `bundle`, `backend`, `dotnet`, `evaluate`, `review`. The differences:
+
+- `reference` (`reference/genai-chat/run_reference.py`) runs with `trust_remote_code` off and refuses a model or tokenizer class that is not built into the pinned transformers. The candidate pins no Python file of the checkpoint.
+- `bundle` (`reference/genai-chat/build_bundle.py`) checks `config.json` against the contract's geometry, including the rope settings, and removes `auto_map` from its scratch copy. It works in `TMPDIR`: about 15 GB of graph data, so set `TMPDIR` to a disk where `/tmp` is a memory file system.
+- A corpus row that reaches the contract's `max_context_tokens` (4,096, where the long rope factors start) is refused, so long context stays out of the evidence.
+- `dotnet` runs `ai-dotnet/tools/Starlings.GenAIChat.Fidelity`, which goes through the generic `GenAIChatModel` with the family's `ChatModelDefinition`.
+- There is no `--distribution`: the family package `Starlings.Models.Phi4` is source only.
+
+Run it inside a memory limit of at least 20 GB, the limit the evidence run used. `model.onnx.data` is 15.3 GB. In that run anonymous memory peaked at 17.7 GiB in 15-second samples, and the control group, file cache included, reached the limit without an out-of-memory kill. No smaller limit was tried.
 
 ## Qwen3 Embedding route
 

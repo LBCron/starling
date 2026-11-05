@@ -748,6 +748,8 @@ _BERT_RERANKER_ARCHITECTURES = {
 }
 # Decoder families the qwen-genai-cpu-v1 route builds GenAI bundles for (onboarding_generation.CONFIG_CONTRACT).
 _QWEN_ARCHITECTURES = {"qwen2": "Qwen2ForCausalLM", "qwen3": "Qwen3ForCausalLM"}
+# Decoder families of the genai-chat-cpu-v1 route (routes/genai-chat-cpu-v1/contracts.json).
+_GENAI_CHAT_ARCHITECTURES = {"phi3": "Phi3ForCausalLM"}
 _NO_ROUTE = "No plugin route can be inferred from these observed facts."
 
 
@@ -764,7 +766,7 @@ def _suggest_route(
     module_types: set[str],
     pooling: dict[str, Any],
 ) -> dict[str, Any]:
-    """Recommend bert-onnx-cpu-v1 or qwen-genai-cpu-v1 from config.json, tokenizer.json and modules.json facts.
+    """Recommend a BERT or GenAI route from config.json, tokenizer.json and modules.json facts.
 
     A recommendation is a candidate route, never a support claim: each plugin still accepts only the
     repositories its contract table pins and refuses everything else.
@@ -786,6 +788,22 @@ def _suggest_route(
             "reason": f"Observed a {expected} decoder with a supported BPE tokenizer; the plugin accepts only the "
             "pinned repositories and geometries of its contract (onboarding_generation.py) and still requires "
             "its own validation.",
+        }
+    if model_type in _GENAI_CHAT_ARCHITECTURES:
+        expected = _GENAI_CHAT_ARCHITECTURES[model_type]
+        # No tokenizer_known check, unlike Qwen: the inspector implements only the Qwen split regexes, so it reports
+        # Phi-4-mini's o200k split as unsupported. Its tokenizer is phi4-bpe-chat in Starlings.Tokenizers.
+        if architectures != [expected] or tokenizer_model != "BPE":
+            return _unknown_route(
+                f"config.json declares {model_type}, but genai-chat-cpu-v1 needs architectures [{expected}] and a "
+                "BPE tokenizer.json."
+            )
+        return {
+            "id": "genai-chat-cpu-v1",
+            "status": "candidate",
+            "task": "generation",
+            "reason": f"Observed a {expected} decoder with a BPE tokenizer; the plugin accepts only the repositories "
+            "of its contract table (routes/genai-chat-cpu-v1/contracts.json) and still requires its own validation.",
         }
     if model_type not in _BERT_MODEL_TYPES:
         return _unknown_route()

@@ -530,6 +530,24 @@ def test_inspect_recommends_the_qwen_route_for_qwen_decoders(
     assert (route["id"], route["status"], route["task"]) == ("qwen-genai-cpu-v1", "candidate", "generation")
 
 
+def test_inspect_recommends_the_genai_chat_route_for_phi3(tmp_path: Path) -> None:
+    config = {"model_type": "phi3", "architectures": ["Phi3ForCausalLM"], "hidden_size": 3072}
+    route = inspect_snapshot(_write_snapshot(tmp_path / "s", config, _qwen_tokenizer()))["plugin_route"]
+    assert (route["id"], route["status"], route["task"]) == ("genai-chat-cpu-v1", "candidate", "generation")
+    other = {"model_type": "phi3", "architectures": ["Phi3ForSequenceClassification"]}
+    assert (
+        inspect_snapshot(_write_snapshot(tmp_path / "t", other, _qwen_tokenizer()))["plugin_route"]["id"] == "unknown"
+    )
+    route = inspect_snapshot(_write_snapshot(tmp_path / "u", config, _WORDPIECE))["plugin_route"]
+    assert (route["id"], route["status"]) == ("unknown", "unknown")
+    # Phi-4-mini's own split regex is one the inspector does not implement; the route is still suggested.
+    tokenizer = _qwen_tokenizer()
+    tokenizer["pre_tokenizer"]["pretokenizers"][0]["pattern"]["Regex"] = "another split"
+    report = inspect_snapshot(_write_snapshot(tmp_path / "v", config, tokenizer))
+    assert report["tokenizer"]["components"][1]["status"] == "unsupported"
+    assert report["plugin_route"]["id"] == "genai-chat-cpu-v1"
+
+
 def test_inspect_refuses_the_qwen_route_for_another_head_or_tokenizer(tmp_path: Path) -> None:
     head = {"model_type": "qwen3", "architectures": ["Qwen3ForSequenceClassification"]}
     assert inspect_snapshot(_write_snapshot(tmp_path / "s", head, _qwen_tokenizer()))["plugin_route"]["id"] == "unknown"

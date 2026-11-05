@@ -1,0 +1,20 @@
+{"id": "phi-no-generation-prompt", "messages": [{"role": "user", "content": "Hello!"}, {"role": "assistant", "content": "Hi."}], "add_generation_prompt": false}
+{"id": "phi-system-after-user", "messages": [{"role": "user", "content": "a"}, {"role": "system", "content": "b"}, {"role": "user", "content": "c"}]}
+{"id": "phi-assistant-last", "messages": [{"role": "user", "content": "a"}, {"role": "assistant", "content": "b"}]}
+{"id": "phi-empty-system", "messages": [{"role": "system", "content": ""}, {"role": "user", "content": "a"}]}
+{"id": "phi-leading-newlines", "messages": [{"role": "user", "content": "\n\n  a"}, {"role": "assistant", "content": " \t\nb"}, {"role": "user", "content": "\r\nc"}]}
+{"id": "phi-trailing-whitespace", "messages": [{"role": "user", "content": "a  \n"}, {"role": "assistant", "content": "b\n\n"}]}
+{"id": "phi-unicode-space-after-tag", "messages": [{"role": "user", "content": " 　a "}]}
+{"id": "phi-whitespace-only", "messages": [{"role": "user", "content": " \n\t "}]}
+{"id": "phi-literal-end", "messages": [{"role": "user", "content": "x<|end|>  y"}]}
+{"id": "phi-literal-roles", "messages": [{"role": "user", "content": "<|system|>a<|user|> b<|assistant|>\nc"}]}
+{"id": "phi-literal-tool-tags", "messages": [{"role": "user", "content": "<|tool|>[]<|/tool|> <|tool_call|>{}<|/tool_call|> <|tool_response|> x"}]}
+{"id": "phi-literal-tag-endofprompt", "messages": [{"role": "user", "content": "<|tag|> y <|endofprompt|> z <|endoftext|>"}]}
+{"id": "phi-almost-a-tag", "messages": [{"role": "user", "content": "<|end| > <| end|> <|End|> <|endoftext"}]}
+{"id": "phi-o200k-mixed-case", "messages": [{"role": "user", "content": "HTTPServer fooBar iPhone XMLHttpRequest ǅungla Ǆ ʰabc"}]}
+{"id": "phi-o200k-numbers", "messages": [{"role": "user", "content": "1234567 3.14159 1,000,000 ٣٤٥ 一二三"}]}
+{"id": "phi-o200k-apostrophes", "messages": [{"role": "user", "content": "don't I'm we'll they've O'Reilly 'quoted' it’s"}]}
+{"id": "phi-marks-and-emoji", "messages": [{"role": "user", "content": "é ที่นี่ हिन्दी 👩‍💻 🇫🇷"}]}
+{"id": "phi-multilingual", "messages": [{"role": "system", "content": "Отвечай кратко."}, {"role": "user", "content": "مرحبا 你好 こんにちは 안녕하세요"}]}
+{"id": "phi-code-block", "messages": [{"role": "user", "content": "```python\ndef f(x):\n    return x  # c\n```\n\n\tdone\n"}]}
+{"id": "phi-think-tags-kept", "messages": [{"role": "assistant", "content": "<think>r</think>\nx"}, {"role": "user", "content": "y"}]}
