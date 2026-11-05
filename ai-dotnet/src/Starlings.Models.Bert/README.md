@@ -120,9 +120,9 @@ it on, the arena keeps every buffer a run needed until the session is disposed. 
 | CPU arena | Peak RSS, run 1 | Peak RSS, runs 2 to 4 | RSS after each run | Time per run |
 | --- | ---: | ---: | ---: | ---: |
 | on (before) | 10.1 GB | 19.3 GB | 10.1 GB, then 19.3 GB | 44 to 56 s |
-| off | 9.4 GB | 10.1 GB | 1.0 GB | 52 s at best (86 to 125 s while other jobs shared the machine) |
+| off | 9.4 GB | 10.1 GB | 1.0 GB | 52 s on run 1; 86 to 125 s on runs 2 to 4, while other jobs shared the machine |
 
-The cost is latency on long pairs, about 10 to 20 percent at 8,192 tokens: 52 s against 44 s for the fastest .NET run, and 54 to 56 s against 45 to 53 s in a Python probe. This is an estimate, because the machine was shared and the .NET settings did not run under the same load. On short inputs no consistent cost showed. Scores are unchanged. A process that wants the arena back sets the `AppContext` switch
+The expected cost is latency on long pairs, roughly 10 to 20 percent at 8,192 tokens, from a Python probe (54 to 56 s without the arena, 45 to 53 s with it). It is not measured on .NET: the .NET comparison was inconclusive, because the arena-off runs overlapped other jobs. On short and medium inputs on .NET, any difference was within the noise of a loaded machine. Scores are unchanged. A process that wants the arena back sets the `AppContext` switch
 `Starlings.Models.Bert.CpuMemoryArena` to `true`, for every session of this package. Evidence:
 `docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04/`.
 
