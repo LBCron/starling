@@ -15,32 +15,30 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
     private readonly EncoderCore _core;
     private int _disposed;
 
-    public BertSession(BertModelProfile profile, string snapshot, int threads, int maxBatchSize, int? maxBatchTokens = null, bool sortByLength = false)
+    public BertSession(BertModelProfile profile, string snapshot, int threads, int maxBatchSize, int? maxBatchTokens = null, bool sortByLength = false, int? maxTokens = null)
     {
         ArgumentNullException.ThrowIfNull(profile);
         ArgumentOutOfRangeException.ThrowIfLessThan(threads, 1);
         ArgumentOutOfRangeException.ThrowIfGreaterThan(threads, 64);
         ValidateBatching(maxBatchSize, maxBatchTokens);
+        ValidateTokenLimit(maxTokens, profile.MaxTokens);
         Profile = profile;
+        MaxTokens = maxTokens ?? profile.MaxTokens;
         _maxBatchSize = maxBatchSize;
         _maxBatchTokens = maxBatchTokens;
         _sortByLength = sortByLength;
         var files = ModelAssetStore.VerifyDirectory(profile.RuntimeLock, snapshot, CacheVerification.Sha256);
-        // The profile requires truncation "longest_first" (BertModelProfile.Parse); stated here rather than left to the
-        // library's default, which is the same strategy and direction.
-        _tokenizer = Tokenizer.FromFile(files.GetFilePath(BertModelProfile.TokenizerFile))
-            .WithPadding(null).WithTruncation(new TruncationOptions(profile.MaxTokens, TruncationStrategy.LongestFirst, TruncationDirection.Right));
+        _tokenizer = ForProfile(Tokenizer.FromFile(files.GetFilePath(BertModelProfile.TokenizerFile)), MaxTokens);
         _untruncated = _tokenizer.WithTruncation(null);
         SpecialTokenCount = _untruncated.Encode(string.Empty).Count;
-        Session = OnnxModelSession.Create(files.GetFilePath(BertModelProfile.GraphFile), new OnnxSessionOptions
+        if (maxTokens is { } limit)
         {
-            IntraOpNumThreads = threads,
-            InterOpNumThreads = 1,
-            ExpectedModelSha256 = profile.RuntimeLock.GetFile(BertModelProfile.GraphFile).Sha256,
+            ValidateTokenFloor(limit, _untruncated.Encode(string.Empty, string.Empty).Count);
+        }
 
-            // VerifyDirectory just hashed the graph against the lock; the session does not read it again.
-            KnownModelSha256 = files.GetVerifiedSha256(BertModelProfile.GraphFile),
-        });
+        Session = OnnxModelSession.Create(
+            files.GetFilePath(BertModelProfile.GraphFile),
+            SessionOptions(threads, profile.RuntimeLock.GetFile(BertModelProfile.GraphFile).Sha256, files.GetVerifiedSha256(BertModelProfile.GraphFile)));
         try
         {
             ValidateSignature(Session.Inputs, Session.Outputs, profile.Task, profile.HiddenSize,
@@ -54,8 +52,21 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
         }
     }
 
+    /// <summary>
+    /// The tokenizer as the route runs it: no padding and truncation to <paramref name="maxTokens"/>, whatever
+    /// <c>tokenizer.json</c> declares. The gte-reranker file declares Fixed 8000 padding and truncation to 8000, which
+    /// <see cref="Tokenizer.FromFile(string)"/> applies; transformers replaces both per call, so they are not the model's
+    /// contract. The profile requires truncation "longest_first" (BertModelProfile.Parse); stated here rather than left
+    /// to the library's default, which is the same strategy and direction.
+    /// </summary>
+    internal static Tokenizer ForProfile(Tokenizer tokenizer, int maxTokens) =>
+        tokenizer.WithPadding(null).WithTruncation(new TruncationOptions(maxTokens, TruncationStrategy.LongestFirst, TruncationDirection.Right));
+
     public BertModelProfile Profile { get; }
     public OnnxModelSession Session { get; }
+
+    /// <summary>Tokens per row at most, special tokens included: the caller's limit, or the profile's.</summary>
+    public int MaxTokens { get; }
 
     /// <summary>Tokens the profile's post-processor adds around one sequence.</summary>
     public int SpecialTokenCount { get; }
@@ -99,7 +110,7 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
         ArgumentNullException.ThrowIfNull(inputs);
         foreach (var input in inputs)
         {
-            ValidateInput(input, Profile.MaxTokens, Profile.VocabularySize, Profile.PadTokenId,
+            ValidateInput(input, MaxTokens, Profile.VocabularySize, Profile.PadTokenId,
                 Profile.ClsTokenId, Profile.SepTokenId);
         }
 
@@ -158,6 +169,44 @@ internal sealed class BertSession : IChunkingTokenizer, IDisposable
             ArgumentOutOfRangeException.ThrowIfLessThan(tokens, 1, nameof(maxBatchTokens));
         }
     }
+
+    /// <summary>
+    /// The route's session options. VerifyDirectory has just hashed the graph against the lock, so
+    /// <paramref name="verifiedSha256"/> saves the session from reading the graph again.
+    /// </summary>
+    internal static OnnxSessionOptions SessionOptions(int threads, string expectedSha256, string? verifiedSha256) => new()
+    {
+        IntraOpNumThreads = threads,
+        InterOpNumThreads = 1,
+        CpuMemoryArena = CpuMemoryArena(),
+        ExpectedModelSha256 = expectedSha256,
+        KnownModelSha256 = verifiedSha256,
+    };
+
+    /// <summary>The process-wide <see cref="AppContext"/> switch that turns ONNX Runtime's CPU arena back on for this route.</summary>
+    internal const string CpuMemoryArenaSwitch = "Starlings.Models.Bert.CpuMemoryArena";
+
+    /// <summary>
+    /// ONNX Runtime's CPU arena is off on this route unless <see cref="CpuMemoryArenaSwitch"/> is set: with it on, one
+    /// 8,192-token gte-reranker-modernbert-base pair at four threads kept 9.7 GiB resident after its first run and 18.4 GiB
+    /// from its second run on, for the life of the session; with it off, resident memory falls back after each run
+    /// (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04/). Outputs are unchanged.
+    /// </summary>
+    internal static bool CpuMemoryArena() => AppContext.TryGetSwitch(CpuMemoryArenaSwitch, out bool enabled) && enabled;
+
+    /// <summary>The caller's token limit, when set, is positive and within the profile's limit; it never raises it.</summary>
+    internal static void ValidateTokenLimit(int? maxTokens, int profileMaxTokens)
+    {
+        if (maxTokens is { } tokens)
+        {
+            ArgumentOutOfRangeException.ThrowIfLessThan(tokens, 1, nameof(maxTokens));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(tokens, profileMaxTokens, nameof(maxTokens));
+        }
+    }
+
+    /// <summary>A token limit leaves room for one token of each text beside the pair's special tokens.</summary>
+    internal static void ValidateTokenFloor(int maxTokens, int pairSpecialTokens) =>
+        ArgumentOutOfRangeException.ThrowIfLessThan(maxTokens, pairSpecialTokens + 2, nameof(maxTokens));
 
     /// <summary>
     /// Runs one chunk (its inputs in call order, right-padded to <paramref name="width"/>) and returns one result per

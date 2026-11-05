@@ -1,0 +1,26 @@
+# 2026-11-04T21:13:22Z unit=b291-arena-on MemoryMax=26G args=<snapshot> gte-reranker-modernbert-base 4 4 arena 8192 level: OK: heavy 2 light 8, free 28.6 GB, 0 runner job(s) busy, app.slice pressure 0.0%
+Running as unit: b291-arena-on.service
+gte-reranker-modernbert-base arena threads 4 session arena True maxTokens 8192 load 3.1s peak 0.94G rss 0.94G
+tokens 8192 rows 1 run 1 logit 1.492696 time 56.456s peak 10.12G rss 10.12G
+tokens 8192 rows 1 run 2 logit 1.492696 time 52.511s peak 19.27G rss 19.27G
+tokens 8192 rows 1 run 3 logit 1.492696 time 47.139s peak 19.28G rss 19.27G
+tokens 8192 rows 1 run 4 logit 1.492696 time 43.586s peak 19.28G rss 19.28G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 3min 24.097s
+             CPU time consumed: 12min 9.088s
+                   Memory peak: 18.3G (swap: 0B)
+# exit 0
+# 2026-11-04T21:16:47Z unit=b291-arena-off MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 4 4 noarena 8192 level: OK: heavy 1 light 8, free 9.4 GB, 0 runner job(s) busy, app.slice pressure 0.0%
+Running as unit: b291-arena-off.service
+gte-reranker-modernbert-base noarena threads 4 session arena False maxTokens 8192 load 3.2s peak 0.94G rss 0.94G
+tokens 8192 rows 1 run 1 logit 1.492696 time 52.238s peak 9.43G rss 0.97G
+tokens 8192 rows 1 run 2 logit 1.492696 time 101.034s peak 10.11G rss 0.98G
+tokens 8192 rows 1 run 3 logit 1.492696 time 125.292s peak 10.11G rss 0.98G
+tokens 8192 rows 1 run 4 logit 1.492696 time 85.764s peak 10.11G rss 0.98G
+          Finished with result: success
+Main processes terminated with: code=exited, status=0/SUCCESS
+               Service runtime: 6min 7.870s
+             CPU time consumed: 14min 44.574s
+                   Memory peak: 9.6G (swap: 0B)
+# exit 0

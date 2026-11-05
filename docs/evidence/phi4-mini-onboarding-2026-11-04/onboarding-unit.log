@@ -1,0 +1,66 @@
+TIGHT: heavy 0 light 8, free 23.1 GB, 3 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 20.9 on 12 cores)
+2026-11-04T19:44:31Z
+Onboarding stage assets: checking inputs
+Onboarding stage assets: executing
+Onboarding stage assets: completed
+Onboarding stage environment: checking inputs
+Onboarding stage environment: executing
+Onboarding stage environment: completed
+Onboarding stage reference: checking inputs
+Onboarding stage reference: executing
+Onboarding stage reference: completed
+Onboarding stage bundle: checking inputs
+Onboarding stage bundle: executing
+Onboarding stage bundle: completed
+Onboarding stage backend: checking inputs
+Onboarding stage backend: executing
+Onboarding stage backend: completed
+Onboarding stage dotnet: checking inputs
+Onboarding stage dotnet: executing
+Onboarding stage dotnet: completed
+Onboarding stage evaluate: checking inputs
+Onboarding stage evaluate: executing
+Onboarding stage evaluate: completed
+Onboarding stage review: checking inputs
+Onboarding stage review: executing
+Onboarding stage review: completed
+{
+  "run_record": "/home/mark/Projects/starling/.claude/worktrees/wf_19588a52-d07-3/artifacts/onboarding/phi4-mini/run.json",
+  "stages": {
+    "assets": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "backend": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "bundle": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "dotnet": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "environment": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "evaluate": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "reference": {
+      "cache_status": "executed",
+      "status": "completed"
+    },
+    "review": {
+      "cache_status": "executed",
+      "status": "completed"
+    }
+  },
+  "status": "completed"
+}
+2026-11-04T21:10:26Z
+ONBOARD-EXIT 0

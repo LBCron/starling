@@ -1,0 +1,197 @@
+{
+  "comparisons": [
+    {
+      "backend": "python-genai",
+      "id": "greeting",
+      "logits_max_abs": 6.29425048828125e-05,
+      "logits_mean_abs": 1.073780741306619e-05
+    },
+    {
+      "backend": "dotnet",
+      "id": "greeting",
+      "logits_max_abs": 6.29425048828125e-05,
+      "logits_mean_abs": 1.073780741306619e-05
+    },
+    {
+      "backend": "python-genai",
+      "id": "arithmetic",
+      "logits_max_abs": 6.4849853515625e-05,
+      "logits_mean_abs": 7.128296509356508e-06
+    },
+    {
+      "backend": "dotnet",
+      "id": "arithmetic",
+      "logits_max_abs": 6.4849853515625e-05,
+      "logits_mean_abs": 7.128296509356508e-06
+    },
+    {
+      "backend": "python-genai",
+      "id": "system",
+      "logits_max_abs": 9.72747802734375e-05,
+      "logits_mean_abs": 1.029368973815586e-05
+    },
+    {
+      "backend": "dotnet",
+      "id": "system",
+      "logits_max_abs": 9.72747802734375e-05,
+      "logits_mean_abs": 1.029368973815586e-05
+    },
+    {
+      "backend": "python-genai",
+      "id": "multi-turn",
+      "logits_max_abs": 6.103515625e-05,
+      "logits_mean_abs": 8.315127402524954e-06
+    },
+    {
+      "backend": "dotnet",
+      "id": "multi-turn",
+      "logits_max_abs": 6.103515625e-05,
+      "logits_mean_abs": 8.315127402524954e-06
+    },
+    {
+      "backend": "python-genai",
+      "id": "assistant-thinking",
+      "logits_max_abs": 6.103515625e-05,
+      "logits_mean_abs": 1.2525124326395973e-05
+    },
+    {
+      "backend": "dotnet",
+      "id": "assistant-thinking",
+      "logits_max_abs": 6.103515625e-05,
+      "logits_mean_abs": 1.2525124326395973e-05
+    },
+    {
+      "backend": "python-genai",
+      "id": "reasoning-content",
+      "logits_max_abs": 0.000213623046875,
+      "logits_mean_abs": 4.2666972484332355e-05
+    },
+    {
+      "backend": "dotnet",
+      "id": "reasoning-content",
+      "logits_max_abs": 0.000213623046875,
+      "logits_mean_abs": 4.2666972484332355e-05
+    },
+    {
+      "backend": "python-genai",
+      "id": "whitespace",
+      "logits_max_abs": 7.62939453125e-05,
+      "logits_mean_abs": 1.6988427285879602e-05
+    },
+    {
+      "backend": "dotnet",
+      "id": "whitespace",
+      "logits_max_abs": 7.62939453125e-05,
+      "logits_mean_abs": 1.6988427285879602e-05
+    },
+    {
+      "backend": "python-genai",
+      "id": "empty-content",
+      "logits_max_abs": 0.00011920928955078125,
+      "logits_mean_abs": 1.4681509155189436e-05
+    },
+    {
+      "backend": "dotnet",
+      "id": "empty-content",
+      "logits_max_abs": 0.00011920928955078125,
+      "logits_mean_abs": 1.4681509155189436e-05
+    },
+    {
+      "backend": "python-genai",
+      "id": "chinese",
+      "logits_max_abs": 8.153915405273438e-05,
+      "logits_mean_abs": 1.5435964163019328e-05
+    },
+    {
+      "backend": "dotnet",
+      "id": "chinese",
+      "logits_max_abs": 8.153915405273438e-05,
+      "logits_mean_abs": 1.5435964163019328e-05
+    },
+    {
+      "backend": "python-genai",
+      "id": "unicode",
+      "logits_max_abs": 5.14984130859375e-05,
+      "logits_mean_abs": 4.71645347673925e-06
+    },
+    {
+      "backend": "dotnet",
+      "id": "unicode",
+      "logits_max_abs": 5.14984130859375e-05,
+      "logits_mean_abs": 4.71645347673925e-06
+    },
+    {
+      "backend": "python-genai",
+      "id": "endoftext-literal",
+      "logits_max_abs": 5.14984130859375e-05,
+      "logits_mean_abs": 1.0640893705899488e-05
+    },
+    {
+      "backend": "dotnet",
+      "id": "endoftext-literal",
+      "logits_max_abs": 5.14984130859375e-05,
+      "logits_mean_abs": 1.0640893705899488e-05
+    },
+    {
+      "backend": "python-genai",
+      "id": "role-lookalikes",
+      "logits_max_abs": 6.4849853515625e-05,
+      "logits_mean_abs": 9.181343200148792e-06
+    },
+    {
+      "backend": "dotnet",
+      "id": "role-lookalikes",
+      "logits_max_abs": 6.4849853515625e-05,
+      "logits_mean_abs": 9.181343200148792e-06
+    },
+    {
+      "backend": "python-genai",
+      "id": "long-prefill",
+      "logits_max_abs": 5.91278076171875e-05,
+      "logits_mean_abs": 9.740576784407108e-06
+    },
+    {
+      "backend": "dotnet",
+      "id": "long-prefill",
+      "logits_max_abs": 5.91278076171875e-05,
+      "logits_mean_abs": 9.740576784407108e-06
+    },
+    {
+      "backend": "python-genai",
+      "id": "one-token-limit",
+      "logits_max_abs": 4.76837158203125e-05,
+      "logits_mean_abs": 5.938045106117952e-06
+    },
+    {
+      "backend": "dotnet",
+      "id": "one-token-limit",
+      "logits_max_abs": 4.76837158203125e-05,
+      "logits_mean_abs": 5.938045106117952e-06
+    }
+  ],
+  "failures": [],
+  "format_version": 1,
+  "policy": {
+    "greedy_ids": "exact",
+    "logits_max_abs": 0.005,
+    "logits_mean_abs": 0.0005,
+    "prompt_ids": "exact",
+    "required_evidence": [
+      "prompt_text",
+      "prompt_ids",
+      "initial_logits",
+      "output_ids",
+      "finish_reason",
+      "stream",
+      "usage",
+      "cancellation",
+      "cache",
+      "isolation"
+    ]
+  },
+  "profile": "phi4-mini-instruct/ortgenai-fp32-cpu",
+  "protected_release_qualification": "unapproved",
+  "reference_status": "proposed",
+  "rows": 14,
+  "status": "passed"
+}

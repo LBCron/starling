@@ -11,6 +11,7 @@ Command-line tools for acquisition, fidelity stage results, operational qualific
 | [`Starlings.Qwen35.Fidelity`](#starlingsqwen35fidelity) | Qwen3.5-0.8B parity, semantics, long-context and stress runs; G3 generation outputs. | yes |
 | [`Starlings.Bert.Fidelity.Tool`](#starlingsbertfidelitytool) | The .NET stage of the `bert-onnx-cpu-v1` onboarding route. | yes |
 | [`Starlings.Generation.Fidelity`](#starlingsgenerationfidelity) | The .NET stage of the `qwen-genai-cpu-v1` onboarding route (QwenChat). | yes |
+| [`Starlings.GenAIChat.Fidelity`](#starlingsgenaichatfidelity) | The .NET stage of the `genai-chat-cpu-v1` onboarding route (Phi-4-mini). | yes |
 | [`Starlings.Kev.Fidelity.Tool`](#starlingskevfidelitytool) | The .NET stage of the `kev-onnx-cpu-v1` onboarding route. | yes |
 | [`Starlings.Whisper.Fidelity.Tool`](#starlingswhisperfidelitytool) | The .NET stage of the `whisper-onnx-cpu-v1` onboarding route. | yes |
 | [`Starlings.PaddleOcr.Fidelity.Tool`](#starlingspaddleocrfidelitytool) | The .NET stage of the `ppocr-onnx-cpu-v1` onboarding route. | yes |
@@ -91,6 +92,14 @@ Starlings.Generation.Fidelity --candidate <candidate.json> --bundle <dir> --corp
 ```
 
 The .NET stage of the `qwen-genai-cpu-v1` onboarding route (`model-pipeline/src/model_pipeline/onboarding_generation.py`) for `Starlings.Models.QwenChat` (Qwen3-0.6B, Qwen2.5-0.5B-Instruct). It checks the candidate's profile id and revision against `QwenChatProfile`, refuses an output directory inside the bundle and corpus rows with `enable_thinking`, and runs each corpus row through `QwenChatModel`. It writes `results.jsonl`, or `templates.jsonl` with `--templates-only true` (template rendering and ids, no model load). Arguments are `--name value` pairs. Recipes: `model-pipeline/recipes/{qwen3,qwen25}-cpu.yaml`.
+
+## Starlings.GenAIChat.Fidelity
+
+```sh
+Starlings.GenAIChat.Fidelity --candidate <candidate.json> --bundle <dir> --corpus <jsonl> --out <dir> [--threads 2] [--templates-only true]
+```
+
+The .NET stage of the `genai-chat-cpu-v1` onboarding route (`model-pipeline/src/model_pipeline/onboarding_genai_chat.py`) (today Phi-4-mini-instruct, through `Phi4Checkpoint.ChatDefinition`). It has the same checks and output as `Starlings.Generation.Fidelity`, through the generic `GenAIChatModel`: the route's contract table and a family's `ChatModelDefinition` supply everything specific to a model, and a new family adds one line to the tool's definition lookup. Recipe: `model-pipeline/recipes/phi4-mini-cpu.yaml`.
 
 ## Starlings.Whisper.Fidelity.Tool
 

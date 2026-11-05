@@ -1,0 +1,10 @@
+Running tests from /home/mark/Projects/starling/.claude/worktrees/wf_19588a52-d07-3/ai-dotnet/tests/Starlings.Models.Phi4.Tests/bin/Release/net10.0/Starlings.Models.Phi4.Tests.dll (net10.0|x64)
+/home/mark/Projects/starling/.claude/worktrees/wf_19588a52-d07-3/ai-dotnet/tests/Starlings.Models.Phi4.Tests/bin/Release/net10.0/Starlings.Models.Phi4.Tests.dll (net10.0|x64) passed (1s 633ms)
+
+Test run summary: Passed!
+  total: 76
+  failed: 0
+  succeeded: 76
+  skipped: 0
+  duration: 2s 312ms
+phi4 tests exit 0

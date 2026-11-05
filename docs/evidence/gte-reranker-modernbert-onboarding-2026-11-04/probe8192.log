@@ -1,0 +1,2 @@
+len 8192 same as transformers truncation=True True
+pt [1.4926984] ort [1.4926956] d 2.861023e-06 pt 51.6s ort 60.5s rss 10.5G

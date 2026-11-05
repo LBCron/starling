@@ -428,6 +428,70 @@ def test_inspect_needs_a_supported_tokenizer_for_the_bert_route(tmp_path: Path) 
     assert inspect_snapshot(snapshot)["plugin_route"]["status"] == "unknown"
 
 
+_MODERNBERT_BYTE_LEVEL = {"type": "ByteLevel", "add_prefix_space": False, "trim_offsets": True, "use_regex": True}
+_MODERNBERT_TOKENIZER = {
+    "version": "1.0",
+    "normalizer": {"type": "NFC"},
+    "pre_tokenizer": _MODERNBERT_BYTE_LEVEL,
+    "decoder": _MODERNBERT_BYTE_LEVEL,
+    "added_tokens": [
+        {
+            "id": 0,
+            "content": "[MASK]",
+            "single_word": False,
+            "lstrip": True,
+            "rstrip": False,
+            "normalized": False,
+            "special": True,
+        }
+    ],
+    "model": {
+        "type": "BPE",
+        "dropout": None,
+        "unk_token": None,
+        "continuing_subword_prefix": None,
+        "end_of_word_suffix": None,
+        "fuse_unk": False,
+        "byte_fallback": False,
+        "ignore_merges": False,
+        "vocab": {},
+        "merges": [],
+    },
+}
+
+
+def test_inspect_recommends_the_bert_route_for_a_modernbert_cross_encoder(tmp_path: Path) -> None:
+    config = {
+        "model_type": "modernbert",
+        "architectures": ["ModernBertForSequenceClassification"],
+        "hidden_size": 768,
+        "id2label": {"0": "LABEL_0"},
+    }
+    route = inspect_snapshot(_write_snapshot(tmp_path / "s", config, _MODERNBERT_TOKENIZER))["plugin_route"]
+    assert (route["id"], route["status"], route["task"]) == ("bert-onnx-cpu-v1", "candidate", "reranking")
+    masked_lm = {**config, "architectures": ["ModernBertForMaskedLM"]}
+    route = inspect_snapshot(_write_snapshot(tmp_path / "t", masked_lm, _MODERNBERT_TOKENIZER))["plugin_route"]
+    assert route["id"] == "unknown"
+
+
+def test_inspect_keeps_each_bert_family_to_its_own_tokenizer_model(tmp_path: Path) -> None:
+    modernbert = {"model_type": "modernbert", "architectures": ["ModernBertForSequenceClassification"], "num_labels": 1}
+    assert inspect_snapshot(_write_snapshot(tmp_path / "s", modernbert, _WORDPIECE))["plugin_route"]["id"] == "unknown"
+    bert = {"model_type": "bert", "architectures": ["BertForSequenceClassification"], "num_labels": 1}
+    assert inspect_snapshot(_write_snapshot(tmp_path / "t", bert, _MODERNBERT_TOKENIZER))["plugin_route"]["id"] == (
+        "unknown"
+    )
+
+
+def test_inspect_refuses_the_gpt2_split_inside_a_sequence(tmp_path: Path) -> None:
+    tokenizer = {
+        **_MODERNBERT_TOKENIZER,
+        "pre_tokenizer": {"type": "Sequence", "pretokenizers": [_MODERNBERT_BYTE_LEVEL]},
+    }
+    config = {"model_type": "modernbert", "architectures": ["ModernBertForSequenceClassification"], "num_labels": 1}
+    assert inspect_snapshot(_write_snapshot(tmp_path / "s", config, tokenizer))["plugin_route"]["id"] == "unknown"
+
+
 def _qwen_tokenizer() -> dict:
     byte_level = {"type": "ByteLevel", "add_prefix_space": False, "trim_offsets": False, "use_regex": False}
     return {
@@ -464,6 +528,24 @@ def test_inspect_recommends_the_qwen_route_for_qwen_decoders(
     config = {"model_type": model_type, "architectures": [architecture], "hidden_size": 1024}
     route = inspect_snapshot(_write_snapshot(tmp_path / "s", config, _qwen_tokenizer()))["plugin_route"]
     assert (route["id"], route["status"], route["task"]) == ("qwen-genai-cpu-v1", "candidate", "generation")
+
+
+def test_inspect_recommends_the_genai_chat_route_for_phi3(tmp_path: Path) -> None:
+    config = {"model_type": "phi3", "architectures": ["Phi3ForCausalLM"], "hidden_size": 3072}
+    route = inspect_snapshot(_write_snapshot(tmp_path / "s", config, _qwen_tokenizer()))["plugin_route"]
+    assert (route["id"], route["status"], route["task"]) == ("genai-chat-cpu-v1", "candidate", "generation")
+    other = {"model_type": "phi3", "architectures": ["Phi3ForSequenceClassification"]}
+    assert (
+        inspect_snapshot(_write_snapshot(tmp_path / "t", other, _qwen_tokenizer()))["plugin_route"]["id"] == "unknown"
+    )
+    route = inspect_snapshot(_write_snapshot(tmp_path / "u", config, _WORDPIECE))["plugin_route"]
+    assert (route["id"], route["status"]) == ("unknown", "unknown")
+    # Phi-4-mini's own split regex is one the inspector does not implement; the route is still suggested.
+    tokenizer = _qwen_tokenizer()
+    tokenizer["pre_tokenizer"]["pretokenizers"][0]["pattern"]["Regex"] = "another split"
+    report = inspect_snapshot(_write_snapshot(tmp_path / "v", config, tokenizer))
+    assert report["tokenizer"]["components"][1]["status"] == "unsupported"
+    assert report["plugin_route"]["id"] == "genai-chat-cpu-v1"
 
 
 def test_inspect_refuses_the_qwen_route_for_another_head_or_tokenizer(tmp_path: Path) -> None:

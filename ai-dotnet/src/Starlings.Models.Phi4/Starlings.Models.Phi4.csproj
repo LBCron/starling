@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Source only until the admission decision (model-pipeline/admissions/phi4-mini.md). -->
+    <IsPackable>false</IsPackable>
+    <Description>microsoft/Phi-4-mini-instruct (revision cfbefacb) model definition without a runtime: the Phi chat template rendered in C# for text turns, the checkpoint's ids and shape as a ModelProfile, and its asset lock. Experimental.</Description>
+    <PackageTags>phi;phi4;llm;chat;chat-template</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <!-- The route contract table, read by Phi4Checkpoint.ChatDefinition. -->
+    <EmbeddedResource Include="../../../model-pipeline/routes/genai-chat-cpu-v1/contracts.json" Link="Contracts/contracts.json" LogicalName="Starlings.Models.Phi4.Contracts.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Starlings.Generation.Abstractions/Starlings.Generation.Abstractions.csproj" />
+    <!-- ModelAssetLock of the Hub checkpoint (BCL only). -->
+    <ProjectReference Include="../Starlings.Acquisition/Starlings.Acquisition.csproj" />
+    <PackageReference Include="Starlings.Tokenizers" />
+  </ItemGroup>
+
+</Project>

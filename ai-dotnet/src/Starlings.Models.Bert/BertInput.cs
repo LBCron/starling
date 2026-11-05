@@ -25,6 +25,8 @@ public static class BertCapabilities
     public const string BatchTokenBudget = "experimental";
     /// <summary>Length-sorted chunking with results in input order (<c>sortByLength</c>) is experimental.</summary>
     public const string BatchSortByLength = "experimental";
+    /// <summary>The reranker's optional token limit below the profile's (<c>maxTokens</c>) is experimental. Text is truncated to it; longer pre-tokenized rows are refused.</summary>
+    public const string TokenLimit = "experimental";
     /// <summary>Cancellation is experimental, at native graph-node and batch-chunk boundaries.</summary>
     public const string Cancellation = "experimental";
     /// <summary>

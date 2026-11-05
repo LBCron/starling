@@ -1,0 +1,29 @@
+# 2026-11-04T20:34:32Z unit=b291-arena-on MemoryMax=26G args=<snapshot> gte-reranker-modernbert-base 4 4 arena 8192 level: OK: heavy 1 light 8, free 27.9 GB, 0 runner job(s) busy, app.slice pressure 0.62%
+Running as unit: b291-arena-on.service
+gte-reranker-modernbert-base arena threads 4 session arena True maxTokens 8192 load 5.0s peak 0.92G rss 0.92G
+Unhandled exception. System.FormatException: The input string 'kB' was not in a correct format.
+   at System.Number.ThrowFormatException[TChar](ReadOnlySpan`1 value)
+   at System.Double.Parse(String s)
+   at Program.<<Main>$>g__Memory|0_0() in <probe> 25
+   at Program.<Main>$(String[] args) in <probe> 58
+          Finished with result: core-dump
+Main processes terminated with: code=dumped, status=6/ABRT
+               Service runtime: 1min 12.503s
+             CPU time consumed: 3min 37.694s
+                   Memory peak: 10.1G (swap: 0B)
+# exit 1
+# 2026-11-04T20:35:44Z unit=b291-arena-off MemoryMax=20G args=<snapshot> gte-reranker-modernbert-base 4 4 noarena 8192 level: TIGHT: heavy 0 light 8, free 15.4 GB, 0 runner job(s) busy, app.slice pressure 0.0% - CPU saturated (load 12.8 on 12 cores)
+Running as unit: b291-arena-off.service
+gte-reranker-modernbert-base noarena threads 4 session arena False maxTokens 8192 load 3.5s peak 0.93G rss 0.93G
+tokens 8192 rows 1 run 1 logit 1.492696 time 68.718s peak 9.42G rss 0.96G
+Unhandled exception. System.FormatException: The input string 'kB' was not in a correct format.
+   at System.Number.ThrowFormatException[TChar](ReadOnlySpan`1 value)
+   at System.Double.Parse(String s)
+   at Program.<<Main>$>g__Memory|0_0() in <probe> 25
+   at Program.<Main>$(String[] args) in <probe> 58
+          Finished with result: core-dump
+Main processes terminated with: code=dumped, status=6/ABRT
+               Service runtime: 2min 21.333s
+             CPU time consumed: 7min 39.898s
+                   Memory peak: 9.7G (swap: 0B)
+# exit 1

@@ -116,11 +116,12 @@ public sealed class BertModelProfile
     /// <summary>
     /// Names of the profiles built into the package, one per supported repository: the candidate directory names of
     /// <c>model-pipeline/candidates/</c> (<c>bge-base</c>, <c>bge-m3</c>, <c>bge-reranker-v2-m3</c>, <c>bge-small</c>,
-    /// <c>minilm</c>, <c>ms-marco</c>, <c>nomic-embed</c>, <c>paraphrase-multilingual</c>), in ordinal order.
+    /// <c>gte-reranker-modernbert-base</c>, <c>minilm</c>, <c>ms-marco</c>, <c>nomic-embed</c>, <c>paraphrase-multilingual</c>), in ordinal order.
     /// </summary>
     public static IReadOnlyList<string> BuiltInIds { get; } = Array.AsReadOnly(new[]
     {
-        "bge-base", "bge-m3", "bge-reranker-v2-m3", "bge-small", "minilm", "ms-marco", "nomic-embed", "paraphrase-multilingual",
+        "bge-base", "bge-m3", "bge-reranker-v2-m3", "bge-small", "gte-reranker-modernbert-base", "minilm", "ms-marco", "nomic-embed",
+        "paraphrase-multilingual",
     });
 
     /// <summary>
@@ -310,9 +311,9 @@ public sealed class BertModelProfile
         }
 
         string tokenizerProfile = String("tokenizer_profile"), outputName = String("output_name");
-        if (tokenizerProfile is not ("bert-wordpiece-uncased" or "xlmr-unigram") || outputName.Length == 0)
+        if (tokenizerProfile is not ("bert-wordpiece-uncased" or "xlmr-unigram" or "modernbert-bpe-gte-reranker") || outputName.Length == 0)
         {
-            throw new InvalidDataException($"{where}: tokenizer_profile must be bert-wordpiece-uncased or xlmr-unigram and output_name must not be empty.");
+            throw new InvalidDataException($"{where}: tokenizer_profile must be bert-wordpiece-uncased, xlmr-unigram or modernbert-bpe-gte-reranker and output_name must not be empty.");
         }
 
         int maxTokens = Integer("max_tokens"), hiddenSize = Integer("hidden_size"), vocabularySize = Integer("vocabulary_size");

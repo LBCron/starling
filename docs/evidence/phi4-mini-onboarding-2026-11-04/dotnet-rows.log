@@ -1,0 +1,15 @@
+Command: ["/home/mark/.dotnet/dotnet","/home/mark/Projects/starling/.claude/worktrees/wf_19588a52-d07-3/artifacts/onboarding/phi4-mini/stages/dotnet/bf5da2f495aa442a98de106318ec020e/output/dotnet-build-cor2rxmu/published/Starlings.GenAIChat.Fidelity.dll","--candidate","/home/mark/Projects/starling/.claude/worktrees/wf_19588a52-d07-3/model-pipeline/candidates/phi4-mini/profile.json","--bundle","/home/mark/Projects/starling/.claude/worktrees/wf_19588a52-d07-3/artifacts/onboarding/phi4-mini/stages/bundle/c13d7d375a6f493a833b814be5f9bcf4/output","--corpus","/home/mark/Projects/starling/.claude/worktrees/wf_19588a52-d07-3/model-pipeline/corpora/five-models/chat.jsonl","--out","/home/mark/Projects/starling/.claude/worktrees/wf_19588a52-d07-3/artifacts/onboarding/phi4-mini/stages/dotnet/bf5da2f495aa442a98de106318ec020e/output","--threads","2"]
+greeting: prompt=5 completion=9 stop=200020
+arithmetic: prompt=14 completion=1 stop=200020
+system: prompt=16 completion=16 stop=
+multi-turn: prompt=16 completion=2 stop=200020
+assistant-thinking: prompt=31 completion=12 stop=200020
+reasoning-content: prompt=20 completion=1 stop=200020
+whitespace: prompt=12 completion=10 stop=200020
+empty-content: prompt=3 completion=16 stop=
+chinese: prompt=10 completion=16 stop=
+unicode: prompt=11 completion=16 stop=
+endoftext-literal: prompt=18 completion=16 stop=
+role-lookalikes: prompt=21 completion=13 stop=200020
+long-prefill: prompt=361 completion=5 stop=200020
+one-token-limit: prompt=7 completion=1 stop=

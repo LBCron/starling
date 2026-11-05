@@ -1,6 +1,6 @@
 # A model-agnostic GenAI chat route: design note
 
-Status: **proposed**, 2026-11-01 (#109; the text part of #110 is the second intended consumer). Nothing in this note changes product code, a capability status, a manifest or a tolerance. It is input for a maintainer decision, not a support claim.
+Status: **accepted** by the maintainer on 2026-11-04 for the route shape (option C) and the generic GenAI chat loader (#109; the text part of #110 is the second intended consumer). Proposed 2026-11-01. Two questions stay open: see "Open questions". This note changes no capability status, manifest or tolerance, and it is not a support claim. `docs/kickoff.md` has the decision row.
 
 ## Problem
 
@@ -34,9 +34,20 @@ Each new chat family would otherwise need its own copy of the Qwen route. This n
 
 ## Recommendation
 
-Option C. It matches how the BERT route already removed per-model allow-lists from code, it keeps the Qwen route's evidence and stage keys stable, and it makes a second family (#110 text) a table entry plus a template port rather than a new plugin.
+Option C. It matches how the BERT route already removed per-model allow-lists from code, it keeps the Qwen route's evidence and stage keys stable, and it makes a second family (#110 text) a table entry plus a template port rather than a new plugin, once the table format fits that family (see "What #110 needs").
 
-On the .NET side, add a model-definition package for Phi (`Starlings.Models.Phi4`: checkpoint identity, template port, tool-call parser if tools are admitted) and either a thin `Starlings.Models.Phi4.OnnxGenAI` loader in the QwenChat style or, preferably, a generic GenAI chat loader that reads the same contract table. The choice between those two is the first open question for the maintainer; the route design does not depend on it.
+On the .NET side, add a model-definition package for Phi (`Starlings.Models.Phi4`: checkpoint identity, template port, tool-call parser if tools are admitted) and one generic GenAI chat loader that reads the same contract table. The maintainer chose the generic loader over a thin `Starlings.Models.Phi4.OnnxGenAI` package on 2026-11-04. `QwenChat` and `Qwen35` keep their packages.
+
+The loader is `GenAIChatModel` in `Starlings.Generation.OnnxGenAI`, experimental API. No dependency reason called for a new package. It holds no model data: it takes a `ChatModelDefinition` from `Starlings.Generation.Abstractions`, which is the entry of the table (`ChatRouteContract`), the family's `IChatTemplate`, its bundle lock and its tokenizer check. The family package embeds the table, so the definition package stays free of a runtime and the published generation packages carry no unadmitted entry. A second family with the same config shape adds its table entry, a definition package with its template port, and one line in the fidelity tool's lookup.
+
+### What #110 needs
+
+The code holds no Phi data, but the table format still has the shape of its one family: a flat `config.json` with long rope settings. The text half of `google/gemma-3-4b-it` does not fit it yet, so #110 needs a format change in both readers and the bundle stage, not only an entry. Checked against transformers 5.18.0 and the GenAI 0.17.1 builder; the checkpoint's real `config.json` is gated and was not read.
+
+- **Required rope fields.** `ChatRouteContract.ConfigFields` and `_CONFIG_FIELDS` require `original_max_position_embeddings`, `partial_rotary_factor` and `rope_type`. `Gemma3TextConfig` has neither of the first two, and the bundle stage compares each field with `config.json`, so a filler value would parse and then always be refused.
+- **Long rope bounds.** `max_context_tokens` is tied to `original_max_position_embeddings`. `rope_type` is read only from `rope_scaling.type`, and the default Gemma 3 `rope_scaling` is keyed by attention type, with no such key.
+- **Nested config.** `float32_config` refuses a `text_config`, and `Gemma3Config` nests its text config.
+- **One `model_type`.** One value is compared with both `config.json` and GenAI's type. For Gemma 3 they differ: `gemma3` in `Gemma3Config` (`gemma3_text` for the text config), `gemma3_text` or `gemma3_vl_text` in the builder.
 
 Order: tokenizer profile first (it is the long pole and lives in another repository), then the route table and plugin, then the template port, then the export and parity run.
 
@@ -47,6 +58,11 @@ Order: tokenizer profile first (it is the long pole and lives in another reposit
 3. `model-pipeline`: `routes/genai-chat-cpu-v1/contracts.json`, its schema and loader with the same refusal rules as the BERT table, and the `inspect` rule for `phi3` / `Phi3ForCausalLM`. No candidate yet.
 4. `model-pipeline`: route-generic reference runner and bundle builder (built-in transformers architectures only, `trust_remote_code` off), reusing `reference/generation/`; the generic plugin registered in `onboarding_plugins.py` with orchestration tests.
 5. `Starlings.Models.Phi4`: checkpoint identity and the C# port of the pinned chat template with a template corpus test against the Python rendering. Tools `unsupported` unless this PR also ports and tests the tool format.
-6. GenAI loader (generic or Phi-specific, per the maintainer's choice) and the candidate profile, recipe and asset lock for `microsoft/Phi-4-mini-instruct` pinned by full commit SHA.
+6. The generic GenAI loader and the candidate profile, recipe and asset lock for `microsoft/Phi-4-mini-instruct` pinned by full commit SHA.
 7. Onboarding run on CPU (fp32, prompts under 4096 tokens), evidence under `docs/evidence/`, profile Experimental. The maintainer adds tolerances and the registry manifest.
-8. Later, separately: the #110 text entry on the same table; long-context (`longrope` long factors) evidence; GPU runs under #210.
+8. Later, separately: the #110 text entry on the same table, with the format change it needs; long-context (`longrope` long factors) evidence; GPU runs under #210.
+
+## Open questions
+
+- **Hosting a bundle.** Whether to host a built Phi-4-mini bundle is not decided. Today a user must have the snapshot and build about 15 GB of graph data.
+- **Admission level.** The candidate is not admitted. `model-pipeline/admissions/phi4-mini.md` states its proposal, and the level is the maintainer's decision.

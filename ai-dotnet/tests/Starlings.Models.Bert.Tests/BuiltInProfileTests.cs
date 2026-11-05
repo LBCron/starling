@@ -57,6 +57,7 @@ public sealed class BuiltInProfileTests
     [InlineData("bge-m3", 3)]
     [InlineData("bge-reranker-v2-m3", 3)]
     [InlineData("bge-small", 2)]
+    [InlineData("gte-reranker-modernbert-base", 2)]
     public void BuiltInRuntimeLocksNameTheInferenceFiles(string name, int files)
     {
         var profile = BertModelProfile.BuiltIn(name);

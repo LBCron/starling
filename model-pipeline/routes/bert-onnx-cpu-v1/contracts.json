@@ -141,6 +141,24 @@
       "prompts": {
         "none": ""
       }
+    },
+    "Alibaba-NLP/gte-reranker-modernbert-base": {
+      "task": "reranking",
+      "max_tokens": 8192,
+      "pooling": "none",
+      "hidden_size": 768,
+      "normalize": "none",
+      "vocabulary_size": 50368,
+      "cls_token_id": 50281,
+      "sep_token_id": 50282,
+      "pad_token_id": 50283,
+      "output_name": "logits",
+      "tokenizer_profile": "modernbert-bpe-gte-reranker",
+      "token_type_ids": false,
+      "prompts": {
+        "none": ""
+      },
+      "score_activation_source": "explicit"
     }
   }
 }

@@ -377,7 +377,7 @@ internal static class EmbeddingGemma2VideoTestAssets
             string path = Path.Combine(dir, m.File);
             if (!File.Exists(path))
             {
-                return $"video set not found ({path}); regenerate it with model-pipeline/reference/embeddinggemma2/make_eg2_videos.py --out <dir> (pinned FFmpeg GPL build from fetch_eg2_ffmpeg.sh) and set {VideosEnvironmentVariable}.";
+                return $"video set not found ({path}); regenerate it with model-pipeline/reference/embeddinggemma2/make_eg2_videos.py --out <dir> (pinned FFmpeg GPL build, a local copy checked by fetch_eg2_ffmpeg.sh --with-gpl) and set {VideosEnvironmentVariable}.";
             }
 
             string sha = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(path)));

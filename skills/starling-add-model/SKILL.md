@@ -48,12 +48,13 @@ uvx --from huggingface_hub hf download <org>/<model> \
 .venv/bin/model-pipeline inspect .models/snapshots/<name>
 ```
 
-`inspect` is read-only. From `config.json`, `tokenizer.json` and `modules.json` its `plugin_route` suggests `e5-onnx-cpu-v1` (the pinned e5 geometry), `bert-onnx-cpu-v1` (a BERT, XLM-R or nomic-bert encoder with a tokenizer this checkout implements, plus sentence-transformers mean or CLS pooling, or a single-logit sequence-classification head), `qwen-genai-cpu-v1` (a `Qwen2ForCausalLM` or `Qwen3ForCausalLM` decoder with a supported BPE tokenizer) or `unknown`, with the reason. A suggestion is a candidate route, not a fit: check it against the table:
+`inspect` is read-only. From `config.json`, `tokenizer.json` and `modules.json` its `plugin_route` suggests `e5-onnx-cpu-v1` (the pinned e5 geometry), `bert-onnx-cpu-v1` (a BERT, XLM-R, nomic-bert or ModernBERT encoder with a tokenizer this checkout implements, plus sentence-transformers mean or CLS pooling, or a single-logit sequence-classification head), `qwen-genai-cpu-v1` (a `Qwen2ForCausalLM` or `Qwen3ForCausalLM` decoder with a supported BPE tokenizer), `genai-chat-cpu-v1` (a `Phi3ForCausalLM` decoder with a BPE tokenizer) or `unknown`, with the reason. A suggestion is a candidate route, not a fit: check it against the table:
 
 | Route (plugin) | Fits when the model is... | Code to extend |
 | --- | --- | --- |
 | `bert-onnx-cpu-v1` | A BERT encoder, uncased WordPiece (vocab 30,522), right padding, ONNX Runtime 1.30.0 CPU fp32, whose Hub repo ships `onnx/model.onnx`; embeddings (mean or CLS pooling, L2 or no normalization) or a cross-encoder reranker. Hidden size, `max_tokens`, pooling and normalization are set per model (admitted so far: 384 or 768 wide, 256 to 8,192 tokens) | `model-pipeline/routes/bert-onnx-cpu-v1/contracts.json` (read by `onboarding_bert.py` and `ai-dotnet/src/Starlings.Models.Bert/`) |
 | `qwen-genai-cpu-v1` | A Qwen-family decoder for ONNX Runtime GenAI 0.17.1, CPU fp32 | `model-pipeline/src/model_pipeline/onboarding_generation.py`, `ai-dotnet/src/Starlings.Models.QwenChat/` (definition) and `ai-dotnet/src/Starlings.Models.QwenChat.OnnxGenAI/` (runtime) |
+| `genai-chat-cpu-v1` | A text chat decoder for ONNX Runtime GenAI 0.17.1, CPU fp32, with a built-in transformers architecture and a flat `config.json` with long rope settings (experimental; the one entry so far is Phi-4-mini-instruct, and the design note lists what a family of another shape needs; see "GenAI chat route" in `model-pipeline/ONBOARDING.md`) | `model-pipeline/routes/genai-chat-cpu-v1/contracts.json` (read by `onboarding_genai_chat.py` and `ChatRouteContract`), a definition package such as `ai-dotnet/src/Starlings.Models.Phi4/` for the generic `GenAIChatModel`, and the family's line in `ai-dotnet/tools/Starlings.GenAIChat.Fidelity/` |
 | `kev-onnx-cpu-v1` | Exactly the pinned Kev-0.8B or Kev-4B decision checkpoint on its pinned Qwen3.5 base (run with `--base-snapshot`; see "Kev route" in `model-pipeline/ONBOARDING.md`) | `model-pipeline/src/model_pipeline/onboarding_kev.py`, `ai-dotnet/src/Starlings.Models.Kev/` (definition) and `ai-dotnet/src/Starlings.Models.Kev.Onnx/` (runtime) |
 | `whisper-onnx-cpu-v1` | Exactly the pinned whisper-large-v3-turbo fp16 ONNX graphs on their pinned PyTorch checkpoint (run with `--base-snapshot`; see "Whisper route" in `model-pipeline/ONBOARDING.md`) | `model-pipeline/src/model_pipeline/onboarding_whisper.py`, `ai-dotnet/src/Starlings.Models.Whisper/` |
 | `ppocr-onnx-cpu-v1` | Exactly the pinned PP-OCRv5 mobile detector and recognizer ONNX exports on their pinned Paddle inference models (one `--snapshot` directory holding all four repositories; see "PP-OCRv5 route" in `model-pipeline/ONBOARDING.md`) | `model-pipeline/src/model_pipeline/onboarding_ppocr.py`, `ai-dotnet/src/Starlings.Models.PaddleOcr/` |
@@ -76,7 +77,7 @@ Use the existing MiniLM files as templates. To find every place they are registe
    The candidate has no license fields. State the code license, weights license and tokenizer terms in the issue and in the PR description.
 2. **Generate the rest with `model-pipeline scaffold <name>`.** It reads the candidate and prints, as JSON, every other input the route needs; `--write` applies them (pieces already present are reported as `unchanged`, and a candidate that contradicts an existing table entry is refused):
    - `model-pipeline/recipes/<name>-cpu.yaml`, with the task's five-model corpus (`--corpus <path>` for another one);
-   - the entry for the repo in `model-pipeline/routes/bert-onnx-cpu-v1/contracts.json` (task, `max_tokens`, pooling, width, normalization, vocabulary and special ids, output name, tokenizer profile, prompts). The cls and sep ids come from the tokenizer profile (`bert-wordpiece-uncased`: 101, 102; `xlmr-unigram`: 0, 2); check them against the model's `tokenizer.json`. The segment-id input defaults from it too (`bert-wordpiece-uncased`: with `token_type_ids`; `xlmr-unigram`: without). The candidate does not state this, so check the graph's inputs and pass `--token-type-ids` or `--no-token-type-ids` when they differ, as a BERT encoder with an XLM-R tokenizer does (paraphrase-multilingual-MiniLM-L12-v2);
+   - the entry for the repo in `model-pipeline/routes/bert-onnx-cpu-v1/contracts.json` (task, `max_tokens`, pooling, width, normalization, vocabulary and special ids, output name, tokenizer profile, prompts). The cls and sep ids come from the tokenizer profile (`bert-wordpiece-uncased`: 101, 102; `xlmr-unigram`: 0, 2; `modernbert-bpe-gte-reranker`: 50281, 50282); check them against the model's `tokenizer.json`. The segment-id input defaults from it too (`bert-wordpiece-uncased`: with `token_type_ids`; `xlmr-unigram`: without; `modernbert-bpe-gte-reranker`: without). The candidate does not state this, so check the graph's inputs and pass `--token-type-ids` or `--no-token-type-ids` when they differ, as a BERT encoder with an XLM-R tokenizer does (paraphrase-multilingual-MiniLM-L12-v2);
    - the `tools/fetch-tokenizer-assets.sh` line (`"<repo>|<sha>|tokenizer.json|<sha256>"`);
    - the profile row of the table in `ai-dotnet/src/Starlings.Models.Bert/README.md`;
    - the `InlineData` row of `ContractTests.ParsesOnlyDeclaredTaskContracts` (the test helper builds each profile from the contract table, so nothing else in it changes);
@@ -85,7 +86,8 @@ Use the existing MiniLM files as templates. To find every place they are registe
    `test_onboarding_bert.py` is parametrized over the contract table, so the new entry is tested without a new row. Review every generated piece; the scaffold changes no gate, tolerance, protected file or maturity.
 3. **Tests you still write:** a near-miss case for anything model-specific (for example a wrong pooling) in `test_onboarding_bert.py` and `ContractTests.cs`.
 4. **`ai-dotnet/src/Starlings.Models.Bert/README.md`**: besides the generated row, state the model's status and anything it doesn't support.
-5. **Optionally, `model-pipeline/workflows/*.json`**: add the model to a workflow only if it belongs to that group.
+5. **Built-in profile and registry manifest.** A candidate the route accepts is a built-in profile: add it to `BertModelProfile.BuiltIn` and `BuiltInIds`, and `BuiltInIdsAreEveryCandidateTheRouteAccepts` holds you to that. `model-pipeline scaffold` generates none of this step. Add the candidate's `EmbeddedResource` to `Starlings.Models.Bert.csproj`, add it to the expected-profile table in `tools/release-drill/bert-consumer/Program.cs`, and raise the built-in profile count in the csproj description and in the drill's message in `tools/release-drill-ai.sh` and `tools/release-drill-ai.ps1`. Then add `model-pipeline/registry/<family>/<profile>/manifest.yaml`, because `EveryBuiltInProfileHasAFamily` requires one, and the family to `CapabilityRecordTests.Families`. Copy a BERT manifest: `maturity: experimental` and every gate `status: not-run`. Run `model-pipeline catalog` to regenerate the catalog, the package README tables and `ProfileCapabilities.g.cs`.
+6. **Optionally, `model-pipeline/workflows/*.json`**: add the model to a workflow only if it belongs to that group.
 
 For the Qwen route, the pattern is the same with `onboarding_generation.py` and the generation reference environment.
 
@@ -153,12 +155,13 @@ Tests that need model weights are skipped when the weights are absent; that's ex
 
 The PR (template `.github/pull_request_template.md`) contains:
 - the candidate, the recipe, and the route code with its tests in Python and C#;
+- for a built-in profile, its Experimental registry manifest with every gate `not-run`, and the regenerated catalog;
 - the tokenizer asset line and README updates;
 - under **Evidence**: the run's exit status, the `summarize_report.py` table, the total number of checks, the pinned revision and the reference environment;
 - the licenses: code, weights and tokenizer terms;
 - every unsupported feature, listed explicitly.
 
-It must **not** contain weights, artifacts, protected files, tolerance changes, gate statuses or maturity changes. Mark it as a draft. The model lands as Experimental.
+It must **not** contain weights, artifacts, protected files, tolerance changes, a gate status other than `not-run`, or a maturity other than Experimental. Mark it as a draft. The model lands as Experimental.
 
 ## 6. A model that fits no route
 
@@ -177,7 +180,7 @@ A new task (generation, extraction, vision) needs its own evaluator checks; an e
 You don't need to do these, and your PR must not attempt them:
 - **References and tolerances:** the maintainer reviews the proposed references and moves them byte-identical into `model-pipeline/protected/` in a `protected-change` PR, and sets the tolerances.
 - **Hosted graphs:** Starling-built graphs are hosted under the `Starlinghq` Hugging Face organization, and the maintainer creates those repositories.
-- **Registry and maturity:** writing the registry manifest (`model-pipeline/registry/<family>/<profile>/manifest.yaml`), G3 task datasets and budgets, gate statuses, and maturity changes.
+- **Gates and maturity:** G3 task datasets and budgets, every gate status, and every maturity change. A built-in candidate's PR adds the registry manifest itself (section 3, step 5), Experimental with every gate `not-run`; everything that moves it after that is the maintainer's.
 - **Qualification CI:** wiring the profile into `.github/workflows/qualification.yml`.
 
 Preview needs G0, G1, G2 and G6 passed; Stable needs all of G0–G7, plus an owner and regression support (`docs/support-policy.md`).

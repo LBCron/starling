@@ -1,0 +1,6 @@
+recipe_version: 1
+id: phi4-mini-cpu
+plugin: genai-chat-cpu-v1
+manifest: model-pipeline/candidates/phi4-mini/profile.json
+reference_corpus: model-pipeline/corpora/five-models/chat.jsonl
+reference_environment: model-pipeline/reference/generation/requirements.txt

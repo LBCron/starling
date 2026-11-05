@@ -438,6 +438,7 @@ def test_every_registered_plugin_declares_its_distribution_source():
         "e5-onnx-cpu-v1": False,
         "bert-onnx-cpu-v1": True,
         "qwen-genai-cpu-v1": True,
+        "genai-chat-cpu-v1": False,
         "kev-onnx-cpu-v1": True,
         "whisper-onnx-cpu-v1": True,
         "ppocr-onnx-cpu-v1": True,

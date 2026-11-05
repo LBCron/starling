@@ -1,0 +1,260 @@
+{
+  "dotnet": {
+    "argv": [
+      "<dotnet>/dotnet",
+      "--info"
+    ],
+    "sdk": {
+      "argv": [
+        "<dotnet>/dotnet",
+        "--version"
+      ],
+      "status": "available",
+      "stdout": "10.0.100"
+    },
+    "status": "available",
+    "stdout": ".NET SDK:\n Version:           10.0.100\n Commit:            b0f34d51fc\n Workload version:  10.0.100-manifests.c32c898f\n MSBuild version:   18.0.2+b0f34d51f\n\nRuntime Environment:\n OS Name:     omarchy\n OS Version:  4.0.6\n OS Platform: Linux\n RID:         linux-x64\n Base Path:   <dotnet>/sdk/10.0.100/\n\n.NET workloads installed:\n [wasm-tools]\n   Installation Source: SDK 10.0.100\n   Manifest Version:    10.0.112/10.0.100\n   Manifest Path:       <dotnet>/sdk-manifests/10.0.100/microsoft.net.workload.mono.toolchain.current/10.0.112/WorkloadManifest.json\n   Install Type:        FileBased\n\nConfigured to use workload sets when installing new manifests.\nNo workload sets are installed. Run \"dotnet workload restore\" to install a workload set.\n\nHost:\n  Version:      10.0.12\n  Architecture: x64\n  Commit:       95017c711e\n\n.NET SDKs installed:\n  10.0.100 [<dotnet>/sdk]\n  10.0.401 [<dotnet>/sdk]\n\n.NET runtimes installed:\n  Microsoft.AspNetCore.App 10.0.0 [<dotnet>/shared/Microsoft.AspNetCore.App]\n  Microsoft.AspNetCore.App 10.0.12 [<dotnet>/shared/Microsoft.AspNetCore.App]\n  Microsoft.NETCore.App 10.0.0 [<dotnet>/shared/Microsoft.NETCore.App]\n  Microsoft.NETCore.App 10.0.12 [<dotnet>/shared/Microsoft.NETCore.App]\n\nOther architectures found:\n  None\n\nEnvironment variables:\n  DOTNET_MULTILEVEL_LOOKUP                 [0]\n  DOTNET_ROOT                              [<dotnet>]\n\nglobal.json file:\n  <repo>/global.json\n\nLearn more:\n  https://aka.ms/dotnet/info\n\nDownload .NET:\n  https://aka.ms/dotnet/download"
+  },
+  "host": {
+    "cpu_count": 12,
+    "machine": "omarchy",
+    "platform": "Linux-7.2.8-9-omarchy-x86_64-with-glibc2.44"
+  },
+  "orchestrator_packages": {
+    "cpu": "Intel(R) Core(TM) i7-5820K CPU @ 3.30GHz",
+    "cpu_count": 12,
+    "machine": "x86_64",
+    "packages": {
+      "jsonschema": "4.26.0",
+      "model-pipeline": "0.1.0",
+      "pyyaml": "6.0.3"
+    },
+    "platform": "Linux-7.2.8-9-omarchy-x86_64-with-glibc2.44",
+    "python": "3.11.16"
+  },
+  "orchestrator_python": "3.11.16 (main, Sep 24 2026, 17:56:40) [Clang 22.1.3 ]",
+  "python": {
+    "argv": [
+      "<models>/venv-reference/bin/python",
+      "-c",
+      "import importlib.metadata as m,json,platform,sys; print(json.dumps({'python':sys.version,'executable':sys.executable,'prefix':sys.prefix,'platform':platform.platform(),'packages':sorted((d.metadata['Name'],d.version) for d in m.distributions() if d.metadata['Name'])},sort_keys=True))"
+    ],
+    "identity": {
+      "executable": "<models>/venv-reference/bin/python",
+      "packages": [
+        [
+          "Jinja2",
+          "3.1.6"
+        ],
+        [
+          "MarkupSafe",
+          "3.0.4"
+        ],
+        [
+          "PyYAML",
+          "6.0.3"
+        ],
+        [
+          "Pygments",
+          "2.21.0"
+        ],
+        [
+          "annotated-doc",
+          "0.0.5"
+        ],
+        [
+          "anyio",
+          "4.15.1"
+        ],
+        [
+          "attrs",
+          "26.1.0"
+        ],
+        [
+          "certifi",
+          "2026.7.22"
+        ],
+        [
+          "click",
+          "8.5.0"
+        ],
+        [
+          "cloudpickle",
+          "3.1.2"
+        ],
+        [
+          "filelock",
+          "4.0.11"
+        ],
+        [
+          "flatbuffers",
+          "25.12.19"
+        ],
+        [
+          "fsspec",
+          "2026.9.0"
+        ],
+        [
+          "h11",
+          "0.16.0"
+        ],
+        [
+          "hf-xet",
+          "1.6.0"
+        ],
+        [
+          "httpcore",
+          "1.0.9"
+        ],
+        [
+          "httpx",
+          "0.28.1"
+        ],
+        [
+          "huggingface_hub",
+          "1.33.0"
+        ],
+        [
+          "idna",
+          "3.20"
+        ],
+        [
+          "joblib",
+          "1.6.0"
+        ],
+        [
+          "jsonschema",
+          "4.26.0"
+        ],
+        [
+          "jsonschema-specifications",
+          "2025.9.1"
+        ],
+        [
+          "markdown-it-py",
+          "4.2.0"
+        ],
+        [
+          "mdurl",
+          "0.1.2"
+        ],
+        [
+          "model-pipeline",
+          "0.1.0"
+        ],
+        [
+          "model-pipeline",
+          "0.1.0"
+        ],
+        [
+          "mpmath",
+          "1.3.0"
+        ],
+        [
+          "narwhals",
+          "2.27.0"
+        ],
+        [
+          "networkx",
+          "3.6.1"
+        ],
+        [
+          "numpy",
+          "2.4.6"
+        ],
+        [
+          "onnxruntime",
+          "1.30.0"
+        ],
+        [
+          "packaging",
+          "26.3"
+        ],
+        [
+          "protobuf",
+          "7.36.2"
+        ],
+        [
+          "referencing",
+          "0.37.0"
+        ],
+        [
+          "regex",
+          "2026.9.29"
+        ],
+        [
+          "rich",
+          "15.0.0"
+        ],
+        [
+          "rpds-py",
+          "2026.9.1"
+        ],
+        [
+          "safetensors",
+          "0.8.0"
+        ],
+        [
+          "scikit-learn",
+          "1.9.1"
+        ],
+        [
+          "scipy",
+          "1.17.1"
+        ],
+        [
+          "sentence-transformers",
+          "6.1.0"
+        ],
+        [
+          "sentencepiece",
+          "0.2.2"
+        ],
+        [
+          "setuptools",
+          "84.0.0"
+        ],
+        [
+          "shellingham",
+          "1.5.4"
+        ],
+        [
+          "sympy",
+          "1.14.0"
+        ],
+        [
+          "threadpoolctl",
+          "3.7.0"
+        ],
+        [
+          "tokenizers",
+          "0.23.2"
+        ],
+        [
+          "torch",
+          "2.14.1+cpu"
+        ],
+        [
+          "tqdm",
+          "4.70.1"
+        ],
+        [
+          "transformers",
+          "5.18.0"
+        ],
+        [
+          "typer",
+          "0.27.2"
+        ],
+        [
+          "typing_extensions",
+          "4.16.0"
+        ]
+      ],
+      "platform": "Linux-7.2.8-9-omarchy-x86_64-with-glibc2.44",
+      "prefix": "<models>/venv-reference",
+      "python": "3.11.16 (main, Sep 24 2026, 17:56:40) [Clang 22.1.3 ]"
+    },
+    "status": "available"
+  }
+}

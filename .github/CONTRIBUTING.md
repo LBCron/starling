@@ -48,7 +48,7 @@ CI (`.github/workflows/ci.yml`) runs the jobs `boundary`, `ai release-candidate 
 
 ## Adding a model
 
-Follow [`skills/starling-add-model/SKILL.md`](../skills/starling-add-model/SKILL.md): it covers the model request, choosing an onboarding route, the candidate contract under `model-pipeline/candidates/`, running the comparison against a fresh Python reference, and the draft PR. The pipeline itself is described in [`model-pipeline/ONBOARDING.md`](../model-pipeline/ONBOARDING.md), and the experimental BERT and Qwen routes in [`model-pipeline/FIVE_MODELS.md`](../model-pipeline/FIVE_MODELS.md). A contributed model lands as Experimental with proposed evidence. Adopting references into `protected/`, setting tolerances, writing registry manifests, recording gate results and changing maturity are maintainer actions.
+Follow [`skills/starling-add-model/SKILL.md`](../skills/starling-add-model/SKILL.md): it covers the model request, choosing an onboarding route, the candidate contract under `model-pipeline/candidates/`, running the comparison against a fresh Python reference, and the draft PR. The pipeline itself is described in [`model-pipeline/ONBOARDING.md`](../model-pipeline/ONBOARDING.md), and the experimental BERT and Qwen routes in [`model-pipeline/FIVE_MODELS.md`](../model-pipeline/FIVE_MODELS.md). A contributed model lands as Experimental with proposed evidence. A candidate that becomes a built-in profile brings its registry manifest in the same pull request, Experimental with every gate `not-run`, because the tests require one. Adopting references into `protected/`, setting tolerances, recording gate results and changing maturity are maintainer actions.
 
 ## Protected evidence
 
