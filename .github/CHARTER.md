@@ -23,8 +23,6 @@ Out of scope until a separate use case, owner, and budget exist: general-purpose
 | Release pipeline | Mark |
 | Second release owner | Open, required before broad support commitments |
 
-Every stable model family has a named owner recorded in its manifest. A family without an owner is Experimental.
-
 ## Release authority
 
 Only a human maintainer approves a release. Implementation agents open draft changes and produce evidence. They cannot approve their own change, hold publishing credentials, or change protected fixtures, tolerances, or release evaluation sets. See [CONTRIBUTING.md](CONTRIBUTING.md#agent-contributions).
@@ -35,7 +33,7 @@ Only a human maintainer approves a release. Implementation agents open draft cha
 | --- | --- |
 | Experimental | Investigation or incomplete feature set; no production support claim. |
 | Preview | Declared scope passes meaningful tests; API or platform support may still change. |
-| Stable | Documented contract, qualification gates G0 to G7, owner, compatibility matrix, and regression support. |
+| Stable | Documented contract, qualification gates G0 to G7, compatibility matrix, and regression support. |
 | Maintenance | Existing pinned combinations remain supported; new upstream features are not pursued. |
 | Deprecated | Replacement and migration information published; support end date stated. |
 

@@ -107,7 +107,7 @@ replaces both at load with no padding and the profile's limit, as transformers d
 `BertReranker.Create` here (see "Token limit"). Scores are raw logits; the sentence-transformers default applies a sigmoid.
 Onboarding evidence stops at the longest corpus row (1,468 tokens). Past it, the .NET path has only one repetitive pair
 behind it, which matched Python ONNX Runtime at 2,048 and 8,192 tokens. Long pairs are also costly on CPU: at four
-threads, one 8,192-token pair took about a minute on .NET and peaked at 9.6 GiB. Use `maxTokens` and `maxBatchTokens` with long documents, and do not
+threads, one 8,192-token pair took 38 to 40 s on .NET and peaked at 9.6 GiB (table under "CPU memory arena"). Use `maxTokens` and `maxBatchTokens` with long documents, and do not
 plan on less memory than that. See "CPU memory arena".
 The upstream fp16 and quantized graphs, Flash Attention 2 and GPU providers are not implemented.
 

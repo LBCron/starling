@@ -232,7 +232,6 @@ qualification:
     G7: { status: not-run }
 
 maintenance:
-  owner: Mark
   # The export repository's main moved to f2d0148f (2025-03-05, "Upload fixed & optimized fp16/q4f16 ONNX weights"),
   # which changes only decoder_model_merged_fp16.onnx and decoder_model_merged_q4f16.onnx; no file this profile locks
   # changed, so the pin stays.

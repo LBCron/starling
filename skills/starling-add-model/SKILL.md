@@ -183,4 +183,4 @@ You don't need to do these, and your PR must not attempt them:
 - **Gates and maturity:** G3 task datasets and budgets, every gate status, and every maturity change. A built-in candidate's PR adds the registry manifest itself (section 3, step 5), Experimental with every gate `not-run`; everything that moves it after that is the maintainer's.
 - **Qualification CI:** wiring the profile into `.github/workflows/qualification.yml`.
 
-Preview needs G0, G1, G2 and G6 passed; Stable needs all of G0–G7, plus an owner and regression support (`docs/support-policy.md`).
+Preview needs G0, G1, G2 and G6 passed; Stable needs all of G0–G7, plus regression support (`docs/support-policy.md`).

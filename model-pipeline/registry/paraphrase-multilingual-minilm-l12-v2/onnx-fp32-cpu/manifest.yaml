@@ -175,7 +175,6 @@ qualification:
     G7: { status: not-run }
 
 maintenance:
-  owner: Mark
   latest_verified_upstream_revision: "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"
   review_date: 2027-01-23
   known_issues:

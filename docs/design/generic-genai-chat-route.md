@@ -1,6 +1,6 @@
 # A model-agnostic GenAI chat route: design note
 
-Status: **accepted** by the maintainer on 2026-11-04 for the route shape (option C) and the generic GenAI chat loader (#109; the text part of #110 is the second intended consumer). Proposed 2026-11-01. Two questions stay open: see "Open questions". This note changes no capability status, manifest or tolerance, and it is not a support claim. `docs/kickoff.md` has the decision row.
+Status: **accepted** by the maintainer on 2026-11-04 for the route shape (option C) and the generic GenAI chat loader (#109; the text part of #110 is the second intended consumer). Proposed 2026-11-01. Mark admitted the candidate at Experimental on 2026-11-04 (`model-pipeline/admissions/phi4-mini.md`). One question stays open: see "Open questions". This note changes no capability status, manifest or tolerance, and it is not a support claim. `docs/kickoff.md` has the decision row.
 
 ## Problem
 
@@ -65,4 +65,3 @@ Order: tokenizer profile first (it is the long pole and lives in another reposit
 ## Open questions
 
 - **Hosting a bundle.** Whether to host a built Phi-4-mini bundle is not decided. Today a user must have the snapshot and build about 15 GB of graph data.
-- **Admission level.** The candidate is not admitted. `model-pipeline/admissions/phi4-mini.md` states its proposal, and the level is the maintainer's decision.

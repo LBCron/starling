@@ -205,7 +205,6 @@ qualification:
     G7: { status: not-run }
 
 maintenance:
-  owner: Mark
   # The export repository's main moved to e90558fd (2026-11-03): only README.md (card) and configuration_lfm3.py (now
   # the copy in the LFM3-1.7B checkpoint at its pin) changed. Neither is in this profile's lock, so the pin stays (#279).
   latest_known_upstream_revision: "e90558fd7388a536a029a4196ddc1c90a234ae9b"

@@ -7,8 +7,7 @@ Model request: Clover-35B-A3B-Preview. Plan section 7, pipeline stage 1. Facts w
 | Candidate | `Diffuspace/Clover-35B-A3B-Preview`: a block-diffusion fine-tune of `Qwen/Qwen3.6-35B-A3B` (text only) |
 | Code revision | `4b0402b65e523d0183a14c431955438714cb16ff` (`modeling_clover_moe.py`, `configuration_clover_moe.py`, `sampling_clover_moe.py` in the checkpoint repository, run by transformers 5.19.0 with `trust_remote_code`). The card names SGLang and llama.cpp implementations in github.com/DiffuSpace/Clover-35B-A3B-Preview; no commit of that repository is pinned here. |
 | Weight revision | `4b0402b65e523d0183a14c431955438714cb16ff`: 26 bf16 safetensors shards and two bidirectional GDN parameter files, 69.3 GB (`CloverCheckpoint.Lock`) |
-| Requested by / demand evidence | Model request in this repository. Released 2026-10-24; 105 downloads and 68 likes on 2026-10-28. The card reports agentic benchmark results on the DiffuSpace blog; none were reproduced here. |
-| Proposed owner | Unassigned |
+| Requested by | Model request in this repository. Released 2026-10-24; 105 downloads and 68 likes on 2026-10-28. The card reports agentic benchmark results on the DiffuSpace blog; none were reproduced here. |
 | Proposed maturity at first release | Experimental (model definition only) |
 | Decision | **Pending maintainer decision** (execution route, below). Development work in the same pull request is the model definition: Experimental and source only. Nothing is registered or published. |
 | Decided by and date | |

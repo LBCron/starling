@@ -26,6 +26,11 @@ def test_missing_capability_is_rejected(tmp_path):
     assert any("streaming" in p.message for p in validate_file(path))
 
 
+def test_named_owner_is_not_a_manifest_field(tmp_path):
+    path = write_variant(tmp_path, lambda m: m["maintenance"].update(owner="Someone"))
+    assert any("owner" in p.message for p in validate_file(path))
+
+
 def test_unknown_capability_status_is_rejected(tmp_path):
     path = write_variant(tmp_path, lambda m: m["capabilities"].update(batch="probably"))
     assert validate_file(path)

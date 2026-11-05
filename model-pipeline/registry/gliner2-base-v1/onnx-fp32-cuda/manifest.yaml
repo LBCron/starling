@@ -248,7 +248,6 @@ qualification:
     G7: { status: passed, evidence: docs/evidence/g7-integration-2026-10-14/README.md, date: 2026-10-14 }
 
 maintenance:
-  owner: Mark
   latest_known_upstream_revision: "55656fbfa01d3d4a77485e1a1eeeaf682990ccdf"
   latest_verified_upstream_revision: "55656fbfa01d3d4a77485e1a1eeeaf682990ccdf"
   last_checked: 2026-10-10

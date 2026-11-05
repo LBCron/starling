@@ -173,7 +173,6 @@ qualification:
     G7: { status: not-run }
 
 maintenance:
-  owner: Mark
   latest_verified_upstream_revision: "f7481e6055501a30fb19d090657df9ec1f79ab2c"
   review_date: 2027-02-04
   known_issues:
@@ -184,6 +183,6 @@ maintenance:
       Scores are raw logits, not calibrated probabilities.
     - >-
       Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long
-      pairs are costly on CPU. On .NET through BertReranker at four threads, one 8,192-token pair took about a minute and
-      peaked at 9.6 GiB with the CPU arena off, as the package now runs it; with the arena on it kept 18.4 GiB resident from the
-      second run on (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04).
+      pairs are costly on CPU. On .NET through BertReranker at four threads, one 8,192-token pair took 40 s and peaked at
+      9.6 GiB with the CPU arena off, as the package now runs it; with the arena on it took 38 s and kept 18.4 GiB resident
+      from the second run on (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04).

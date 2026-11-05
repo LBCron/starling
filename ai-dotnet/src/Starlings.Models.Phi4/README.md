@@ -2,7 +2,7 @@
 
 The model definition of [`microsoft/Phi-4-mini-instruct`](https://huggingface.co/microsoft/Phi-4-mini-instruct) at revision `cfbefacb99257ffa30c83adab238a50856ac3083`, without a runtime. Generation goes through the generic `GenAIChatModel` in `Starlings.Generation.OnnxGenAI`, which reads `Phi4Checkpoint.ChatDefinition`.
 
-This library is **experimental**, source only, and its admission is proposed, not decided (`model-pipeline/admissions/phi4-mini.md`).
+This library is **experimental** and source only. It was admitted at maturity Experimental on 2026-11-04 with no package, no registry manifest and no hosted bundle (`model-pipeline/admissions/phi4-mini.md`).
 
 - `Phi4ChatTemplate`: the checkpoint's `chat_template` rendered in C# for text turns (system, user, assistant).
 - `Phi4Checkpoint`: repository and revision; the special token ids; the decoder shape; `Profile` (a `ModelProfile`); `Lock` (the asset lock of the Hub files a bundle is built from, about 7.7 GB of bf16 weights); `BundleFiles` (the lock of the six built bundle files); `ChatDefinition` (the entry of the route contract table, embedded here, with the template, the bundle lock and the tokenizer check); `OpenTokenizer`, which verifies the pinned `tokenizer.json` and loads it with the owned tokenizer (`phi4-bpe-chat`, `Starlings.Tokenizers` 0.3.5).
@@ -33,7 +33,7 @@ Console.WriteLine(result.Text);
 
 The application references `Microsoft.ML.OnnxRuntimeGenAI` 0.17.1 for the native runtime.
 
-Sizes: `model.onnx.data` is 15.3 GB. Process memory was not sampled; the evidence run used a 20 GiB limit. One or two native threads.
+Sizes: `model.onnx.data` is 15.3 GB. Anonymous memory peaked at 17.4 GiB in the evidence run's .NET stage, in 15-second samples, inside a 20 GiB limit. One or two native threads.
 
 Prompt plus completion should stay below 4,096 tokens: past that the long rope factors start, and no evidence covers them. The loader does not refuse a longer request; the status is untested, not unsupported.
 

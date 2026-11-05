@@ -7,11 +7,10 @@ Model request #109. Plan section 7, pipeline stage 1. Facts were read on 2026-11
 | Candidate | `microsoft/Phi-4-mini-instruct` (profile `phi4-mini-instruct/ortgenai-fp32-cpu`, template `phi4-text-v1`, route `genai-chat-cpu-v1`) |
 | Code revision | No upstream modeling code is run or adopted: the reference is the `Phi3ForCausalLM` built into transformers 5.18.0 with `trust_remote_code` off, and the candidate pins no Python file. The bundle comes from the ONNX Runtime GenAI 0.17.1 builder (source commit `83de55a1f3886cddbb32a5517e26adb3f9d65159`). |
 | Weight revision | `cfbefacb99257ffa30c83adab238a50856ac3083`: two bf16 safetensors shards, 7.7 GB. Every file's size and SHA-256 is in the candidate contract. |
-| Requested by / demand evidence | #109. Hub on 2026-11-04: 340,545 downloads, 880 likes. Its triage calls it a natural step up from Qwen3.5-0.8B. No named consumer yet. |
-| Proposed owner | Unassigned |
+| Requested by | #109. Hub on 2026-11-04: 340,545 downloads, 880 likes. Its triage calls it a natural step up from Qwen3.5-0.8B. |
 | Proposed maturity at first release | Experimental |
-| Decision | Proposed: admitted at maturity Experimental, `phi4-mini-instruct/ortgenai-fp32-cpu`, greedy text chat, CPU fp32 on Linux x64, prompt plus completion below 4,096 tokens. `Starlings.Models.Phi4` is source only: no Phi-4 package, no registry manifest and no hosted bundle. Development parity passed on all 14 corpus rows; protected G1/G2 did not run. The admission level and whether to host a bundle are open. |
-| Decided by and date | Pending maintainer decision. |
+| Decision | Admitted at maturity Experimental: `phi4-mini-instruct/ortgenai-fp32-cpu`, greedy text chat, CPU fp32 on Linux x64, prompt plus completion below 4,096 tokens. `Starlings.Models.Phi4` is source only: no Phi-4 package, no registry manifest and no hosted bundle. Development parity passed on all 14 corpus rows; protected G1/G2 did not run. Whether to host a bundle stays open. |
+| Decided by and date | Mark, 2026-11-04 |
 
 ## Rights (hard blockers)
 
@@ -28,7 +27,7 @@ No rights blocker.
 
 | Criterion | Weight | Score (0 to 5) | Notes |
 | --- | --- | --- | --- |
-| User demand | 25% | 3 | High Hub usage; no named consumer. |
+| User demand | 25% | 3 | High Hub usage. |
 | Backend feasibility | 20% | 4 | The GenAI builder has a Phi-3 long-rope model class and a `phi3` model type, and the decode loop is the Qwen3.5 one. fp32 is 15.3 GB. |
 | Reusable architecture coverage | 20% | 4 | First Phi family model, first o200k tokenizer profile, and the first entry of a data-driven chat route meant for #110. |
 | Access and licensing clarity | 15% | 5 | Ungated, MIT, files pinned by commit and SHA-256. |
@@ -79,4 +78,4 @@ Linux x64 CPU, two threads, inside a 20 GiB limit. `model.onnx.data` is 15.3 GB.
 - Bounds are the route's existing development policy, proposed. No fixture is protected, no tolerance is set, no gate has run.
 - 15.3 GB of graph data is a heavy CPU profile. With no hosted bundle, a user must have the snapshot and build it.
 - The evaluated corpus is 14 short conversations; the parity check is about faithfulness to the reference, not model quality.
-- The design note leaves the admission level and hosting a bundle open; this record proposes the first and does not settle the second.
+- Whether to host a bundle stays open (`docs/design/generic-genai-chat-route.md`).

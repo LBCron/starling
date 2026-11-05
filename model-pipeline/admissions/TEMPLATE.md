@@ -7,8 +7,7 @@ Copy to `admissions/<family>.md`. Plan section 7 and pipeline stage 1.
 | Candidate | Hub ID or upstream URL |
 | Code revision | Full commit SHA |
 | Weight revision | Full commit SHA |
-| Requested by / demand evidence | |
-| Proposed owner | |
+| Requested by | |
 | Proposed maturity at first release | Experimental / Preview |
 | Decision | Admitted / Blocked / Deferred |
 | Decided by and date | |

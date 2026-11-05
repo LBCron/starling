@@ -197,7 +197,6 @@ def build(registry: Path = DEFAULT_REGISTRY, repo_root: Path = REPO_ROOT) -> dic
                 "behavior": _behavior(m),
                 "generation": m["behavior"].get("generation"),
                 "qualified_providers": _qualified_providers(m),
-                "owner": maintenance["owner"],
                 "review_date": str(maintenance["review_date"]),
                 "last_checked": str(maintenance["last_checked"]) if "last_checked" in maintenance else None,
                 "known_issues": list(maintenance.get("known_issues", [])),
@@ -317,13 +316,12 @@ def _render_readme(catalog: dict[str, Any], out: Path, repo_root: Path) -> str:
         "is not promoted until that per-release GPU run is green for it.",
         "",
     ]
-    header = ["Profile", "Task", "Maturity", "Owner", "Review date", *GATES, "Stable readiness"]
+    header = ["Profile", "Task", "Maturity", "Review date", *GATES, "Stable readiness"]
     rows = [
         [
             _link(p["manifest"], p["id"], out, repo_root),
             ", ".join(p["tasks"]),
             p["maturity"],
-            p["owner"],
             p["review_date"],
             *(_gate_cell(p["gates"][g], out, repo_root) for g in GATES),
             stable_readiness_text(

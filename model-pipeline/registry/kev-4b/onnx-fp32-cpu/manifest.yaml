@@ -316,7 +316,6 @@ qualification:
     G7: { status: not-run }
 
 maintenance:
-  owner: Mark
   # main (also the Hub tag v1.0) is 6cfce5c2, with weights identical to the pinned commit (admissions/kev.md, "Upstream
   # inventory"; package README).
   latest_known_upstream_revision: "6cfce5c2fa4b4bd64026336ab649c5ca78857d52"
