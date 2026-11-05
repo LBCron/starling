@@ -2,7 +2,7 @@
 
 Nothing produced here is committed. Every frame is drawn with NumPy (PCG64 from `SEED`) and Pillow's built-in bitmap
 font, converted to Y'CbCr in NumPy with exact float64 formulas (so the encoder input does not depend on swscale or the
-CPU), and piped as raw `yuv420p` or `yuv420p10le` to a pinned FFmpeg CLI (`fetch_eg2_ffmpeg.sh`, GPL build:
+CPU), and piped as raw `yuv420p` or `yuv420p10le` to a pinned FFmpeg CLI (`fetch_eg2_ffmpeg.sh --with-gpl`, GPL build:
 libx264, libx265, libvpx-vp9, libaom-av1), single-threaded for deterministic output. The videos are original works
 of this repository (MIT, like the rest of `model-pipeline/`).
 

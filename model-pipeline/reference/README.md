@@ -198,8 +198,8 @@ VIRTUAL_ENV=.models/venv-eg2-video uv pip install --require-hashes -r model-pipe
 VIRTUAL_ENV=.models/venv-eg2-video uv pip install --no-deps -e model-pipeline jsonschema pyyaml
 cd model-pipeline/reference/embeddinggemma2
 P=../../../.models/venv-eg2-video/bin/python; M=<snapshot dir>; F=<ffmpeg dir>; V=<video dir>
-sh fetch_eg2_ffmpeg.sh $F   # BtbN builds of FFmpeg n8.1.3-17-gc389840894, checked by SHA-256
-GPL=$F/ffmpeg-n8.1.3-17-gc389840894-linux64-gpl-shared-8.1; LGPL=$F/ffmpeg-n8.1.3-17-gc389840894-linux64-lgpl-shared-8.1
+sh fetch_eg2_ffmpeg.sh --with-gpl $F   # FFmpeg n8.1.3-17-gc389840894, checked by SHA-256: our LGPL build (build_eg2_ffmpeg.sh) and a local copy of the BtbN GPL build, which must already be in $F
+GPL=$F/ffmpeg-n8.1.3-17-gc389840894-linux64-gpl-shared-8.1; LGPL=$F/ffmpeg-n8.1.3-17-gc389840894-starling-linux64-lgpl-shared-8.1
 $P make_eg2_videos.py --ffmpeg-bin $GPL/bin --decoder-bin $LGPL/bin --out $V   # byte-identical on regeneration
 LD_LIBRARY_PATH=$LGPL/lib $P run_embeddinggemma2_video.py --model-dir $M --revision 914f7f89142e33e77833254d9c9b90c3cef7303b \
   --videos $V --out <ref dir> --tensors <tensor dir>

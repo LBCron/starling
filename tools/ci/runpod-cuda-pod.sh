@@ -153,7 +153,8 @@ fi
     echo "== volume before cleanup"; df -h "$W"; du -sh "$W"/* "$W"/ci-cache/* 2>/dev/null
     rm -rf "$W/ci-cache/refs"
     find "$W/ci-cache" -maxdepth 3 \( -name '*.part' -o -name '*.tmp' \) -delete 2>/dev/null
-    rm -f "$W"/ci-cache/ffmpeg8/*.tar.xz "$W"/ci-cache/ffmpeg9/*.tar.xz
+    rm -rf "$W"/ci-cache/ffmpeg8 "$W"/ci-cache/ffmpeg9   # the BtbN builds, replaced by the builds in ffmpeg8-lgpl and ffmpeg9-lgpl
+    rm -f "$W"/ci-cache/ffmpeg8-lgpl/*.tar.xz "$W"/ci-cache/ffmpeg9-lgpl/*.tar.xz
     echo "== volume after cleanup"; df -h "$W"; du -sh "$W"/ci-cache/* 2>/dev/null
 } >"$OUT/volume-cleanup.txt" 2>&1
 # Release-input cache: the volume when it has room, else the container disk (prepared again next run, in minutes), so
@@ -265,8 +266,8 @@ export STARLING_EMBEDDINGGEMMA2_VIDEO_TENSORS=$W/fixtures/video-spike/ref-clean-
 
 # ---------------------------------------------------------------------------------------------------------------------
 # Release inputs outside Git, prepared in the background while the GPU runs tests and the first profiles.
-FF8=$CACHE/ffmpeg8/ffmpeg-n8.1.3-17-gc389840894-linux64-lgpl-shared-8.1/lib
-FF9=$CACHE/ffmpeg9/ffmpeg-n9.0.2-28-g669f5ab083-linux64-lgpl-shared-9.0/lib
+FF8=$CACHE/ffmpeg8-lgpl/ffmpeg-n8.1.3-17-gc389840894-starling-linux64-lgpl-shared-8.1/lib
+FF9=$CACHE/ffmpeg9-lgpl/ffmpeg-n9.0.2-28-g669f5ab083-starling-linux64-lgpl-shared-9.0/lib
 MEDIA_REL=$CACHE/media/release
 MEDIA_IMG=$CACHE/media/image-retrieval-v1
 MEDIA_VID=$CACHE/media/video-retrieval-v1
@@ -277,15 +278,15 @@ REF_QW=$CI/refs/qwen35-release-prompts
 mkdir -p "$OUT/prepare"
 ready() { [[ -f "$1/.complete" ]]; }
 prepare_ffmpeg() {
-    ready "$CACHE/ffmpeg8" || {
-        rm -rf "$CACHE/ffmpeg8" && sh model-pipeline/reference/embeddinggemma2/fetch_eg2_ffmpeg.sh "$CACHE/ffmpeg8" &&
-            rm -rf "$CACHE"/ffmpeg8/*gpl-shared-8.1.tar.xz "$CACHE"/ffmpeg8/*-gpl-shared-8.1 && touch "$CACHE/ffmpeg8/.complete"
+    ready "$CACHE/ffmpeg8-lgpl" || {
+        rm -rf "$CACHE/ffmpeg8-lgpl" && sh model-pipeline/reference/embeddinggemma2/fetch_eg2_ffmpeg.sh "$CACHE/ffmpeg8-lgpl" &&
+            rm -f "$CACHE"/ffmpeg8-lgpl/*-lgpl-shared-8.1.tar.xz && touch "$CACHE/ffmpeg8-lgpl/.complete"
     }
-    ready "$CACHE/ffmpeg9" || {
-        local a=ffmpeg-n9.0.2-28-g669f5ab083-linux64-lgpl-shared-9.0.tar.xz
-        rm -rf "$CACHE/ffmpeg9" && mkdir -p "$CACHE/ffmpeg9" && cd "$CACHE/ffmpeg9" &&
-            curl -fsSL -o "$a" "https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2026-10-15-13-03/$a" &&
-            echo "5838264a2cff06ddc6b7b2fc43edeb51358ead38fd56d82f83f49c270fe0f5ff  $a" | sha256sum -c - &&
+    ready "$CACHE/ffmpeg9-lgpl" || {
+        local a=ffmpeg-n9.0.2-28-g669f5ab083-starling-linux64-lgpl-shared-9.0.tar.xz
+        rm -rf "$CACHE/ffmpeg9-lgpl" && mkdir -p "$CACHE/ffmpeg9-lgpl" && cd "$CACHE/ffmpeg9-lgpl" &&
+            curl -fsSL -o "$a" "https://huggingface.co/datasets/Starlinghq/ffmpeg-lgpl-rebuilds/resolve/caf396f176296fc12620c18a344a31f628a4613a/$a" &&
+            echo "db79bc561add07fe48cbe013f714f4ceaf12e49553e56aff9775eff088f8b5ed  $a" | sha256sum -c - &&
             tar xf "$a" && rm -f "$a" && touch .complete
         cd "$REPO" || return 1
     }
@@ -451,12 +452,12 @@ gates_eg2_video() {
     local pr=embeddinggemma-2/video-fp32-cuda w REL=$P/embeddinggemma-2/release/video-fp32-release
     local SET=$P/embeddinggemma-2/release/video-retrieval-v1
     w="$(work $pr)"
-    if need $pr "g1-g2-video-release G1,G2" "$CACHE/ffmpeg9" && need $pr "g1-g2-video-release G1,G2" "$REF_VID"; then
+    if need $pr "g1-g2-video-release G1,G2" "$CACHE/ffmpeg9-lgpl" && need $pr "g1-g2-video-release G1,G2" "$REF_VID"; then
         step $pr dotnet-stages "${TOOL[@]}" embeddinggemma2-videos --out "$w/stages" --videos "$MEDIA_REL" --ffmpeg "$FF8" --ffmpeg9 "$FF9" \
             --fixtures "$REL" --threads 4 --device cuda:0
         evaluate $pr g1-g2-video-release G1,G2 --fixtures "$REL" --results "$w/stages" --reference-tensors "$REF_VID" --require-gates G1,G2
     fi
-    if need $pr "g3-retrieval G3" "$MEDIA_VID" && need $pr "g3-retrieval G3" "$CACHE/ffmpeg8"; then
+    if need $pr "g3-retrieval G3" "$MEDIA_VID" && need $pr "g3-retrieval G3" "$CACHE/ffmpeg8-lgpl"; then
         step $pr g3-producer "${TOOL[@]}" retrieval --model embeddinggemma2-video --dataset "$SET" --media "$MEDIA_VID" \
             --out "$w/g3/embeddings.jsonl" --ffmpeg "$FF8" --device cuda --threads 16
         evaluate $pr g3-retrieval G3 --g3 retrieval --dataset "$SET" --results "$w/g3/embeddings.jsonl"
