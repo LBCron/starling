@@ -10,9 +10,9 @@ Run on 2026-11-04 on the maintainer's shared machine, CPU only, 4 threads. BtbN 
 | G2 | **passed** | embedding max abs 1.29e-6 (1e-5); min cosine 0.999999999959 (0.9999995); soft tokens 2.37e-4 row-relative (1e-3); token embeddings 3.81e-4 (4e-3) | same |
 | G3 | **passed** | `video-retrieval-v1`, 50 queries, 50 videos: nDCG@10 0.8126 (minimum 0.797), MRR@10 0.7714 (minimum 0.751) | [`g3-retrieval/report.md`](g3-retrieval/report.md) |
 
-The G3 results file has SHA-256 `abda524cf373d68f19b05348df75378e51e76267ad0392c1166107f2bf3f38c1`, the same as the runs of 2026-10-15 and 2026-11-04 on the BtbN builds, and `per_query` is equal. `mrr@10` in `metrics` differs from the 2026-11-04 report in the sixteenth digit (0.771388888888889, now 0.7713888888888889) although its inputs are equal; this was not looked into. These gate figures equal the [2026-10-14 evidence](../release-set-gates-2026-10-14/embeddinggemma2-video-fp32-cpu/README.md).
+The G3 results file has SHA-256 `abda524cf373d68f19b05348df75378e51e76267ad0392c1166107f2bf3f38c1`, the same as the runs of 2026-10-15 and 2026-11-04 on the BtbN builds, and `per_query` is equal. `mrr@10` in `metrics` differs from the earlier report on the BtbN builds (at `493765b`) in the sixteenth digit (0.771388888888889, now 0.7713888888888889) although its inputs are equal; this was not looked into. These gate figures equal the [2026-10-14 evidence](../release-set-gates-2026-10-14/embeddinggemma2-video-fp32-cpu/README.md).
 
-The evaluator verified the protected files against Git, and nothing under `protected/` changed. It marks its own commit `9f6b202…-dirty`, because the only uncommitted change at the time was this evidence directory's rename. Each `report.json` differs from the evaluator's file only in its local paths, which read `<work>`.
+The evaluator verified the protected files against Git, and nothing under `protected/` changed. It marks its own commit `9f6b202…-dirty`, because the only uncommitted changes at the time were in this evidence directory. Each `report.json` differs from the evaluator's file only in its local paths, which read `<work>`.
 
 ## The builds
 
