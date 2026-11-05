@@ -262,7 +262,7 @@ Separate stable anchors from current-model previews. A stable, reproducible mode
 | P1 | EmbeddingGemma 2 (`google/embeddinggemma-2`, Apache-2.0), text embeddings first. Added 2026-10-10 at the maintainer's request. | Current multilingual embedding model with strong demand; reuses the encoder path and adapters, and adds a Gemma-family backbone and a third owned tokenizer profile (SentencePiece-style BPE with byte fallback). | Admission spike (`model-pipeline/admissions/embeddinggemma-2.md`), then text embedding preview with Extensions.AI and ML.NET adapters. Image, audio and video towers stay out of the first contract. |
 | P2 | One cross-encoder reranker or compact classifier. | Demonstrates task variety and reuses encoder infrastructure. | Stable typed API and benchmark. |
 | P2 | One vision model such as an image classifier or detector. | Demonstrates that the organization serves deep learning beyond text. | Tested image processor and output semantics. |
-| Later | Speech, multimodal generation, additional LLM architectures, training recipes. | Valuable expansion after the first families can be maintained reliably. | Independent admission and ownership. |
+| Later | Speech, multimodal generation, additional LLM architectures, training recipes. | Valuable expansion after the first families can be maintained reliably. | Independent admission. |
 
 Choose exact model IDs and immutable revisions during the kickoff admission spike. Prefer a small current decoder that fits the available test hardware over a large flagship that makes every verification expensive. The initial launch does not depend on a specific unreleased model.
 
@@ -507,7 +507,7 @@ Mark initially acts as technical lead, API owner, and final release reviewer. Ag
 
 Use a permissive license such as MIT for original project code, subject to the final organization decision. Preserve upstream licenses and notices for reused code. Model weights, tokenizer assets, and datasets retain their own terms; the repository's code license does not override them.
 
-Define ownership for the core API, each backend, the tokenizer implementation/conformance/release lane, the release pipeline, and every stable model family. Tokenizer ownership includes independent fixes and upstream contribution follow-through. Initially the same person may cover several areas. Recruit a second trusted human release owner before promising broad support or expanding beyond a manageable stable catalog. Protected branches and release environments should not allow an implementation agent to approve its own change.
+Define ownership for the core API, each backend, the tokenizer implementation/conformance/release lane, and the release pipeline. Tokenizer ownership includes independent fixes and upstream contribution follow-through. Initially the same person may cover several areas. Recruit a second trusted human release owner before promising broad support or expanding beyond a manageable stable catalog. Protected branches and release environments should not allow an implementation agent to approve its own change.
 
 Use small design proposals for new public APIs, backends, model families, or changes to fidelity policy. Routine fixes can use an issue plus tests. Publish a contribution path with distinct tasks for model experts, .NET engineers, performance specialists, documentation contributors, and hardware testers.
 
@@ -580,7 +580,7 @@ The following items are ready to turn into repository issues after the organizat
 | P-018 | Add qualification CI and controlled hardware profiles. | P-010 | Supported combinations have evidence; public PR execution cannot access release credentials. |
 | P-019 | Add bounded concurrency and safe model replacement where needed. | P-008, P-018 | Saturation, cancellation, replacement, and memory tests pass; added complexity improves a measured workload. |
 | P-020 | Add upstream change detection and scoped revalidation. | P-002, P-007, P-018, P-026 | Model/tokenizer changes create useful proposals and rerun all affected gates; upstream PR status cannot block an owned release. |
-| P-021 | Generate catalog and evidence reports. | P-010, P-018 | Catalog reflects machine-readable maturity, feature scope, ownership, and test dates. |
+| P-021 | Generate catalog and evidence reports. | P-010, P-018 | Catalog reflects machine-readable maturity, feature scope, and test dates. |
 | P-022 | Execute first maintained update and rollback drill. | P-020, P-021 | Both old and new profiles remain identifiable; regression and migration information is visible. |
 | P-023 | Audit and adopt tokenizer source into the owned repository. | P-001, P-002 | Exact origins, dependency/asset inventory, notices, owned namespace, measured `tokenizer.json` component coverage of the adopted source, and justified initial profile scope. |
 | P-024 | Implement and package the owned tokenizer core and first profile. | P-004, P-023 | Managed production path with no direct/transitive Microsoft.ML.Tokenizers reference, a `tokenizer.json` pipeline interpreter covering the pilot profiles' components, explicit unsupported operators, scalar/batch APIs, and passing conformance. |
