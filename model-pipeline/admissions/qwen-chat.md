@@ -7,8 +7,7 @@ Pipeline stage 1 for `Starlings.Models.QwenChat` (plan section 7; five-model onb
 | Candidate | `Qwen/Qwen3-0.6B` (profile `qwen3-0.6b/ortgenai-fp32-cpu`, template `qwen3-text-v1`) and `Qwen/Qwen2.5-0.5B-Instruct` (profile `qwen2.5-0.5b-instruct/ortgenai-fp32-cpu`) |
 | Code revision | No upstream code is run or adopted. The C# chat templates adapt the `chat_template` strings at the weight revisions below (`ai-dotnet/src/Starlings.Models.QwenChat/THIRD-PARTY-NOTICES.md`). The bundle is built with the ONNX Runtime GenAI 0.17.1 builder at source commit `83de55a1f3886cddbb32a5517e26adb3f9d65159`. |
 | Weight revision | Qwen3-0.6B `c1899de289a04d12100db370d81485cdf75e47ca`; Qwen2.5-0.5B-Instruct `7ae557604adf67be50417f59c2c2f167def9a775`. Every file's size and SHA-256 is in the candidate contracts and was verified on download. |
-| Requested by / demand evidence | #124 (Roost R-009: a named consumer). Hub downloads on 2026-10-18: Qwen3-0.6B 247.0M (1,828 likes), Qwen2.5-0.5B-Instruct 74.8M (697 likes). |
-| Proposed owner | Mark |
+| Requested by | #124 (Roost R-009). Hub downloads on 2026-10-18: Qwen3-0.6B 247.0M (1,828 likes), Qwen2.5-0.5B-Instruct 74.8M (697 likes). |
 | Proposed maturity at first release | Experimental |
 | Decision | Proposed: admitted at maturity Experimental, both profiles, CPU fp32 on Linux x64. Bundles hosted publicly by Starling (decided by Mark on 2026-10-19): `Starlinghq/qwen3-0.6b-ortgenai` (`00278275`) and `Starlinghq/qwen2.5-0.5b-instruct-ortgenai` (`265459af`), tag `r2`; `QwenChatModelAssets` downloads them explicitly, and a local build gives the same bytes. |
 | Decided by and date | Pending: merging the PR that adds this record is the decision. |
@@ -28,7 +27,7 @@ No hard blocker.
 
 | Criterion | Weight | Score (0 to 5) | Notes |
 | --- | --- | --- | --- |
-| User demand | 25% | 4 | Very high Hub usage and a named consumer (Roost R-009). |
+| User demand | 25% | 4 | Very high Hub usage and a request from Roost (R-009). |
 | Backend feasibility | 20% | 4 | The same GenAI 0.17.1 backend and decode loop as the Stable Qwen3.5 profiles, with standard `qwen3` and `qwen2` GenAI model types. Development parity: see "Evidence". |
 | Reusable architecture coverage | 20% | 3 | Adds two dense Qwen generations and their chat templates on the existing generation backend. No new runtime. |
 | Access and licensing clarity | 15% | 5 | Apache-2.0, public, files pinned by commit and SHA-256. |

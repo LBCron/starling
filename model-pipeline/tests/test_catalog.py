@@ -52,6 +52,13 @@ def test_missing_capability_is_unrecorded_never_supported(repo):
     assert "| vision | supported | unrecorded |" in readme
 
 
+def test_catalog_names_no_owner(repo):
+    add_profile(repo / "registry", "fam/a")
+    cat = catalog.build(repo / "registry", repo)
+    assert "owner" not in profile(cat, "fam/a")
+    assert "| Owner |" not in catalog.render(cat, repo / "docs" / "catalog", repo)["README.md"]
+
+
 def test_capability_tables_cover_every_recorded_capability(repo):
     add_profile(repo / "registry", "fam/a", lambda m: m["capabilities"].update(vision="experimental"))
     cat = catalog.build(repo / "registry", repo)

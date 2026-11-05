@@ -241,7 +241,6 @@ qualification:
     G7: { status: passed, evidence: docs/evidence/g7-integration-2026-10-14/README.md, date: 2026-10-14 }
 
 maintenance:
-  owner: Mark
   # main moved to f9972ac2 (2026-10-28): only README.md changed (technical report link and citation, a table
   # reformat, revised MIEB and MAEB figures; license line unchanged). README.md is locked, so G0 reruns before any pin
   # move; no other file changed, so nothing that affects inference moved (#279).

@@ -7,8 +7,7 @@ Model request #217. Plan section 7, pipeline stage 1. Facts were read from the H
 | Candidate | `LiquidAI/LFM3-1.7B` (text) through its ONNX export `LiquidAI/LFM3-1.7B-ONNX`. Later candidates of the same family: `LiquidAI/LFM3-VL-2B`, `LiquidAI/LFM3-Audio-2B`, `LiquidAI/LFM3-Omni-2B` (not in this admission). |
 | Code revision | `40ebe0aa6662c9d40389c2f5d565b6a2c6aebacd` (`modeling_lfm3.py`, `configuration_lfm3.py`, `lfm3_conv.py` in the checkpoint repository; the reference runs them with `trust_remote_code`) |
 | Weight revision | Checkpoint `40ebe0aa6662c9d40389c2f5d565b6a2c6aebacd`; ONNX export `c680759afee1ce8310c90d6c621f4558200dee77` |
-| Requested by / demand evidence | #217. Released 2026-10-27; 6,311 downloads and 155 likes on the first day. The card reports LiveClaw 45.6 (Qwen3.5-4B 19.9, Qwen3.5-9B 35.8), relevant to the tool-calling gap in #181. |
-| Proposed owner | Unassigned |
+| Requested by | #217. Released 2026-10-27; 6,311 downloads and 155 likes on the first day. The card reports LiveClaw 45.6 (Qwen3.5-4B 19.9, Qwen3.5-9B 35.8), relevant to the tool-calling gap in #181. |
 | Proposed maturity at first release | Experimental |
 | Decision | Admitted at maturity Experimental, to be published on nuget.org with the LFM Open License v1.0 as the package's license file and license acceptance required on install (`Starlings.Models.Lfm3`, `LICENSE.txt`); the revenue condition opens the package description and README. Registry profile `lfm3-1.7b/onnx-fp32-cpu`. |
 | Decided by and date | The maintainer, 2026-10-30: "make sure that license is attached and prominent in the NuGet package for that model" |

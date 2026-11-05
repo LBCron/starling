@@ -278,9 +278,8 @@
     "maintenance": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["owner", "latest_verified_upstream_revision", "review_date"],
+      "required": ["latest_verified_upstream_revision", "review_date"],
       "properties": {
-        "owner": { "type": "string", "minLength": 1 },
         "latest_known_upstream_revision": { "$ref": "#/$defs/gitSha" },
         "latest_verified_upstream_revision": { "$ref": "#/$defs/gitSha" },
         "last_checked": { "type": "string", "format": "date" },

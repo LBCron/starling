@@ -76,6 +76,5 @@ qualification:
     G6: { status: passed }
 
 maintenance:
-  owner: Mark
   latest_verified_upstream_revision: "0123456789abcdef0123456789abcdef01234567"
   review_date: 2026-12-01

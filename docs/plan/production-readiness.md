@@ -1,6 +1,6 @@
 # Production readiness plan
 
-Goal: take every registered model to **Stable** (plan section 14): documented contract, all qualification gates G0 to G7 passed in full (plan section 10), an owner, a compatibility matrix, and regression support. The manifest validator enforces part of this already: a `stable` profile needs every gate `passed` and no `untested` capability (`model-pipeline/src/model_pipeline/manifest.py`).
+Goal: take every registered model to **Stable** (plan section 14): documented contract, all qualification gates G0 to G7 passed in full (plan section 10), a compatibility matrix, and regression support. The manifest validator enforces part of this already: a `stable` profile needs every gate `passed` and no `untested` capability (`model-pipeline/src/model_pipeline/manifest.py`).
 
 Audit date: 2026-10-13, at `fb27658`. Baseline on the workstation: 711 .NET tests, 473 pass, 0 fail, 238 skipped (weight-dependent tests skip without a local model cache).
 
@@ -98,7 +98,7 @@ These cannot be done by an agent. Each row names what it unblocks.
 | M4 | Legal: D2 (FFmpeg adapter); sign-off on licenses stated only in model cards (e5 MIT, GLiNER2 Apache-2.0). | G0, adapter publish |
 | M5 | Repository settings: branch protection and the `release` environment (`docs/kickoff.md`). The NuGet `Starlings` prefix reservation is optional hardening, not a publish prerequisite: releases ship without it (#209, decided 2026-11-01 by the maintainer's delegate (agent), revisitable). | G6, any publish |
 | M6 | Hardware: GPU time for CUDA evaluator runs and soaks, a quiet machine for controlled benchmarks, and Windows evidence (CI runner approval). | G2/G4/G5 on CUDA, compatibility matrix |
-| M7 | Name a second release owner and a first named consumer (P-028). Update 2026-11-01 (decided 2026-11-01 by the maintainer's delegate (agent), revisitable): the first named consumers are starlinghq/roost and starlinghq/corvid, the organization's own projects on the published `0.3.0` packages (#208), so the consumer half is done; the owner half is a standing single-owner exception that every promotion and release cites (#207), still open as a risk but no longer blocking. | Stable, G7 |
+| M7 | Name a second release owner. Update 2026-11-04: the maintainer dropped the named consumer requirement that was the other half of this item (`docs/kickoff.md`). Update 2026-11-01 (decided 2026-11-01 by the maintainer's delegate (agent), revisitable): the second release owner is a standing single-owner exception that every promotion and release cites (#207), still open as a risk but no longer blocking. | Stable, G7 |
 | M8 | Accept the e5 CUDA `PROPOSED.md` decisions. Decide whether a tokenizer bump requires a model G1/G2 rerun or whether the tokenizer conformance suite suffices (settled 2026-11-01, #202: the middle path in `docs/support-policy.md`; options in `docs/support-policy.md`, R10). | e5 CUDA, every tokenizer bump |
 | M9 | File the upstream onnxruntime-genai concurrent-generator report (drafted in R8). Confirm CUDA serialization as the documented behavior. | Qwen G4 |
 | M10 | Record gate results and promote maturity once evidence exists. | Every promotion |

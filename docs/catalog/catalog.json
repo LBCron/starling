@@ -217,7 +217,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": null,
       "known_issues": [
@@ -487,7 +486,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": null,
       "known_issues": [
@@ -757,7 +755,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": null,
       "known_issues": [
@@ -1027,7 +1024,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": null,
       "known_issues": [
@@ -1298,7 +1294,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": null,
       "known_issues": [
@@ -1570,7 +1565,6 @@
       "qualified_providers": [
         "cpu"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -1860,7 +1854,6 @@
       "qualified_providers": [
         "cuda"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -2154,7 +2147,6 @@
       "qualified_providers": [
         "cpu"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -2445,7 +2437,6 @@
       "qualified_providers": [
         "cuda"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -2738,7 +2729,6 @@
       "qualified_providers": [
         "cpu"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -3031,7 +3021,6 @@
       "qualified_providers": [
         "cuda"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -3328,7 +3317,6 @@
         "cpu",
         "cuda"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-10-10",
       "known_issues": [
@@ -3619,7 +3607,6 @@
       "qualified_providers": [
         "cuda"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-10-10",
       "known_issues": [
@@ -3911,13 +3898,12 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-02-04",
       "last_checked": null,
       "known_issues": [
         "The references are proposed, not adopted into protected/, and no gate has run; every capability is at most experimental.",
         "Scores are raw logits, not calibrated probabilities.",
-        "Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long pairs are costly on CPU. On .NET through BertReranker at four threads, one 8,192-token pair took about a minute and peaked at 9.6 GiB with the CPU arena off, as the package now runs it; with the arena on it kept 18.4 GiB resident from the second run on (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04)."
+        "Onboarding evidence stops at the longest corpus row (1,468 tokens); the 8192-token limit is not gate evidence. Long pairs are costly on CPU. On .NET through BertReranker at four threads, one 8,192-token pair took 40 s and peaked at 9.6 GiB with the CPU arena off, as the package now runs it; with the arena on it took 38 s and kept 18.4 GiB resident from the second run on (docs/evidence/gte-reranker-modernbert-onboarding-2026-11-04)."
       ],
       "execution": {
         "runtime": "onnxruntime",
@@ -4183,7 +4169,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -4459,7 +4444,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -4738,7 +4722,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -5013,7 +4996,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -5300,7 +5282,6 @@
         "max_output_tokens": "untested"
       },
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-28",
       "last_checked": "2026-11-03",
       "known_issues": [
@@ -5578,7 +5559,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": null,
       "known_issues": [
@@ -5851,7 +5831,6 @@
       "qualified_providers": [
         "cpu"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-10-09",
       "known_issues": [
@@ -6141,7 +6120,6 @@
       "qualified_providers": [
         "cuda"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-10-05",
       "known_issues": [
@@ -6431,7 +6409,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": "2026-10-23",
       "known_issues": [
@@ -6710,7 +6687,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": "2026-10-23",
       "known_issues": [
@@ -6990,7 +6966,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": "2026-10-23",
       "known_issues": [
@@ -7266,7 +7241,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": "2026-10-23",
       "known_issues": [
@@ -7547,7 +7521,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": null,
       "known_issues": [
@@ -7818,7 +7791,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": null,
       "known_issues": [
@@ -8098,7 +8070,6 @@
         "max_output_tokens": 32768
       },
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-18",
       "last_checked": "2026-10-18",
       "known_issues": [
@@ -8383,7 +8354,6 @@
         "max_output_tokens": 40960
       },
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-18",
       "last_checked": "2026-10-18",
       "known_issues": [
@@ -8659,7 +8629,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-02-02",
       "last_checked": "2026-11-02",
       "known_issues": [
@@ -8943,7 +8912,6 @@
       "qualified_providers": [
         "cuda"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-10-10",
       "known_issues": [
@@ -9244,7 +9212,6 @@
       "qualified_providers": [
         "cpu"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-10-10",
       "known_issues": [
@@ -9542,7 +9509,6 @@
       "qualified_providers": [
         "cuda"
       ],
-      "owner": "Mark",
       "review_date": "2027-01-05",
       "last_checked": "2026-10-10",
       "known_issues": [
@@ -9841,7 +9807,6 @@
         "max_output_tokens": 8192
       },
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-02-01",
       "last_checked": "2026-11-01",
       "known_issues": [
@@ -10118,7 +10083,6 @@
       },
       "generation": null,
       "qualified_providers": [],
-      "owner": "Mark",
       "review_date": "2027-01-23",
       "last_checked": "2026-11-03",
       "known_issues": [

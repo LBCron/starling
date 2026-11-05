@@ -179,13 +179,13 @@ for (bx, by, ph) in ((x + 30, 318, 0.0), (x - 26, 362, 0.45), (x + 14, 378, 0.7)
 # ================================================================ 01 admit
 x = TX[1]
 station(x, TT, "01", "ADMIT", "no work order, no entry", TR,
-        ["admissions/<model>.md", "value · access · licences", "hardware · route · owner", "→ model contract (or reason)"])
+        ["admissions/<model>.md", "value · access · licences", "hardware · route · scope", "→ model contract (or reason)"])
 box(x - 66, 268, 132, 16)
 box(x - 64, 284, 16, 242)
 box(x + 48, 284, 16, 242)
 box(x - 42, 296, 84, 150)
 text(x, 314, "WORK ORDER", "sm")
-for i, item in enumerate(["value", "access", "licence", "hardware", "route", "owner"]):
+for i, item in enumerate(["value", "access", "licence", "hardware", "route", "scope"]):
     yy = 334 + i * 18
     a(f'<polyline points="{x - 34},{yy - 5} {x - 30},{yy - 1} {x - 24},{yy - 9}" fill="none" stroke="{GREEN}" stroke-width="2"/>')
     text(x - 16, yy, item, "sm", "start")

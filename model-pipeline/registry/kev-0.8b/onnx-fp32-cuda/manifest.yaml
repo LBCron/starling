@@ -334,7 +334,6 @@ qualification:
     G7: { status: not-run }
 
 maintenance:
-  owner: Mark
   # main at the check date is the card-only commit bf75a6a8 (also the Hub tag v1.0), with byte-identical weight, head
   # and tokenizer files (docs/m0/hub-pins.md, checked 2026-10-05).
   latest_known_upstream_revision: "bf75a6a8848ea6960ff2ed108d9ed44c2941174f"

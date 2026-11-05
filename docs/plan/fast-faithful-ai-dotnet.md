@@ -72,11 +72,11 @@ These are proposed project decisions. Relevant existing integration points are d
 
 Public examples should solve complete small problems: multilingual classification, schema-based extraction, semantic retrieval with reranking, and local streamed chat. They should stay independent of any particular cloud account or orchestration product.
 
-### 3.1 Landscape and first consumer
+### 3.1 Landscape
 
 Publish a short comparison against existing .NET options in the encoder and tokenizer lane before M1 exits (P-028). Candidates to survey, with current versions and status verified at kickoff: Semantic Kernel's ONNX embedding connector, SmartComponents.LocalEmbeddings, FastBertTokenizer, and .NET bindings to the Hugging Face Rust tokenizers such as ErgoX.TokenX. The comparison states what each one already covers and where this organization's evidence and release cadence differ.
 
-Name one real consumer for the encoder package before M1 exits: a project or team that installs the preview and reports back. Until a consumer exists, score the user-demand criterion in section 7 from observable signals such as upstream repository activity and model-request issues.
+Score the user-demand criterion in section 7 from observable signals such as upstream repository activity and model-request issues.
 
 ## 4. Organization and repository structure
 
@@ -166,7 +166,7 @@ Separate queue time, preprocessing time, inference time, and decoding time in di
 
 Generation state belongs to a request or an explicitly owned conversation. Test concurrent requests for state leakage. Model replacement should validate and warm the new version, atomically route new work to it, allow old work to drain, then dispose the old instance. Do not dispose a model while an adapter or active request still uses it.
 
-The initial runtime should use .NET 10 as the primary implementation and sample target, with exact SDK/runtime versions pinned in CI. Microsoft's current policy lists .NET 10 as active LTS; .NET 8 and 9 are close to end of support at this plan's date [S11]. Add older targets only for a named consumer and a funded support window.
+The initial runtime should use .NET 10 as the primary implementation and sample target, with exact SDK/runtime versions pinned in CI. Microsoft's current policy lists .NET 10 as active LTS; .NET 8 and 9 are close to end of support at this plan's date [S11]. Add older targets only for a demonstrated need and a funded support window.
 
 Native AOT is a per-package/per-backend qualification, not a launch-wide claim. Validate trimming and native loading in a standalone executable before advertising it [S10]. A compiled API target does not certify every runtime identifier or provider.
 
@@ -262,7 +262,7 @@ Separate stable anchors from current-model previews. A stable, reproducible mode
 | P1 | EmbeddingGemma 2 (`google/embeddinggemma-2`, Apache-2.0), text embeddings first. Added 2026-10-10 at the maintainer's request. | Current multilingual embedding model with strong demand; reuses the encoder path and adapters, and adds a Gemma-family backbone and a third owned tokenizer profile (SentencePiece-style BPE with byte fallback). | Admission spike (`model-pipeline/admissions/embeddinggemma-2.md`), then text embedding preview with Extensions.AI and ML.NET adapters. Image, audio and video towers stay out of the first contract. |
 | P2 | One cross-encoder reranker or compact classifier. | Demonstrates task variety and reuses encoder infrastructure. | Stable typed API and benchmark. |
 | P2 | One vision model such as an image classifier or detector. | Demonstrates that the organization serves deep learning beyond text. | Tested image processor and output semantics. |
-| Later | Speech, multimodal generation, additional LLM architectures, training recipes. | Valuable expansion after the first families can be maintained reliably. | Independent admission and ownership. |
+| Later | Speech, multimodal generation, additional LLM architectures, training recipes. | Valuable expansion after the first families can be maintained reliably. | Independent admission. |
 
 Choose exact model IDs and immutable revisions during the kickoff admission spike. Prefer a small current decoder that fits the available test hardware over a large flagship that makes every verification expensive. The initial launch does not depend on a specific unreleased model.
 
@@ -287,7 +287,7 @@ The model pipeline produces reviewed changes and evidence. Its initial implement
 | Stage | Work | Required output and exit gate |
 | --- | --- | --- |
 | 0. Discover | Watch admitted upstream projects, model releases, ecosystem requests, and relevant dependencies. | Deduplicated candidate or update proposal with impact and effort estimate. |
-| 1. Admit | Check user value, access, licenses, hardware needs, backend route, owner, and scope. | Approved model contract; blocked cases have a reason. |
+| 1. Admit | Check user value, access, licenses, hardware needs, backend route, and scope. | Approved model contract; blocked cases have a reason. |
 | 2. Pin | Resolve code, weights, tokenizer, configs, templates, dependencies, and evaluation data. | Immutable source lock and artifact digests. |
 | 3. Establish reference | Execute the original implementation in a reproducible environment. | Reference outputs and intermediate fixtures, feature checklist, tolerance policy. |
 | 4. Implement execution route | Export graphs, configure a supported backend, or port an architecture. | Rebuildable implementation and an explicit unsupported-feature list. |
@@ -327,7 +327,7 @@ Minimum manifest fields:
 | Execution | Backend versions, graph signatures, operators/opset where applicable, native artifacts, provider options, precision, shapes. |
 | Compatibility | Tested OS/architecture/provider combinations; streaming, batch, persistence, training, and AOT status. |
 | Qualification | Reference runner, fixture versions, numeric tolerances, task-quality budgets, performance protocol, soak test configuration. |
-| Maintenance | Named owner, maturity, latest verified upstream revision, review date, known issues, replacement/deprecation information. |
+| Maintenance | Maturity, latest verified upstream revision, review date, known issues, replacement/deprecation information. |
 
 Represent each feature as supported, unsupported, experimental, or untested. Do not use missing values to imply support. A model bundle can expose a limited preview scope, but its package name, catalog entry, and examples must make that scope clear.
 
@@ -465,7 +465,7 @@ Publish maturity and support separately:
 | --- | --- |
 | Experimental | Investigation or incomplete feature set; no production support claim. |
 | Preview | Declared scope passes meaningful tests; API or platform support may still change. |
-| Stable | Documented contract, qualification gates, owner, compatibility matrix, and regression support. |
+| Stable | Documented contract, qualification gates, compatibility matrix, and regression support. |
 | Maintenance | Existing pinned combinations remain supported, but new upstream features are not actively pursued. |
 | Deprecated | Replacement and migration information published; support end date stated. |
 
@@ -507,7 +507,7 @@ Mark initially acts as technical lead, API owner, and final release reviewer. Ag
 
 Use a permissive license such as MIT for original project code, subject to the final organization decision. Preserve upstream licenses and notices for reused code. Model weights, tokenizer assets, and datasets retain their own terms; the repository's code license does not override them.
 
-Define ownership for the core API, each backend, the tokenizer implementation/conformance/release lane, the release pipeline, and every stable model family. Tokenizer ownership includes independent fixes and upstream contribution follow-through. Initially the same person may cover several areas. Recruit a second trusted human release owner before promising broad support or expanding beyond a manageable stable catalog. Protected branches and release environments should not allow an implementation agent to approve its own change.
+Define ownership for the core API, each backend, the tokenizer implementation/conformance/release lane, and the release pipeline. Tokenizer ownership includes independent fixes and upstream contribution follow-through. Initially the same person may cover several areas. Recruit a second trusted human release owner before promising broad support or expanding beyond a manageable stable catalog. Protected branches and release environments should not allow an implementation agent to approve its own change.
 
 Use small design proposals for new public APIs, backends, model families, or changes to fidelity policy. Routine fixes can use an issue plus tests. Publish a contribution path with distinct tasks for model experts, .NET engineers, performance specialists, documentation contributors, and hardware testers.
 
@@ -530,7 +530,7 @@ Version 0.3 adds roughly 50 to 100 maintainer hours across the tokenizer interpr
 | Milestone | Indicative window | Deliverables | Exit decision |
 | --- | --- | --- | --- |
 | M0 — Prove the route | Weeks 1–2 | Charter/repo design, model selection, reference fixtures, tokenizer source/dependency audit with `tokenizer.json` coverage measurement and adoption prototype, GLiNER2 feasibility spike and backbone-tokenizer check, Kev admission and execution-route spike, landscape survey started. | Can the organization own and release the required tokenizer profiles and preserve model fidelity at acceptable cost? |
-| M1 — Deliver a complete small model | Weeks 3–6 | Independently released tokenizer package, encoder package labeled Preview, bundle/registry, clean installs, benchmark harness with the Python same-backend comparison, Extensions.AI embedding adapter, ML.NET composition prototype, landscape comparison, one named consumer. | Can a new user reproduce the evidence without the source checkout or an upstream tokenizer update? |
+| M1 — Deliver a complete small model | Weeks 3–6 | Independently released tokenizer package, encoder package labeled Preview, bundle/registry, clean installs, benchmark harness with the Python same-backend comparison, Extensions.AI embedding adapter, ML.NET composition prototype, landscape comparison. | Can a new user reproduce the evidence without the source checkout or an upstream tokenizer update? |
 | M2 — Demonstrate the hard cases | Weeks 7–11 | GLiNER2 implementation against a fixed contract; one existing-backend LLM preview; owned tokenizer profiles and explicit backend boundaries. | Which candidates pass, and which remain explicitly preview or blocked? |
 | M3 — Demonstrate maintenance | Weeks 12–15 | One upstream change end to end, tokenizer fix/profile release while upstream contribution is pending, controlled benchmarks, soak, catalog, migration example, Stable promotion of the encoder once qualification CI, soak and the compatibility matrix exist. | Publish only the combinations qualified for their advertised maturity; demonstrate independent release control. |
 
@@ -580,14 +580,14 @@ The following items are ready to turn into repository issues after the organizat
 | P-018 | Add qualification CI and controlled hardware profiles. | P-010 | Supported combinations have evidence; public PR execution cannot access release credentials. |
 | P-019 | Add bounded concurrency and safe model replacement where needed. | P-008, P-018 | Saturation, cancellation, replacement, and memory tests pass; added complexity improves a measured workload. |
 | P-020 | Add upstream change detection and scoped revalidation. | P-002, P-007, P-018, P-026 | Model/tokenizer changes create useful proposals and rerun all affected gates; upstream PR status cannot block an owned release. |
-| P-021 | Generate catalog and evidence reports. | P-010, P-018 | Catalog reflects machine-readable maturity, feature scope, ownership, and test dates. |
+| P-021 | Generate catalog and evidence reports. | P-010, P-018 | Catalog reflects machine-readable maturity, feature scope, and test dates. |
 | P-022 | Execute first maintained update and rollback drill. | P-020, P-021 | Both old and new profiles remain identifiable; regression and migration information is visible. |
 | P-023 | Audit and adopt tokenizer source into the owned repository. | P-001, P-002 | Exact origins, dependency/asset inventory, notices, owned namespace, measured `tokenizer.json` component coverage of the adopted source, and justified initial profile scope. |
 | P-024 | Implement and package the owned tokenizer core and first profile. | P-004, P-023 | Managed production path with no direct/transitive Microsoft.ML.Tokenizers reference, a `tokenizer.json` pipeline interpreter covering the pilot profiles' components, explicit unsupported operators, scalar/batch APIs, and passing conformance. |
 | P-025 | Prove standalone tokenizer release independence. | P-024 | Clean consumer and release drill succeed with optional Microsoft comparator disabled and upstream patch unmerged; local fixture/evidence requirements remain enforced. |
 | P-026 | Establish upstream contribution and selective intake workflow. | P-023, P-024 | Patch ledger, reproducible upstream test cases, intake/revalidation policy, and separate product/upstream release status. |
 | P-027 | Run Kev admission and execution-route spike. | P-002, P-003 | Admission record; hidden-state export of the Kev-0.8B backbone attempted and compared with the PyTorch reference; TorchSharp or Kev-0.6B fallback result recorded; go/no-go for the M2 slot. |
-| P-028 | Publish the landscape comparison and secure a first consumer. | P-001 | Comparison covers the section 3.1 candidates at verified versions; one named consumer agrees to install the M1 preview. |
+| P-028 | Publish the landscape comparison. | P-001 | Comparison covers the section 3.1 candidates at verified versions. |
 | P-029 | Render the pinned LLM chat template in C#. | P-016, P-024 | Rendered prompts match the upstream reference on the template corpus; unsupported template features fail explicitly; the backend-rendered fallback stays labeled as a dependency until this passes. |
 | P-030 | Curate protected release evaluation sets. | P-004 | Maintainer-curated tokenizer and encoder holdout sets, versioned where implementation jobs have no write access. |
 
@@ -626,7 +626,7 @@ The strongest launch story is a reproducible before/after case study: a useful w
 | Scope grows faster than maintenance capacity. | Many previews, unowned families, rising time-to-triage. | Freeze new families; improve one stable lane and recruit ownership. |
 | ONNX export cannot preserve required behavior. | Repeated operator/control-flow workarounds or major quality loss. | Evaluate a direct backend/architecture port; retain blocked status until fidelity is demonstrated. |
 | Tokenizer or template drift invalidates model results. | Correct tensors on simple text, failures on multilingual or structured inputs. | Pin processors, expand conformance, invalidate downstream evidence. |
-| Owned tokenizer diverges without enough maintenance capacity. | Missed upstream fixes, difficult source ports, growing profile backlog. | Keep a provenance ledger, narrowly scoped commits, a named owner, and funded review capacity; restrict new profiles when needed. |
+| Owned tokenizer diverges without enough maintenance capacity. | Missed upstream fixes, difficult source ports, growing profile backlog. | Keep a provenance ledger, narrowly scoped commits, and funded review capacity; restrict new profiles when needed. |
 | A generation backend reintroduces hidden tokenizer dependence. | Backend ignores supplied token IDs or applies its own template/special tokens. | Verify the boundary, label limitations, and use an independent primary route. |
 | Agent-generated fixes overfit tests. | Changed goldens/tolerances or unexplained benchmark improvements. | Protected gates, separate holdout evaluation, minimal failure reproductions, human review. |
 | Native dependency conflicts complicate deployment. | Models work alone but fail together. | Explicit coexistence tests, aligned runtime packages, documented backend combinations. |
@@ -694,3 +694,4 @@ Sources S1–S13 were checked on 3 October 2026 and S14–S18 on 4 October 2026.
 | 0.2 | 2026-10-03 | Replaced upstream tokenizer-package reliance with owned source/API/releases; added ADR-13/14, standalone repository and package, source-adoption/conformance policy, backend boundary checks, parallel upstream contributions, four implementation issues, independence gates/metrics, and revised pilot effort. |
 | 0.3 | 2026-10-04 | Review update: release-lag evidence for ADR-13 and new ADR-15 (`tokenizer.json` interpreter first); Jev defined as API-only and Kev added as an M0 admission spike; pilot LLM default candidate and tokenizer profile sequencing; template rendering separated from tokenization independence; M1 release labeled Preview with Stable at M3; gate phasing; landscape survey and first-consumer requirement; Python same-backend headline benchmark; holdout-curation and post-pilot maintenance hours; tokenizer estimate raised to 60–120 hours; support-lag metric; issues P-027 to P-030; sources S14–S18. |
 | 0.3.1 | 2026-10-10 | Section 7: EmbeddingGemma 2 added as a P1 candidate at the maintainer's request (admission record `model-pipeline/admissions/embeddinggemma-2.md`, spike pending). |
+| 0.3.2 | 2026-11-04 | The maintainer removed the named owner and named consumer requirements (`docs/kickoff.md`): the admission check, maintenance metadata and Stable definition name no owner, and section 3.1, M1 and P-028 require no consumer. The landscape comparison and the second release owner stay. |
