@@ -2,7 +2,7 @@
 
 The qualification run on the tag `ai-v0.5.0` (41560779069) left two gaps. `cuda (runpod)` never started, because RunPod had no RTX 3090 for its 30-minute wait, and `release gates embeddinggemma-2/video-fp32-cpu` could not download its pinned FFmpeg builds (#277). This entry fills both gaps on a local machine at the tag's commit, `ce5225854fa7c007fc1cfb9adb50e665e6c1f611`.
 
-**Result.** No model regression. Every gate, test and soak passed on the seven Stable CUDA profiles and on `embeddinggemma-2/video-fp32-cpu`. One recorded check is `failed`: `builds`, a stale lock file at the tag (below). Nothing here changes a manifest, a gate status, a tolerance or a `protected/` file.
+**Result.** No model regression. Every gate and test passed on the seven Stable CUDA profiles and on `embeddinggemma-2/video-fp32-cpu`, and every soak passed its smoke check, with one non-binding growth FAIL that the one-hour soak below resolves. One recorded check is `failed`: `builds`, a stale lock file at the tag (below). Nothing here changes a manifest, a gate status, a tolerance or a `protected/` file.
 
 **This is regression evidence, not a qualification round.** It isn't a G4 or G5 run, and no manifest cites it as gate evidence. The 10-minute soaks are screening runs, and no benchmark was measured.
 
@@ -10,13 +10,13 @@ The qualification run on the tag `ai-v0.5.0` (41560779069) left two gaps. `cuda 
 
 | Item | Value |
 | --- | --- |
-| GPU | NVIDIA GeForce RTX 3090, driver 615.78.08 (the 2026-10-16 binding round ran on 580.x) |
+| GPU | NVIDIA GeForce RTX 3090, driver 615.78.08 (the 2026-10-16 binding round ran on 580.x). The machine also has an RTX 4060 Ti; `CUDA_VISIBLE_DEVICES=0` with PCI ordering selects the 3090 |
 | CUDA libraries | CUDA 13 and cuDNN 9 from the tag's hash-locked `requirements-cuda.txt`, on `LD_LIBRARY_PATH` |
-| CPU | Intel Core i7-5820K, 12 logical CPUs, no CPU quota, so the Python reference stages ran with 12 threads |
+| CPU | Intel Core i7-5820K, 12 logical CPUs, no CPU quota, so the reference thread cap was 12 (the GLiNER2 stage sets 4) |
 | RAM | 94 GB, shared with other work |
 | Python | 3.11 from uv, in the reference environments the script builds at the tag |
 | .NET SDK | 10.0.100, as `global.json` pins it |
-| FFmpeg | The archives the tag pins, each checked against its SHA-256 before use (FFmpeg 8 `bf3db18a…`, FFmpeg 9 `5838264a…`) |
+| FFmpeg | The BtbN archives the tag pins, each checked against its SHA-256 before use (FFmpeg 8 `bf3db18a…`, FFmpeg 9 `5838264a…`) |
 
 The machine is shared, so other jobs ran during these runs. The CUDA run's cgroup was frozen twice between 20:30Z and 20:38Z on 2026-11-04, during the EmbeddingGemma 2 text gates, while other work held the memory. Those gates compare outputs, not time, and both freezes ended before any soak started. The video CPU gates and the one-hour soak were not frozen.
 
@@ -38,7 +38,7 @@ The machine is shared, so other jobs ran during these runs. The CUDA run's cgrou
 | `Starlings.Models.EmbeddingGemma2.Tests.Cuda` | 21 | 0 | 8 |
 | `Starlings.Models.Qwen35.Tests.Cuda` | 116 | 0 | 0 |
 
-The e5 skip needs a machine where the CUDA provider can't load. The 8 EmbeddingGemma 2 skips need `STARLING_FFMPEG_DIR`, which the pod script doesn't set, so the job has been skipping them on RunPod too (7 of 26 on the `ai-v0.4.0` run). They all passed in the separate run in the table above.
+The e5 skip needs a machine where the CUDA provider can't load. The 8 EmbeddingGemma 2 skips need the video set (`STARLING_EMBEDDINGGEMMA2_VIDEOS`) and `STARLING_FFMPEG_DIR`. The pod script sets neither, so the job skips them on RunPod too (7 of 26 on the `ai-v0.4.0` run). They all passed in the separate run in the table above.
 
 ### 10-minute soaks
 
@@ -56,7 +56,7 @@ The growth verdict of a 10-minute soak isn't binding, because a short run sits i
 
 ### One-hour soak of `qwen3.5-0.8b/ortgenai-fp32x-cuda`
 
-PASS with the tool's unchanged growth rule: 854 load and unload cycles, 9,394 requests checked, 0 wrong outputs and 0 errors. Loaded `rss_anon` grew 4.3 MB (limit 32 MB) and loaded `working_set` 4.8 MB. Every gating series is a plateau. So the 10-minute reading was the warm-up ramp. The soak ran on an otherwise idle GPU. This is one profile's run on this machine, and it doesn't replace the binding G4 record.
+PASS with the tool's unchanged growth rule: 854 load and unload cycles, 9,394 requests checked, 0 wrong outputs and 0 errors. Loaded `rss_anon` grew 4.3 MB (limit 32 MB) and loaded `working_set` 4.8 MB. Every gating series is a plateau. So the 10-minute reading was the warm-up ramp: in this run `rss_anon` rose about 38 MB in the first 600 s, then about 5 MB/h. The GPU showed 0% utilisation at the start, with only resident idle processes. It wasn't sampled during the hour, and CPU load rose from about 2 to about 10 by the end. This is one profile's run on this machine, and it doesn't replace the binding G4 record.
 
 ### `embeddinggemma-2/video-fp32-cpu`
 
@@ -64,15 +64,21 @@ G1 and G2 passed against the release set, with all 11 hosted reference files ver
 
 ## The `builds` failure
 
-At the tag, the CUDA builds of `Starlings.Qwen35.Fidelity` and `Starlings.Soak.Tool` fail locked restore with `NU1004`. Their `packages.cuda.lock.json` files still carried the 0.4.0 versions of Starling's own packages and lacked `Starlings.Models.Abstractions`. So the tagged commit couldn't have passed this job, even with a GPU: without these two tools, the Qwen gates and every soak would have failed.
+At the tag, the CUDA builds of `Starlings.Qwen35.Fidelity` and `Starlings.Soak.Tool` fail locked restore with `NU1004`. Their `packages.cuda.lock.json` files still carried the 0.4.0 versions of Starling's own packages and lacked the dependency edges 0.5.0 added, among them `Starlings.Models.Abstractions` on `Starlings.Models.Qwen35.OnnxGenAI` and the `starlings.models.abstractions` project entry in the Qwen lock. So the tagged commit couldn't have passed this job, even with a GPU: without these two tools, the Qwen gates and every soak would have failed.
 
-To measure the profiles anyway, both tools were built at the tag from a separate clone with `-p:RestoreLockedMode=false`, into the paths the script expects. [`cuda/unlocked-lock-changes.diff`](cuda/unlocked-lock-changes.diff) is what restore changed: only `Starlings.*` versions moving from 0.4.0 to 0.5.0, and the new `Starlings.Models.Abstractions` entries. No third-party package moved. `builds` stays `failed` in `summary.tsv`, because that's what happened at the tag.
+To measure the profiles anyway, both tools were built at the tag from a separate clone with `-p:RestoreLockedMode=false`, into the paths the script expects, while the run was in progress and before it reached the Qwen gates. [`cuda/unlocked-lock-changes.diff`](cuda/unlocked-lock-changes.diff) is what restore changed: `Starlings.*` versions moving from 0.4.0 to 0.5.0, the new `Starlings.Models.Abstractions` entries, and one new `Starlings.Acquisition` dependency on `starlings.models.kev`. Every changed line is a `Starlings.*` package. No third-party package moved, and `Starlings.Tokenizers` stays at 0.3.4. `builds` stays `failed` in `summary.tsv`, because that's what happened at the tag.
 
 `main` no longer has this problem: `2d9c6e74b` regenerated these lock files. Nothing in the release path caught it before the tag.
 
 ## Differences from the tagged scripts
 
 - `cuda/harness-changes.diff` is the whole difference from the tag's pod script: the two root paths, `-m:2` on `dotnet build` (the machine's memory rules), and one line for a bug that only shows off a pod. With no CPU quota, `cpu_quota` prints ` none`, `read` strips the space, and `none` reaches arithmetic under `set -u`. The line routes that case to the script's own no-quota branch.
-- `video-cpu/harness-changes.diff` is the whole difference from the tag's `release-gates.sh`: `fetch_ffmpeg` is a no-op because the archives are already in place, and `-m:2`.
-- The release media and hosted references were fetched and verified by the scripts themselves. The model cache was this machine's, verified by `tools/acquire-models.sh`.
-- The pinned FFmpeg archives came from a local copy of the mirror proposed in #286. Their digests equal the tag's pins, so the bytes are the ones the gates specify. This doesn't settle the mirror's open licence question, and it doesn't make the job fetch them: #277 stays open until `release-gates` passes in the qualification workflow.
+- `video-cpu/harness-changes.diff` is the whole difference from the tag's `release-gates.sh`: `fetch_ffmpeg` is a no-op because the archives are already in place, and `-m:2`. That patch is why the two video reports record the commit as `ce522585…-dirty`.
+- The soak reports' notes say "scheduled CUDA qualification on RunPod" because the tag's script hard-codes that text. These runs were local. Their reports show `git_commit n/a`, so the commit comes from that note.
+- [`harness/`](harness) holds the two scripts this entry adds to the tagged ones. `run-soak-1h.sh` is the one-hour soak. `run-video-tests.sh` is the test run, which also sets `MALLOC_MMAP_THRESHOLD_=65536`, unlike the pod's test step, and uses FFmpeg 8 for `STARLING_FFMPEG_DIR`.
+- The release media and hosted references were fetched and verified by the scripts themselves. The model cache and NuGet cache were this machine's, and the models were verified by `tools/acquire-models.sh`. `images-r1` and `video-spike` were local fixture directories.
+- The FFmpeg archives were a local copy of the BtbN builds the tag pins, with digests equal to those pins, so the bytes are the ones the tag's gates specify. BtbN has deleted them, so this run can't be repeated from the tag's URLs.
+
+## Since the tag
+
+#286 merged after these runs started and closed #277. It replaces those FFmpeg builds on `main` with builds from pinned sources, under new pins. This entry measures the tag's builds, not those. The qualification workflow hasn't run on them either.
