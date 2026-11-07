@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The same one-hour e5 CUDA soak as run-main-extra.sh, at the ai-v0.5.0 tag, to separate a code change from this machine.
 set -uo pipefail
-H=<local>
+H="${STARLING_Q_LOCAL:?set STARLING_Q_LOCAL to the local workspace root}"
 W=$H/ws
 OUT=$H/out-e5-tag-1h
 mkdir -p "$OUT"

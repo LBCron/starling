@@ -2,7 +2,7 @@
 # At the main commit of the pod run: the EmbeddingGemma 2 CUDA tests with the video set and the rebuilt FFmpeg 8, then a
 # one-hour e5 CUDA soak.
 set -uo pipefail
-H=<local>
+H="${STARLING_Q_LOCAL:?set STARLING_Q_LOCAL to the local workspace root}"
 W=$H/ws
 OUT=$H/out-main-extra
 mkdir -p "$OUT"

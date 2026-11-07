@@ -2,7 +2,7 @@
 # The CUDA video parity tests at ai-v0.5.0 that the pod script leaves skipped: same project and environment as the run,
 # plus the fixture and FFmpeg variables those tests read.
 set -uo pipefail
-H=<local>
+H="${STARLING_Q_LOCAL:?set STARLING_Q_LOCAL to the local workspace root}"
 W=$H/ws
 OUT=$H/out-video-tests-0.5.0
 mkdir -p "$OUT"
@@ -17,4 +17,6 @@ export STARLING_FFMPEG_DIR=$W/ci-cache/ffmpeg8/ffmpeg-n8.1.3-17-gc389840894-linu
 export MALLOC_MMAP_THRESHOLD_=65536
 cd "$H/ci/starling"
 dotnet test --project ai-dotnet/tests/Starlings.Models.EmbeddingGemma2.Tests.Cuda -c Release --results-directory "$OUT/results" -- --report-xunit-trx >"$OUT/tests.log" 2>&1
-echo "exit $?" >"$OUT/exit.txt"
+status=$?
+echo "exit $status" >"$OUT/exit.txt"
+exit "$status"

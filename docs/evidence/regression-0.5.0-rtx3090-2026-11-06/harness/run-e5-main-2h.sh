@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The e5 CUDA soak at main for two hours, unchanged otherwise: does the growth of the one-hour run saturate or continue?
 set -uo pipefail
-H=<local>
+H="${STARLING_Q_LOCAL:?set STARLING_Q_LOCAL to the local workspace root}"
 W=$H/ws
 OUT=$H/out-e5-main-2h
 mkdir -p "$OUT"

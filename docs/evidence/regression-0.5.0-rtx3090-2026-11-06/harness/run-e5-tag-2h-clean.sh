@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The two-hour e5 CUDA soak at the tag again, on an otherwise idle GPU: the first one started while other work held the GPU.
 set -uo pipefail
-H=<local>
+H="${STARLING_Q_LOCAL:?set STARLING_Q_LOCAL to the local workspace root}"
 W=$H/ws
 OUT=$H/out-e5-tag-2h-clean
 mkdir -p "$OUT"

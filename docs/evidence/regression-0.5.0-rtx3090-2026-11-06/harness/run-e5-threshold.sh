@@ -2,7 +2,7 @@
 # After run-e5-diag.sh: e5 CUDA at main for two hours with MALLOC_MMAP_THRESHOLD_=65536. If the growth is heap
 # allocator retention, the series go flat; if it is memory in use, they keep growing.
 set -uo pipefail
-H=<local>
+H="${STARLING_Q_LOCAL:?set STARLING_Q_LOCAL to the local workspace root}"
 W=$H/ws
 OUT=$H/out-e5-main-2h-mmap
 while systemctl --user is-active -q starling-e5-diag; do sleep 20; done

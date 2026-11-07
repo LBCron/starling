@@ -2,7 +2,7 @@
 # One-hour CUDA soak of qwen3.5-0.8b/ortgenai-fp32x-cuda at ai-v0.5.0: same tool build, CUDA libraries and contract
 # environment as the run's 10-minute soak, with the duration of the one-hour G4 rule.
 set -uo pipefail
-H=<local>
+H="${STARLING_Q_LOCAL:?set STARLING_Q_LOCAL to the local workspace root}"
 W=$H/ws
 OUT=$H/out-soak-1h-0.5.0
 mkdir -p "$OUT"
