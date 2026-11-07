@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # After run-e5-diag.sh: e5 CUDA at main for two hours with MALLOC_MMAP_THRESHOLD_=65536. If the growth is heap
-# fragmentation, the series go flat; if it is memory in use, they keep growing.
+# allocator retention, the series go flat; if it is memory in use, they keep growing.
 set -uo pipefail
 H=<local>
 W=$H/ws
